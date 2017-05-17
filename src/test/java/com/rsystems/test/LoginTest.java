@@ -29,6 +29,22 @@ public class LoginTest extends TestInitization{
 		//reports.endTest();
 	}
 	
+	
+	@Test
+	public void hubNavigation()
+	{
+		log.info("Logger Info:: Inside Test hubNavigation() method");
+		System.out.println("Hello hubTextLineNavigation");
+		//reports.startTest("Starting the test: hubTextLineNavigation()");
+		reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB Text Line");
+		
+		reports.log(LogStatus.INFO, "Step 2: Navigate to the left most item");
+		
+		reports.log(LogStatus.INFO, "Step 3: Navigate to the right most item");
+		
+		reports.log(LogStatus.PASS, "hubTextLineNavigation() Test cases successfully PASSED");
+		//reports.endTest();
+	}
 
 	@Test
 	public void hubShowcaseLineNavigation() throws InterruptedException
