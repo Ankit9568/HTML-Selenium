@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+
+    
+
+<test name="Login test">
+    <classes>
+        <class name="com.rsystems.test.LoginTest" ></class>  
+    </classes>
+</test>
+
+
+<!-- <test name="Profile test">
+    <classes>
+        <class name="com.rsystems.test.LoginTest" ></class>  
+    </classes>
+</test>
+ -->
+
+
+</suite>
