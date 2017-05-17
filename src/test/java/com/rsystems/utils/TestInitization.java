@@ -10,10 +10,13 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import org.testng.annotations.AfterMethod;
@@ -34,7 +37,8 @@ public class TestInitization {
 	public static String captureFilePath;
 	public static String currentMethodName;
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
-
+	public static WebDriverWait wait = null;
+	
 	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException
@@ -64,6 +68,10 @@ public class TestInitization {
 		driver.manage().window().maximize();
 		driver.navigate().to(PR.getProperty("URL"));
 		System.out.println("Waiting for the page to load");
+		
+		//wait = new WebDriverWait(driver, 30L);
+		//wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+		//System.out.println("Element found :::::::::::: YEPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 		
 		Thread.sleep(20000);
 		//WebDriverWait wait = new WebDriverWait(driver, 30l);
@@ -149,7 +157,7 @@ public class TestInitization {
 	
 	
 	
-	public String getExcelKeyValue(String sheetname, String objectname, String keyname)
+	public static String getExcelKeyValue(String sheetname, String objectname, String keyname)
 	{
 		
 		System.out.println("Inside getExcelKeyValue Function");
@@ -186,7 +194,26 @@ public class TestInitization {
 	
 
 	
-	
+	public static boolean loadHubFocusedDTVShowcase()
+	{
+		driver.navigate().refresh();
+		wait = new WebDriverWait(driver, 30L);
+		
+		try{
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+			return true;
+		}
+		catch(Throwable t)
+		{
+			
+			System.out.println("Element not found:: " + t );
+			return false;
+			
+			
+		}
+		
+					
+	}
 	
 	
 	

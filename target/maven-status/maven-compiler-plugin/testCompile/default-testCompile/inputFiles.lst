@@ -1,10 +1,12 @@
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\pages\StoreFilterLayer.java
+D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\test\moveSettings.java
+D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\test\test.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\utils\DataProviders.java
-D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\config\ObjectRepo.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\utils\TestInitization.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\utils\ErrorCollector.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\utils\TestListenerAdapter.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\pages\Hub.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\utils\Xls_Reader.java
+D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\config\ObjectRepository.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\pages\LibraryFilterLayer.java
 D:\NewSelenium\proximusIPTV\src\test\java\com\rsystems\test\LoginTest.java

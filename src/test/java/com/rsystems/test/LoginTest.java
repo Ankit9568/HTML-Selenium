@@ -5,6 +5,7 @@ package com.rsystems.test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -39,6 +40,7 @@ public class LoginTest extends TestInitization{
 		System.out.println("Hello hubShowcaseLineNavigation");
 		//reports.startTest("Starting the test: hubShowcaseLineNavigation()");
 		//Thread.sleep(1000);
+		Thread.sleep(1000);
 		driver.switchTo().frame("ScreenHolder1");
 		Thread.sleep(1000);
 		
