@@ -11,10 +11,12 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -215,8 +217,36 @@ public class TestInitization {
 					
 	}
 	
+	public static int getCurrentFrameIndex()
+	{
+		int lastFrameIndex;
+		driver.switchTo().defaultContent();
+		lastFrameIndex = driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()-1;
+		System.out.println("Last opened frame index is returned as :: " + lastFrameIndex); 
+		log.info("Last opened frame index is returned as :: " + lastFrameIndex);		
+		
+		return lastFrameIndex;
+			
+	}
 	
+	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys) throws InterruptedException
+	{
 	
+		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes + "  with delay in each key as : " + delaybetweemKeys);
+
+		Actions action = new Actions(driver);
+		
+		
+		for(int noOfTimes=0; noOfTimes<numberoftimes;  noOfTimes++)
+		{
+			action.sendKeys(Keys.valueOf(keyname)).perform();
+			Thread.sleep(delaybetweemKeys);
+			
+			
+		}
+		
+			
+	}
 	
 	
 }

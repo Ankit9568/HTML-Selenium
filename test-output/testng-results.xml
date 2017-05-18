@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="14590" started-at="2017-05-17T13:13:21Z" finished-at="2017-05-17T13:13:36Z">
+  <suite name="Default suite" duration-ms="9454" started-at="2017-05-18T05:16:43Z" finished-at="2017-05-18T05:16:52Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="14590" started-at="2017-05-17T13:13:21Z" finished-at="2017-05-17T13:13:36Z">
+    <test name="Default test" duration-ms="9454" started-at="2017-05-18T05:16:43Z" finished-at="2017-05-18T05:16:52Z">
       <class name="com.rsystems.test.moveSettings">
-        <test-method status="PASS" signature="Setup()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="Setup" is-config="true" duration-ms="24514" started-at="2017-05-17T18:42:57Z" finished-at="2017-05-17T18:43:21Z">
+        <test-method status="PASS" signature="Setup()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="Setup" is-config="true" duration-ms="24487" started-at="2017-05-18T10:46:18Z" finished-at="2017-05-18T10:46:43Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Setup -->
-        <test-method status="PASS" signature="beforeMethodCalled(java.lang.reflect.Method)[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="beforeMethodCalled" is-config="true" duration-ms="27" started-at="2017-05-17T18:43:21Z" finished-at="2017-05-17T18:43:21Z">
+        <test-method status="PASS" signature="beforeMethodCalled(java.lang.reflect.Method)[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="beforeMethodCalled" is-config="true" duration-ms="27" started-at="2017-05-18T10:46:43Z" finished-at="2017-05-18T10:46:43Z">
           <params>
             <param index="0">
               <value>
@@ -22,15 +22,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethodCalled -->
-        <test-method status="PASS" signature="hubSettingNavigation()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="hubSettingNavigation" duration-ms="14526" started-at="2017-05-17T18:43:21Z" finished-at="2017-05-17T18:43:36Z">
+        <test-method status="PASS" signature="hubSettingNavigation()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="hubSettingNavigation" duration-ms="9390" started-at="2017-05-18T10:46:43Z" finished-at="2017-05-18T10:46:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- hubSettingNavigation -->
-        <test-method status="PASS" signature="afterMethodCalled()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="afterMethodCalled" is-config="true" duration-ms="15" started-at="2017-05-17T18:43:36Z" finished-at="2017-05-17T18:43:36Z">
+        <test-method status="PASS" signature="afterMethodCalled()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="afterMethodCalled" is-config="true" duration-ms="15" started-at="2017-05-18T10:46:52Z" finished-at="2017-05-18T10:46:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterMethodCalled -->
-        <test-method status="PASS" signature="suiteEndReached()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="suiteEndReached" is-config="true" duration-ms="842" started-at="2017-05-17T18:43:36Z" finished-at="2017-05-17T18:43:37Z">
+        <test-method status="PASS" signature="suiteEndReached()[pri:0, instance:com.rsystems.test.moveSettings@28eaa59a]" name="suiteEndReached" is-config="true" duration-ms="864" started-at="2017-05-18T10:46:52Z" finished-at="2017-05-18T10:46:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- suiteEndReached -->
