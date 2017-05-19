@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -19,8 +18,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -47,8 +44,6 @@ public class TestInitization {
 	{
 		
 		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\report.html";
-		
-		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -70,30 +65,38 @@ public class TestInitization {
 		driver.manage().window().maximize();
 		driver.navigate().to(PR.getProperty("URL"));
 		System.out.println("Waiting for the page to load");
+		wait = new WebDriverWait(driver, 30L);
+
 		
-		//wait = new WebDriverWait(driver, 30L);
-		//wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
-		//System.out.println("Element found :::::::::::: YEPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-		
-		Thread.sleep(20000);
-		//WebDriverWait wait = new WebDriverWait(driver, 30l);
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@id='menuItem_0']")));
-		//wait.until(ExpectedConditions.visibilityOf(driver.switchTo().frame("ScreenHolder1").findElement(By.xpath("//li[@id='menuItem_0']"))));
-		
-		//driver.manage().timeouts().pageLoadTimeout(10l, TimeUnit.SECONDS);
-		
-		//driver.manage().timeouts().implicitlyWait(10l, TimeUnit.SECONDS);
-		//driver.navigate().refresh();
-		
-		
-		
+		try{
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+			System.out.println("Proximus Logo Loaded");
+			
+			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+			System.out.println("Frame loaded");
+			
+			Thread.sleep(2000);
+			
+			if(driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText().equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl")))
+			{
+				System.out.println("HUB TV text returned is :: " + driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+				System.out.println("HUB is loaded with TV showcase focused");
+				
+			}
+			else{
+				
+				System.out.println("HUB TV text returned is :: " + driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+				System.out.println("This is not equal to Televisie ");
+				
+			}
+				
+		}
+		catch(Throwable t)
+		{
+			System.out.println("HUB is not loaded with TV showcase focused " + t );
+		}
 		
 		log.info("Logger Info:: Going out of Setup Method");
-	
-		
-		
-		
-							
 	}
 	
 	@BeforeMethod
@@ -196,14 +199,29 @@ public class TestInitization {
 	
 
 	
-	public static boolean loadHubFocusedDTVShowcase()
+	public static boolean loadHubFocusedDTVTextLine()
 	{
+		System.out.println("Inside method ::::::::::::::::::::::::::::::::::::::::: loadHubFocusedDTVShowcase");
 		driver.navigate().refresh();
-		wait = new WebDriverWait(driver, 30L);
 		
+
 		try{
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
-			return true;
+			System.out.println("Proximus Logo Loaded");
+			
+			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+			System.out.println("Frame loaded");
+			
+			Thread.sleep(2000);
+			
+			if(driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText().equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl")))
+			{
+				
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+				return true;
+			}
+				
+				
 		}
 		catch(Throwable t)
 		{
@@ -213,6 +231,7 @@ public class TestInitization {
 			
 			
 		}
+		return false;
 		
 					
 	}
@@ -247,6 +266,8 @@ public class TestInitization {
 		
 			
 	}
+	
+	
 	
 	
 }

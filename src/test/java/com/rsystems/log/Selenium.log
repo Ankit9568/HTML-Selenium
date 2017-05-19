@@ -1,0 +1,44 @@
+15:57:22,296 DEBUG org.apache.http.wire<strong>{1}</strong>:86 - http-outgoing-161 << "ABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACIEIABAAAAAAAAIgRgAAAAAAAAgAgBGAAAAAAAACBCAAYAAAAAAACI+AfWO6Zc2ZO3NgAAAABJRU5ErkJggg=="}"
+15:57:22,297 DEBUG org.apache.http.impl.conn.DefaultManagedHttpClientConnection<strong>{1}</strong>:81 - http-outgoing-161: Close connection
+15:57:22,297 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:103 - Connection discarded
+15:57:22,297 DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager<strong>{1}</strong>:320 - Connection released: [id: 161][route: {}->http://localhost:26802][total kept alive: 0; route allocated: 0 of 2000; total allocated: 0 of 2000]
+15:57:22,320 DEBUG org.apache.http.client.protocol.RequestAddCookies<strong>{1}</strong>:122 - CookieSpec selected: default
+15:57:22,320 DEBUG org.apache.http.client.protocol.RequestAuthCache<strong>{1}</strong>:76 - Auth cache not set in the context
+15:57:22,320 DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager<strong>{1}</strong>:249 - Connection request: [route: {}->http://localhost:26802][total kept alive: 0; route allocated: 0 of 2000; total allocated: 0 of 2000]
+15:57:22,321 DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager<strong>{1}</strong>:282 - Connection leased: [id: 162][route: {}->http://localhost:26802][total kept alive: 0; route allocated: 1 of 2000; total allocated: 1 of 2000]
+15:57:22,321 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:234 - Opening connection {}->http://localhost:26802
+15:57:22,321 DEBUG org.apache.http.impl.conn.DefaultHttpClientConnectionOperator<strong>{1}</strong>:131 - Connecting to localhost/127.0.0.1:26802
+15:57:22,321 DEBUG org.apache.http.impl.conn.DefaultHttpClientConnectionOperator<strong>{1}</strong>:138 - Connection established 127.0.0.1:59859<->127.0.0.1:26802
+15:57:22,321 DEBUG org.apache.http.impl.conn.DefaultManagedHttpClientConnection<strong>{1}</strong>:90 - http-outgoing-162: set socket timeout to 10800000
+15:57:22,321 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:255 - Executing request POST /session/69a727fa2529de2e00d4468071ad9ec4/keys HTTP/1.1
+15:57:22,321 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:260 - Target auth state: UNCHALLENGED
+15:57:22,321 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:266 - Proxy auth state: UNCHALLENGED
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:135 - http-outgoing-162 >> POST /session/69a727fa2529de2e00d4468071ad9ec4/keys HTTP/1.1
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> Content-Type: application/json; charset=utf-8
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> Content-Length: 17
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> Host: localhost:26802
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> Connection: Keep-Alive
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> User-Agent: Apache-HttpClient/4.5.1 (Java/1.8.0_131)
+15:57:22,322 DEBUG org.apache.http.headers<strong>{1}</strong>:138 - http-outgoing-162 >> Accept-Encoding: gzip,deflate
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "POST /session/69a727fa2529de2e00d4468071ad9ec4/keys HTTP/1.1[\r][\n]"
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "Content-Type: application/json; charset=utf-8[\r][\n]"
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "Content-Length: 17[\r][\n]"
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "Host: localhost:26802[\r][\n]"
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "Connection: Keep-Alive[\r][\n]"
+15:57:22,322 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "User-Agent: Apache-HttpClient/4.5.1 (Java/1.8.0_131)[\r][\n]"
+15:57:22,323 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+15:57:22,323 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 >> "[\r][\n]"
+15:57:22,323 DEBUG org.apache.http.wire<strong>{1}</strong>:86 - http-outgoing-162 >> "{"value":["[0xee][0x80][0x94]"]}"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 << "HTTP/1.1 200 OK[\r][\n]"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 << "Content-Length:72[\r][\n]"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 << "Content-Type:application/json; charset=utf-8[\r][\n]"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 << "Connection:close[\r][\n]"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:72 - http-outgoing-162 << "[\r][\n]"
+15:57:22,332 DEBUG org.apache.http.wire<strong>{1}</strong>:86 - http-outgoing-162 << "{"sessionId":"69a727fa2529de2e00d4468071ad9ec4","status":0,"value":null}"
+15:57:22,333 DEBUG org.apache.http.headers<strong>{1}</strong>:124 - http-outgoing-162 << HTTP/1.1 200 OK
+15:57:22,333 DEBUG org.apache.http.headers<strong>{1}</strong>:127 - http-outgoing-162 << Content-Length:72
+15:57:22,333 DEBUG org.apache.http.headers<strong>{1}</strong>:127 - http-outgoing-162 << Content-Type:application/json; charset=utf-8
+15:57:22,333 DEBUG org.apache.http.headers<strong>{1}</strong>:127 - http-outgoing-162 << Connection:close
+15:57:22,333 DEBUG org.apache.http.impl.conn.DefaultManagedHttpClientConnection<strong>{1}</strong>:81 - http-outgoing-162: Close connection
+15:57:22,333 DEBUG org.apache.http.impl.execchain.MainClientExec<strong>{1}</strong>:103 - Connection discarded
+15:57:22,333 DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager<strong>{1}</strong>:320 - Connection released: [id: 162][route: {}->http://localhost:26802][total kept alive: 0; route allocated: 0 of 2000; total allocated: 0 of 2000]

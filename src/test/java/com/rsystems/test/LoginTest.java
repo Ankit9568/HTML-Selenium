@@ -1,49 +1,57 @@
 package com.rsystems.test;
-
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
-
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.utils.TestInitization;
 
 public class LoginTest extends TestInitization{
 	
 	
-	@Test
+	@Test(priority=1)
 	public void hubTextLineNavigation()
 	{
+		
 		log.info("Logger Info:: Inside Test hubTextLineNavigation() method");
-		System.out.println("Hello hubTextLineNavigation");
-		//reports.startTest("Starting the test: hubTextLineNavigation()");
-		reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB Text Line");
 		
-		reports.log(LogStatus.INFO, "Step 2: Navigate to the left most item");
+		if(TestInitization.loadHubFocusedDTVTextLine())
+		{
+			System.out.println("Hello hubTextLineNavigation");
+			//reports.startTest("Starting the test: hubTextLineNavigation()");
+			reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB Text Line");
+			
+			reports.log(LogStatus.INFO, "Step 2: Navigate to the left most item");
+			
+			reports.log(LogStatus.INFO, "Step 3: Navigate to the right most item");
+			
+			reports.log(LogStatus.PASS, "hubTextLineNavigation() Test cases successfully PASSED");
+			//reports.endTest();	
+			
+		}
 		
-		reports.log(LogStatus.INFO, "Step 3: Navigate to the right most item");
+		else
+		{
+			throw new SkipException("Skipping the test as Hub is not loaded");
+			
+		}
 		
-		reports.log(LogStatus.PASS, "hubTextLineNavigation() Test cases successfully PASSED");
-		//reports.endTest();
 	}
 	
 	
 	
-
-	@Test
+	@Test(priority=2)
 	public void hubShowcaseLineNavigation() throws InterruptedException
 	{
 		log.info("Logger Info:: Inside Test hubShowcaseLineNavigation() method");
 		System.out.println("Hello hubShowcaseLineNavigation");
 		//reports.startTest("Starting the test: hubShowcaseLineNavigation()");
 		//Thread.sleep(1000);
-		Thread.sleep(1000);
+		/*Thread.sleep(1000);
 		driver.switchTo().frame("ScreenHolder1");
 		Thread.sleep(1000);
-		
+		*/
 		reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB DTV Showcase Item Focused");
 		System.out.println("Default Unfocused elements location on HUB text line is:");
 		System.out.println("Its Location is ::::::: X: " + driver.findElement(By.xpath("//li[@id='menuItem_0']")).getLocation().getX() + "------ Y:  " +driver.findElement(By.xpath("//li[@id='menuItem_0']")).getLocation().getY());

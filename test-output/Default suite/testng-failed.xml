@@ -3,15 +3,16 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.rsystems.test.moveSettings">
+      <class name="com.rsystems.test.LoginTest">
         <methods>
+          <include name="hubShowcaseLineNavigation"/>
           <include name="afterMethodCalled"/>
           <include name="suiteEndReached"/>
-          <include name="hubSettingNavigation"/>
           <include name="Setup"/>
           <include name="beforeMethodCalled"/>
+          <include name="hubTextLineNavigation"/>
         </methods>
-      </class> <!-- com.rsystems.test.moveSettings -->
+      </class> <!-- com.rsystems.test.LoginTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

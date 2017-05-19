@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +38,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-Rsystems_HTML_Testing">
-              <span class="suite-name border-passed">Rsystems HTML Testing</span>
+              <span class="suite-name border-failed">Rsystems HTML Testing</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -91,7 +91,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods,   2 passed</span>
+                    <span class="method-stats">2 methods, 1 failed,   1 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-Rsystems_HTML_Testing" class="hide-methods failed suite-Rsystems_HTML_Testing"> (hide)</a> <!-- hide-methods failed suite-Rsystems_HTML_Testing -->
+                      <a href="#" panel-name="suite-Rsystems_HTML_Testing" class="show-methods failed suite-Rsystems_HTML_Testing"> (show)</a> <!-- show-methods failed suite-Rsystems_HTML_Testing -->
+                    </span>
+                    <div class="method-list-content failed suite-Rsystems_HTML_Testing">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Rsystems_HTML_Testing" title="com.rsystems.test.LoginTest" hash-for-method="hubShowcaseLineNavigation">hubShowcaseLineNavigation</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-Rsystems_HTML_Testing -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -100,11 +114,6 @@
                       <a href="#" panel-name="suite-Rsystems_HTML_Testing" class="show-methods passed suite-Rsystems_HTML_Testing"> (show)</a> <!-- show-methods passed suite-Rsystems_HTML_Testing -->
                     </span>
                     <div class="method-list-content passed suite-Rsystems_HTML_Testing">
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Rsystems_HTML_Testing" title="com.rsystems.test.LoginTest" hash-for-method="hubShowcaseLineNavigation">hubShowcaseLineNavigation</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Rsystems_HTML_Testing" title="com.rsystems.test.LoginTest" hash-for-method="hubTextLineNavigation">hubTextLineNavigation</a> <!-- method navigator-link -->
@@ -122,9 +131,9 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-Rsystems_HTML_Testing" class="panel Rsystems_HTML_Testing">
-          <div class="suite-Rsystems_HTML_Testing-class-passed">
+          <div class="suite-Rsystems_HTML_Testing-class-failed">
             <div class="main-panel-header rounded-window-top">
-              <img src="passed.png"/>
+              <img src="failed.png"/>
               <span class="class-name">com.rsystems.test.LoginTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
@@ -133,8 +142,20 @@
                   <a name="hubShowcaseLineNavigation">
                   </a> <!-- hubShowcaseLineNavigation -->
                   <span class="method-name">hubShowcaseLineNavigation</span>
+                  <div class="stack-trace">java.lang.NullPointerException
+	at com.rsystems.test.LoginTest.hubShowcaseLineNavigation(LoginTest.java:132)
+... Removed 28 stack frames
+</div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Rsystems_HTML_Testing-class-failed -->
+          <div class="suite-Rsystems_HTML_Testing-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.rsystems.test.LoginTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
                   <a name="hubTextLineNavigation">
@@ -200,16 +221,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'hubShowcaseLineNavigation')
 data.setCell(0, 2, 'com.rsystems.test.LoginTest')
-data.setCell(0, 3, 13825);
+data.setCell(0, 3, 5115);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'hubTextLineNavigation')
 data.setCell(1, 2, 'com.rsystems.test.LoginTest')
-data.setCell(1, 3, 61);
+data.setCell(1, 3, 82);
 window.suiteTableData['Rsystems_HTML_Testing']= { tableData: data, tableDiv: 'times-div-Rsystems_HTML_Testing'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 13 seconds</span>
+              <span class="suite-total-time">Total running time: 5 seconds</span>
               <div id="times-div-Rsystems_HTML_Testing">
               </div> <!-- times-div-Rsystems_HTML_Testing -->
             </div> <!-- times-div -->
@@ -242,31 +263,33 @@ return data;
               </div> <!-- configuration-suite before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeMethodCalled(public void com.rsystems.test.LoginTest.hubShowcaseLineNavigation() throws java.lang.InterruptedExce...)</span>
-                <span class="method-start">24376 ms</span>
+                <span class="method-start">24411 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
+                <img src="failed.png">
+                </img>
                 <span class="method-name">hubShowcaseLineNavigation</span>
-                <span class="method-start">24406 ms</span>
+                <span class="method-start">24443 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">afterMethodCalled</span>
-                <span class="method-start">38232 ms</span>
+                <span class="method-start">29568 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-method before">
                 <span class="method-name">beforeMethodCalled(public void com.rsystems.test.LoginTest.hubTextLineNavigation())</span>
-                <span class="method-start">38264 ms</span>
+                <span class="method-start">29589 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <span class="method-name">hubTextLineNavigation</span>
-                <span class="method-start">38280 ms</span>
+                <span class="method-start">29613 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">afterMethodCalled</span>
-                <span class="method-start">38342 ms</span>
+                <span class="method-start">29696 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-suite after">
                 <span class="method-name">suiteEndReached</span>
-                <span class="method-start">38377 ms</span>
+                <span class="method-start">29736 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
