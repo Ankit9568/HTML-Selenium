@@ -10,7 +10,6 @@
           <include name="suiteEndReached"/>
           <include name="Setup"/>
           <include name="beforeMethodCalled"/>
-          <include name="hubTextLineNavigation"/>
         </methods>
       </class> <!-- com.rsystems.test.LoginTest -->
     </classes>

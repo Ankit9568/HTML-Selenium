@@ -127,3 +127,86 @@
 19/05/2017 15:57:03 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
 19/05/2017 15:57:17 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
 19/05/2017 15:57:17 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:20:09 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:20:27 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:20:27 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:20:27 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:20:43 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:20:43 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:20:43 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:20:55 nitinLogger Logger Info:: Inside suiteEndReached Method
+19/05/2017 16:22:55 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:23:13 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:23:13 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:23:13 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:23:29 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:23:29 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:23:29 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:23:41 nitinLogger Logger Info:: Inside suiteEndReached Method
+19/05/2017 16:26:39 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:26:57 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:26:57 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:26:57 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:27:14 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:27:14 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:27:14 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:27:26 nitinLogger Logger Info:: Inside suiteEndReached Method
+19/05/2017 16:33:58 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:34:16 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:34:16 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:34:16 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:34:32 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:34 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:36 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:38 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:40 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:42 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:34:44 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:34:46 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:34:46 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:34:46 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:34:46 nitinLogger Logger Info:: Inside suiteEndReached Method
+19/05/2017 16:36:01 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:36:19 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:36:19 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:36:19 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:36:35 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:36:37 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:36:39 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:36:41 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:36:43 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:36:45 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:36:47 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:36:49 nitinLogger Last opened frame index is returned as :: 2
+19/05/2017 16:36:49 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:36:49 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:36:49 nitinLogger Logger Info:: Inside suiteEndReached Method
+19/05/2017 16:39:00 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:39:18 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:39:18 nitinLogger Testcase name is :::::: hubTextLineNavigation
+19/05/2017 16:39:18 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:39:34 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:39:36 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:39:38 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:39:40 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:39:42 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:39:44 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:39:46 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:39:48 nitinLogger Last opened frame index is returned as :: 2
+19/05/2017 16:39:48 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:40:02 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:47:20 nitinLogger Logger Info:: Inside Setup Method
+19/05/2017 16:47:38 nitinLogger Logger Info:: Going out of Setup Method
+19/05/2017 16:47:38 nitinLogger Testcase name is :::::: navigationTillSystemScreen
+19/05/2017 16:47:38 nitinLogger Logger Info:: Inside Test hubTextLineNavigation() method
+19/05/2017 16:47:55 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:47:57 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:48:00 nitinLogger Last opened frame index is returned as :: 0
+19/05/2017 16:48:02 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:48:04 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:48:06 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:48:09 nitinLogger Last opened frame index is returned as :: 1
+19/05/2017 16:48:11 nitinLogger Last opened frame index is returned as :: 2
+19/05/2017 16:48:11 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
+19/05/2017 16:48:26 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
+19/05/2017 16:48:38 nitinLogger Logger Info:: Inside suiteEndReached Method

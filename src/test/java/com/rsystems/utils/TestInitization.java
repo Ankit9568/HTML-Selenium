@@ -18,6 +18,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -37,6 +38,7 @@ public class TestInitization {
 	public static String currentMethodName;
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
+	private static String currentScreenTitle;
 	
 	
 	@BeforeSuite
@@ -267,6 +269,53 @@ public class TestInitization {
 			
 	}
 	
+	
+	public static void sendKeySequence(String commaSeparatedKeySequence, int timeOutMiliSec, String screenTitle) throws InterruptedException
+    {
+          
+          String myname = commaSeparatedKeySequence;
+          String expectedScreenTitle = screenTitle;
+          String screenTitleAfterNavigation = null ;
+          
+          System.out.println("Inside keySequence method");
+          String[] splitedKeys = myname.split("\\s*,\\s*");
+          
+          
+          Actions action = new Actions(driver);
+          
+          System.out.println("Size of Keys list is : " + splitedKeys.length);
+          for(int i=0; i<splitedKeys.length;i++)
+          {
+                
+             System.out.println("Key value passed is : " + splitedKeys[i]);
+             action.sendKeys(Keys.valueOf(splitedKeys[i])).perform();
+             Thread.sleep(timeOutMiliSec);
+             reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+                
+             driver.switchTo().frame(getCurrentFrameIndex());
+           // screenTitleAfterNavigation = driver.findElement(By.xpath("//p[@id='headerTitle']")).getText(); 
+          //  System.out.println("Current Screen Title is :: " + currentScreenTitle);
+             
+                }
+          driver.switchTo().defaultContent();
+    	  screenTitleAfterNavigation = driver.findElement(By.xpath("//p[@id='headerTitle']")).getText(); 
+    	 
+          
+              if(expectedScreenTitle.equalsIgnoreCase(screenTitleAfterNavigation))
+              {
+            	   System.out.println("Correctly reached at the desired screen");
+            	  
+              }
+              else
+              {
+            	  System.out.println("Not reached at the desired screen");
+            	  throw new SkipException("Not reached at the desired screen");
+              }
+          
+          
+          }
+    
+
 	
 	
 	

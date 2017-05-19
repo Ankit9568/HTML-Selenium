@@ -11,23 +11,31 @@ public class LoginTest extends TestInitization{
 	
 	
 	@Test(priority=1)
-	public void hubTextLineNavigation()
+	public void navigationTillSystemScreen() throws InterruptedException
 	{
 		
 		log.info("Logger Info:: Inside Test hubTextLineNavigation() method");
 		
+		reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB Text Line");
 		if(TestInitization.loadHubFocusedDTVTextLine())
 		{
-			System.out.println("Hello hubTextLineNavigation");
-			//reports.startTest("Starting the test: hubTextLineNavigation()");
-			reports.log(LogStatus.INFO, "Step 1: Start with the focus on HUB Text Line");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			
-			reports.log(LogStatus.INFO, "Step 2: Navigate to the left most item");
 			
-			reports.log(LogStatus.INFO, "Step 3: Navigate to the right most item");
+			
+			reports.log(LogStatus.INFO, "Step 2: Navigate to the Settings Screen");
+			TestInitization.sendKeySequence("RIGHT,RIGHT,RIGHT,ENTER", 2000, "instellingen");
+			
+			
+			reports.log(LogStatus.INFO, "Step 3: Navigate to the System Screen");
+			TestInitization.sendKeySequence("DOWN,DOWN,DOWN,ENTER", 2000, "instellingen");
+			
 			
 			reports.log(LogStatus.PASS, "hubTextLineNavigation() Test cases successfully PASSED");
 			//reports.endTest();	
+			
+			
+			
 			
 		}
 		
@@ -44,6 +52,13 @@ public class LoginTest extends TestInitization{
 	@Test(priority=2)
 	public void hubShowcaseLineNavigation() throws InterruptedException
 	{
+		
+		if(TestInitization.loadHubFocusedDTVTextLine())
+		{
+			
+			
+			
+		
 		log.info("Logger Info:: Inside Test hubShowcaseLineNavigation() method");
 		System.out.println("Hello hubShowcaseLineNavigation");
 		//reports.startTest("Starting the test: hubShowcaseLineNavigation()");
@@ -208,6 +223,12 @@ public class LoginTest extends TestInitization{
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		Thread.sleep(2000);
 		//reports.endTest();
-	}
+		}
+		else
+		{
+			System.out.println("Hub is not loaded");
+		}
+		
+		}
 
 }
