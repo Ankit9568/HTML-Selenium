@@ -168,7 +168,7 @@ public class TestInitization {
 	public static String getExcelKeyValue(String sheetname, String objectname, String keyname)
 	{
 		
-		System.out.println("Inside getExcelKeyValue Function");
+		//System.out.println("Inside getExcelKeyValue Function");
 		
 		String sheetName = sheetname;
 		String objectName = objectname;
@@ -183,7 +183,7 @@ public class TestInitization {
 			if(excel.getCellData(sheetName, "objectID", rowNum).equalsIgnoreCase(objectName))
 			{
 		
-				System.out.println("Going out of getExcelKeyValue Function with valid value");
+				//System.out.println("Going out of getExcelKeyValue Function with valid value");
 				return excel.getCellData(sheetName, keyName, rowNum);
 				
 				
@@ -262,7 +262,7 @@ public class TestInitization {
 			if(driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText().equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl")))
 			{
 				
-				sendKeyMultipleTimes("DOWN", 1, 1000);
+				System.out.println("Focus is on HUB TV showcase");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				return true;
 			}

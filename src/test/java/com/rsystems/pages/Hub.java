@@ -43,8 +43,8 @@ public class Hub extends TestInitization {
 		 * This function will check the different elements present on the screen including their translation, font-size, position etc.
 		 * Created by Nitin Kaushik
 		 */
-		log.info("Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items");
-		System.out.println("Inside hubMenuItemsTranslationCheck method");
+		log.info("Inside hubMenuItems method ::: It will return the list of elements containing Menu Items");
+		System.out.println("Inside hubMenuItems method");
 		return driver.findElements(By.xpath("//li[contains(@id,'menuItem')]"));
 		
 		

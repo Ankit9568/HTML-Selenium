@@ -1,9 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Rsystems HTML Testing">
 
-<!--  <listeners>
-    <listener class-name="ErrorCollectors.TestListenerAdapter" />
-</listeners> -->
+
 
 <!-- <test name="Login test">
     <classes>

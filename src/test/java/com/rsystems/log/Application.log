@@ -270,3 +270,30 @@
 22/05/2017 14:29:37 nitinLogger Testcase name is :::::: testHubTranslationCheck
 22/05/2017 14:29:52 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
 22/05/2017 14:29:53 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 18:02:34 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 18:02:52 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 18:02:52 nitinLogger Testcase name is :::::: testHubMenuFontsNonFocused
+22/05/2017 18:03:05 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:03:07 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 18:15:45 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 18:16:03 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 18:16:03 nitinLogger Testcase name is :::::: testHubMenuFontsNonFocused
+22/05/2017 18:16:17 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:16:17 nitinLogger Fonts size is mijn bibliotheek36px
+22/05/2017 18:16:19 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 18:23:36 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 18:23:54 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 18:23:54 nitinLogger Testcase name is :::::: testHubMenuFontsNonFocused
+22/05/2017 18:24:08 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:24:08 nitinLogger Fonts size is mijn bibliotheek36px
+22/05/2017 18:24:10 nitinLogger Testcase name is :::::: testHubMenuTitles
+22/05/2017 18:24:24 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:24:25 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 18:26:53 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 18:27:11 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 18:27:11 nitinLogger Testcase name is :::::: testHubMenuFontsNonFocused
+22/05/2017 18:27:24 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:27:24 nitinLogger Fonts size is mijn bibliotheek36px
+22/05/2017 18:27:26 nitinLogger Testcase name is :::::: testHubMenuTitles
+22/05/2017 18:27:40 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+22/05/2017 18:27:42 nitinLogger Logger Info:: Inside suiteEndReached Method

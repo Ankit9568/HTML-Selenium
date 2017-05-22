@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="16011" started-at="2017-05-22T08:59:37Z" finished-at="2017-05-22T08:59:53Z">
+  <suite name="Default suite" duration-ms="30984" started-at="2017-05-22T12:57:11Z" finished-at="2017-05-22T12:57:42Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="16011" started-at="2017-05-22T08:59:37Z" finished-at="2017-05-22T08:59:53Z">
+    <test name="Default test" duration-ms="30984" started-at="2017-05-22T12:57:11Z" finished-at="2017-05-22T12:57:42Z">
       <class name="com.rsystems.test.HubTestCases">
-        <test-method status="PASS" signature="Setup()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="Setup" is-config="true" duration-ms="18117" started-at="2017-05-22T14:29:19Z" finished-at="2017-05-22T14:29:37Z">
+        <test-method status="PASS" signature="Setup()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="Setup" is-config="true" duration-ms="18142" started-at="2017-05-22T18:26:53Z" finished-at="2017-05-22T18:27:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Setup -->
-        <test-method status="PASS" signature="beforeMethodCalled(java.lang.reflect.Method)[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="beforeMethodCalled" is-config="true" duration-ms="18" started-at="2017-05-22T14:29:37Z" finished-at="2017-05-22T14:29:37Z">
+        <test-method status="PASS" signature="beforeMethodCalled(java.lang.reflect.Method)[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="beforeMethodCalled" is-config="true" duration-ms="17" started-at="2017-05-22T18:27:11Z" finished-at="2017-05-22T18:27:11Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void com.rsystems.test.HubTestCases.testHubTranslationCheck()]]>
+                <![CDATA[public void com.rsystems.test.HubTestCases.testHubMenuFontsNonFocused()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethodCalled -->
-        <test-method status="PASS" signature="testHubTranslationCheck()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="testHubTranslationCheck" duration-ms="15963" started-at="2017-05-22T14:29:37Z" finished-at="2017-05-22T14:29:53Z">
+        <test-method status="PASS" signature="testHubMenuFontsNonFocused()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="testHubMenuFontsNonFocused" duration-ms="15165" started-at="2017-05-22T18:27:11Z" finished-at="2017-05-22T18:27:26Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testHubTranslationCheck -->
-        <test-method status="PASS" signature="afterMethodCalled()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="afterMethodCalled" is-config="true" duration-ms="19" started-at="2017-05-22T14:29:53Z" finished-at="2017-05-22T14:29:53Z">
+        </test-method> <!-- testHubMenuFontsNonFocused -->
+        <test-method status="PASS" signature="afterMethodCalled()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="afterMethodCalled" is-config="true" duration-ms="15" started-at="2017-05-22T18:27:26Z" finished-at="2017-05-22T18:27:26Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterMethodCalled -->
-        <test-method status="PASS" signature="suiteEndReached()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="suiteEndReached" is-config="true" duration-ms="831" started-at="2017-05-22T14:29:53Z" finished-at="2017-05-22T14:29:54Z">
+        <test-method status="PASS" signature="beforeMethodCalled(java.lang.reflect.Method)[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="beforeMethodCalled" is-config="true" duration-ms="16" started-at="2017-05-22T18:27:26Z" finished-at="2017-05-22T18:27:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.rsystems.test.HubTestCases.testHubMenuTitles()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethodCalled -->
+        <test-method status="PASS" signature="testHubMenuTitles()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="testHubMenuTitles" duration-ms="15743" started-at="2017-05-22T18:27:26Z" finished-at="2017-05-22T18:27:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testHubMenuTitles -->
+        <test-method status="PASS" signature="afterMethodCalled()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="afterMethodCalled" is-config="true" duration-ms="15" started-at="2017-05-22T18:27:42Z" finished-at="2017-05-22T18:27:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethodCalled -->
+        <test-method status="PASS" signature="suiteEndReached()[pri:0, instance:com.rsystems.test.HubTestCases@49438269]" name="suiteEndReached" is-config="true" duration-ms="806" started-at="2017-05-22T18:27:42Z" finished-at="2017-05-22T18:27:43Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- suiteEndReached -->
