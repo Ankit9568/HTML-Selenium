@@ -210,3 +210,63 @@
 19/05/2017 16:48:11 nitinLogger Testcase name is :::::: hubShowcaseLineNavigation
 19/05/2017 16:48:26 nitinLogger Logger Info:: Inside Test hubShowcaseLineNavigation() method
 19/05/2017 16:48:38 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 12:51:40 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 12:52:18 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 12:52:18 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 12:52:23 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:33:22 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:33:40 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:33:40 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:33:54 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:33:55 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:35:38 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:35:56 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:35:56 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:36:11 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:36:13 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:39:18 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:39:36 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:39:36 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:39:51 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:39:52 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:47:35 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:47:53 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:47:53 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:48:08 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:48:10 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:54:13 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:54:31 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:54:31 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:54:46 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:54:48 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 13:57:51 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 13:58:09 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 13:58:09 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 13:58:23 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 13:58:25 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 14:01:05 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:01:23 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 14:01:23 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 14:01:38 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 14:01:40 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 14:04:32 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:04:50 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 14:04:50 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 14:05:05 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 14:05:06 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 14:09:50 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:10:08 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 14:10:08 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 14:10:22 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 14:10:24 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 14:22:18 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:26:28 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:26:46 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 14:26:46 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 14:27:00 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 14:27:02 nitinLogger Logger Info:: Inside suiteEndReached Method
+22/05/2017 14:29:19 nitinLogger Logger Info:: Inside Setup Method
+22/05/2017 14:29:37 nitinLogger Logger Info:: Going out of Setup Method
+22/05/2017 14:29:37 nitinLogger Testcase name is :::::: testHubTranslationCheck
+22/05/2017 14:29:52 nitinLogger Inside hubMenuItemsTranslationCheck method ::: It will return the list of elements containing Menu Items
+22/05/2017 14:29:53 nitinLogger Logger Info:: Inside suiteEndReached Method

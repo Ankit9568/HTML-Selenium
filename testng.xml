@@ -1,22 +1,22 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Rsystems HTML Testing">
 
+<!--  <listeners>
+    <listener class-name="ErrorCollectors.TestListenerAdapter" />
+</listeners> -->
 
-    
-
-<test name="Login test">
+<!-- <test name="Login test">
     <classes>
         <class name="com.rsystems.test.LoginTest" ></class>  
     </classes>
-</test>
+</test> -->
 
 
-<!-- <test name="Profile test">
+<test name="Hub test">
     <classes>
-        <class name="com.rsystems.test.LoginTest" ></class>  
+        <class name="com.rsystems.test.HubTestCases" ></class>  
     </classes>
 </test>
- -->
 
 
 </suite>

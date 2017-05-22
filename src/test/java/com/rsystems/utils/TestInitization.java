@@ -41,6 +41,7 @@ public class TestInitization {
 	private static String currentScreenTitle;
 	
 	
+	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException
 	{
@@ -220,6 +221,7 @@ public class TestInitization {
 			{
 				
 				sendKeyMultipleTimes("DOWN", 1, 1000);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				return true;
 			}
 				
@@ -229,14 +231,63 @@ public class TestInitization {
 		{
 			
 			System.out.println("Element not found:: " + t );
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			return false;
 			
 			
 		}
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		return false;
 		
 					
 	}
+	
+	
+	
+	public static boolean loadHubFocusedDTVShowcase()
+	{
+		System.out.println("Inside method ::::::::::::::::::::::::::::::::::::::::: loadHubFocusedDTVShowcase");
+		driver.navigate().refresh();
+		
+
+		try{
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+			System.out.println("Proximus Logo Loaded");
+			
+			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+			System.out.println("Frame loaded");
+			
+			Thread.sleep(2000);
+			
+			if(driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText().equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl")))
+			{
+				
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				return true;
+			}
+				
+				
+		}
+		catch(Throwable t)
+		{
+			
+			System.out.println("Element not found:: " + t );
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			return false;
+			
+			
+		}
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		return false;
+		
+					
+	}
+	
+	
+	
+	
+	
 	
 	public static int getCurrentFrameIndex()
 	{
