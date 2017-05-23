@@ -1,5 +1,8 @@
 package com.rsystems.utils;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -98,6 +101,7 @@ public class TestInitization {
 		catch(Throwable t)
 		{
 			System.out.println("HUB is not loaded with TV showcase focused " + t );
+			
 		}
 		
 		log.info("Logger Info:: Going out of Setup Method");
@@ -244,6 +248,9 @@ public class TestInitization {
 	}
 	
 	
+		
+	
+	
 	
 	public static boolean loadHubFocusedDTVShowcase()
 	{
@@ -370,7 +377,8 @@ public class TestInitization {
           
           
           }
-    
+
+
 
 	
 	

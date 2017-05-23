@@ -15,22 +15,22 @@ public class HubTestCases extends TestInitization{
 
 	Hub hubScreen = null;
 	
-	@Test
+	@Test(priority=2)
 	public void testHubTextLineRightNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		int MenuItemsMismatched = 0;
 		
-		reports.log(LogStatus.INFO, "Load the Hub with DTV text line focused.");
-		TestInitization.loadHubFocusedDTVTextLine();
-		
+		reports.log(LogStatus.PASS, "Move the focus on DTV Text Line Item.");
+		//TestInitization.loadHubFocusedDTVTextLine();
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
 
-		reports.log(LogStatus.INFO, "Move to the left most item in HUB");
+		reports.log(LogStatus.PASS, "Move to the left most item in HUB");
 		TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		
 		
 		
 		for(int i=0; i<hubMenuItems.size(); i++)
@@ -52,7 +52,7 @@ public class HubTestCases extends TestInitization{
 					
 					Assert.assertEquals(ObjectRepository.HubMenuItemsNLFocused[i], hubMenuItems.get(i).getText());
 					System.out.println("Menu Item is Focused :: " + hubMenuItems.get(i).getText());
-					reports.log(LogStatus.INFO, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
+					reports.log(LogStatus.PASS, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 
@@ -62,7 +62,7 @@ public class HubTestCases extends TestInitization{
 				{
 					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNLFocused[i]));
 					System.out.println("Menu Item is Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
-					reports.log(LogStatus.INFO, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
+					reports.log(LogStatus.PASS, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 
@@ -72,7 +72,7 @@ public class HubTestCases extends TestInitization{
 				{
 					MenuItemsMismatched++;
 					System.out.println("X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
-					reports.log(LogStatus.INFO, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.PASS, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
 					
 				}
 				
@@ -81,7 +81,7 @@ public class HubTestCases extends TestInitization{
 			{
 				MenuItemsMismatched++;
 				System.out.println("Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
-				reports.log(LogStatus.INFO, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.log(LogStatus.PASS, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 
@@ -98,11 +98,14 @@ public class HubTestCases extends TestInitization{
 		if(MenuItemsMismatched==0)
 		{
 			reports.log(LogStatus.PASS,"All Menu Items are correctly Focused in Right Navigation");
-			
+			System.out.println("Move back to DTV Text Line Focused");
+			TestInitization.sendKeyMultipleTimes("LEFT", 3, 1000);
 		}
 		else
 		{
 			reports.log(LogStatus.FAIL, MenuItemsMismatched + "Menu Items are not correctly Focused in Right Navigation");
+			System.out.println("Move back to DTV Text Line Focused");
+			TestInitization.sendKeyMultipleTimes("LEFT", 3, 1000);
 				
 		}
 		
@@ -111,19 +114,20 @@ public class HubTestCases extends TestInitization{
 		
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void testHubTextLineLeftNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		int MenuItemsMismatched = 0;
 		
-		reports.log(LogStatus.INFO, "Load the Hub with DTV text line focused.");
-		TestInitization.loadHubFocusedDTVTextLine();
+		reports.log(LogStatus.PASS, "Load the Hub with DTV text line focused.");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//TestInitization.loadHubFocusedDTVTextLine();
 		
 
 		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
 
-		reports.log(LogStatus.INFO, "Move to the right most item in HUB");
+		reports.log(LogStatus.PASS, "Move to the right most item in HUB");
 		TestInitization.sendKeyMultipleTimes("RIGHT", 3, 1000);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		
@@ -148,7 +152,7 @@ public class HubTestCases extends TestInitization{
 					
 					Assert.assertEquals(ObjectRepository.HubMenuItemsNLFocused[i], hubMenuItems.get(i).getText());
 					System.out.println("Menu Item is Focused :: " + hubMenuItems.get(i).getText());
-					reports.log(LogStatus.INFO, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
+					reports.log(LogStatus.PASS, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
 
@@ -158,7 +162,7 @@ public class HubTestCases extends TestInitization{
 				{
 					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNLFocused[i]));
 					System.out.println("Menu Item is Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
-					reports.log(LogStatus.INFO, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
+					reports.log(LogStatus.PASS, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
 
@@ -168,7 +172,7 @@ public class HubTestCases extends TestInitization{
 				{
 					MenuItemsMismatched++;
 					System.out.println("X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
-					reports.log(LogStatus.INFO, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.PASS, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
 					
 				}
 				
@@ -177,7 +181,7 @@ public class HubTestCases extends TestInitization{
 			{
 				MenuItemsMismatched++;
 				System.out.println("Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
-				reports.log(LogStatus.INFO, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.log(LogStatus.PASS, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
 
@@ -194,11 +198,15 @@ public class HubTestCases extends TestInitization{
 		if(MenuItemsMismatched==0)
 		{
 			reports.log(LogStatus.PASS,"All Menu Items are correctly Focused in Right Navigation");
+			System.out.println("Move back to DTV Text Line Focused");
+			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 			
 		}
 		else
 		{
 			reports.log(LogStatus.FAIL, MenuItemsMismatched + "Menu Items are not correctly Focused in Right Navigation");
+			System.out.println("Move back to DTV Text Line Focused");
+			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 				
 		}
 		
@@ -211,15 +219,19 @@ public class HubTestCases extends TestInitization{
 	
 	
 	
-	@Test
-	public void testHubMenuTitles()
+	@Test(priority=4)
+	public void testHubMenuTitles() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		
 		int MenuItemsMismatched = 0;
 		
-		reports.log(LogStatus.INFO, "Load the Hub with DTV text line focused.");
-		TestInitization.loadHubFocusedDTVTextLine();
+		reports.log(LogStatus.PASS, "Start the Hub with DTV text line focused.");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		
+		
+		//TestInitization.loadHubFocusedDTVTextLine();
+		
 		
 		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
 		
@@ -235,7 +247,7 @@ public class HubTestCases extends TestInitization{
 					
 					Assert.assertEquals(ObjectRepository.HubMenuItemsNL[i], hubMenuItems.get(i).getText());
 					System.out.println("Menu Item is OK :: " + hubMenuItems.get(i).getText());
-					reports.log(LogStatus.INFO, "Translation of Menu Item is OK :: " + hubMenuItems.get(i).getText());
+					reports.log(LogStatus.PASS, "Translation of Menu Item is OK :: " + hubMenuItems.get(i).getText());
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					
 				}
@@ -243,7 +255,7 @@ public class HubTestCases extends TestInitization{
 				{
 					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNL[i]));
 					System.out.println("Menu Item is OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-					reports.log(LogStatus.INFO, "Icon Image of Menu Item is OK :: " + ObjectRepository.HubMenuItemsNL[i]);
+					reports.log(LogStatus.PASS, "Icon Image of Menu Item is OK :: " + ObjectRepository.HubMenuItemsNL[i]);
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				}
 			
@@ -252,7 +264,7 @@ public class HubTestCases extends TestInitization{
 			{
 				MenuItemsMismatched++;
 				System.out.println("Menu Item is Not OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-				reports.log(LogStatus.INFO, "Menu Item is Not OK :: " + ObjectRepository.HubMenuItemsNL[i]);
+				reports.log(LogStatus.FAIL, "Menu Item is Not OK :: " + ObjectRepository.HubMenuItemsNL[i]);
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				
 				
@@ -282,15 +294,17 @@ public class HubTestCases extends TestInitization{
 	
 	
 
-	@Test
+	@Test(priority=1)
 	public void testHubMenuFontsNonFocused()
 	{
 		hubScreen = new Hub(driver);
 		
 		int MenuItemsFontMismatched = 0;
 		
-		reports.log(LogStatus.INFO, "Load the Hub with focus on DTV showcase.");
-		TestInitization.loadHubFocusedDTVShowcase();
+		reports.log(LogStatus.PASS, "Load the Hub with focus on DTV showcase.");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+
+		//TestInitization.loadHubFocusedDTVShowcase();
 		
 		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
 		
@@ -308,21 +322,21 @@ public class HubTestCases extends TestInitization{
 						System.out.println("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size"));
 						log.info("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size"));
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "Library", "font-size"), hubMenuItems.get(i).getCssValue("font-size"));
-						reports.log(LogStatus.INFO, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "Library", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
+						reports.log(LogStatus.PASS, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "Library", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						break;
 					
 					case 1: 
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "TV", "font-size"), hubMenuItems.get(i).getCssValue("font-size"));
 						System.out.println("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size"));
-						reports.log(LogStatus.INFO, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "TV", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
+						reports.log(LogStatus.PASS, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "TV", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						break;
 					
 					case 2: 
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "Store", "font-size"), hubMenuItems.get(i).getCssValue("font-size"));
 						System.out.println("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size"));
-						reports.log(LogStatus.INFO, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "Store", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
+						reports.log(LogStatus.PASS, "Font for Menu Item is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Font:: " +  TestInitization.getExcelKeyValue("hub", "Store", "font-size") + "::::Action Font::::"+hubMenuItems.get(i).getCssValue("font-size"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						break;
 						
@@ -330,14 +344,14 @@ public class HubTestCases extends TestInitization{
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "Search", "width"), hubMenuItems.get(i).getCssValue("width"));
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "Search", "height"), hubMenuItems.get(i).getCssValue("height"));
 						System.out.println("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("width") + hubMenuItems.get(i).getCssValue("height"));
-						reports.log(LogStatus.INFO, "Height & Width of Search Icon is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Width & Height:: " +  TestInitization.getExcelKeyValue("hub", "Search", "width") +" , "  +TestInitization.getExcelKeyValue("hub", "Search", "height") + "::::Action Width & Height::::"+hubMenuItems.get(i).getCssValue("width") +" , " + hubMenuItems.get(i).getCssValue("height"));
+						reports.log(LogStatus.PASS, "Height & Width of Search Icon is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Width & Height:: " +  TestInitization.getExcelKeyValue("hub", "Search", "width") +" , "  +TestInitization.getExcelKeyValue("hub", "Search", "height") + "::::Action Width & Height::::"+hubMenuItems.get(i).getCssValue("width") +" , " + hubMenuItems.get(i).getCssValue("height"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						break;
 					
 					case 4: 
 						Assert.assertEquals(TestInitization.getExcelKeyValue("hub", "Settings", "width"), hubMenuItems.get(i).getCssValue("width"));
 						System.out.println("Fonts size is " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("width"));
-						reports.log(LogStatus.INFO, "Height & Width of Settings Icon is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Width & Height:: " +  TestInitization.getExcelKeyValue("hub", "Settings", "width") +" , "  +TestInitization.getExcelKeyValue("hub", "Settings", "height") + "::::Action Width & Height::::"+hubMenuItems.get(i).getCssValue("width") +" , " + hubMenuItems.get(i).getCssValue("height"));
+						reports.log(LogStatus.PASS, "Height & Width of Settings Icon is OK :: " + hubMenuItems.get(i).getText() + ":::Expected Width & Height:: " +  TestInitization.getExcelKeyValue("hub", "Settings", "width") +" , "  +TestInitization.getExcelKeyValue("hub", "Settings", "height") + "::::Action Width & Height::::"+hubMenuItems.get(i).getCssValue("width") +" , " + hubMenuItems.get(i).getCssValue("height"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						break;
 					
@@ -350,7 +364,7 @@ public class HubTestCases extends TestInitization{
 						
 						MenuItemsFontMismatched++;
 						System.out.println("Menu Item font is Not OK :: " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size") + hubMenuItems.get(i).getCssValue("width"));
-						reports.log(LogStatus.INFO, "Menu Item font is Not OK :: " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size") + hubMenuItems.get(i).getCssValue("width"));
+						reports.log(LogStatus.PASS, "Menu Item font is Not OK :: " + hubMenuItems.get(i).getText()+ hubMenuItems.get(i).getCssValue("font-size") + hubMenuItems.get(i).getCssValue("width"));
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						
 						
