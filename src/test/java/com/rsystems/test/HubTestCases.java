@@ -1,7 +1,10 @@
 package com.rsystems.test;
 import java.util.List;
 import junit.framework.Assert;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -11,6 +14,201 @@ import com.rsystems.utils.TestInitization;
 public class HubTestCases extends TestInitization{
 
 	Hub hubScreen = null;
+	
+	@Test
+	public void testHubTextLineRightNavigation() throws InterruptedException
+	{
+		hubScreen = new Hub(driver);
+		int MenuItemsMismatched = 0;
+		
+		reports.log(LogStatus.INFO, "Load the Hub with DTV text line focused.");
+		TestInitization.loadHubFocusedDTVTextLine();
+		
+
+		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
+
+		reports.log(LogStatus.INFO, "Move to the left most item in HUB");
+		TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		
+		
+		
+		for(int i=0; i<hubMenuItems.size(); i++)
+		{
+			System.out.println("Passing element to function as :::::::::: + " + hubMenuItems.get(i).getText());
+		
+	
+			try{
+				
+				
+				
+				if((hubMenuItems.get(i).getLocation().getX()==(int) Float.parseFloat(TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedX")))&&(hubMenuItems.get(i).getLocation().getY()==(int) Float.parseFloat(TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedY"))))
+				{
+					
+				
+				
+				if(i<3)
+				{
+					
+					Assert.assertEquals(ObjectRepository.HubMenuItemsNLFocused[i], hubMenuItems.get(i).getText());
+					System.out.println("Menu Item is Focused :: " + hubMenuItems.get(i).getText());
+					reports.log(LogStatus.INFO, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+
+					
+				}
+				else
+				{
+					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNLFocused[i]));
+					System.out.println("Menu Item is Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.INFO, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+
+				}
+				}
+				else
+				{
+					MenuItemsMismatched++;
+					System.out.println("X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.INFO, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					
+				}
+				
+			}
+			catch(Throwable t)
+			{
+				MenuItemsMismatched++;
+				System.out.println("Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.log(LogStatus.INFO, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+
+				
+				
+			}
+		
+			
+			
+			
+			
+		}
+		
+		if(MenuItemsMismatched==0)
+		{
+			reports.log(LogStatus.PASS,"All Menu Items are correctly Focused in Right Navigation");
+			
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, MenuItemsMismatched + "Menu Items are not correctly Focused in Right Navigation");
+				
+		}
+		
+		
+		
+		
+	}
+	
+	@Test
+	public void testHubTextLineLeftNavigation() throws InterruptedException
+	{
+		hubScreen = new Hub(driver);
+		int MenuItemsMismatched = 0;
+		
+		reports.log(LogStatus.INFO, "Load the Hub with DTV text line focused.");
+		TestInitization.loadHubFocusedDTVTextLine();
+		
+
+		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
+
+		reports.log(LogStatus.INFO, "Move to the right most item in HUB");
+		TestInitization.sendKeyMultipleTimes("RIGHT", 3, 1000);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		
+		
+		
+		for(int i=hubMenuItems.size()-1; i>=0; i--)
+		{
+			System.out.println("Passing element to function as :::::::::: + " + hubMenuItems.get(i).getText());
+		
+	
+			try{
+				
+				
+				
+				if((hubMenuItems.get(i).getLocation().getX()==(int) Float.parseFloat(TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedX")))&&(hubMenuItems.get(i).getLocation().getY()==(int) Float.parseFloat(TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedY"))))
+				{
+					
+				
+				
+				if(i<3)
+				{
+					
+					Assert.assertEquals(ObjectRepository.HubMenuItemsNLFocused[i], hubMenuItems.get(i).getText());
+					System.out.println("Menu Item is Focused :: " + hubMenuItems.get(i).getText());
+					reports.log(LogStatus.INFO, "Menu Item " + hubMenuItems.get(i).getText() + " is Focused correctly.");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+
+					
+				}
+				else
+				{
+					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNLFocused[i]));
+					System.out.println("Menu Item is Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.INFO, "Icon Image of Menu Item " + ObjectRepository.HubMenuItemsNLFocused[i] + " is Focused correctly.");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+
+				}
+				}
+				else
+				{
+					MenuItemsMismatched++;
+					System.out.println("X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					reports.log(LogStatus.INFO, "X & Y Cordinates are not matched for the menu item " + ObjectRepository.HubMenuItemsNLFocused[i]);
+					
+				}
+				
+			}
+			catch(Throwable t)
+			{
+				MenuItemsMismatched++;
+				System.out.println("Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.log(LogStatus.INFO, "Menu Item is not Focused :: " + ObjectRepository.HubMenuItemsNLFocused[i]);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+
+				
+				
+			}
+		
+			
+			
+			
+			
+		}
+		
+		if(MenuItemsMismatched==0)
+		{
+			reports.log(LogStatus.PASS,"All Menu Items are correctly Focused in Right Navigation");
+			
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, MenuItemsMismatched + "Menu Items are not correctly Focused in Right Navigation");
+				
+		}
+		
+		
+		
+		
+	}
+
+	
+	
 	
 	
 	@Test
@@ -179,6 +377,7 @@ public class HubTestCases extends TestInitization{
 		
 		
 	}
+
 
 	
 	

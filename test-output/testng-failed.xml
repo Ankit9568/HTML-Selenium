@@ -5,7 +5,7 @@
     <classes>
       <class name="com.rsystems.test.HubTestCases">
         <methods>
-          <include name="testHubTranslationCheck"/>
+          <include name="testHubTextLineLeftNavigation"/>
           <include name="afterMethodCalled"/>
           <include name="suiteEndReached"/>
           <include name="Setup"/>

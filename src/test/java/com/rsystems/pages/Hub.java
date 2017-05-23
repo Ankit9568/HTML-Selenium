@@ -53,22 +53,79 @@ public class Hub extends TestInitization {
 	
 	
 	
-	public void hubTextlineNavigation()
+	/*public String hubCurrentFocusedMenuItem()
 	{
 		
+		String currentFocusedMenuItem = TestInitization.returnElementTextOrImageAtGivenLocation(element, TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedX"), TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedY"));
+		
+		//String currentFocusedMenuItem = TestInitization.returnElementTextOrImageAtGivenLocation(hubLibraryTextLine, coordX, coordY);
 		
 		
+		if(currentFocusedMenuItem.contains("search_active_bold.png"))
+		{
+			System.out.println("hubCurrentFocusedMenuItem :: search_active_bold.png");
+			return "search_active_bold.png";
+		}
+			
+		else if(currentFocusedMenuItem.contains("setting_active_bold.png"))
+		{
+			System.out.println("hubCurrentFocusedMenuItem :: setting_active_bold.png");
+			return "setting_active_bold.png";
+		}
+			
+		else 		
+		{
+			System.out.println("hubCurrentFocusedMenuItem :: " + currentFocusedMenuItem);
+			return currentFocusedMenuItem;
+		}
+			
 		
-		
-		
-	}
+	}*/
 	
-
-	
-	public void hubShowcaselineNavigation()
+	public String returnElementTextOrImageAtGivenLocation(WebElement element, String elementExcelX, String elementExcelY)
 	{
+		int x = (int) Float.parseFloat(elementExcelX);
+		int y = (int) Float.parseFloat(elementExcelY);
+		
+		System.out.println("Element returned from excel are x & y :: " + x + " ::::: " + y);		
+		System.out.println("Element passed in the function is :::::::::::  " + element);
+		
+		System.out.println("Element returned x & y :: " + element.getLocation().getX() + " ::::: " + element.getLocation().getY());		
+		
+		if(element.getLocation().getX()==x && element.getLocation().getY()==y)
+		{
+			System.out.println("Elemnt's X and Y cordinates are correctly matched");
+			log.info("Elemnt's X and Y cordinates are correctly matched");
+			
+			if(element.getText()!=null)
+			{
+				System.out.println("Elemnt's Text returned from X and Y cordinates : " + element.getText());
+				log.info("Elemnt's Text returned from X and Y cordinates : " + element.getText());
+				return element.getText();
+				
+			}
+			else if(element.getCssValue("background-image")!=null)
+			{
+				System.out.println("Elemnt's Image returned from X and Y cordinates : " + element.getCssValue("background-image"));
+				log.info("Elemnt's Image returned from X and Y cordinates : " + element.getCssValue("background-image"));
+				return element.getCssValue("background-image");
 					
+			}
+			else
+			{
+				System.out.println("Neither image nor text found at Elemnt's X and Y cordinates");
+				log.info("Neither image nor text found at Elemnt's X and Y cordinates");
+				return "Neither text nor image found at the given location";
+			}
+			
+		}
+		else
+			return "Element not found at the given cordinates";
+		
 		
 	}
+	
+	
+	
 	
 }

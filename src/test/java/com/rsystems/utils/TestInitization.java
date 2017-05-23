@@ -14,6 +14,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -304,8 +305,11 @@ public class TestInitization {
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys) throws InterruptedException
 	{
 	
+		
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes + "  with delay in each key as : " + delaybetweemKeys);
 
+		Thread.sleep(1000);
+		
 		Actions action = new Actions(driver);
 		
 		
@@ -313,6 +317,7 @@ public class TestInitization {
 		{
 			action.sendKeys(Keys.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
+			//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			
 			
 		}
