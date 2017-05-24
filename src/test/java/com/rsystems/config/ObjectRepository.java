@@ -14,6 +14,7 @@ public class ObjectRepository {
 	public static final String[] HubMenuItemsNL = {"mijn bibliotheek", "televisie", "shop", "search_normal1.png", "setting_normal.png"};
 	public static final String[] HubMenuItemsNLFocused = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
 	public static final String[] Test1 = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
+	public static final String[] Test2 = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
 	
 	
 	
