@@ -29,6 +29,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 
 
@@ -108,20 +109,27 @@ public class TestInitization {
 	}
 	
 	@BeforeMethod
-	public void beforeMethodCalled(Method method)
+	public void beforeMethodCalled(Method method) throws InterruptedException
 	{
 		reports.startTest("Starting the Test: + " +  method.getName());
 		log.info("Testcase name is :::::: " + method.getName());
 		System.out.println("Testcase name is :::::: " + method.getName());
 		currentMethodName=method.getName();
+		reports.log(LogStatus.INFO, "Start Step : Start with the focus on HUB Text Line");
+		TestInitization.setApplicationHubPage(2);
 				
 		
 
 	}
 	
 	@AfterMethod()
-	public void afterMethodCalled()
+	public void afterMethodCalled() throws InterruptedException
 	{
+
+		reports.log(LogStatus.INFO, "END Step : Leave the test case with focus on HUB Text Line");
+
+		TestInitization.setApplicationHubPage(2);
+
 		reports.endTest();
 		
 	}
@@ -378,7 +386,99 @@ public class TestInitization {
           
           }
 
+	public static void setApplicationHubPage(int noOfRetry) throws InterruptedException {
 
+		System.out.println("Trying to set home page ");
+		int retryForHubScreen = 5;
+		Actions action = new Actions(driver);
+
+		// Needs to switch home screen
+		driver.switchTo().defaultContent();
+
+		while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
+				&& retryForHubScreen > 0) {
+			System.out.println("Trying to press page down");
+			action.sendKeys(Keys.PAGE_DOWN).perform();
+			retryForHubScreen--;
+		}
+
+		if (retryForHubScreen == 0) {
+			// Application is not on the HUB page
+			driver.navigate().refresh();
+		}
+
+		driver.switchTo().frame(0);
+		action.sendKeys(Keys.DOWN).perform();
+
+		Thread.sleep(1000);
+
+		while (noOfRetry > 0) {
+
+			int leftMove = 5;
+			int rightMove = 5;
+
+			for (int iterator = 0; iterator <= 10; iterator++) {
+				String className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
+
+				if (className.contains("cActiveMenuItem_Bold")) {
+					System.out.println("Successfully set hub");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					Thread.sleep(3000);
+					noOfRetry=0;
+					break;
+				} else {
+					// need to move left or right
+					if (leftMove > 0) {
+						action.sendKeys(Keys.LEFT).perform();
+						leftMove--;
+
+					}
+					if (rightMove > 0 && leftMove == 0) {
+						action.sendKeys(Keys.RIGHT).perform();
+						rightMove--;
+					}
+				}
+			}
+			noOfRetry--;
+		}
+	}
+
+	public static void sendKeysSequenceUpdated(String commaSeparatedKeySequence, int timeOutMiliSec, String screenTitle)
+			throws InterruptedException {
+
+		String myname = commaSeparatedKeySequence;
+		String expectedScreenTitle = screenTitle;
+		String screenTitleAfterNavigation = null;
+
+		System.out.println("Inside keySequence method");
+		String[] splitedKeys = myname.split("\\s*,\\s*");
+
+		Actions action = new Actions(driver);
+
+		System.out.println("Size of Keys list is : " + splitedKeys.length);
+
+		for (int i = 0; i < splitedKeys.length; i++) {
+
+			System.out.println("Key value passed is : " + splitedKeys[i]);
+			action.sendKeys(Keys.valueOf(splitedKeys[i])).perform();
+			Thread.sleep(timeOutMiliSec);
+
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		WebElement webElement = driver.findElement(By.xpath("//div[contains(@class,'Heading')]"));
+		screenTitleAfterNavigation = webElement.getText();
+
+		if (expectedScreenTitle.equalsIgnoreCase(screenTitleAfterNavigation)) {
+			System.out.println("Correctly reached at the desired screen");
+
+		} else {
+			System.out.println("Not reached at the desired screen");
+			throw new SkipException("Not reached at the desired screen");
+		}
+
+	}
 
 	
 	

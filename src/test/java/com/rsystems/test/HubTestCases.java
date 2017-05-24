@@ -13,16 +13,16 @@ public class HubTestCases extends TestInitization{
 	Hub hubScreen = null;
 	
 	
-	@Test(priority=1)
+	@Test(priority=4)
 	public void testHubTranslation() throws InterruptedException
 	{
 		
 		hubScreen = new Hub(driver);
 		List<String> actualTitles = hubScreen.getHubMenuItemsText();
 		
-		reports.log(LogStatus.PASS, "Start with the DTV Showcase Focused on HUB.");
+		/*reports.log(LogStatus.PASS, "Start with the DTV Showcase Focused on HUB.");
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		
+		*/
 		//Arrays.equals(ObjectRepository.HubMenuItemsNL, actualTitles.toArray(new String[actualTitles.size()-1])))
 		
 
@@ -48,16 +48,16 @@ public class HubTestCases extends TestInitization{
 	}
 	
 	
-	@Test(priority=3)
+	@Test(priority=2)
 	public void testHubTextLineRightNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		int MenuItemsMismatched = 0;
 		
-		reports.log(LogStatus.PASS, "Move the focus on DTV Text Line Item.");
+		//reports.log(LogStatus.PASS, "Move the focus on DTV Text Line Item.");
 		//TestInitization.loadHubFocusedDTVTextLine();
-		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
 
@@ -147,14 +147,14 @@ public class HubTestCases extends TestInitization{
 		
 	}
 	
-	@Test(priority=4)
+	@Test(priority=1)
 	public void testHubTextLineLeftNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		int MenuItemsMismatched = 0;
 		
-		reports.log(LogStatus.PASS, "Load the Hub with DTV text line focused.");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//reports.log(LogStatus.PASS, "Load the Hub with DTV text line focused.");
+		//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		//TestInitization.loadHubFocusedDTVTextLine();
 		
 
@@ -250,15 +250,15 @@ public class HubTestCases extends TestInitization{
 
 	
 	
-	@Test(priority=2)
+	@Test(priority=3)
 	public void testHubMenuFontsNonFocused()
 	{
 		hubScreen = new Hub(driver);
 		
 		int MenuItemsFontMismatched = 0;
 		
-		reports.log(LogStatus.PASS, "Load the Hub with focus on DTV showcase.");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//reports.log(LogStatus.PASS, "Load the Hub with focus on DTV showcase.");
+		//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		//TestInitization.loadHubFocusedDTVShowcase();
 		
