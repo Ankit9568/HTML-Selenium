@@ -550,3 +550,15 @@
 24/05/2017 15:19:03 nitinLogger Testcase name is :::::: testHubTextLineLeftNavigation
 24/05/2017 15:19:03 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
 24/05/2017 15:19:21 nitinLogger Logger Info:: Inside suiteEndReached Method
+24/05/2017 15:32:10 nitinLogger Logger Info:: Inside Setup Method
+24/05/2017 15:32:28 nitinLogger Logger Info:: Going out of Setup Method
+24/05/2017 15:32:28 nitinLogger Testcase name is :::::: testHubTranslation
+24/05/2017 15:32:28 nitinLogger Inside hubMenuItemsTranslation method ::: This function will return the list of Hub Menu Items Text
+24/05/2017 15:32:30 nitinLogger Testcase name is :::::: testHubMenuFontsNonFocused
+24/05/2017 15:32:30 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+24/05/2017 15:32:30 nitinLogger Fonts size is mijn bibliotheek36px
+24/05/2017 15:32:32 nitinLogger Testcase name is :::::: testHubTextLineRightNavigation
+24/05/2017 15:32:34 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+24/05/2017 15:32:52 nitinLogger Testcase name is :::::: testHubTextLineLeftNavigation
+24/05/2017 15:32:53 nitinLogger Inside hubMenuItems method ::: It will return the list of elements containing Menu Items
+24/05/2017 15:33:10 nitinLogger Logger Info:: Inside suiteEndReached Method

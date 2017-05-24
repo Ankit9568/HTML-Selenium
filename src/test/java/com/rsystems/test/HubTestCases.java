@@ -1,11 +1,7 @@
 package com.rsystems.test;
-import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
-
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
