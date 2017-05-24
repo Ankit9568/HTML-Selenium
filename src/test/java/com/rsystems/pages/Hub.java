@@ -1,6 +1,9 @@
 package com.rsystems.pages;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
 
@@ -51,36 +55,72 @@ public class Hub extends TestInitization {
 	}
 	
 	
+	/*
+	 * This function will return the list of translation of Hub Menu Items
+	 * Created by Nitin Kaushik
+	 */
 	
-	
-	/*public String hubCurrentFocusedMenuItem()
+	public List<String> getHubMenuItemsText()
 	{
 		
-		String currentFocusedMenuItem = TestInitization.returnElementTextOrImageAtGivenLocation(element, TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedX"), TestInitization.getExcelKeyValue("hub", "HubMenu", "hubFocusedY"));
+		log.info("Inside hubMenuItemsTranslation method ::: This function will return the list of Hub Menu Items Text");
+		System.out.println("Inside hubMenuItemsTranslation method ::: This function will return the list of Hub Menu Items Text");
 		
-		//String currentFocusedMenuItem = TestInitization.returnElementTextOrImageAtGivenLocation(hubLibraryTextLine, coordX, coordY);
+		List<String> hubMenuItemList = new ArrayList<String>();
 		
 		
-		if(currentFocusedMenuItem.contains("search_active_bold.png"))
+		for(int i=0; i<driver.findElements(By.xpath("//li[contains(@id,'menuItem')]")).size() ;i++)
 		{
-			System.out.println("hubCurrentFocusedMenuItem :: search_active_bold.png");
-			return "search_active_bold.png";
-		}
 			
-		else if(currentFocusedMenuItem.contains("setting_active_bold.png"))
-		{
-			System.out.println("hubCurrentFocusedMenuItem :: setting_active_bold.png");
-			return "setting_active_bold.png";
-		}
 			
-		else 		
-		{
-			System.out.println("hubCurrentFocusedMenuItem :: " + currentFocusedMenuItem);
-			return currentFocusedMenuItem;
-		}
+			if(i<3)
+			{
+				hubMenuItemList.add(driver.findElements(By.xpath("//li[contains(@id,'menuItem')]")).get(i).getText());
+				System.out.println("Adding value in the array list at position + " + i + " " + driver.findElements(By.xpath("//li[contains(@id,'menuItem')]")).get(i).getText());	
+				
+				
+			}
+			else
+			{
+				String imageURL = driver.findElements(By.xpath("//li[contains(@id,'menuItem')]")).get(i).getCssValue("background-image");
+				hubMenuItemList.add(imageURL.split("/")[imageURL.split("/").length-1].replace("\")", ""));
+				System.out.println("Adding value in the array list at position + " + i + " " + imageURL.split("/")[imageURL.split("/").length-1].replace("\")", ""));
+			}
 			
+			
+			
+		}
 		
-	}*/
+		
+		
+		
+		return hubMenuItemList;
+		
+		
+	}
+	
+	
+	public List<String> getHubMenuItemsFonts()
+	{
+		
+		log.info("Inside getHubMenuItemsFonts method ::: This function will return the list of Hub Menu Items Fonts");
+		System.out.println("Inside getHubMenuItemsFonts method ::: This function will return the list of Hub Menu Items Fonts");
+		
+
+		List<String> hubMenuItemFonts = new ArrayList<String>();
+		
+		
+		hubMenuItemFonts.add(hubLibraryTextLine.getAttribute("font-size"));
+		hubMenuItemFonts.add(hubTelevisionTextLine.getAttribute("font-size"));
+		hubMenuItemFonts.add(hubStoreTextLine.getAttribute("font-size"));
+		hubMenuItemFonts.add(hubSearchTextLine.getAttribute("width"));
+		hubMenuItemFonts.add(hubSettingsTextLine.getAttribute("width"));
+
+		return hubMenuItemFonts;
+		
+		
+	}
+	
 	
 	public String returnElementTextOrImageAtGivenLocation(WebElement element, String elementExcelX, String elementExcelY)
 	{

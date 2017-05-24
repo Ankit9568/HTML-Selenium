@@ -11,7 +11,7 @@ public class ObjectRepository {
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
 	public static final String HubSearchItem = "//li[@id='menuItem_3']";
 	public static final String HubSettingsItem = "//li[@id='menuItem_4']";
-	public static final String[] HubMenuItemsNL = {"123mijn bibliotheek", "televisie", "shop", "123search_normal.png", "setting_normal.png"};
+	public static final String[] HubMenuItemsNL = {"mijn bibliotheek", "televisie", "shop", "search_normal1.png", "setting_normal.png"};
 	public static final String[] HubMenuItemsNLFocused = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
 	
 	

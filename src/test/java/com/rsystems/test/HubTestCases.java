@@ -1,4 +1,5 @@
 package com.rsystems.test;
+import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
 
@@ -15,7 +16,43 @@ public class HubTestCases extends TestInitization{
 
 	Hub hubScreen = null;
 	
-	@Test(priority=2)
+	
+	@Test(priority=1)
+	public void testHubTranslation() throws InterruptedException
+	{
+		
+		hubScreen = new Hub(driver);
+		List<String> actualTitles = hubScreen.getHubMenuItemsText();
+		
+		reports.log(LogStatus.PASS, "Start with the DTV Showcase Focused on HUB.");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		
+		//Arrays.equals(ObjectRepository.HubMenuItemsNL, actualTitles.toArray(new String[actualTitles.size()-1])))
+		
+
+		for(int i=0; i<actualTitles.size(); i++)
+		{
+			if(ObjectRepository.HubMenuItemsNL[i].equals(actualTitles.get(i)))
+			{
+				reports.log(LogStatus.PASS, "Menu Item Text is OK :: Expected - " + ObjectRepository.HubMenuItemsNL[i] + " Actual - " + actualTitles.get(i));
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				
+			}
+			else
+			{
+				reports.log(LogStatus.FAIL, "Menu Item Text is NOT OK :: Expected - " + ObjectRepository.HubMenuItemsNL[i] + " Actual - " + actualTitles.get(i));
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
+	@Test(priority=3)
 	public void testHubTextLineRightNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
@@ -114,7 +151,7 @@ public class HubTestCases extends TestInitization{
 		
 	}
 	
-	@Test(priority=3)
+	@Test(priority=4)
 	public void testHubTextLineLeftNavigation() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
@@ -217,84 +254,7 @@ public class HubTestCases extends TestInitization{
 
 	
 	
-	
-	
-	@Test(priority=4)
-	public void testHubMenuTitles() throws InterruptedException
-	{
-		hubScreen = new Hub(driver);
-		
-		int MenuItemsMismatched = 0;
-		
-		reports.log(LogStatus.PASS, "Start the Hub with DTV text line focused.");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		
-		
-		//TestInitization.loadHubFocusedDTVTextLine();
-		
-		
-		List<WebElement> hubMenuItems = hubScreen.hubMenuItems();
-		
-
-		for(int i=0; i<hubMenuItems.size(); i++)
-		{
-			try{
-				
-				
-		
-				if(i<3)
-				{
-					
-					Assert.assertEquals(ObjectRepository.HubMenuItemsNL[i], hubMenuItems.get(i).getText());
-					System.out.println("Menu Item is OK :: " + hubMenuItems.get(i).getText());
-					reports.log(LogStatus.PASS, "Translation of Menu Item is OK :: " + hubMenuItems.get(i).getText());
-					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-					
-				}
-				else
-				{
-					Assert.assertTrue(hubMenuItems.get(i).getCssValue("background-image").contains(ObjectRepository.HubMenuItemsNL[i]));
-					System.out.println("Menu Item is OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-					reports.log(LogStatus.PASS, "Icon Image of Menu Item is OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-				}
-			
-			}
-			catch(Throwable t)
-			{
-				MenuItemsMismatched++;
-				System.out.println("Menu Item is Not OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-				reports.log(LogStatus.FAIL, "Menu Item is Not OK :: " + ObjectRepository.HubMenuItemsNL[i]);
-				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-				
-				
-			}
-			
-			
-			
-		}
-		
-		if(MenuItemsMismatched==0)
-		{
-			reports.log(LogStatus.PASS,"All Menu Items are correctly displayed in HUB");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			
-		}
-		else
-		{
-			reports.log(LogStatus.FAIL, MenuItemsMismatched + "  Menu Items are not correctly displayed in HUB");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-				
-		}
-		
-		
-		
-		
-	}
-	
-	
-
-	@Test(priority=1)
+	@Test(priority=2)
 	public void testHubMenuFontsNonFocused()
 	{
 		hubScreen = new Hub(driver);
