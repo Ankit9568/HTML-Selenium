@@ -1,8 +1,5 @@
 package com.rsystems.utils;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +7,7 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -380,7 +378,7 @@ public class TestInitization {
               else
               {
             	  System.out.println("Not reached at the desired screen");
-            	  throw new SkipException("Not reached at the desired screen");
+            	  throw new SkipException("Not reached at the desired screen" + "Actual Screen Title : " + screenTitleAfterNavigation + "Expected Screen Title : " + expectedScreenTitle);
               }
           
           
@@ -388,7 +386,10 @@ public class TestInitization {
 
 	public static void setApplicationHubPage(int noOfRetry) throws InterruptedException {
 
+	
 		System.out.println("Trying to set home page ");
+		
+		
 		int retryForHubScreen = 5;
 		Actions action = new Actions(driver);
 
@@ -398,6 +399,7 @@ public class TestInitization {
 		while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
 				&& retryForHubScreen > 0) {
 			System.out.println("Trying to press page down");
+			Thread.sleep(500);
 			action.sendKeys(Keys.PAGE_DOWN).perform();
 			retryForHubScreen--;
 		}
@@ -410,31 +412,39 @@ public class TestInitization {
 		driver.switchTo().frame(0);
 		action.sendKeys(Keys.DOWN).perform();
 
-		Thread.sleep(1000);
+		String className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
 
+		if (className.contains("cActiveMenuItem_Bold")) {
+				System.out.println("Control already on HUB page");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				return;
+		}
+		
 		while (noOfRetry > 0) {
 
 			int leftMove = 5;
 			int rightMove = 5;
 
 			for (int iterator = 0; iterator <= 10; iterator++) {
-				String className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
-
+				
+				className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
 				if (className.contains("cActiveMenuItem_Bold")) {
 					System.out.println("Successfully set hub");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-					Thread.sleep(3000);
+					Thread.sleep(1000);
 					noOfRetry=0;
 					break;
 				} else {
 					// need to move left or right
 					if (leftMove > 0) {
 						action.sendKeys(Keys.LEFT).perform();
+						Thread.sleep(500);
 						leftMove--;
 
 					}
 					if (rightMove > 0 && leftMove == 0) {
 						action.sendKeys(Keys.RIGHT).perform();
+						Thread.sleep(500);
 						rightMove--;
 					}
 				}
@@ -443,6 +453,8 @@ public class TestInitization {
 		}
 	}
 
+		
+	
 	public static void sendKeysSequenceUpdated(String commaSeparatedKeySequence, int timeOutMiliSec, String screenTitle)
 			throws InterruptedException {
 
@@ -475,7 +487,8 @@ public class TestInitization {
 
 		} else {
 			System.out.println("Not reached at the desired screen");
-			throw new SkipException("Not reached at the desired screen");
+			
+			throw new SkipException("Not reached at the desired screen" + "Actual Screen Title : " + screenTitleAfterNavigation + "Expected Screen Title : " + expectedScreenTitle);
 		}
 
 	}

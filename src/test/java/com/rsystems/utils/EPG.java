@@ -17,23 +17,24 @@ public class EPG extends TestInitization {
 
 		
 		TestInitization.setApplicationHubPage(2);
-		reports.log(LogStatus.INFO, "Navigate to the EPG  Setting Screen");
+		reports.log(LogStatus.PASS, "Navigate to the Setting Screen");
 		TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
 				TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
 
-		reports.log(LogStatus.INFO, "Step 3: Navigate to the System Screen");
+		reports.log(LogStatus.PASS, "Step : Navigate to the System Screen");
 		TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
 				TestInitization.getExcelKeyValue("screenTitles", "System", "name_nl"));
 
-		reports.log(LogStatus.INFO, "Step 4: Navigate to the epg setting Screen");
+		reports.log(LogStatus.PASS, "Step : Navigate to the EPG Setting Screen");
 		TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
 				TestInitization.getExcelKeyValue("screenTitles", "epgSetting", "name_nl"));
 	}
 
 	public static void goToEpgChannelScreen() throws InterruptedException {
-		reports.log(LogStatus.INFO, "Navigate to EPG channel Screen");
+		reports.log(LogStatus.PASS, "Navigate to EPG");
 		TestInitization.setApplicationHubPage(2);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);	
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	
@@ -46,8 +47,7 @@ public class EPG extends TestInitization {
 		String expectedFontColor = null;
 		String expectedChannelCount = null;
 		
-		reports.log(LogStatus.INFO, "Verification of EPG channel CSS");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		if (epgType.equalsIgnoreCase("STANDAARD") && epgBackground.equalsIgnoreCase("STANDAARD")
 				&& epgFont.equalsIgnoreCase("STANDAARD")) {
 
@@ -113,7 +113,7 @@ public class EPG extends TestInitization {
 				}
 			}
 		}
-
+		//reports.log(LogStatus.PASS, "Verification of changes in EPG Colour, Font & Background Passed");
 		return true;
 	}
 	
@@ -122,10 +122,11 @@ public class EPG extends TestInitization {
 		
 		int MoveCount = 4;
 		// For EPG Type
-		reports.log(LogStatus.INFO, "Change EPG Channel Setting");
+		reports.log(LogStatus.PASS, "Change EPG Settings");
 		System.out.println("Trying to set the Epg Type");
 		while((!EpgScreen.getEpgType().getText().equalsIgnoreCase(epgType)) && MoveCount>0){
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			MoveCount--;
 		}
 		
@@ -136,6 +137,7 @@ public class EPG extends TestInitization {
 		
 		while((!EpgScreen.getEpgBackground().getText().equalsIgnoreCase(epgBackground)) && MoveCount>0){
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			MoveCount--;
 		}
 		
@@ -146,10 +148,11 @@ public class EPG extends TestInitization {
 		
 		while((!EpgScreen.getEpgFont().getText().equalsIgnoreCase(epgFont)) && MoveCount>0){
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			MoveCount--;
 		}
 		
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 	}
@@ -157,7 +160,7 @@ public class EPG extends TestInitization {
 	public static boolean validateEpgChannelSetting( String epgType , String epgBackgroung , String epgFont) throws InterruptedException{
 		
 		
-		reports.log(LogStatus.INFO, "Validation for EPG channel setting");
+		reports.log(LogStatus.PASS, "Validation for EPG channel setting");
 		goToEpgSettingScreen();
 		
 		boolean validationResult = false;
