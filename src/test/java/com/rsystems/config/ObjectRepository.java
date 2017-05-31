@@ -44,4 +44,8 @@ public class ObjectRepository {
 		public static final String ProgramDurationInPlannedRecording = ".recordingDetails .duration";
 		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
 	}
+	public static class gitTest{
+		
+	}
+	
 }
