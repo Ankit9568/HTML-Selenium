@@ -229,8 +229,6 @@ public class EpgScreen extends TestInitization {
 				if (expectedFontSize.equalsIgnoreCase(we.getCssValue("font-size"))
 						&& expectedFontFamily.equalsIgnoreCase(we.getCssValue("font-family"))
 						&& expectedFontColor.equalsIgnoreCase(we.getCssValue("color"))) {
-
-					System.out.println("Background color : " + we.getAttribute("background-color"));
 					System.out.println("CSS matched");
 				} else {
 					throw new SkipException("CSS not Matched Actual Font-Size,font,color: "

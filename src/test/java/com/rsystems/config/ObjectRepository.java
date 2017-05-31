@@ -2,7 +2,9 @@ package com.rsystems.config;
 
 public class ObjectRepository {
 	
-	public static final String excelFilePath = "D:/Git_Code/HTMLSelenium/src/test/java/com/rsystems/config/testdata.xlsx";
+	public static final String excelFilePath = System.getProperty("user.dir") +"/src/test/java/com/rsystems/config/testdata.xlsx";
+	
+	
 	
 	/*-----------------HUB Menu Item Locators------------------------*/
 	

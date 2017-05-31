@@ -50,6 +50,8 @@ public class TestInitization {
 	{
 		
 		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\report.html";
+		String chromeDriverPath = System.getProperty("user.dir") +"/src/test/resources/chromedriver.exe";
+		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -64,7 +66,7 @@ public class TestInitization {
 		FileInputStream FI = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\config\\config.properties");
 		Properties PR = new Properties();
 		PR.load(FI);
-		System.setProperty("webdriver.chrome.driver",PR.getProperty("CHROME_DRIVER_PATH"));		
+		System.setProperty("webdriver.chrome.driver",chromeDriverPath);		
 		
 		driver = new ChromeDriver();
 		
