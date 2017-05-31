@@ -49,7 +49,11 @@ public class TestInitization {
 	public void Setup() throws InterruptedException, IOException
 	{
 		
-		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\report.html";
+		cald = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+		String extentReportFileName = "report_" + formatter.format(cald.getTime()).toString()+".html";
+		
+		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\" + extentReportFileName;
 		String chromeDriverPath = System.getProperty("user.dir") +"/src/test/resources/chromedriver.exe";
 		
 		reports.init(extentReportPath, true);
