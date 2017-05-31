@@ -22,4 +22,26 @@ public class ObjectRepository {
 		public static final String epgFont = "epgFont";
 	}
 	
+	public static class LibraryElements{
+		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
+	}
+	
+	public static class PIPElements{
+		public static final String pipPositonIDElement = "pipPosition";
+		public static final String currentPIPClassElement = "toggle";
+	}
+	
+	public static class RecordingElements{
+		public static final String InfoEpisodeNameXPath = "//*[@id='programTitle']/span";
+		public static final String ChannelNoClassName = "channel-no";
+		public static final String ChannelInfoImageXPath ="/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
+		public static final String EpisodeDurationXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[2]";
+		public static final String ProgramDefinitionXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[1]/img";
+		public static final String RecordingListCSSSelector = "#recordingContent div[id^='item']";
+		public static final String ChannelNoInPlannedRecording = "recordingNumber";
+		public static final String ChannelLogoInPlannedRecording =".logo";
+		public static final String ProgramNameInPlannedRecording = ".recordingDetails h2";
+		public static final String ProgramDurationInPlannedRecording = ".recordingDetails .duration";
+		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
+	}
 }
