@@ -1,36 +1,80 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Rsystems HTML Testing">
-
-
-
-	<!-- <test name="Hub Test Case "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.HubTestCases" ></class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
-
-
-	<!-- <test name="EPG Test Cases "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.EPGTestCases" ></class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
-
-
-	<!-- <test name="SettingsTestCases Test Cases "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.SettingsTestCases" ></class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+	<test name="Hub Test Case ">
+		<classes>
+			<class name="com.rsystems.test.HubTestCases" >
+				<methods>
+					<include name="testHubTranslation" />
+					<include name="testHubTextLineRightNavigation" />
+					<include name="testHubTextLineLeftNavigation" />
+					<include name="testHubMenuFontsNonFocused" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="SettingsTestCases Test Cases ">
+		<classes>
+			<class name="com.rsystems.test.SettingsTestCases" >
+				<methods>
+					<include name="epgSettingScreenTitleMatch" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 <test name="EPG Setting Test case " >
 	<classes>
 		<class name="com.rsystems.test.EPGTestCases">
-<!-- 			<methods> -->
-<!-- 				<include name="standardEPG_Validation" /> -->
-<!-- 				<include name="seniorEPG_Validation" /> -->
-<!-- 				<include name="seniorStandardStandardEpgValidation" /> -->
-<!-- 			</methods> -->
+			<methods>
+				<include name="standardEPG_Validation" />
+				<include name="seniorEPG_Validation" />
+				<include name="seniorGroenStandardEPG_Validation" />
+				<include name="seniorGroenGeelEpgValidation" />
+				<include name="seniorStandardStandardEpgValidation" />
+				<include name="seniorStandardGeelEpgValidation" />
+				<include name="seniorStandardGrijsEpgValidation" />
+				<include name="strakStandardStandardEpgValidation" />
+				<include name="strakGroenStandardEpgValidation" />
+				<include name="strakGroenGrijsEpgValidation" />
+				<include name="strakGroenGeelEpgValidation" />
+				<include name="strakStandardGrijsEpgValidation" />
+				<include name="strakStandardGeelEpgValidation" />
+			</methods>
 		</class>
 	</classes>
 </test>	
+
+<test name="Library Test case " >
+	<classes>
+		<class name="com.rsystems.test.LibraryTestCase">
+			<methods>
+				<include name="verifyLibraryMenuItemsText" />
+				<include name="verifyLibraryItemsFontSize" />
+				<include name="verifyLibraryMenuSubListText" />
+				<include name="verifyLibraryMenuSubListFontSize" />
+			</methods>
+		</class>
+	</classes>
+</test>	
+<test name="Recording Test case " >
+	<classes>
+		<class name="com.rsystems.test.RecordingTestCase">
+			<methods>
+				<include name="verifyStartSingleRecording" />
+				<include name="verifySingleAssetIsDeleted" />
+			</methods>
+		</class>
+	</classes>
+</test>
+<test name="PIP Setting Test case " >
+	<classes>
+		<class name="com.rsystems.test.PIPTestCases">
+			<methods>
+				<include name="verifyLinksPipPosition" />
+				<include name="verifyStandardPipPosition" />
+			</methods>
+		</class>
+	</classes>
+</test>	
+
 </suite>
