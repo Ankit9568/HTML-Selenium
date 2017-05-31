@@ -3,18 +3,34 @@
 
 
 
-<!-- <test name="Login test">
-    <classes>
-        <class name="com.rsystems.test.LoginTest" ></class>  
-    </classes>
-</test> -->
+	<!-- <test name="Hub Test Case "> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.HubTestCases" ></class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
 
-<test name="Hub test">
-    <classes>
-        <class name="com.rsystems.test.HubTestCases" ></class>  
-    </classes>
-</test>
+	<!-- <test name="EPG Test Cases "> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.EPGTestCases" ></class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
 
+	<!-- <test name="SettingsTestCases Test Cases "> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.SettingsTestCases" ></class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
+<test name="EPG Setting Test case " >
+	<classes>
+		<class name="com.rsystems.test.EPGTestCases">
+<!-- 			<methods> -->
+<!-- 				<include name="standardEPG_Validation" /> -->
+<!-- 				<include name="seniorEPG_Validation" /> -->
+<!-- 				<include name="seniorStandardStandardEpgValidation" /> -->
+<!-- 			</methods> -->
+		</class>
+	</classes>
+</test>	
 </suite>

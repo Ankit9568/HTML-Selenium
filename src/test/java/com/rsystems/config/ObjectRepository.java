@@ -2,7 +2,7 @@ package com.rsystems.config;
 
 public class ObjectRepository {
 	
-	public static final String excelFilePath = "D:/gitTest/HTMLSelenium/src/test/java/com/rsystems/config/testdata.xlsx";
+	public static final String excelFilePath = "D:/Git_Code/HTMLSelenium/src/test/java/com/rsystems/config/testdata.xlsx";
 	
 	/*-----------------HUB Menu Item Locators------------------------*/
 	
@@ -16,6 +16,10 @@ public class ObjectRepository {
 	public static final String[] Test1 = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
 	public static final String[] Test2 = {"mijn bibliotheek", "televisie", "shop", "search_active_bold.png", "setting_active_bold.png"};
 	
-	
+	public static class EpgScreen{
+		public static final String epgType = "epgType";
+		public static final String epgBackground = "epgBackground";
+		public static final String epgFont = "epgFont";
+	}
 	
 }
