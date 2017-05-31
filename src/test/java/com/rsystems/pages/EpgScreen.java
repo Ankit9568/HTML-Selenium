@@ -64,7 +64,7 @@ public class EpgScreen extends TestInitization {
 
 	}
 
-	public  boolean validationChannelCss(HashMap<String, String> currentEpgSetting) throws InterruptedException {
+	public  boolean validationEpgCss(HashMap<String, String> currentEpgSetting) throws InterruptedException {
 
 		
 		String epgType = currentEpgSetting.get("epgType");
@@ -243,7 +243,7 @@ public class EpgScreen extends TestInitization {
 		return true;
 	}
 
-	public HashMap<String , String> changeEpgChannelSetting(String epgType, String epgBackground, String epgFont)
+	public HashMap<String , String> changeEpgSetting(String epgType, String epgBackground, String epgFont)
 			throws InterruptedException {
 		
 		EpgScreen epgScreen = new EpgScreen(driver);
