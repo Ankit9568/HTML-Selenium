@@ -9,7 +9,6 @@ public class ObjectRepository {
 	/*-----------------HUB Menu Item Locators------------------------*/
 	
 	public static final String HubTVItem = "//li[@id='menuItem_1']";
-	public static final String HubTVItem22 = "//li[@id='menuItem_1']";
 	public static final String HubLibraryItem = "//li[@id='menuItem_0']";
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
 	public static final String HubSearchItem = "//li[@id='menuItem_3']";

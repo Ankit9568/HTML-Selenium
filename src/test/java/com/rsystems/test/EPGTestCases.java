@@ -2,6 +2,7 @@ package com.rsystems.test;
 
 import java.util.HashMap;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -23,6 +24,8 @@ public class EPGTestCases extends TestInitization {
 	@Test
 	public void standardEPG_Validation() throws InterruptedException {
 		
+		
+		
 		// check font is standard on EPf Setting Screen
 		EpgScreen epgScreen = new EpgScreen(driver);
 		
@@ -42,6 +45,8 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
 		}
+		
+		
 	}
 
 	/**

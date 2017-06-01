@@ -1,5 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Rsystems HTML Testing">
+
+<listeners>
+<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+</listeners>
+
 	<test name="Hub Test Case ">
 		<classes>
 			<class name="com.rsystems.test.HubTestCases" >
@@ -27,18 +32,18 @@
 		<class name="com.rsystems.test.EPGTestCases">
 			<methods>
 				<include name="standardEPG_Validation" />
-				<include name="seniorEPG_Validation" />
-				<include name="seniorGroenStandardEPG_Validation" />
-				<include name="seniorGroenGeelEpgValidation" />
+				<include name="seniorGreenGrayEPG_Validation" />
+				<include name="seniorGreenStandardEPG_Validation" />
+				<include name="seniorGreenYellowEpgValidation" />
 				<include name="seniorStandardStandardEpgValidation" />
-				<include name="seniorStandardGeelEpgValidation" />
-				<include name="seniorStandardGrijsEpgValidation" />
+				<include name="seniorStandardYellowEpgValidation" />
+				<include name="seniorStandardGrayEpgValidation" />
 				<include name="strakStandardStandardEpgValidation" />
-				<include name="strakGroenStandardEpgValidation" />
-				<include name="strakGroenGrijsEpgValidation" />
-				<include name="strakGroenGeelEpgValidation" />
-				<include name="strakStandardGrijsEpgValidation" />
-				<include name="strakStandardGeelEpgValidation" />
+				<include name="strakGreenStandardEpgValidation" />
+				<include name="strakGreenGrayEpgValidation" />
+				<include name="strakGreenYellowEpgValidation" />
+				<include name="strakStandardGrayEpgValidation" />
+<!-- 				<include name="strakStandardYellowEpgValidation" /> -->
 			</methods>
 		</class>
 	</classes>
