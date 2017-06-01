@@ -23,6 +23,7 @@ public class ObjectRepository {
 		public static final String epgType = "epgType";
 		public static final String epgBackground = "epgBackground";
 		public static final String epgFont = "epgFont";
+		public static final String screenBackgroundColor = "//link[@href = './resources/components/epg_custom/css/parentgreen.css']";
 	}
 	
 	public static class LibraryElements{

@@ -58,7 +58,7 @@ public class TestInitization {
 		reports.config().useExtentFooter(false);
 		
 		
-		log = Logger.getLogger("nitinLogger");
+		log = Logger.getLogger("ProximusHTMLLogger");
 		log.info("Logger Info:: Inside Setup Method");
 		
 		
