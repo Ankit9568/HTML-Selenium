@@ -10,8 +10,12 @@ public enum ExceptionMesages {
 
 	private final String exceptionMsg;
 
-	private ExceptionMesages(String s) {
-		exceptionMsg = s;
+	private ExceptionMesages(String exceptionMsg) {
+		this.exceptionMsg = exceptionMsg;
 	}
 
+	 @Override
+	    public String toString() {
+	        return exceptionMsg;
+	    }
 }

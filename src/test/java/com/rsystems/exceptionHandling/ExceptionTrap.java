@@ -1,5 +1,7 @@
 package com.rsystems.exceptionHandling;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import org.openqa.selenium.NoSuchElementException;
@@ -29,18 +31,33 @@ public class ExceptionTrap extends TestInitization {
 
 		boolean matchedRegisteredException = false;
 		if (testResult.getStatus() == ITestResult.SKIP) {
+			log.debug("Logger.debug " +  testResult.getMethod().getMethodName() + " : "+ getExceptionStackTrace());
 			reports.log(LogStatus.ERROR, testResult.getThrowable().getLocalizedMessage());
 			return;
 		}
 
 		for (Exception exception : registeredException) {
 			if (exception.getClass().getName().equalsIgnoreCase(testResult.getThrowable().getClass().getName())) {
-				reports.log(LogStatus.FAIL, exception.getMessage());
+				log.debug("Logger.debug " +testResult.getMethod().getMethodName() + " : "+  getExceptionStackTrace());
+				reports.log(LogStatus.FAIL, exception.getMessage().split("\n")[0]);
 				matchedRegisteredException = true;
 			}
 		}
 		if(!matchedRegisteredException){
-			reports.log(LogStatus.FAIL, testResult.getThrowable().getMessage());
+			log.debug("Logger.debug " +  getExceptionStackTrace());
+			reports.log(LogStatus.FAIL, testResult.getMethod().getMethodName() + " : "+ testResult.getThrowable().getMessage());
 		}
+	}
+	
+	
+	private String getExceptionStackTrace(){
+		StringWriter sw = new StringWriter();
+	    PrintWriter pw = new PrintWriter(sw);
+	    Throwable cause = testResult.getThrowable();
+	    if (null != cause) {
+	        cause.printStackTrace(pw);
+	       return sw.getBuffer().toString();
+	    }
+		return null;
 	}
 }
