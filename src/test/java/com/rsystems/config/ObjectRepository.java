@@ -35,7 +35,7 @@ public class ObjectRepository {
 	}
 	
 	public static class RecordingElements{
-		public static final String InfoEpisodeNameXPath = "//*[@id='programTitle']/span";
+		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
 		public static final String ChannelInfoImageXPath ="/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
 		public static final String EpisodeDurationXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[2]";
@@ -46,6 +46,10 @@ public class ObjectRepository {
 		public static final String ProgramNameInPlannedRecording = ".recordingDetails h2";
 		public static final String ProgramDurationInPlannedRecording = ".recordingDetails .duration";
 		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
+		public static final String StartRecordingXPath = "//*[@id='item_1']";
+		public static final String currentRecordingCountID = "countNumbers";
+		public static final String totalRecordingsID = "totalItems";
+		public static final String focusRecordingElementXPath = "//div[@class='recordingList fillGradient']";
 	}
 	
 	public static class VerifySystemInfoScreen
