@@ -2,7 +2,6 @@ package com.rsystems.test;
 
 import java.util.HashMap;
 
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;

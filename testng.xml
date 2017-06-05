@@ -43,7 +43,7 @@
 				<include name="strakGreenGrayEpgValidation" />
 				<include name="strakGreenYellowEpgValidation" />
 				<include name="strakStandardGrayEpgValidation" />
-<!-- 				<include name="strakStandardYellowEpgValidation" /> -->
+				<include name="strakStandardYellowEpgValidation" />
 			</methods>
 		</class>
 	</classes>
@@ -80,6 +80,18 @@
 			</methods>
 		</class>
 	</classes>
+ </test>	 
+
+<test name="System Info Screen test cases  " >
+	<classes>
+		<class name="com.rsystems.test.SystemInfoScreenTestCase">
+			<methods>
+				<include name="verifySettingInfoScreen" />
+			</methods>
+		</class>
+	</classes>
 </test>	
+
+
 
 </suite>

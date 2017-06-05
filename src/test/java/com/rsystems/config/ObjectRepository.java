@@ -48,4 +48,13 @@ public class ObjectRepository {
 		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
 	}
 	
+	public static class VerifySystemInfoScreen
+	{
+		public static final String systemInfoXpath="//div[@id='settingInfoHeading']"; 
+		public static final String hardwareVersion="hardware_version";
+		public static final String softwareVersion="software_version";
+		public static final String hpgVersion="hpg_version";
+		public static final String serialNumber="serial_number";
+	}
+	
 }
