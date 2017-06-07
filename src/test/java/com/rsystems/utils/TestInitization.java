@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -20,6 +23,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -64,7 +69,7 @@ public class TestInitization {
 		log.info("Logger Info:: Inside Setup Method");
 
 		launchWebdriver();
-		
+
 		System.out.println("Waiting for the page to load");
 		wait = new WebDriverWait(driver, 120L);
 
@@ -72,12 +77,9 @@ public class TestInitization {
 			wait.until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
 			System.out.println("Proximus Logo Loaded");
-
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
 			System.out.println("Frame loaded");
-
 			Thread.sleep(2000);
-
 			if (driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText()
 					.equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl"))) {
 				System.out.println("HUB TV text returned is :: "
@@ -98,6 +100,7 @@ public class TestInitization {
 		}
 
 		log.info("Logger Info:: Going out of Setup Method");
+		
 	}
 
 	@BeforeMethod
@@ -147,6 +150,7 @@ public class TestInitization {
 
 		// System.out.println("Image to be captured as :: " + captureFilePath);
 		// log.info("Image to be captured as :: " + captureFilePath);
+
 		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(srcFile, new File(captureFilePath));
@@ -270,6 +274,29 @@ public class TestInitization {
 
 	}
 
+	
+
+	public static void sendUnicodeMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
+			throws InterruptedException {
+
+		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
+				+ "  with delay in each key as : " + delaybetweemKeys);
+
+		Thread.sleep(1000);
+
+		Actions action = new Actions(driver);
+
+		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
+			
+			action.sendKeys(String.valueOf(keyname)).perform();
+			Thread.sleep(delaybetweemKeys);
+			// reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+
+		}
+
+	}
+
+	
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
 
@@ -281,6 +308,7 @@ public class TestInitization {
 		Actions action = new Actions(driver);
 
 		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
+			
 			action.sendKeys(Keys.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
 			// reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -435,7 +463,7 @@ public class TestInitization {
 
 	}
 
-	private void launchWebdriver() throws IOException {
+	private void launchWebdriver() throws IOException, InterruptedException {
 
 		String url = null;
 		FileInputStream FI = new FileInputStream(
@@ -449,8 +477,13 @@ public class TestInitization {
 		executionOnHTV = Boolean.valueOf(PR.getProperty("RunOnHTV"));
 
 		if (executionOnHTV) {
-			Capabilities caps = new DesiredCapabilities();
-			driver = new RemoteWebDriver(new URL("http://10.67.181.112:9517"), caps);
+
+			DesiredCapabilities capability = new DesiredCapabilities();
+			// Start WebDriver by reusing existing widget UI
+			capability.setCapability("browserStartWindow", "*");
+			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+			driver = new RemoteWebDriver(new URL("http://10.67.181.112:9517"), capability);
+			selectWindow("http");
 			// override URL in case of HTV
 			url = "http://hpg.nat.myrio.net/boot_webkit.html";
 		}
@@ -460,9 +493,26 @@ public class TestInitization {
 			System.setProperty("webdriver.chrome.driver",
 					System.getProperty("user.dir") + "/src/test/resources/chromedriver.exe");
 			driver = new ChromeDriver();
+			driver.manage().window().maximize();
 		}
-		driver.manage().window().maximize();
+
 		driver.navigate().to(url);
+
 	}
-	
+
+	private String selectWindow(String protocol) {
+		Set<String> windowHandles = driver.getWindowHandles();
+
+		for (Iterator<String> iterator = windowHandles.iterator(); iterator.hasNext();) {
+			String w = iterator.next();
+
+			driver.switchTo().window(w);
+			if (driver.getCurrentUrl().startsWith(protocol)) {
+
+				return w;
+			}
+		}
+		return null;
+	}
+
 }

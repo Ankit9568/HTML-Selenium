@@ -15,6 +15,7 @@ import org.testng.SkipException;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
+import com.rsystems.utils.Unicode;
 
 /**
  * @author Ankit.Agarwal1 return necessary object and dependent function of EPG
@@ -58,24 +59,31 @@ public class EpgScreen extends TestInitization {
 				TestInitization.getExcelKeyValue("screenTitles", "epgSetting", "name_nl"));
 	}
 
-	public static void goToEpgChannelScreen() throws InterruptedException {
-		reports.log(LogStatus.PASS, "Navigate to EPG");
-		TestInitization.setApplicationHubPage(2);
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+	public void goToEpgChannelScreen(boolean usingHotKey) throws InterruptedException {
 
+		reports.log(LogStatus.PASS, "Navigate to EPG");
+		if (usingHotKey) {
+
+			TestInitization.sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			TestInitization.setApplicationHubPage(2);
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
 	}
 
-	public boolean validationEpgCss(HashMap<String, String> currentEpgSetting) throws InterruptedException {
+	public boolean validationEpgCss(HashMap<String, String> currentEpgSetting, boolean usingHotKey)
+			throws InterruptedException {
 
 		String epgType = currentEpgSetting.get("epgType");
 		String epgBackground = currentEpgSetting.get("epgBackground");
 		String epgFont = currentEpgSetting.get("epgFont");
 
 		// First go to epg channel screen
-		goToEpgChannelScreen();
+		goToEpgChannelScreen(usingHotKey);
 
 		String expectedFontSize = null;
 		String expectedFontFamily = null;
@@ -269,11 +277,6 @@ public class EpgScreen extends TestInitization {
 				if (expectedFontSize.equalsIgnoreCase(we.getCssValue("font-size"))
 						&& expectedFontFamily.equalsIgnoreCase(we.getCssValue("font-family"))
 						&& expectedFontColor.equalsIgnoreCase(we.getCssValue("color"))) {
-					reports.log(LogStatus.INFO,
-							"Css  matched For " + we.getText() + " Title Actual Font-Size, font, font-family, color : "
-									+ we.getCssValue("font-size") + "," + we.getCssValue("font-family") + ","
-									+ we.getCssValue("color") + " Expected : font-size, font-family, color "
-									+ expectedFontSize + "," + expectedFontFamily + "," + expectedFontColor);
 				} else {
 					throw new SkipException("CSS not Matched Actual Font-Size,font, font-family, color : "
 							+ we.getCssValue("font-size") + "," + we.getCssValue("font-family") + ","
@@ -338,7 +341,7 @@ public class EpgScreen extends TestInitization {
 			currentEpgSetting.put("epgType", epgType);
 			currentEpgSetting.put("epgBackground", epgBackground);
 			currentEpgSetting.put("epgFont", epgFont);
-			reports.log(LogStatus.PASS, "Change EPG Settings");
+			reports.log(LogStatus.PASS, "EPG Settings Changed");
 			return currentEpgSetting;
 
 		}
@@ -356,16 +359,14 @@ public class EpgScreen extends TestInitization {
 			throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
-
-		reports.log(LogStatus.PASS, "Validation for EPG channel setting");
 		epgScreen.goToEpgSettingScreen();
-
 		boolean validationResult = false;
 		if (epgScreen.epgType.getText().equalsIgnoreCase(epgType)
 				&& epgScreen.epgBackground.getText().equalsIgnoreCase(epgBackgroung)
 				&& epgScreen.epgFont.getText().equalsIgnoreCase(epgFont)) {
 			validationResult = true;
 		}
+		reports.log(LogStatus.PASS, "Validation for EPG channel setting");
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		return validationResult;
 	}

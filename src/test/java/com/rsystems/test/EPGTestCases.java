@@ -34,7 +34,7 @@ public class EPGTestCases extends TestInitization {
 		defaultSetting.put("epgFont", "STANDAARD");
 
 		
-		if (epgScreen.validationEpgCss(defaultSetting)) {
+		if (epgScreen.validationEpgCss(defaultSetting , false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -61,7 +61,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GRIJS"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GRIJS"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -88,7 +88,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -115,7 +115,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GEEL"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GEEL"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -141,7 +141,7 @@ public class EPGTestCases extends TestInitization {
 
 		// change EPG Screen to Seniour_groen_Grijs and validation
 		EpgScreen epgScreen = new EpgScreen(driver);
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "STANDAARD"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "STANDAARD"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -168,7 +168,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GEEL"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GEEL"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -194,7 +194,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GRIJS"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GRIJS"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -221,7 +221,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "STANDAARD"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "STANDAARD"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -247,7 +247,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "STANDAARD"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "STANDAARD"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -273,7 +273,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "GRIJS"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "GRIJS"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -300,7 +300,7 @@ public class EPGTestCases extends TestInitization {
 		
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "GEEL"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "GROEN", "GEEL"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -326,7 +326,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GRIJS"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GRIJS"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -352,7 +352,7 @@ public class EPGTestCases extends TestInitization {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		// change EPG Screen to Seniour_groen_Grijs and validation
-		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GEEL"))) {
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GEEL"), false)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
@@ -364,4 +364,143 @@ public class EPGTestCases extends TestInitization {
 		// Back EPG setting to Standard
 		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 	}
+	
+	
+	@Test
+	public void validateDefaultEpgSetting() throws InterruptedException{
+		
+		EpgScreen epgScreen = new EpgScreen(driver);
+		
+		if(epgScreen.validateEpgChannelSetting("STANDAARD", "STANDAARD", "STANDAARD")){
+			reports.log(LogStatus.PASS, "Verification of default Epg setting successfully passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of default Epg setting successfully passed");
+		}
+		
+		else{
+			reports.log(LogStatus.FAIL, "Verification of default Epg setting failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of default Epg setting successfully passed");
+		}
+		
+		
+	}
+	
+	/**
+	 * TC_ID = epg_006
+	 * @throws InterruptedException
+	 */
+	
+	@Test
+	public void tc_epg_006_epg_scenior_default() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "STANDAARD"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+	
+	
+	@Test
+	public void tc_epg_007_epg_scenior_font_grijs() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GRIJS"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+	
+	@Test
+	public void tc_epg_008_epg_scenior_font_geel() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GEEL"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+	
+
+	@Test
+	public void tc_epg_009_epg_scenior_groen_standard() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+
+	@Test
+	public void tc_epg_010_epg_scenior_groen_grijs() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GRIJS"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+
+	@Test
+	public void tc_epg_011_epg_scenior_groen_geel() throws InterruptedException{
+	
+		EpgScreen epgScreen = new EpgScreen(driver);
+		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GEEL"), true)) {
+			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		} else {
+			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			System.out.println("Verification of EPG changes OK");
+		}
+		// Back EPG setting to Standard
+		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
+		
+	}
+
+
+	
 }

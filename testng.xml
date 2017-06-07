@@ -44,6 +44,13 @@
 					<include name="strakGreenYellowEpgValidation" />
 					<include name="strakStandardGrayEpgValidation" />
 					<include name="strakStandardYellowEpgValidation" />
+						<include name="tc_epg_006_epg_scenior_default" />
+						<include name="tc_epg_007_epg_scenior_font_grijs" />
+						<include name="tc_epg_008_epg_scenior_font_geel" />
+						<include name="tc_epg_009_epg_scenior_groen_standard" />
+						<include name="tc_epg_010_epg_scenior_groen_grijs" />
+						<include name="tc_epg_011_epg_scenior_groen_geel" />
+						
 				</methods>
 			</class>
 		</classes>
@@ -95,7 +102,4 @@
 			</class>
 		</classes>
 	</test>
-
-
-
 </suite>
