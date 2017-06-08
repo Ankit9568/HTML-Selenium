@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.testng.SkipException;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -42,6 +43,12 @@ public class EpgScreen extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.screenBackgroundColor)
 	public WebElement screenBackgroundColor;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.confirmButton)
+	public WebElement epgConfirmBtn;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.cancleButton)
+	public WebElement epgCancleBtn;
 
 	public void goToEpgSettingScreen() throws InterruptedException {
 
@@ -287,10 +294,24 @@ public class EpgScreen extends TestInitization {
 		}
 		return true;
 	}
+	
+	
+	
+	public void shuffleEpgSetting(String epgType, String epgBackground, String epgFont) throws InterruptedException{
+		
 
-	public HashMap<String, String> changeEpgSetting(String epgType, String epgBackground, String epgFont)
-			throws InterruptedException {
-
+		changeEpgDropDownValue(epgType, epgBackground,epgFont );
+		
+		// Cancel change setting 
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+	}
+	
+	
+	private void changeEpgDropDownValue(String epgType, String epgBackground, String epgFont) throws InterruptedException{
+	
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
 
@@ -325,9 +346,20 @@ public class EpgScreen extends TestInitization {
 			MoveCount--;
 		}
 
+		
+	}
+	
+	public HashMap<String, String> changeEpgSetting(String epgType, String epgBackground, String epgFont)
+			throws InterruptedException {
+
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgSettingScreen();
+		changeEpgDropDownValue(epgType, epgBackground,epgFont );
+
+		// Save setting 
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		
 		// Validation for Setting saved successfully or not
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 
@@ -407,6 +439,63 @@ public class EpgScreen extends TestInitization {
 
 			}
 
+		}
+	}
+
+	public void verifyOptionInEpg(String[] optionArr, WebElement we) throws InterruptedException {
+
+		int maxMoveCount = 3;
+		String actualVal = "";
+		for (String option : optionArr) {
+			maxMoveCount = 3;
+			while (maxMoveCount > 0) {
+
+				actualVal = actualVal + we.getText() + ";";
+				if (we.getText().equalsIgnoreCase(option)) {
+					reports.log(LogStatus.PASS, option + " is visible on webpage");
+					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+					actualVal="";
+					break;
+				}
+				sendKeyMultipleTimes("RIGHT", 1, 1000);
+				maxMoveCount--;
+			}
+
+			if (maxMoveCount == 0) {
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				throw new SkipException("Option is not available in EPG Type Expected Option: " + option
+						+ " Actually Found :" + actualVal);
+			}
+		}
+	}
+
+	public void confirmBtnExist() {
+
+		try {
+			if (epgConfirmBtn.isDisplayed()) {
+				reports.log(LogStatus.PASS, "Confirm button is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				FailTestCase("Confirm button is not visible on webpage");
+			}
+
+		} catch (NoSuchElementException e) {
+			FailTestCase("Confirm button is not visible on webpage");
+		}
+	}
+
+	public void cancleBtnExist() {
+
+		try {
+			if (epgCancleBtn.isDisplayed()) {
+				reports.log(LogStatus.PASS, "Cancle button is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				FailTestCase("Cancle button is not visible on webpage");
+			}
+
+		} catch (NoSuchElementException e) {
+			FailTestCase("Cancle button is not visible on webpage");
 		}
 	}
 }
