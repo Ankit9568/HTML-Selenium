@@ -26,6 +26,8 @@ public class ObjectRepository {
 		public static final String epgBackground = "epgBackground";
 		public static final String epgFont = "epgFont";
 		public static final String screenBackgroundColor = "//link[@href = './resources/components/epg_custom/css/parentgreen.css']";
+		public static final String cancleButton = "item_4";
+		public static final String confirmButton = "item_3";
 	}
 
 	public static class LibraryElements {
