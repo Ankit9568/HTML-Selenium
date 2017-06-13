@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,7 +14,6 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -23,12 +21,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -60,6 +58,9 @@ public class TestInitization {
 		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\"
 				+ extentReportFileName;
 
+		
+		
+		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -274,11 +275,9 @@ public class TestInitization {
 
 	}
 
-	
-
 	public static void sendUnicodeMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
-
+		
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
 
@@ -295,11 +294,11 @@ public class TestInitization {
 		}
 
 	}
-
 	
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
 
+		
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
 
@@ -308,6 +307,7 @@ public class TestInitization {
 		Actions action = new Actions(driver);
 
 		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
+			
 			
 			action.sendKeys(Keys.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
@@ -513,6 +513,12 @@ public class TestInitization {
 			}
 		}
 		return null;
+	}
+	
+	public void FailTestCase(String reason){
+		Assert.fail(reason);
+		reports.log(LogStatus.FAIL,reason);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	}
 
 }

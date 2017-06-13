@@ -1,5 +1,7 @@
 package com.rsystems.pages;
 
+import static org.testng.Assert.assertThrows;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.SkipException;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -25,30 +26,60 @@ import com.rsystems.utils.Unicode;
 
 public class EpgScreen extends TestInitization {
 
-	WebDriver driver;
+	static WebDriver driver;
 
 	public EpgScreen(WebDriver driver) {
-		this.driver = driver;
+		EpgScreen.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.epgType)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.epgType)
 	public WebElement epgType;
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.epgFont)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.epgFont)
 	public WebElement epgFont;
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.epgBackground)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.epgBackground)
 	public WebElement epgBackground;
 
-	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.screenBackgroundColor)
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgSettingScreen.screenBackgroundColor)
 	public WebElement screenBackgroundColor;
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.confirmButton)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.confirmButton)
 	public WebElement epgConfirmBtn;
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.cancleButton)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.cancleButton)
 	public WebElement epgCancleBtn;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focousElement)
+	public WebElement focusElemntInEpg;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.displayChannelTitle)
+	public WebElement displayChannelTitle;
+
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.displayChannelDescription)
+	public WebElement displayChannelDescription;
+
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.displayChannelprogressbar)
+	public WebElement displayChannelprogressbar;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.displayChannelStartTime)
+	public WebElement displayChannelStartTime;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.displayChannelEndTime)
+	public WebElement displayChannelEndTime;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.displayChannelCallLetterIcon)
+	public WebElement displayChannelCallLetterIcon;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.cutvIcon)
+	public WebElement cutvIcon;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focousElementProrgamImg)
+	public WebElement focousElementProrgamImg;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.diplayChannelDescImg)
+	public WebElement diplayProgramDescImg;
 
 	public void goToEpgSettingScreen() throws InterruptedException {
 
@@ -294,29 +325,27 @@ public class EpgScreen extends TestInitization {
 		}
 		return true;
 	}
-	
-	
-	
-	public void shuffleEpgSetting(String epgType, String epgBackground, String epgFont) throws InterruptedException{
-		
 
-		changeEpgDropDownValue(epgType, epgBackground,epgFont );
-		
-		// Cancel change setting 
+	public void shuffleEpgSetting(String epgType, String epgBackground, String epgFont) throws InterruptedException {
+
+		changeEpgDropDownValue(epgType, epgBackground, epgFont);
+
+		// Cancel change setting
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		
+
 	}
-	
-	
-	private void changeEpgDropDownValue(String epgType, String epgBackground, String epgFont) throws InterruptedException{
-	
+
+	private void changeEpgDropDownValue(String epgType, String epgBackground, String epgFont)
+			throws InterruptedException {
+
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
 
 		int MoveCount = 4;
 		// For EPG Type
+		reports.log(LogStatus.PASS, "Trying to set the Epg Type");
 		System.out.println("Trying to set the Epg Type");
 		while ((!epgScreen.epgType.getText().equalsIgnoreCase(epgType)) && MoveCount > 0) {
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
@@ -328,7 +357,8 @@ public class EpgScreen extends TestInitization {
 		System.out.println(" Trying to set the EPG background");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		MoveCount = 4;
-
+		
+		reports.log(LogStatus.PASS, "Trying to set the EPG background");
 		while ((!epgScreen.epgBackground.getText().equalsIgnoreCase(epgBackground)) && MoveCount > 0) {
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -339,27 +369,25 @@ public class EpgScreen extends TestInitization {
 		System.out.println(" Trying to set the EPG font");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		MoveCount = 4;
-
+		reports.log(LogStatus.PASS, "Trying to set the EPG font");
 		while ((!epgScreen.epgFont.getText().equalsIgnoreCase(epgFont)) && MoveCount > 0) {
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			MoveCount--;
 		}
 
-		
 	}
-	
+
 	public HashMap<String, String> changeEpgSetting(String epgType, String epgBackground, String epgFont)
 			throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
-		epgScreen.goToEpgSettingScreen();
-		changeEpgDropDownValue(epgType, epgBackground,epgFont );
+		changeEpgDropDownValue(epgType, epgBackground, epgFont);
 
-		// Save setting 
+		// Save setting
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		
+
 		// Validation for Setting saved successfully or not
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 
@@ -454,7 +482,7 @@ public class EpgScreen extends TestInitization {
 				if (we.getText().equalsIgnoreCase(option)) {
 					reports.log(LogStatus.PASS, option + " is visible on webpage");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-					actualVal="";
+					actualVal = "";
 					break;
 				}
 				sendKeyMultipleTimes("RIGHT", 1, 1000);
@@ -497,5 +525,207 @@ public class EpgScreen extends TestInitization {
 		} catch (NoSuchElementException e) {
 			FailTestCase("Cancle button is not visible on webpage");
 		}
+	}
+
+	public boolean validateEPGProgramSetting(HashMap<String, String> currentEpgSetting, boolean usingHotKey)
+			throws InterruptedException {
+
+		String epgType = currentEpgSetting.get("epgType");
+		String epgBackground = currentEpgSetting.get("epgBackground");
+		String epgFont = currentEpgSetting.get("epgFont");
+		String expectedChannelCount = null;
+		String expectedFontColor = null;
+
+		// First go to epg channel screen
+		goToEpgChannelScreen(usingHotKey);
+
+		Thread.sleep(5000);
+
+		if (epgType.equalsIgnoreCase("STANDAARD") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("STANDAARD")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("groen")
+				&& epgFont.equalsIgnoreCase("Grijs")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Grijs", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Grijs",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("groen")
+				&& epgFont.equalsIgnoreCase("Geel")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Geel", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Geel", "No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("groen")
+				&& epgFont.equalsIgnoreCase("STANDAARD")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_groen_Standard",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("STANDAARD")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_Standard",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("GEEL")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_geel", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_geel",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("Senior") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("GRIJS")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_grijs", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Seniour_Standard_grijs",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("STANDAARD")) {
+
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Stark_Standard_Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Stark_Standard_Standard",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("GROEN")
+				&& epgFont.equalsIgnoreCase("STANDAARD")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_Standard",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("GROEN")
+				&& epgFont.equalsIgnoreCase("GRIJS")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_grijs", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_grijs", "No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("GROEN")
+				&& epgFont.equalsIgnoreCase("GEEL")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_geel", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Strak_groen_geel", "No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("GRIJS")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_grijs", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_grijs",
+					"No_of_Channel");
+		}
+
+		else if (epgType.equalsIgnoreCase("STRAK") && epgBackground.equalsIgnoreCase("STANDAARD")
+				&& epgFont.equalsIgnoreCase("GEEL")) {
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_geel", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_geel",
+					"No_of_Channel");
+		}
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> listChnl = driver.findElements(By.xpath("//ul[contains(@class,'channelRow')]"));
+
+		if ((listChnl.size() + "").equalsIgnoreCase(expectedChannelCount)) {
+			reports.log(LogStatus.INFO,
+					"Row count matched Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
+			System.out.println(
+					"Expected Channel Count match Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
+		} else {
+			throw new SkipException("Expected Channel Count Unmatch Actual: " + listChnl.size() + " Expected : "
+					+ expectedChannelCount);
+		}
+
+		// Validate title of Focus program
+
+		if (focusElemntInEpg.getText().equalsIgnoreCase(displayChannelTitle.getText())) {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			reports.log(LogStatus.PASS, "Display program title and focus program title are same");
+		}
+
+		else {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			throw new SkipException("Display program title and focus program title are not same");
+		}
+		// Validate focused program details
+		
+		reports.log(LogStatus.PASS, "Change focus to another channel");
+		isDisplayed(displayChannelDescription, "Focused program details");
+
+		// focused another program
+		sendKeyMultipleTimes("NUMPAD5", 1, 4000);
+
+		// validate again description
+		isDisplayed(displayChannelDescription, "Focused program details");
+
+		// validate call latter
+		isDisplayed(displayChannelCallLetterIcon, "Call Letter Icon");
+
+		// Validate progress bar
+		isDisplayed(displayChannelprogressbar, "Progress bar");
+
+		// Start Time validation
+		isDisplayed(displayChannelStartTime, "Start time Icon");
+
+		// End Time validation
+		isDisplayed(displayChannelEndTime, "End time Icon");
+
+		// CUTV icon
+		isDisplayed(cutvIcon, "Cutv Icon");
+
+		// Match the program logo and display logo image source are same
+
+		if (diplayProgramDescImg.getAttribute("src").equalsIgnoreCase(focousElementProrgamImg.getAttribute("src"))) {
+
+			
+			reports.log(LogStatus.PASS, "Display program image and focus program image source are same");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+
+		} else {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			reports.log(LogStatus.FAIL, "Display program image and focus program image source are not same");
+
+		}
+
+		// Validation for font color
+		if (focusElemntInEpg.getCssValue("color").equalsIgnoreCase(expectedFontColor)) {
+			
+			reports.log(LogStatus.PASS, "Font color is matched");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+
+		else {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			reports.log(LogStatus.FAIL, "Font color is not matched");
+
+		}
+
+		return true;
+	}
+
+	public void isDisplayed(WebElement we, String webElementName) {
+
+		try {
+			if (we.isDisplayed()) {
+
+				reports.log(LogStatus.PASS, webElementName + " is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				reports.log(LogStatus.INFO, webElementName + " exist on webpage but it is not visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+
+			}
+		} catch (NoSuchElementException e) {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			throw new SkipException(webElementName + " is not found on webpage");
+
+		}
+
 	}
 }
