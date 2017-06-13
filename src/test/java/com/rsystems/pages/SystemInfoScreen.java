@@ -134,6 +134,19 @@ public  boolean validationSystemInfoScreen() throws InterruptedException
 		}	
 		return true;		
 }
+public void navigateToSytemScreen() throws InterruptedException
+{
+	reports.log(LogStatus.INFO, "Navigate to the Settings Screen");
+	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
+	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
+	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
+	TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
+	
+    reports.log(LogStatus.INFO, "Navigate to the System Screen");
+	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+}
 }	
 	
 

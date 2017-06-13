@@ -82,4 +82,15 @@ public class ObjectRepository {
 	public static class FilmsScreen {
 		public static final String highlighedMovie = "//li[@class='focusedItem'][2]/span";
 	}
+	
+	public static class LanguageChange
+	{
+		public static final String position="pipPosition";
+		public static final String menuItem="leftLabel";
+		public static final String confirm="item_1";
+		public static final String itemHeading="item_1";
+		public static final String heading="settingHeading";
+		public static final String languagedumenu="item_0";
+	
+	}
 }
