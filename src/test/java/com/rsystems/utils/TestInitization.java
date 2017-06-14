@@ -58,9 +58,6 @@ public class TestInitization {
 		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\"
 				+ extentReportFileName;
 
-		
-		
-		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -101,7 +98,7 @@ public class TestInitization {
 		}
 
 		log.info("Logger Info:: Going out of Setup Method");
-		
+
 	}
 
 	@BeforeMethod
@@ -163,6 +160,7 @@ public class TestInitization {
 			e.printStackTrace();
 		}
 
+		captureFilePath = "./screenshots\\" + captureFileName;
 		return captureFilePath;
 
 	}
@@ -277,7 +275,7 @@ public class TestInitization {
 
 	public static void sendUnicodeMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
-		
+
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
 
@@ -286,7 +284,7 @@ public class TestInitization {
 		Actions action = new Actions(driver);
 
 		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
-			
+
 			action.sendKeys(String.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
 			// reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -294,11 +292,10 @@ public class TestInitization {
 		}
 
 	}
-	
+
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
 
-		
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
 
@@ -307,8 +304,7 @@ public class TestInitization {
 		Actions action = new Actions(driver);
 
 		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
-			
-			
+
 			action.sendKeys(Keys.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
 			// reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -483,6 +479,8 @@ public class TestInitization {
 			capability.setCapability("browserStartWindow", "*");
 			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 			driver = new RemoteWebDriver(new URL("http://10.67.181.112:9517"), capability);
+			// driver = new RemoteWebDriver(new
+			// URL("http://10.67.196.111:9517"), capability);
 			selectWindow("http");
 			// override URL in case of HTV
 			url = "http://hpg.nat.myrio.net/boot_webkit.html";
@@ -514,10 +512,10 @@ public class TestInitization {
 		}
 		return null;
 	}
-	
-	public void FailTestCase(String reason){
+
+	public void FailTestCase(String reason) {
 		Assert.fail(reason);
-		reports.log(LogStatus.FAIL,reason);
+		reports.log(LogStatus.FAIL, reason);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	}
 
