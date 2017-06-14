@@ -1,7 +1,5 @@
 package com.rsystems.pages;
 
-import static org.testng.Assert.assertThrows;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import org.testng.SkipException;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.utils.ProximusContext;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
@@ -81,20 +80,38 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.diplayChannelDescImg)
 	public WebElement diplayProgramDescImg;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusElementProgramTiminig)
+	public WebElement focusElementProgramTime;
+	
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
 		reports.log(LogStatus.PASS, "Navigate to the Setting Screen");
-		TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
-				TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+		System.out.println("Current Language Set " + ProximusContext.getCurrentLanguage().toUpperCase().trim());
+		switch(ProximusContext.getCurrentLanguage().toUpperCase().trim()){
+		
+		case "NL" :	TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+			reports.log(LogStatus.PASS, "Step : Navigate to the System Screen");
+			TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "System", "name_nl"));
 
-		reports.log(LogStatus.PASS, "Step : Navigate to the System Screen");
-		TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
-				TestInitization.getExcelKeyValue("screenTitles", "System", "name_nl"));
+			reports.log(LogStatus.PASS, "Step : Navigate to the EPG Setting Screen");
+			TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "epgSetting", "name_nl"));
+			break;
+		case "FR" :
+			TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_fr"));
+			reports.log(LogStatus.PASS, "Step : Navigate to the System Screen");
+			TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "System", "name_fr"));
 
-		reports.log(LogStatus.PASS, "Step : Navigate to the EPG Setting Screen");
-		TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
-				TestInitization.getExcelKeyValue("screenTitles", "epgSetting", "name_nl"));
+			reports.log(LogStatus.PASS, "Step : Navigate to the EPG Setting Screen");
+			TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "epgSetting", "name_fr"));
+			break;
+		}
 	}
 
 	public void goToEpgChannelScreen(boolean usingHotKey) throws InterruptedException {
@@ -128,7 +145,7 @@ public class EpgScreen extends TestInitization {
 		String expectedFontColor = null;
 		String expectedChannelCount = null;
 		String expectedBackgroundColor = null;
-
+		
 		if (epgType.equalsIgnoreCase("STANDAARD") && epgBackground.equalsIgnoreCase("STANDAARD")
 				&& epgFont.equalsIgnoreCase("STANDAARD")) {
 
@@ -281,7 +298,15 @@ public class EpgScreen extends TestInitization {
 			expectedBackgroundColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_geel",
 					"BackgroundColor");
 		}
+		else if(epgType.equalsIgnoreCase("défaut") && epgBackground.equalsIgnoreCase("défaut")
+				&& epgFont.equalsIgnoreCase("défaut")) {
 
+			expectedFontSize = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_size");
+			expectedFontFamily = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_family");
+			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "color");
+			expectedChannelCount = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "No_of_Channel");
+			expectedBackgroundColor = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "BackgroundColor");
+		}
 		expectedChannelCount = String.valueOf(expectedChannelCount.charAt(0));
 
 		driver.switchTo().defaultContent();
@@ -294,7 +319,7 @@ public class EpgScreen extends TestInitization {
 		List<WebElement> listChnl = driver.findElements(By.xpath("//ul[contains(@class,'channelRow')]"));
 
 		if ((listChnl.size() + "").equalsIgnoreCase(expectedChannelCount)) {
-			reports.log(LogStatus.INFO,
+			reports.log(LogStatus.PASS,
 					"Row count matched Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
 			System.out.println(
 					"Expected Channel Count match Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
@@ -445,7 +470,7 @@ public class EpgScreen extends TestInitization {
 				throw new SkipException("Verification of background color is failed");
 			} catch (NoSuchElementException e) {
 				// Means css file not exist
-				reports.log(LogStatus.INFO,
+				reports.log(LogStatus.PASS,
 						"Verification of background color is passed Actual color : Blue  and expected color : blue");
 
 			}
@@ -457,7 +482,7 @@ public class EpgScreen extends TestInitization {
 
 			try {
 				epgScreen.screenBackgroundColor.isDisplayed();
-				reports.log(LogStatus.INFO,
+				reports.log(LogStatus.PASS,
 						"Verification of background color is passed Actual color : Green  and expected color : Green");
 
 			} catch (NoSuchElementException e) {
@@ -633,7 +658,7 @@ public class EpgScreen extends TestInitization {
 		List<WebElement> listChnl = driver.findElements(By.xpath("//ul[contains(@class,'channelRow')]"));
 
 		if ((listChnl.size() + "").equalsIgnoreCase(expectedChannelCount)) {
-			reports.log(LogStatus.INFO,
+			reports.log(LogStatus.PASS,
 					"Row count matched Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
 			System.out.println(
 					"Expected Channel Count match Actual: " + listChnl.size() + " Expected : " + expectedChannelCount);
@@ -717,7 +742,7 @@ public class EpgScreen extends TestInitization {
 				reports.log(LogStatus.PASS, webElementName + " is visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
-				reports.log(LogStatus.INFO, webElementName + " exist on webpage but it is not visible on webpage");
+				reports.log(LogStatus.PASS, webElementName + " exist on webpage but it is not visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 			}
@@ -727,5 +752,131 @@ public class EpgScreen extends TestInitization {
 
 		}
 
+	}
+
+	public void verifyDefaultType() throws InterruptedException {
+		String defaultEPGType;
+		if (ProximusContext.getCurrentLanguage() == "NL")
+		{
+			defaultEPGType = "STANDAARD";
+		}
+		else
+		{
+			defaultEPGType = "défaut";
+		}
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		if(epgType.getText().equalsIgnoreCase(defaultEPGType))
+		{
+			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			String epg_backGround = epgBackground.getText();
+			reports .log(LogStatus.PASS, "Try to change EPG Background value");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			sendKeyMultipleTimes("RIGHT", 1, 1000);
+			if (epg_backGround.equalsIgnoreCase(epgBackground.getText()))
+			{
+				reports.log(LogStatus.PASS, "Not be able to change the background color value");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+			else
+			{
+				reports.log(LogStatus.FAIL, "Able to change the background color value");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			String font_color = epgFont.getText();
+			reports .log(LogStatus.PASS, "Try to change Font Color value");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			sendKeyMultipleTimes("RIGHT", 1, 1000);
+			if (font_color.equalsIgnoreCase(epgFont.getText()))
+			{
+				reports.log(LogStatus.PASS, "Not be able to change the font color value");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+			else
+			{
+				reports.log(LogStatus.FAIL, "Able to change the font color value");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+		}
+	}
+
+	public void verifyEPGScreenDisplayed() {
+		
+		try {
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			if (focusElemntInEpg.isDisplayed()) {
+				reports.log(LogStatus.PASS, "EPG Screen is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				FailTestCase("EPG Screen is not visible on webpage");
+			}
+
+		} catch (NoSuchElementException e) {
+			FailTestCase("EPG Screen is not visible on webpage");
+		}
+		
+	}
+
+	public void verifyNavigationinEPG() throws InterruptedException {
+		// TODO Auto-generated method stub
+		verifyNavigationHorizontally();
+		verifyNavigationVertically();
+	}
+
+	private void verifyNavigationVertically() throws InterruptedException {
+		String prevTitle = focusElementProgramTime.getText();
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
+		{
+			reports.log(LogStatus.PASS, "Navigation is properly on Down Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			prevTitle = focusElementProgramTime.getText();
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, "Navigation is not properly on Down Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
+		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
+		{
+			reports.log(LogStatus.PASS, "Navigation is properly on Up Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			prevTitle = focusElementProgramTime.getText();
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, "Navigation is not properly on Up Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		
+	}
+
+	private void verifyNavigationHorizontally() throws InterruptedException {
+		String prevTitle = focusElementProgramTime.getText();
+		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
+		{
+			reports.log(LogStatus.PASS, "Navigation is properly on Right Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			prevTitle = focusElementProgramTime.getText();
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, "Navigation is not properly on Right Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
+		{
+			reports.log(LogStatus.PASS, "Navigation is properly on Left Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			prevTitle = focusElementProgramTime.getText();
+		}
+		else
+		{
+			reports.log(LogStatus.FAIL, "Navigation is not properly on Left Side");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
 	}
 }

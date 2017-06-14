@@ -42,6 +42,7 @@ public class ObjectRepository {
 		public static final String cutvIcon = "//span[@class='channel-cutv']";
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[@class='programLogo']/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
+		public static final String focusElementProgramTiminig =  "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
 	}
 	
 	public static class LibraryElements {
@@ -50,7 +51,10 @@ public class ObjectRepository {
 
 	public static class PIPElements {
 		public static final String pipPositonIDElement = "pipPosition";
-		public static final String currentPIPClassElement = "toggle";
+		public static final String currentPIPClassElement = "//*[@class='logo-wrapper toggle']	";
+		public static final String pipHeadingElement = "pipHeading";
+		public static final String confirmElement = "//*[@id='item_1']";
+		public static final String cancelElement = "//*[@id='item_2']";
 	}
 
 	public static class RecordingElements {
