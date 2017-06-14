@@ -107,7 +107,7 @@ public class TestInitization {
 		log.info("Testcase name is :::::: " + method.getName());
 		System.out.println("Testcase name is :::::: " + method.getName());
 		currentMethodName = method.getName();
-		reports.log(LogStatus.INFO, "Start Step : Start with the focus on HUB Text Line");
+		reports.log(LogStatus.PASS, "Start Step : Start with the focus on HUB Text Line");
 		TestInitization.setApplicationHubPage(2);
 
 	}
@@ -115,7 +115,7 @@ public class TestInitization {
 	@AfterMethod()
 	public void afterMethodCalled() throws InterruptedException {
 
-		reports.log(LogStatus.INFO, "END Step : Leave the test case with focus on HUB Text Line");
+		reports.log(LogStatus.PASS, "END Step : Leave the test case with focus on HUB Text Line");
 
 		TestInitization.setApplicationHubPage(2);
 
