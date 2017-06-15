@@ -37,18 +37,16 @@ public class SystemInfoScreen extends TestInitization
 	@FindBy(how = How.ID, using = ObjectRepository.VerifySystemInfoScreen.hpgVersion)
 	public WebElement hpgVersion;
 
-	
-	
 public void goTosytemInfoScreen() throws InterruptedException 
 {
-	reports.log(LogStatus.INFO, "Step 2: Navigate to the Settings Screen");
+	reports.log(LogStatus.PASS, "Step 2: Navigate to the Settings Screen");
 	TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
 	
-	reports.log(LogStatus.INFO, "Step 3: Navigate to the System Screen");
+	reports.log(LogStatus.PASS, "Step 3: Navigate to the System Screen");
 	TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "System", "name_nl"));
 	
 	
-	reports.log(LogStatus.INFO, "Step 4: Navigate to the Systeminfo Screen");
+	reports.log(LogStatus.PASS, "Step 4: Navigate to the Systeminfo Screen");
 	TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "SystemInfo", "name_nl"));
 	
 } 
@@ -136,13 +134,13 @@ public  boolean validationSystemInfoScreen() throws InterruptedException
 }
 public void navigateToSytemScreen() throws InterruptedException
 {
-	reports.log(LogStatus.INFO, "Navigate to the Settings Screen");
+	reports.log(LogStatus.PASS, "Navigate to the Settings Screen");
 	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
 	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
 	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
 	TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
 	
-    reports.log(LogStatus.INFO, "Navigate to the System Screen");
+    reports.log(LogStatus.PASS, "Navigate to the System Screen");
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);

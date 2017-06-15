@@ -1,17 +1,13 @@
 package com.rsystems.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.SkipException;
-
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.utils.ProximusContext;
 import com.rsystems.utils.TestInitization;
 
 public class ChangePreference extends TestInitization
@@ -47,14 +43,14 @@ public class ChangePreference extends TestInitization
 	{
 		    SystemInfoScreen systeminfo = new SystemInfoScreen(driver);
 		    systeminfo.navigateToSytemScreen();
-			reports.log(LogStatus.INFO, "Step 3: Navigate to the Preference Screen");
+			reports.log(LogStatus.PASS, "Step 3: Navigate to the Preference Screen");
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 	}
 	public void languageChange(String language) throws InterruptedException
     {
-		reports.log(LogStatus.INFO, "Step 3: Navigate to the Language Change Screen");	
+		reports.log(LogStatus.PASS, "Step 3: Navigate to the Language Change Screen");	
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		String currentStatusLanguage=position.getText();
@@ -65,6 +61,7 @@ public class ChangePreference extends TestInitization
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
 			System.out.println("title "+confirm.getText());
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+			ProximusContext.setLanguage(language);
 		}
 		else
 		{

@@ -373,7 +373,7 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verifyOptionInEpg(optionarrForFont, epgScreen.epgFont);
 
 		// Verification for cancle button
-		epgScreen.cancleBtnExist();
+		epgScreen.cancelBtnExist();
 
 		// Verification for confirm button
 		epgScreen.confirmBtnExist();
@@ -676,7 +676,6 @@ public class EPGTestCases extends TestInitization {
 			System.out.println("verifyLanguageChangedOrNot OK");
 	    	
 	    }
-	    
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
 		// Validation for epg type
@@ -694,30 +693,23 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verifyOptionInEpg(optionarrForFont, epgScreen.epgFont);
 
 		// Verification for cancel button
-		epgScreen.cancleBtnExist();
-
+		epgScreen.cancelBtnExist();
 		// Verification for confirm button
 		epgScreen.confirmBtnExist();
 		//default LanguageSet
 		setApplicationHubPage(1);
 		pref.navigateToMyPreference();
-	    if(pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl")))
-	    {
+		if(pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl")))
+		{
 	    	reports.log(LogStatus.PASS, "Setting of Language to Dutch has Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			System.out.println("verifyLanguageChangedOrNot OK");
 	    }
 	    else
 	    {
 	    	reports.log(LogStatus.FAIL, "Setting of Language to Dutch has Failed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			System.out.println("verifyLanguageChangedOrNot OK");
-	    }   
-
+	    }
 	}
-
-	
-	
 	@Test 
 	public void tc_epg_hot_key() throws InterruptedException{
 		EpgScreen epgScreen =new EpgScreen(driver);
@@ -738,7 +730,6 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verifyDefaultType();
 		//Navigate to EPG Guide and Verify epg Setting;
 		reports.log(LogStatus.PASS, "Navigate to EPG and verify settings");
-		System.out.println(epgSettings);
 		if (epgScreen.validationEpgCss(epgSettings, true)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());

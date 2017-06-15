@@ -1,7 +1,5 @@
 package com.rsystems.test;
 
-import java.util.Locale.LanguageRange;
-
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;

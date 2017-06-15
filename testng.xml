@@ -43,25 +43,24 @@
 <!-- 					<include name="strakGreenYellowEpgValidation" /> -->
 <!-- 					<include name="strakStandardGrayEpgValidation" /> -->
 <!-- 					<include name="strakStandardYellowEpgValidation" /> -->
-					<include name="tc_epg_customize_color_patterns" />
+<!-- 					<include name="tc_epg_006_epg_scenior_default" /> -->
+<!-- 					<include name="tc_epg_012_epg_strak_default" /> -->
 					<include name="tc_epg_001_epg_setting_UI_NL" />
+					<include name="tc_epg_002_epg_setting_UI_FR" />
 					<include name="tc_epg_003_epg_confirmation_setting" />
 					<include name="tc_epg_004_epg_cancel_setting" />
-					<include name="tc_epg_006_epg_scenior_default" />
+					<include name="tc_epg_005_epg_setting_UI_Default_options" />
 					<include name="tc_epg_007_epg_scenior_font_grijs" />
 					<include name="tc_epg_008_epg_scenior_font_geel" />
 					<include name="tc_epg_009_epg_scenior_groen_standard" />
 					<include name="tc_epg_010_epg_scenior_groen_grijs" />
 					<include name="tc_epg_011_epg_scenior_groen_geel" />
-					<include name="tc_epg_012_epg_strak_default" />
 					<include name="tc_epg_013_epg_strak_font_grijs" />
 					<include name="tc_epg_014_epg_strak_font_geel" />
 					<include name="tc_epg_015_epg_strak_groen_standard" />
 					<include name="tc_epg_016_epg_strak_groen_grijs" />
 					<include name="tc_epg_017_epg_strak_groen_geel" />
 					<include name="tc_epg_customize_color_patterns" />
-					<include name="tc_epg_002_epg_setting_UI_FR" />
-					<include name="tc_epg_005_epg_setting_UI_Default_options" />
 					<include name="tc_epg_hot_key" />
 				</methods>
 			</class>
@@ -98,11 +97,11 @@
 		<classes>
 			<class name="com.rsystems.test.PIPTestCases">
 				<methods>
+					<include name="tc_pip_002_pip_setting_links" />
+					<include name="tc_pip_004_pip_links_setting_all_screen" />
+					<include name="tc_pip_008_pip_links_Menu_Zap_MiniEPG_Screen" />
 					<include name="tc_pip_001_pip_setting_ui" />
-<!-- 					<include name="tc_pip_002_pip_setting_links" /> -->
-<!-- 					<include name="tc_pip_003_pip_setting_default" /> -->
-<!-- 					<include name="tc_pip_004_pip_links_setting_all_screen" /> -->
-<!-- 					<include name="tc_pip_008_pip_links_Menu_Zap_MiniEPG_Screen" /> -->
+					<!-- <include name="tc_pip_003_pip_setting_default" /> -->
 				</methods>
 			</class>
 		</classes>

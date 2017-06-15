@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.SkipException;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -47,8 +48,8 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.confirmButton)
 	public WebElement epgConfirmBtn;
 
-	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.cancleButton)
-	public WebElement epgCancleBtn;
+	@FindBy(how = How.ID, using = ObjectRepository.EpgSettingScreen.cancelButton)
+	public WebElement epgCancelBtn;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focousElement)
 	public WebElement focusElemntInEpg;
@@ -115,7 +116,7 @@ public class EpgScreen extends TestInitization {
 	}
 
 	public void goToEpgChannelScreen(boolean usingHotKey) throws InterruptedException {
-
+		
 		reports.log(LogStatus.PASS, "Navigate to EPG");
 		if (usingHotKey) {
 
@@ -128,6 +129,8 @@ public class EpgScreen extends TestInitization {
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(ObjectRepository.EpgScreen.focousElement)));
 	}
 
 	public boolean validationEpgCss(HashMap<String, String> currentEpgSetting, boolean usingHotKey)
@@ -139,7 +142,6 @@ public class EpgScreen extends TestInitization {
 
 		// First go to epg channel screen
 		goToEpgChannelScreen(usingHotKey);
-
 		String expectedFontSize = null;
 		String expectedFontFamily = null;
 		String expectedFontColor = null;
@@ -537,11 +539,11 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
-	public void cancleBtnExist() {
+	public void cancelBtnExist() {
 
 		try {
-			if (epgCancleBtn.isDisplayed()) {
-				reports.log(LogStatus.PASS, "Cancle button is visible on webpage");
+			if (epgCancelBtn.isDisplayed()) {
+				reports.log(LogStatus.PASS, "Cancel button is visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
 				FailTestCase("Cancle button is not visible on webpage");
@@ -563,9 +565,7 @@ public class EpgScreen extends TestInitization {
 
 		// First go to epg channel screen
 		goToEpgChannelScreen(usingHotKey);
-
-		Thread.sleep(5000);
-
+		
 		if (epgType.equalsIgnoreCase("STANDAARD") && epgBackground.equalsIgnoreCase("STANDAARD")
 				&& epgFont.equalsIgnoreCase("STANDAARD")) {
 			expectedFontColor = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "color");
