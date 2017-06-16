@@ -39,14 +39,14 @@ public class SystemInfoScreen extends TestInitization
 
 public void goTosytemInfoScreen() throws InterruptedException 
 {
-	reports.log(LogStatus.PASS, "Step 2: Navigate to the Settings Screen");
+	reports.log(LogStatus.PASS, "Navigate to the Settings Screen");
 	TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
 	
-	reports.log(LogStatus.PASS, "Step 3: Navigate to the System Screen");
+	reports.log(LogStatus.PASS, "Navigate to the System Screen");
 	TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "System", "name_nl"));
 	
 	
-	reports.log(LogStatus.PASS, "Step 4: Navigate to the Systeminfo Screen");
+	reports.log(LogStatus.PASS, "Navigate to the Systeminfo Screen");
 	TestInitization.sendKeysSequenceUpdated("DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,DOWN,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "SystemInfo", "name_nl"));
 	
 } 
@@ -74,61 +74,61 @@ public  boolean validationSystemInfoScreen() throws InterruptedException
 	    actualScreenTitle = systemInfoXpath.getText();
 		if (actualScreenTitle.equalsIgnoreCase(expectedScreenTitle)) 
 		{
-		reports.log(LogStatus.PASS, "sytemInfoScreenTitleMatch() Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case successfully Passed");
+		reports.log(LogStatus.PASS, "Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case successfully Passed");
 		}
 		else 
 		{
-		reports.log(LogStatus.FAIL, "sytemInfoScreenTitleMatch() Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case Failed");
-		throw new SkipException("sytemInfoScreenTitleMatch() Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case Failed");
+		reports.log(LogStatus.FAIL, "Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case Failed");
+		throw new SkipException("Actual Title : "+ actualScreenTitle + " and Expected Title : " + expectedScreenTitle +" Test case Failed");
 		}	
 		
 		
 		ActualhardwareVersion=hardwareVersion.getText();
 		if(ActualhardwareVersion.equalsIgnoreCase(expectedHardwareVersion))
 		{
-		reports.log(LogStatus.PASS, "sytemInfoScreenTitleMatch() Actual Hardware Version : "+ ActualhardwareVersion + " and Expected Hardware Version : " + expectedHardwareVersion +" Test case successfully Passed");	
+		reports.log(LogStatus.PASS, "Actual Hardware Version : "+ ActualhardwareVersion + " and Expected Hardware Version : " + expectedHardwareVersion +" Test case successfully Passed");	
 		}
 		else 
 		{
-		reports.log(LogStatus.FAIL, "sytemInfoScreenTitleMatch() Actual  Hardware Version  : "+ ActualhardwareVersion + " and Expected  Hardware Version  : " + expectedHardwareVersion +" Test case Failed");
-		throw new SkipException("sytemInfoScreenTitleMatch() Actual  Hardware Version : "+ ActualhardwareVersion + " and Expected  Hardware Version : " + expectedHardwareVersion +" Test case Failed");
+		reports.log(LogStatus.FAIL, "Actual  Hardware Version  : "+ ActualhardwareVersion + " and Expected  Hardware Version  : " + expectedHardwareVersion +" Test case Failed");
+		throw new SkipException("Actual  Hardware Version : "+ ActualhardwareVersion + " and Expected  Hardware Version : " + expectedHardwareVersion +" Test case Failed");
 		}	
 		
 		ActualSoftwareVersion=softwareVersion.getText();
 		if(ActualSoftwareVersion.equalsIgnoreCase(expectedSoftwareVersion))
 		{
-		reports.log(LogStatus.PASS, "sytemInfoScreenTitleMatch() Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case successfully Passed");	
+		reports.log(LogStatus.PASS, "Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case successfully Passed");	
 		}
 		else 
 		{
 		
-		reports.log(LogStatus.FAIL, "sytemInfoScreenTitleMatch() Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case Failed");
-		throw new SkipException("sytemInfoScreenTitleMatch() Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case Failed");
+		reports.log(LogStatus.FAIL, "Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case Failed");
+		throw new SkipException("Actual Software Version : "+ ActualSoftwareVersion + " and Expected Software Version : " + expectedSoftwareVersion +" Test case Failed");
 		}	
 		
 		ActualHpgVersion=hpgVersion.getText();
 		if(ActualHpgVersion.equalsIgnoreCase(expectedHpgVersion))
 		{
-		reports.log(LogStatus.PASS, "sytemInfoScreenTitleMatch() Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case successfully Passed");	
+		reports.log(LogStatus.PASS, "Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case successfully Passed");	
 		}
 		else 
 		{
-		reports.log(LogStatus.FAIL, "sytemInfoScreenTitleMatch() Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case Failed");
-		throw new SkipException("sytemInfoScreenTitleMatch() Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case Failed");
+		reports.log(LogStatus.FAIL, "Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case Failed");
+		throw new SkipException("Actual HPG Version : "+ ActualHpgVersion + " and Expected HPG Version : " + expectedHpgVersion +" Test case Failed");
 		}	
 		
 		
 		ActualserialNumber=serialNumber.getText();
 		if(ActualserialNumber.equalsIgnoreCase(expectedSerialNumber))
 		{
-		reports.log(LogStatus.PASS, "sytemInfoScreenTitleMatch() Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case successfully Passed");	
+		reports.log(LogStatus.PASS, "Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case successfully Passed");	
 		}
 		else 
 		{
 			
 			
-		reports.log(LogStatus.FAIL, "sytemInfoScreenTitleMatch() Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case Failed");
-		throw new SkipException("sytemInfoScreenTitleMatch() Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case Failed");
+		reports.log(LogStatus.FAIL, "Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case Failed");
+		throw new SkipException("Actual Serial Number : "+ ActualserialNumber + " and Expected Serial Number : " + expectedSerialNumber +" Test case Failed");
 		}	
 		return true;		
 }
@@ -139,11 +139,12 @@ public void navigateToSytemScreen() throws InterruptedException
 	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
 	TestInitization.sendKeyMultipleTimes("RIGHT",1,1000);
 	TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
-	
+	reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
     reports.log(LogStatus.PASS, "Navigate to the System Screen");
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
 	TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+	reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 }
 }	
 	

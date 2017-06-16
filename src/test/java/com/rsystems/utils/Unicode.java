@@ -3,7 +3,7 @@ package com.rsystems.utils;
 public enum Unicode {
 
 	
-	TV_GUIDE										 			("\u0074"),
+	TV_GUIDE										 			("\uE04A"),
 	VK_DOWN											  			("\uE015"),
 	VK_STOP_RECORDING								 			("\uE040"),
 	VK_ADD_RECORDING								  			("\uE041"),

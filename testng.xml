@@ -4,116 +4,41 @@
 	<listeners>
 		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
 	</listeners>
-
-<!-- 	<test name="Hub Test Case "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.HubTestCases"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="testHubTranslation" /> -->
-<!-- 					<include name="testHubTextLineRightNavigation" /> -->
-<!-- 					<include name="testHubTextLineLeftNavigation" /> -->
-<!-- 					<include name="testHubMenuFontsNonFocused" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
-<!-- 	<test name="SettingsTestCases Test Cases "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.SettingsTestCases"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="epgSettingScreenTitleMatch" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
-
 	<test name="EPG Setting Test case ">
 		<classes>
 			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
-<!-- 					<include name="seniorGreenGrayEPG_Validation" /> -->
-<!-- 					<include name="seniorGreenStandardEPG_Validation" /> -->
-<!-- 					<include name="seniorGreenYellowEpgValidation" /> -->
-<!-- 					<include name="seniorStandardStandardEpgValidation" /> -->
-<!-- 					<include name="seniorStandardYellowEpgValidation" /> -->
-<!-- 					<include name="seniorStandardGrayEpgValidation" /> -->
-<!-- 					<include name="strakStandardStandardEpgValidation" /> -->
-<!-- 					<include name="strakGreenStandardEpgValidation" /> -->
-<!-- 					<include name="strakGreenGrayEpgValidation" /> -->
-<!-- 					<include name="strakGreenYellowEpgValidation" /> -->
-<!-- 					<include name="strakStandardGrayEpgValidation" /> -->
-<!-- 					<include name="strakStandardYellowEpgValidation" /> -->
-<!-- 					<include name="tc_epg_006_epg_scenior_default" /> -->
-<!-- 					<include name="tc_epg_012_epg_strak_default" /> -->
-					<include name="tc_epg_001_epg_setting_UI_NL" />
-					<include name="tc_epg_002_epg_setting_UI_FR" />
-					<include name="tc_epg_003_epg_confirmation_setting" />
-					<include name="tc_epg_004_epg_cancel_setting" />
-					<include name="tc_epg_005_epg_setting_UI_Default_options" />
-					<include name="tc_epg_007_epg_scenior_font_grijs" />
-					<include name="tc_epg_008_epg_scenior_font_geel" />
-					<include name="tc_epg_009_epg_scenior_groen_standard" />
-					<include name="tc_epg_010_epg_scenior_groen_grijs" />
-					<include name="tc_epg_011_epg_scenior_groen_geel" />
-					<include name="tc_epg_013_epg_strak_font_grijs" />
-					<include name="tc_epg_014_epg_strak_font_geel" />
-					<include name="tc_epg_015_epg_strak_groen_standard" />
-					<include name="tc_epg_016_epg_strak_groen_grijs" />
-					<include name="tc_epg_017_epg_strak_groen_geel" />
-					<include name="tc_epg_customize_color_patterns" />
-					<include name="tc_epg_hot_key" />
+					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> 
+					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> 
+					<include name="tc_BCEPGHPG02_epg_confirmation_setting" /> 
+					<include name="tc_BCEPGHPG01_epg_cancel_setting" /> 
+					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> 
+					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> 
+					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
+					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
+					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
+					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
+					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
+					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
+					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
+					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
+					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
+					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-
-<!-- 	<test name="Library Test case "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.LibraryTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="verifyLibraryMenuItemsText" /> -->
-<!-- 					<include name="verifyLibraryItemsFontSize" /> -->
-<!-- 					<include name="verifyLibraryMenuSubListText" /> -->
-<!-- 					<include name="verifyLibraryMenuSubListFontSize" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
-<!-- 	<test name="Recording Test case "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.RecordingTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="verifyStartSingleRecording" /> -->
-<!-- 					<include name="verifySingleAssetIsDeleted" /> -->
-<!-- 					<include name="verifyMultipleSingleRecordings" /> -->
-<!-- 					<include name="navigateUnderPlannedRecordings" /> -->
-<!-- 					<include name="deleteAllRecordings" /> -->
-
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
 	<test name="PIP Setting Test case ">
 		<classes>
 			<class name="com.rsystems.test.PIPTestCases">
 				<methods>
-					<include name="tc_pip_002_pip_setting_links" />
-					<include name="tc_pip_004_pip_links_setting_all_screen" />
-					<include name="tc_pip_008_pip_links_Menu_Zap_MiniEPG_Screen" />
-					<include name="tc_pip_001_pip_setting_ui" />
-					<!-- <include name="tc_pip_003_pip_setting_default" /> -->
+					<include name="tc_BCPIPHPG01_pip_confirmation_setting_links" /> 
+					<include name="tc_BCPIPHPG04_pip_position_links_all_screen" /> 
+					<include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" />
+					<include name="tc_pip_001_pip_setting_ui" /> 
 				</methods>
 			</class>
 		</classes>
 	</test>
-
-<!-- 	<test name="System Info Screen test cases "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.SystemInfoScreenTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="verifySettingInfoScreen" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
 </suite>

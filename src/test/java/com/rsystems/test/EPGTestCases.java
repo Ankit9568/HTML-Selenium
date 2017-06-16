@@ -354,7 +354,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_001_epg_setting_UI_NL() throws InterruptedException {
+	public void tc_BCEPGHPG05_epg_setting_UI_NL() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
@@ -381,7 +381,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_003_epg_confirmation_setting() throws InterruptedException {
+	public void tc_BCEPGHPG02_epg_confirmation_setting() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GEEL"), true)) {
@@ -398,7 +398,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_004_epg_cancel_setting() throws InterruptedException {
+	public void tc_BCEPGHPG01_epg_cancel_setting() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.shuffleEpgSetting("SENIOR", "GROEN", "GEEL");
@@ -441,7 +441,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_007_epg_scenior_font_grijs() throws InterruptedException {
+	public void tc_BCEPGHPG010_epg_scenior_font_grijs() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GRIJS"), true)) {
@@ -459,7 +459,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_008_epg_scenior_font_geel() throws InterruptedException {
+	public void tc_BCEPGHPG09_epg_scenior_font_geel() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "STANDAARD", "GEEL"), true)) {
@@ -477,7 +477,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_009_epg_scenior_groen_standard() throws InterruptedException {
+	public void tc_BCEPGHPG013_epg_scenior_groen_standard() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"), true)) {
@@ -495,7 +495,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_010_epg_scenior_groen_grijs() throws InterruptedException {
+	public void tc_BCEPGHPG012_epg_scenior_groen_grijs() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GRIJS"), true)) {
@@ -513,7 +513,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_011_epg_scenior_groen_geel() throws InterruptedException {
+	public void tc_BCEPGHPG011_epg_scenior_groen_geel() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "GEEL"), true)) {
@@ -549,7 +549,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_013_epg_strak_font_grijs() throws InterruptedException {
+	public void tc_BCEPGHPG016_epg_strak_font_grijs() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validateEPGProgramSetting(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GRIJS"), true)) {
@@ -567,7 +567,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_014_epg_strak_font_geel() throws InterruptedException {
+	public void tc_BCEPGHPG015_epg_strak_font_geel() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validateEPGProgramSetting(epgScreen.changeEpgSetting("STRAK", "STANDAARD", "GEEL"), true)) {
@@ -585,7 +585,7 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	@Test
-	public void tc_epg_015_epg_strak_groen_standard() throws InterruptedException {
+	public void tc_BCEPGHPG019_epg_strak_groen_standard() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validateEPGProgramSetting(epgScreen.changeEpgSetting("STRAK", "GROEN", "STANDAARD"), true)) {
@@ -603,7 +603,7 @@ public class EPGTestCases extends TestInitization {
 	}
 	
 	@Test
-	public void tc_epg_016_epg_strak_groen_grijs() throws InterruptedException {
+	public void tc_BCEPGHPG018_epg_strak_groen_grijs() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validateEPGProgramSetting(epgScreen.changeEpgSetting("STRAK", "GROEN", "GRIJS"), true)) {
@@ -622,7 +622,7 @@ public class EPGTestCases extends TestInitization {
 
 
 	@Test
-	public void tc_epg_017_epg_strak_groen_geel() throws InterruptedException {
+	public void tc_BCEPGHPG017_epg_strak_groen_geel() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validateEPGProgramSetting(epgScreen.changeEpgSetting("STRAK", "GROEN", "GEEL"), true)) {
@@ -640,7 +640,7 @@ public class EPGTestCases extends TestInitization {
 	}
 	
 	@Test
-	public void tc_epg_customize_color_patterns() throws InterruptedException{
+	public void tc_BCEPGHPG07_epg_customize_color_patterns() throws InterruptedException{
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"), true)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
@@ -656,7 +656,7 @@ public class EPGTestCases extends TestInitization {
 	}
 	
 	@Test
-	public void tc_epg_002_epg_setting_UI_FR() throws InterruptedException {
+	public void tc_BCEPGHPG04_epg_setting_UI_FR() throws InterruptedException {
 		
 		//Change Language to FR
 		ChangePreference pref = new ChangePreference(driver);
@@ -711,7 +711,7 @@ public class EPGTestCases extends TestInitization {
 	    }
 	}
 	@Test 
-	public void tc_epg_hot_key() throws InterruptedException{
+	public void tc_BCDTVHP0801_epg_hot_key() throws InterruptedException{
 		EpgScreen epgScreen =new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Open EPG using hot key");
 		epgScreen.goToEpgChannelScreen(true);
@@ -722,7 +722,7 @@ public class EPGTestCases extends TestInitization {
 		
 	}
 	@Test
-	public void tc_epg_005_epg_setting_UI_Default_options() throws InterruptedException {
+	public void tc_BCEPGHPG03_epg_setting_UI_Default_options() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		//Set Type as Standaard
 		reports.log(LogStatus.PASS, "Set Default Type as STANDAARD");

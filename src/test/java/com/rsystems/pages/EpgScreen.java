@@ -546,11 +546,11 @@ public class EpgScreen extends TestInitization {
 				reports.log(LogStatus.PASS, "Cancel button is visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
-				FailTestCase("Cancle button is not visible on webpage");
+				FailTestCase("Cancel button is not visible on webpage");
 			}
 
 		} catch (NoSuchElementException e) {
-			FailTestCase("Cancle button is not visible on webpage");
+			FailTestCase("Cancel button is not visible on webpage");
 		}
 	}
 
@@ -854,7 +854,7 @@ public class EpgScreen extends TestInitization {
 
 	private void verifyNavigationHorizontally() throws InterruptedException {
 		String prevTitle = focusElementProgramTime.getText();
-		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("RIGHT", 2, 1000);
 		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
 		{
 			reports.log(LogStatus.PASS, "Navigation is properly on Right Side");
@@ -866,7 +866,7 @@ public class EpgScreen extends TestInitization {
 			reports.log(LogStatus.FAIL, "Navigation is not properly on Right Side");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
-		TestInitization.sendKeyMultipleTimes("LEFT", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("LEFT", 2, 1000);
 		if(!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle))
 		{
 			reports.log(LogStatus.PASS, "Navigation is properly on Left Side");

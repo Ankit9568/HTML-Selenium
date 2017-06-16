@@ -34,7 +34,7 @@ public class PIPTestCases extends TestInitization {
 	 * Created By Rahul Dhoundiyal
 	 */
 	@Test
-	public void tc_pip_002_pip_setting_links() throws InterruptedException{
+	public void tc_BCPIPHPG01_pip_confirmation_setting_links() throws InterruptedException{
 		pipScreen = new PIPScreen(driver);
 		pipScreen.changePIPSetting(TestInitization.getExcelKeyValue("PIPScreen","PIPLink", "name_nl"));
 		if (pipScreen.verifyPIPSettingChanged(TestInitization.getExcelKeyValue("PIPScreen","PIPLink", "pip_position"))){
@@ -77,7 +77,7 @@ public class PIPTestCases extends TestInitization {
 	 * Created By Rahul Dhoundiyal
 	 */
 	@Test
-	public void tc_pip_004_pip_links_setting_all_screen() throws InterruptedException{
+	public void tc_BCPIPHPG04_pip_position_links_all_screen() throws InterruptedException{
 		pipScreen = new PIPScreen(driver);
 		pipScreen.changePIPSetting(TestInitization.getExcelKeyValue("PIPScreen","PIPLink", "name_nl"));
 		System.out.println(TestInitization.getExcelKeyValue("PIPScreen","PIPLink", "pip_position"));
@@ -98,7 +98,7 @@ public class PIPTestCases extends TestInitization {
 	 * Created By Rahul Dhoundiyal
 	 */
 	@Test
-	public void tc_pip_008_pip_links_Menu_Zap_MiniEPG_Screen() throws InterruptedException
+	public void tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen() throws InterruptedException
 	{
 		pipScreen = new PIPScreen(driver);
 		pipScreen.changePIPSetting(TestInitization.getExcelKeyValue("PIPScreen","PIPLink", "name_nl"));

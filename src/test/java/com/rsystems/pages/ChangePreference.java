@@ -43,14 +43,15 @@ public class ChangePreference extends TestInitization
 	{
 		    SystemInfoScreen systeminfo = new SystemInfoScreen(driver);
 		    systeminfo.navigateToSytemScreen();
-			reports.log(LogStatus.PASS, "Step 3: Navigate to the Preference Screen");
+			reports.log(LogStatus.PASS, "Navigate to the Preference Screen");
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	}
 	public void languageChange(String language) throws InterruptedException
     {
-		reports.log(LogStatus.PASS, "Step 3: Navigate to the Language Change Screen");	
+		reports.log(LogStatus.PASS, "Navigate to the Language Change Screen - Change language to " + language);	
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		String currentStatusLanguage=position.getText();
@@ -60,12 +61,15 @@ public class ChangePreference extends TestInitization
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000); 
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
 			System.out.println("title "+confirm.getText());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+			reports.log(LogStatus.PASS, "Language changed to "+ language);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			ProximusContext.setLanguage(language);
 		}
 		else
 		{
-		 System.out.println("No changes required");
+		 System.out.println("No changes required. Already " + language + " is set");
 		 reports.log(LogStatus.FAIL, "Either the language you have entered is not in the list or its a default setting language");
 		 reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
@@ -106,16 +110,16 @@ public class ChangePreference extends TestInitization
 			
 			if (actualScreenTitleFrench.equalsIgnoreCase(expectedScreenTitleFrench)&& actualLanguagedumenu.equalsIgnoreCase(expectedactualLanguagedumenu)&&languageTheShop.equalsIgnoreCase(expectedlanguageTheShop)) 
 			{
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Actual Screen Title French : "+ actualScreenTitleFrench + " and Expected Screen Title French : " + expectedScreenTitleFrench +" Test case successfully Passed");
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Language Menu : "+ actualLanguagedumenu + " and Expected Language Menu : " + expectedactualLanguagedumenu +" Test case successfully Passed");
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Language shop Title : "+ languageTheShop + " and Expected Language shop Title : " + expectedlanguageTheShop +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Actual Screen Title French : "+ actualScreenTitleFrench + " and Expected Screen Title French : " + expectedScreenTitleFrench +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Language Menu : "+ actualLanguagedumenu + " and Expected Language Menu : " + expectedactualLanguagedumenu +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Language shop Title : "+ languageTheShop + " and Expected Language shop Title : " + expectedlanguageTheShop +" Test case successfully Passed");
 			return true;
 			}
 			else 
 			{
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Actual Screen Title French : "+ actualScreenTitleFrench + " and Expected Screen Title French : " + expectedScreenTitleFrench +" Test case Failed");
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Language Menu : "+ actualLanguagedumenu + " and Expected Language Menu : " + expectedactualLanguagedumenu +" Test case Failed");
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Language shop Title : "+ languageTheShop + " and Expected Language shop Title : " + expectedlanguageTheShop +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Actual Screen Title French : "+ actualScreenTitleFrench + " and Expected Screen Title French : " + expectedScreenTitleFrench +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Language Menu : "+ actualLanguagedumenu + " and Expected Language Menu : " + expectedactualLanguagedumenu +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Language shop Title : "+ languageTheShop + " and Expected Language shop Title : " + expectedlanguageTheShop +" Test case Failed");
 			return false;
 			}	
 		}
@@ -131,16 +135,16 @@ public class ChangePreference extends TestInitization
 			
 			if (actualScreenTitleNL.equalsIgnoreCase(expectedScreenTitleNL)&& languagedumenuNL.equalsIgnoreCase(expectedlanguagedumenuNL)&&languageTheSop.equals(expectedlanguageTheSop)) 
 			{
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Actual Screen Title NL : "+ actualScreenTitleNL + " and Expected Screen Title NL : " + expectedScreenTitleNL +" Test case successfully Passed");
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Actual language Title NL : "+ languagedumenuNL + " and Expected language Title NL : " + expectedlanguagedumenuNL +" Test case successfully Passed");
-			reports.log(LogStatus.PASS, "verifyLanguageChangedOrNot() Language Shop Title : "+ languageTheSop + " and Expected Language Shop Title : " + expectedlanguageTheSop +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Actual Screen Title NL : "+ actualScreenTitleNL + " and Expected Screen Title NL : " + expectedScreenTitleNL +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Actual language Title NL : "+ languagedumenuNL + " and Expected language Title NL : " + expectedlanguagedumenuNL +" Test case successfully Passed");
+			reports.log(LogStatus.PASS, "Language Shop Title : "+ languageTheSop + " and Expected Language Shop Title : " + expectedlanguageTheSop +" Test case successfully Passed");
 			return true;
 			}
 			else 
 			{
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Actual Screen Title NL : "+ actualScreenTitleNL + " and Expected Screen Title NL : " + expectedScreenTitleNL +" Test case Failed");
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Actual language Title NL : "+ languagedumenuNL + " and Expected language Title NL : " + expectedlanguagedumenuNL +" Test case Failed");
-			reports.log(LogStatus.FAIL, "verifyLanguageChangedOrNot() Language Shop Title : "+ languageTheSop + " and Expected Language Shop Title : " + expectedlanguageTheSop +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Actual Screen Title NL : "+ actualScreenTitleNL + " and Expected Screen Title NL : " + expectedScreenTitleNL +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Actual language Title NL : "+ languagedumenuNL + " and Expected language Title NL : " + expectedlanguagedumenuNL +" Test case Failed");
+			reports.log(LogStatus.FAIL, "Language Shop Title : "+ languageTheSop + " and Expected Language Shop Title : " + expectedlanguageTheSop +" Test case Failed");
 			return false;
 			}			
 		}
