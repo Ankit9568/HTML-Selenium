@@ -478,7 +478,8 @@ public class TestInitization {
 			// Start WebDriver by reusing existing widget UI
 			capability.setCapability("browserStartWindow", "*");
 			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-			driver = new RemoteWebDriver(new URL("http://10.67.181.112:9517"), capability);
+			String stbIP = PR.getProperty("STBIP");
+			driver = new RemoteWebDriver(new URL("http://"+stbIP+":9517"), capability);
 			// driver = new RemoteWebDriver(new
 			// URL("http://10.67.196.111:9517"), capability);
 			selectWindow("http");
