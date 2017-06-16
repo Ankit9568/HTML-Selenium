@@ -524,7 +524,7 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
-	public void confirmBtnExist() {
+	public void confirmBtnExist() throws InterruptedException {
 
 		try {
 			if (epgConfirmBtn.isDisplayed()) {
@@ -539,7 +539,7 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
-	public void cancelBtnExist() {
+	public void cancelBtnExist() throws InterruptedException {
 
 		try {
 			if (epgCancelBtn.isDisplayed()) {
@@ -734,7 +734,7 @@ public class EpgScreen extends TestInitization {
 		return true;
 	}
 
-	public void isDisplayed(WebElement we, String webElementName) {
+	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {
 
 		try {
 			if (we.isDisplayed()) {
@@ -800,7 +800,7 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
-	public void verifyEPGScreenDisplayed() {
+	public void verifyEPGScreenDisplayed() throws InterruptedException {
 		
 		try {
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
@@ -818,7 +818,7 @@ public class EpgScreen extends TestInitization {
 	}
 
 	public void verifyNavigationinEPG() throws InterruptedException {
-		// TODO Auto-generated method stub
+	
 		verifyNavigationHorizontally();
 		verifyNavigationVertically();
 	}

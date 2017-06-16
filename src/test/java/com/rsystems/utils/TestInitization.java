@@ -47,7 +47,6 @@ public class TestInitization {
 	public static String currentMethodName;
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
-	private static String currentScreenTitle;
 
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
@@ -131,8 +130,10 @@ public class TestInitization {
 
 	}
 
-	public static String captureCurrentScreenshot() {
+	public static String captureCurrentScreenshot() throws InterruptedException {
 
+		// Wait for page load 
+		Thread.sleep(2000);
 		cald = Calendar.getInstance();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
@@ -194,7 +195,7 @@ public class TestInitization {
 
 	}
 
-	public static boolean loadHubFocusedDTVTextLine() {
+	public static boolean loadHubFocusedDTVTextLine() throws InterruptedException {
 		System.out.println("Inside method ::::::::::::::::::::::::::::::::::::::::: loadHubFocusedDTVShowcase");
 		driver.navigate().refresh();
 
@@ -228,7 +229,7 @@ public class TestInitization {
 
 	}
 
-	public static boolean loadHubFocusedDTVShowcase() {
+	public static boolean loadHubFocusedDTVShowcase() throws InterruptedException {
 		System.out.println("Inside method ::::::::::::::::::::::::::::::::::::::::: loadHubFocusedDTVShowcase");
 		driver.navigate().refresh();
 
@@ -307,7 +308,6 @@ public class TestInitization {
 
 			action.sendKeys(Keys.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		}
 
@@ -514,7 +514,7 @@ public class TestInitization {
 		return null;
 	}
 
-	public void FailTestCase(String reason) {
+	public void FailTestCase(String reason) throws InterruptedException {
 		Assert.fail(reason);
 		reports.log(LogStatus.FAIL, reason);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());

@@ -126,7 +126,7 @@ public class PIPScreen extends TestInitization {
 		}
 	}
 
-	public void confirmBtnExist() {
+	public void confirmBtnExist() throws InterruptedException {
 
 		try {
 			if (confirm.isDisplayed()) {
@@ -141,7 +141,7 @@ public class PIPScreen extends TestInitization {
 		}
 	}
 
-	public void cancelBtnExist() {
+	public void cancelBtnExist() throws InterruptedException {
 
 		try {
 			if (cancel.isDisplayed()) {

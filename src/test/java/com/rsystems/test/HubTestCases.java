@@ -251,7 +251,7 @@ public class HubTestCases extends TestInitization{
 	
 	
 	@Test(priority=3)
-	public void testHubMenuFontsNonFocused()
+	public void testHubMenuFontsNonFocused() throws InterruptedException
 	{
 		hubScreen = new Hub(driver);
 		
