@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -132,7 +133,7 @@ public class TestInitization {
 
 	public static String captureCurrentScreenshot() throws InterruptedException {
 
-		// Wait for page load 
+		// Wait for page load
 		Thread.sleep(2000);
 		cald = Calendar.getInstance();
 
@@ -479,7 +480,7 @@ public class TestInitization {
 			capability.setCapability("browserStartWindow", "*");
 			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 			String stbIP = PR.getProperty("STBIP");
-			driver = new RemoteWebDriver(new URL("http://"+stbIP+":9517"), capability);
+			driver = new RemoteWebDriver(new URL("http://" + stbIP + ":9517"), capability);
 			// driver = new RemoteWebDriver(new
 			// URL("http://10.67.196.111:9517"), capability);
 			selectWindow("http");
@@ -520,4 +521,45 @@ public class TestInitization {
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	}
 
+	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {
+
+		
+		try {
+			if (we.isDisplayed()) {
+
+				reports.log(LogStatus.PASS, webElementName + " is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				
+				reports.log(LogStatus.FAIL, webElementName + " exist on webpage but it is not visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				throw new SkipException(webElementName + " is not found on webpage");
+			}
+		} catch (NoSuchElementException e) {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			throw new SkipException(webElementName + " is not found on webpage");
+
+		}
+
+	}
+
+	public void isNotDisplayed(WebElement we, String webElementName) throws InterruptedException {
+
+		try {
+			if (!we.isDisplayed()) {
+
+				reports.log(LogStatus.PASS, webElementName + " is not visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			} else {
+				reports.log(LogStatus.FAIL, webElementName + "is visible on webpage");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				throw new SkipException(webElementName + " is not found on webpage");
+			}
+		} catch (NoSuchElementException e) {
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			throw new SkipException(webElementName + " is not found on webpage");
+
+		}
+
+	}
 }

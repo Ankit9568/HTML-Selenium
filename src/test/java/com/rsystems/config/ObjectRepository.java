@@ -30,7 +30,6 @@ public class ObjectRepository {
 		public static final String confirmButton = "item_3";
 	}
 
-	
 	public static class EpgScreen {
 		public static final String focousElement = "//li[@class = 'program focusProgram']/div/p[@class='programTitle']";
 		public static final String displayChannelTitle = "title";
@@ -38,13 +37,13 @@ public class ObjectRepository {
 		public static final String displayChannelprogressbar = "progress";
 		public static final String displayChannelStartTime = "startDate";
 		public static final String displayChannelEndTime = "endDate";
-		public static final String displayChannelCallLetterIcon = "//li[@class='focusedChannel']/div[@class='ch_logo']/span/img";	
+		public static final String displayChannelCallLetterIcon = "//li[@class='focusedChannel']/div[@class='ch_logo']/span/img";
 		public static final String cutvIcon = "//span[@class='channel-cutv']";
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[@class='programLogo']/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
-		public static final String focusElementProgramTiminig =  "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
+		public static final String focusElementProgramTiminig = "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
 	}
-	
+
 	public static class LibraryElements {
 		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
 	}
@@ -86,15 +85,21 @@ public class ObjectRepository {
 	public static class FilmsScreen {
 		public static final String highlighedMovie = "//li[@class='focusedItem'][2]/span";
 	}
-	
-	public static class LanguageChange
-	{
-		public static final String position="pipPosition";
-		public static final String menuItem="leftLabel";
-		public static final String confirm="item_1";
-		public static final String itemHeading="item_1";
-		public static final String heading="settingHeading";
-		public static final String languagedumenu="item_0";
-	
+
+	public static class LanguageChange {
+		public static final String position = "pipPosition";
+		public static final String menuItem = "leftLabel";
+		public static final String confirm = "item_1";
+		public static final String itemHeading = "item_1";
+		public static final String heading = "settingHeading";
+		public static final String languagedumenu = "item_0";
+
 	}
+
+	public static class DtvChannel {
+		public static final String chnlNoIn_Infobar = "current_channel";
+		public static final String programDurationIn_Infobar = "programTime";
+		public static final String programTitle = "programTitle";
+	}
+
 }

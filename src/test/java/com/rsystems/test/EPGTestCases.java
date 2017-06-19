@@ -20,7 +20,7 @@ public class EPGTestCases extends TestInitization {
 	 */
 	@Test
 	public void standardEPG_Validation() throws InterruptedException {
-		
+
 		// check font is standard on EPf Setting Screen
 		EpgScreen epgScreen = new EpgScreen(driver);
 
@@ -417,9 +417,10 @@ public class EPGTestCases extends TestInitization {
 	}
 
 	/**
-	 * TC_ID = epg_006
-	 * 
 	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "STANDAARD" Epg Font = "STANDAARD"
+	 * 
 	 */
 
 	@Test
@@ -440,6 +441,13 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "STANDAARD" Epg Font = "GRIJS"
+	 * 
+	 */
+
 	@Test
 	public void tc_BCEPGHPG010_epg_scenior_font_grijs() throws InterruptedException {
 
@@ -457,6 +465,13 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 
 	}
+
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "STANDAARD" Epg Font = "GEEL"
+	 * 
+	 */
 
 	@Test
 	public void tc_BCEPGHPG09_epg_scenior_font_geel() throws InterruptedException {
@@ -476,6 +491,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "GROEN" Epg Font = "STANDAARD"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG013_epg_scenior_groen_standard() throws InterruptedException {
 
@@ -494,6 +515,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "GROEN" Epg Font = "GRIJS"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG012_epg_scenior_groen_grijs() throws InterruptedException {
 
@@ -512,6 +539,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "GROEN" Epg Font = "GEEL"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG011_epg_scenior_groen_geel() throws InterruptedException {
 
@@ -530,6 +563,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "GROEN" Epg Font = "STANDAARD"
+	 * 
+	 */
 	@Test
 	public void tc_epg_012_epg_strak_default() throws InterruptedException {
 
@@ -548,6 +587,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "STANDAARD" Epg Font = "GRIJS"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG016_epg_strak_font_grijs() throws InterruptedException {
 
@@ -566,6 +611,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "STANDAARD" Epg Font = "GEEL"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG015_epg_strak_font_geel() throws InterruptedException {
 
@@ -584,6 +635,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "GROEN" Epg Font = "STANDAARD"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG019_epg_strak_groen_standard() throws InterruptedException {
 
@@ -601,7 +658,13 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 
 	}
-	
+
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "GROEN" Epg Font = "GRIJS"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG018_epg_strak_groen_grijs() throws InterruptedException {
 
@@ -620,7 +683,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
-
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "STRAK" Epg background = "GROEN" Epg Font = "GEEL"
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG017_epg_strak_groen_geel() throws InterruptedException {
 
@@ -638,9 +706,15 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 
 	}
-	
+
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the CSS When EPF Setting is Epg Type =
+	 *             "SENIOR" Epg background = "GROEN" Epg Font = "STANDAARD"
+	 * 
+	 */
 	@Test
-	public void tc_BCEPGHPG07_epg_customize_color_patterns() throws InterruptedException{
+	public void tc_BCEPGHPG07_epg_customize_color_patterns() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		if (epgScreen.validationEpgCss(epgScreen.changeEpgSetting("SENIOR", "GROEN", "STANDAARD"), true)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
@@ -654,28 +728,30 @@ public class EPGTestCases extends TestInitization {
 		// Back EPG setting to Standard
 		epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 	}
-	
+
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the language setting in franch language
+	 * 
+	 */
 	@Test
 	public void tc_BCEPGHPG04_epg_setting_UI_FR() throws InterruptedException {
-		
-		//Change Language to FR
+
+		// Change Language to FR
 		ChangePreference pref = new ChangePreference(driver);
-	    pref.navigateToMyPreference();
-	    //Change to French 
-	    if(pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_FR", "name_nl")))
-	    {
-	    	reports.log(LogStatus.PASS, "Setting of Language to French has Passed");
+		pref.navigateToMyPreference();
+		// Change to French
+		if (pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_FR", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Setting of Language to French has Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("verifyLanguageChangedOrNot OK");
-	      	
-	    }
-	    else
-	    {
-	    	reports.log(LogStatus.FAIL, "Setting of Language to French has Failed");
+
+		} else {
+			reports.log(LogStatus.FAIL, "Setting of Language to French has Failed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("verifyLanguageChangedOrNot OK");
-	    	
-	    }
+
+		}
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
 		// Validation for epg type
@@ -696,39 +772,39 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.cancelBtnExist();
 		// Verification for confirm button
 		epgScreen.confirmBtnExist();
-		//default LanguageSet
+		// default LanguageSet
 		setApplicationHubPage(1);
 		pref.navigateToMyPreference();
-		if(pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl")))
-		{
-	    	reports.log(LogStatus.PASS, "Setting of Language to Dutch has Passed");
+		if (pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Setting of Language to Dutch has Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-	    }
-	    else
-	    {
-	    	reports.log(LogStatus.FAIL, "Setting of Language to Dutch has Failed");
+		} else {
+			reports.log(LogStatus.FAIL, "Setting of Language to Dutch has Failed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-	    }
+		}
 	}
-	@Test 
-	public void tc_BCDTVHP0801_epg_hot_key() throws InterruptedException{
-		EpgScreen epgScreen =new EpgScreen(driver);
+
+	@Test
+	public void tc_BCDTVHP0801_epg_hot_key() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Open EPG using hot key");
 		epgScreen.goToEpgChannelScreen(true);
 		Thread.sleep(5000);
 		epgScreen.verifyEPGScreenDisplayed();
-		//verify navigation in EPG guide
+		// verify navigation in EPG guide
 		epgScreen.verifyNavigationinEPG();
-		
+
 	}
+
 	@Test
+
 	public void tc_BCEPGHPG03_epg_setting_UI_Default_options() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
-		//Set Type as Standaard
+		// Set Type as Standaard
 		reports.log(LogStatus.PASS, "Set Default Type as STANDAARD");
 		HashMap<String, String> epgSettings = epgScreen.changeEpgSetting("STANDAARD", "STANDAARD", "STANDAARD");
 		epgScreen.verifyDefaultType();
-		//Navigate to EPG Guide and Verify epg Setting;
+		// Navigate to EPG Guide and Verify epg Setting;
 		reports.log(LogStatus.PASS, "Navigate to EPG and verify settings");
 		if (epgScreen.validationEpgCss(epgSettings, true)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
@@ -740,24 +816,21 @@ public class EPGTestCases extends TestInitization {
 			System.out.println("Verification of EPG changes OK");
 		}
 		reports.log(LogStatus.PASS, "Change Language from NL to FR and Verify the Deafult Option Setting in EPG");
-		//Change Language to FR
+		// Change Language to FR
 		ChangePreference pref = new ChangePreference(driver);
 		setApplicationHubPage(1);
 		pref.navigateToMyPreference();
-		//Change to French 
-		if(pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_FR", "name_nl")))
-		{
+		// Change to French
+		if (pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_FR", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Setting of Language to French has Passed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			reports.log(LogStatus.FAIL, "Setting of Language to French has Failed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 		HashMap<String, String> epgSetting = epgScreen.changeEpgSetting("défaut", "défaut", "défaut");
 		epgScreen.verifyDefaultType();
-		//Navigate to EPG Guide and Verify epg Setting;
+		// Navigate to EPG Guide and Verify epg Setting;
 		reports.log(LogStatus.PASS, "Navigate to EPG and verify settings");
 		if (epgScreen.validationEpgCss(epgSetting, true)) {
 			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
@@ -768,9 +841,9 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			System.out.println("Verification of EPG changes OK");
 		}
-		//Set to Default language - NL
+		// Set to Default language - NL
 		setApplicationHubPage(1);
 		pref.navigateToMyPreference();
-	    pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));   
+		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
 	}
 }
