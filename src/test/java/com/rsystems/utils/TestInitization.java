@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
@@ -355,6 +357,25 @@ public class TestInitization {
 
 	}
 
+	public static void sendNumaricKeys(int numaricVal) throws InterruptedException {
+
+		ArrayList<Integer> arrList = new ArrayList<Integer>();
+		int modval;
+
+		while (numaricVal > 0) {
+			modval = numaricVal % 10;
+			arrList.add(modval);
+			numaricVal = numaricVal / 10;
+		}
+
+		// reverse of arraylist
+		Collections.reverse(arrList);
+		for (Integer digit : arrList) {
+			sendKeyMultipleTimes("NUMPAD" + digit, 1, 0);
+		}
+
+	}
+
 	public static void setApplicationHubPage(int noOfRetry) throws InterruptedException {
 
 		System.out.println("Trying to set home page ");
@@ -523,14 +544,13 @@ public class TestInitization {
 
 	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {
 
-		
 		try {
 			if (we.isDisplayed()) {
 
 				reports.log(LogStatus.PASS, webElementName + " is visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
-				
+
 				reports.log(LogStatus.FAIL, webElementName + " exist on webpage but it is not visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				throw new SkipException(webElementName + " is not found on webpage");
