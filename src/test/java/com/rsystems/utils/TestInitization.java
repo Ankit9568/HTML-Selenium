@@ -291,7 +291,7 @@ public class TestInitization {
 
 			action.sendKeys(String.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
-			// reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			
 
 		}
 

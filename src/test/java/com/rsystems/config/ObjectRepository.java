@@ -100,6 +100,14 @@ public class ObjectRepository {
 		public static final String chnlNoIn_Infobar = "current_channel";
 		public static final String programDurationIn_Infobar = "programTime";
 		public static final String programTitle = "programTitle";
+		public static final String hdIcon = "programHD";
+		public static final String channelLogo = "current_channel_logo";
 	}
 
+	public static class ZapListPage {
+
+		public static final String screenTitle = "//p[@id='headerTitle']";
+		public static final String focousChannelNumber = "//div[@class='focusBox']/ul/li[2]/div[@class='channel_details']/div/span";
+		
+	}
 }
