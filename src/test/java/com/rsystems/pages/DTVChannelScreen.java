@@ -35,6 +35,10 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.channelLogo)
 	public WebElement channelLogo;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.DtvChannel.pauseAndPlayImg)
+	public WebElement pauseAndPlayImg;
+	
+	
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 

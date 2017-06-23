@@ -74,6 +74,7 @@ public class TestInitization {
 		wait = new WebDriverWait(driver, 120L);
 
 		try {
+		
 			wait.until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
 			System.out.println("Proximus Logo Loaded");
@@ -95,6 +96,7 @@ public class TestInitization {
 			}
 
 		} catch (Throwable t) {
+			t.printStackTrace();
 			System.out.println("HUB is not loaded with TV showcase focused " + t);
 
 		}
