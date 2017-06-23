@@ -103,6 +103,7 @@ public class ObjectRepository {
 		public static final String hdIcon = "programHD";
 		public static final String channelLogo = "current_channel_logo";
 		public static final String pauseAndPlayImg = "//li[@id='play_pause']/div/img";
+		public static final String backToLive = "//div[@id='containerDiv']/div[text()='Terug naar leven']";
 	}
 
 	public static class ZapListPage {
