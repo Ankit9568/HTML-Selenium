@@ -1,5 +1,6 @@
 package com.rsystems.test;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -14,15 +15,17 @@ public class DTVChannelTestCase extends TestInitization {
 	public void tc_BCDTVDT0105_DTVChannelInfobanner() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+
+		dtvChannelScreen.openLiveTV();
+
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 
 		isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel Number");
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.programDurationIn_Infobar, "program duration");
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.programTitle, "Program title");
 
 		// Now wit for 5 second to hide the info banner
@@ -33,14 +36,18 @@ public class DTVChannelTestCase extends TestInitization {
 		isNotDisplayed(dtvChannelScreen.programTitle, "Program title");
 
 	}
+
 	@Test
 	public void tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting() throws InterruptedException {
 
 		String pressChannelNumber = "5";
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		dtvChannelScreen.openLiveTV();
+
+		reports.log(LogStatus.PASS, "Press a channel number which is available");
 		sendKeyMultipleTimes("NUMPAD5", 1, 4000);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -56,12 +63,17 @@ public class DTVChannelTestCase extends TestInitization {
 					+ ActualChannelNo + "and expected : " + pressChannelNumber);
 		}
 	}
+
 	@Test
 	public void DTV_ChannelZapViaChannelNumberNotExisting() throws InterruptedException {
 
 		ZapList zapList = new ZapList(driver);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		new DTVChannelScreen(driver).openLiveTV();
+
+		reports.log(LogStatus.PASS, "Press a channel number which is NOT available");
 		sendNumaricKeys(321);
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+
 		Thread.sleep(2000);
 		/** Verify the zap list */
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -69,8 +81,8 @@ public class DTVChannelTestCase extends TestInitization {
 
 		if (actualFocousChannel
 				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "ExpectedFocousChannel", "Values"))) {
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			reports.log(LogStatus.PASS, "Page Successfully move to zaplist page");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 
 		else {
@@ -80,14 +92,12 @@ public class DTVChannelTestCase extends TestInitization {
 
 		}
 	}
+
 	@Test
 	public void DTV_Channel_Zap_Via_Up_Down() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
-		// Get the current TV Channel number
-		reports.log(LogStatus.PASS, "Navigate Live TV");
-		reports.attachScreenshot(captureCurrentScreenshot());
+		dtvChannelScreen.openLiveTV();
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -117,20 +127,19 @@ public class DTVChannelTestCase extends TestInitization {
 				"Screen has been move to First channel");
 
 	}
+
 	@Test
 	public void tc_BCDTVDT0110_DTV_HD_SD_Zap() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
-		reports.log(LogStatus.PASS, "Navigate Live TV");
-		reports.attachScreenshot(captureCurrentScreenshot());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		dtvChannelScreen.openLiveTV();
 		// Change channel to HD and validation
 
 		reports.log(LogStatus.PASS, "Navigate to HD channel");
-		reports.attachScreenshot(captureCurrentScreenshot());
 		sendNumaricKeys(
 				Integer.parseInt((TestInitization.getExcelKeyValue("DTVChannel", "HDChannelNumber", "Values"))));
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		// validate live TV has been move to HD channel
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
@@ -138,23 +147,22 @@ public class DTVChannelTestCase extends TestInitization {
 		isDisplayed(dtvChannelScreen.hdIcon, "HD Icon");
 
 		reports.log(LogStatus.PASS, "Navigate to SD channel");
-		reports.attachScreenshot(captureCurrentScreenshot());
 		sendNumaricKeys(
 				Integer.parseInt((TestInitization.getExcelKeyValue("DTVChannel", "SDChannelNumber", "Values"))));
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		// validate live TV has been move to HD channel
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 		isNotDisplayed(dtvChannelScreen.hdIcon, "HD Icon");
 
 	}
+
 	@Test
 	public void DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
-		reports.log(LogStatus.PASS, "Navigate Live TV");
-		reports.attachScreenshot(captureCurrentScreenshot());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		dtvChannelScreen.openLiveTV();
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 		// channel plus and validation
@@ -180,19 +188,16 @@ public class DTVChannelTestCase extends TestInitization {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
-		reports.log(LogStatus.PASS, "Navigate Live TV");
-		reports.attachScreenshot(captureCurrentScreenshot());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		dtvChannelScreen.openLiveTV();
 
 		reports.log(LogStatus.PASS, "Press pause button");
-		reports.attachScreenshot(captureCurrentScreenshot());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		System.out.println("Image name " + imageName);
 
 		if (imageName
 				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
@@ -206,7 +211,9 @@ public class DTVChannelTestCase extends TestInitization {
 
 		Thread.sleep(5000);
 
+		reports.log(LogStatus.PASS, "Press play button");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
 		currentImgToArr = currentImgSource.split("/");
@@ -222,6 +229,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 	}
+
 	@Test
 	public void pause_LiveTV_PLTV_BackToLive() throws InterruptedException {
 
@@ -247,7 +255,7 @@ public class DTVChannelTestCase extends TestInitization {
 			}
 		}
 
-		catch (Exception e) {
+		catch (NoSuchElementException e) {
 
 			// Back to live button is not displayed on webpage
 			reports.log(LogStatus.PASS, "Click on Pause button");

@@ -74,7 +74,7 @@ public class TestInitization {
 		wait = new WebDriverWait(driver, 120L);
 
 		try {
-		
+
 			wait.until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
 			System.out.println("Proximus Logo Loaded");
@@ -138,7 +138,7 @@ public class TestInitization {
 	public static String captureCurrentScreenshot() throws InterruptedException {
 
 		// Wait for page load
-		Thread.sleep(2000);
+		 Thread.sleep(2000);
 		cald = Calendar.getInstance();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
@@ -293,7 +293,6 @@ public class TestInitization {
 
 			action.sendKeys(String.valueOf(keyname)).perform();
 			Thread.sleep(delaybetweemKeys);
-			
 
 		}
 
@@ -539,9 +538,9 @@ public class TestInitization {
 	}
 
 	public void FailTestCase(String reason) throws InterruptedException {
-		Assert.fail(reason);
-		reports.log(LogStatus.FAIL, reason);
+		reports.log(LogStatus.ERROR, reason);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		Assert.fail(reason);
 	}
 
 	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {
@@ -553,13 +552,11 @@ public class TestInitization {
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
 
-				reports.log(LogStatus.FAIL, webElementName + " exist on webpage but it is not visible on webpage");
-				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-				throw new SkipException(webElementName + " is not found on webpage");
+				FailTestCase(webElementName + " exist on webpage but it is not visible on webpage");
+
 			}
 		} catch (NoSuchElementException e) {
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			throw new SkipException(webElementName + " is not found on webpage");
+			FailTestCase(webElementName + " is not found on webpage");
 
 		}
 
@@ -573,13 +570,12 @@ public class TestInitization {
 				reports.log(LogStatus.PASS, webElementName + " is not visible on webpage");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
-				reports.log(LogStatus.FAIL, webElementName + "is visible on webpage");
-				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-				throw new SkipException(webElementName + " is not found on webpage");
+				FailTestCase(webElementName + "is visible on webpage");
+			
 			}
 		} catch (NoSuchElementException e) {
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			throw new SkipException(webElementName + " is not found on webpage");
+			FailTestCase(webElementName + " is not found on webpage");
+			
 
 		}
 
