@@ -71,6 +71,7 @@ public class DTVChannelScreen extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 		
 		// Validation channel info
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.channelLogo, "Channel logo");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel Number");

@@ -45,21 +45,28 @@ public class TestInitization {
 	public static WebDriver driver;
 	public static Logger log;
 	public static final ExtentReports reports = ExtentReports.get(TestInitization.class);
-	public static Calendar cald;
+	public static Calendar cald = Calendar.getInstance();
 	public static String captureFilePath;
 	public static String currentMethodName;
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
+	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+	private  static String executionReportPath = 
+			System.getProperty("user.dir") + "/ExecutionReports/ExecutionReport_"+ formatter.format(cald.getTime()).toString();
 
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
-
-		cald = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+		
 		String extentReportFileName = "report_" + formatter.format(cald.getTime()).toString() + ".html";
-		String extentReportPath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\"
-				+ extentReportFileName;
-
+		new File(executionReportPath).mkdirs();
+		String extentReportPath = new File(executionReportPath + "/" + extentReportFileName).getAbsolutePath();
+		String seleniumLogs = new File(executionReportPath + "/Logs/Selenium.log").getAbsolutePath();
+		String applicationLogs = new File(executionReportPath + "/Logs/Application.log").getAbsolutePath();
+		
+		System.setProperty("seleniumLogs", seleniumLogs);
+		System.setProperty("ApplicationLogs", applicationLogs);
+		
+		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -138,7 +145,7 @@ public class TestInitization {
 	public static String captureCurrentScreenshot() throws InterruptedException {
 
 		// Wait for page load
-		 Thread.sleep(2000);
+		Thread.sleep(2000);
 		cald = Calendar.getInstance();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
@@ -149,8 +156,7 @@ public class TestInitization {
 		// formatter.format(cald.getTime()).toString());
 		String captureFileName = currentMethodName + formatter.format(cald.getTime()).toString() + ".jpg";
 
-		captureFilePath = System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\testreport\\screenshots\\"
-				+ captureFileName;
+		captureFilePath = executionReportPath + "/screenshots" + "/" + captureFileName;
 
 		// System.out.println("Image to be captured as :: " + captureFilePath);
 		// log.info("Image to be captured as :: " + captureFilePath);
@@ -571,11 +577,10 @@ public class TestInitization {
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			} else {
 				FailTestCase(webElementName + "is visible on webpage");
-			
+
 			}
 		} catch (NoSuchElementException e) {
 			FailTestCase(webElementName + " is not found on webpage");
-			
 
 		}
 

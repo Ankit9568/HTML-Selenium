@@ -11,7 +11,7 @@ import com.rsystems.utils.Unicode;
 
 public class DTVChannelTestCase extends TestInitization {
 
-	@Test
+@Test
 	public void tc_BCDTVDT0105_DTVChannelInfobanner() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -37,7 +37,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
-	@Test
+@Test
 	public void tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting() throws InterruptedException {
 
 		String pressChannelNumber = "5";
@@ -64,7 +64,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 	}
 
-	@Test
+@Test
 	public void DTV_ChannelZapViaChannelNumberNotExisting() throws InterruptedException {
 
 		ZapList zapList = new ZapList(driver);
@@ -93,7 +93,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 	}
 
-	@Test
+@Test
 	public void DTV_Channel_Zap_Via_Up_Down() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -105,10 +105,10 @@ public class DTVChannelTestCase extends TestInitization {
 
 		// Channel up and validation
 		dtvChannelScreen.chnlChangeAndValidation(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS, (currentChannelNo + 1) + "",
-				"Screen has been move to next channel");
+				"Navigate Screen to next channel");
 		// Channel down and validation
 		dtvChannelScreen.chnlChangeAndValidation(Unicode.VK_CHANNEL_MINUS, (currentChannelNo) + "",
-				"Screen has been move to previous channel");
+				"Navigate Screen to previous channel");
 
 		// Go to first channel
 		sendNumaricKeys(
@@ -119,16 +119,15 @@ public class DTVChannelTestCase extends TestInitization {
 		// Check last channel of Live TV
 		dtvChannelScreen.chnlChangeAndValidation(Unicode.VK_CHANNEL_MINUS,
 				TestInitization.getExcelKeyValue("DTVChannel", "LastChannelNumber", "Values"),
-				"Screen has been move to Last channel");
+				"Navigate Screen to last channel");
 
 		// Check the first Channel Number
 		dtvChannelScreen.chnlChangeAndValidation(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS,
 				TestInitization.getExcelKeyValue("DTVChannel", "FirstChannelNumber", "Values"),
-				"Screen has been move to First channel");
+				"Navigate Screen to First channel");
 
 	}
-
-	@Test
+@Test
 	public void tc_BCDTVDT0110_DTV_HD_SD_Zap() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
