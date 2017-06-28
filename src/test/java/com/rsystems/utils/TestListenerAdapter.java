@@ -81,13 +81,23 @@ public class TestListenerAdapter extends TestInitization implements ITestListene
 	@Override
 	public void onTestFailure(ITestResult result) {
 		ExceptionTrap exceptionTrap = new ExceptionTrap(result);
-		exceptionTrap.setExtendReportStatus();
+		try {
+			exceptionTrap.setExtendReportStatus();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		ExceptionTrap exceptionTrap = new ExceptionTrap(result);
-		exceptionTrap.setExtendReportStatus();
+		try {
+			exceptionTrap.setExtendReportStatus();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -101,7 +111,5 @@ public class TestListenerAdapter extends TestInitization implements ITestListene
 	@Override
 	public void onFinish(ITestContext context) {
 	}
-
-
 
 }

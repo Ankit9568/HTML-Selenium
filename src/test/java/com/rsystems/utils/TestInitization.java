@@ -544,9 +544,7 @@ public class TestInitization {
 	}
 
 	public void FailTestCase(String reason) throws InterruptedException {
-		reports.log(LogStatus.FAIL, reason);
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		Assert.fail(reason);
+		Assert.fail(reason);	
 	}
 
 	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {

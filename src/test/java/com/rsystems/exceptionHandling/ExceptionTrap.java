@@ -27,12 +27,13 @@ public class ExceptionTrap extends TestInitization {
 		registeredException.add(new NoSuchWindowException(ExceptionMesages.NoSuchWindowException.toString()));
 	}
 
-	public void setExtendReportStatus() {
+	public void setExtendReportStatus() throws InterruptedException {
 
 		boolean matchedRegisteredException = false;
 		if (testResult.getStatus() == ITestResult.SKIP) {
 			log.debug("Logger.debug " +  testResult.getMethod().getMethodName() + " : "+ getExceptionStackTrace());
 			reports.log(LogStatus.ERROR, testResult.getThrowable().getLocalizedMessage().split("\n")[0]);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			return;
 		}
 
@@ -40,12 +41,14 @@ public class ExceptionTrap extends TestInitization {
 			if (exception.getClass().getName().equalsIgnoreCase(testResult.getThrowable().getClass().getName())) {
 				log.debug("Logger.debug " +testResult.getMethod().getMethodName() + " : "+  getExceptionStackTrace());
 				reports.log(LogStatus.FAIL, exception.getMessage().split("\n")[0]);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				matchedRegisteredException = true;
 			}
 		}
 		if(!matchedRegisteredException){
 			log.debug("Logger.debug " +  getExceptionStackTrace());
 			reports.log(LogStatus.FAIL, testResult.getMethod().getMethodName() + " : "+ testResult.getThrowable().getMessage());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 	}
 	
