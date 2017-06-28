@@ -9,10 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
+import com.rsystems.utils.Unicode;
 
 public class RecordingScreen extends TestInitization{
 	
@@ -34,7 +36,6 @@ public class RecordingScreen extends TestInitization{
 	@FindBy(how = How.XPATH, using = ObjectRepository.RecordingElements.EpisodeDurationXPath)
 	public WebElement getEpisodeDuration;
 	
-	
 	@FindBy(how = How.XPATH, using = ObjectRepository.RecordingElements.ProgramDefinitionXPath)
 	public WebElement getChannelDefiniton;
 	
@@ -47,6 +48,20 @@ public class RecordingScreen extends TestInitization{
 	@FindBy(how = How.ID,using = ObjectRepository.RecordingElements.currentRecordingCountID)
 	public WebElement currentRecordingCountID;
 	
+	@FindBy(how = How.CLASS_NAME,using = ObjectRepository.RecordingElements.focusProgramCalssName)
+	public WebElement focusProgram;
+	
+	@FindBy(how = How.CLASS_NAME,using = ObjectRepository.RecordingElements.activeMenuItemElement)
+	public WebElement activeInfoMenuItem;
+	
+	@FindBy(how=How.ID,using = ObjectRepository.RecordingElements.plannedRecordingTitleElement)
+	public WebElement plannedRecordingScreenTitle;
+	
+	@FindBy(how=How.ID,using = ObjectRepository.RecordingElements.epgGuideElement)
+	public WebElement EpgGuide;
+	
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.headerElement)
+	public WebElement headerElement;
 	/**
 	 * This function is used to get Episode Name.
 	 * Created By Rahul Dhoundiyal
@@ -102,16 +117,14 @@ public class RecordingScreen extends TestInitization{
 	 * @author Rahul.Dhoundiyal
 	 *
 	 */
-	public class EpsiodeInfo {
+	public class EpisodeInfo {
 		public String channelNo;
 		public String programName;
-		public String programInfoImage;
 		public String programDuration;
 		public String programDefiniton;
-		public EpsiodeInfo(String channelNo, String programName, String programInfoImage, String programDuration,String programDefiniton) {
+		public EpisodeInfo(String channelNo, String programName, String programDuration,String programDefiniton) {
 			this.channelNo = channelNo;
 			this.programName = programName;
-			this.programInfoImage = programInfoImage;
 			this.programDuration = programDuration;
 			this.programDefiniton = programDefiniton;
 		}
@@ -120,71 +133,104 @@ public class RecordingScreen extends TestInitization{
 	 * This function is used to navigate to Planning Menu Under Library Screen
 	 * Created By Rahul Dhoundiyal
 	 */
-	public void moveToPlanning() throws InterruptedException
+	public void moveToPlannedRecordings() throws InterruptedException
 	{	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		TestInitization.setApplicationHubPage(2);
 		//Move to My Library
 		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
 		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
-		TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
 		reports.log(LogStatus.PASS, " mijn bibliotheek Screen getting displayed ");
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		//Move to Planning
 		reports.log(LogStatus.PASS, " Navigate to mijn planning Screen ");
 		TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
 		TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
-		TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
 		reports.log(LogStatus.PASS, " mijn planning Screen getting displayed ");
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	}
+	
+	private void moveToOngoingandCompletedRecordingList() throws InterruptedException {
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		TestInitization.setApplicationHubPage(2);
+		//Move to My Library
+		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
+		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
+		reports.log(LogStatus.PASS, " mijn bibliotheek Screen getting displayed ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//Move to Planning
+		reports.log(LogStatus.PASS, " Navigate to opnames Screen ");
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
+		reports.log(LogStatus.PASS, " Ongoing and Comppleted Recording lists Screen getting displayed ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+	} 
+	
 	/**
 	 * This function is used to start recording on future channel.It will return the episode details like channel number,program name,Info Image,Channel Definition
 	 * Created By Rahul Dhoundiyal
 	 */
-	public List<EpsiodeInfo> startRecordingForFutureChannel(String recordingType,int numberOfRecording) throws InterruptedException{
+	public List<EpisodeInfo> scheduleRecordingForFutureChannel(String recordingType,int numberOfRecording) throws InterruptedException{
 		boolean stopRecording = false;
 		int noOfRecordedChannel = 0;
-		List<EpsiodeInfo> programDetails = new ArrayList<EpsiodeInfo>();
+		List<EpisodeInfo> programDetails = new ArrayList<EpisodeInfo>();
 		//Move to Future Epsiode
-		TestInitization.setApplicationHubPage(1);
-		TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		setApplicationHubPage(1);
+		sendKeyMultipleTimes("UP", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.log(LogStatus.PASS, " DTV Channel Screen getting Displayed ");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		TestInitization.sendKeySequence("RIGHT",1000,TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		// Open info banner for screenshot
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("RIGHT", 2, 2000);
 		reports.log(LogStatus.PASS, " Mini EPG Screen Displayed ");
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		reports.attachScreenshot(captureCurrentScreenshot());
 		while(!stopRecording){
 			if (numberOfRecording != noOfRecordedChannel)
-			{
-					TestInitization.sendKeySequence("RIGHT", 1000,TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
-					reports.log(LogStatus.PASS, " Navigate to Future Episode Screen ");
-					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			{		driver.switchTo().defaultContent();
+					if (!driver.findElement(By.xpath("//p[@id='headerTitle']")).getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl")))
+					{
+						sendKeyMultipleTimes("UP", 1, 1000);
+						sendKeyMultipleTimes("ENTER", 1, 1000);
+					}
+					sendKeyMultipleTimes("RIGHT", 1, 3000);
+					reports.attachScreenshot(captureCurrentScreenshot());
 					if(recordingType.equalsIgnoreCase("SINGLE")){
 						//Enter to open Episode Info
-						TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
+						sendKeyMultipleTimes("ENTER", 1, 3000);
 						reports.log(LogStatus.PASS, " Episode Info Screen getting displayed ");
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 						if (driver.findElement(By.xpath(ObjectRepository.RecordingElements.StartRecordingXPath)).getText().equalsIgnoreCase("opnemen")){
-							programDetails.add(new EpsiodeInfo(getChannelNo(), getInfoEpisodeName(), getChannelInfoImage(), getEpisodeDuration(),getChannelDefiniton()));
+							programDetails.add(new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton()));
 							reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+getInfoEpisodeName());
-							TestInitization.sendKeyMultipleTimes("ENTER", 1, 10000);
-							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+							sendKeyMultipleTimes("ENTER", 1, 1000);
+							driver.switchTo().defaultContent();
+							wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+							sendKeyMultipleTimes("ENTER", 1, 1000);
+							sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+							reports.attachScreenshot(captureCurrentScreenshot());
 							noOfRecordedChannel += 1;
 						}
 						else 
 						{	reports.log(LogStatus.PASS, " Already recording is scheduled on  " + getInfoEpisodeName() + " epsiode. Unable to record this episode");
-							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-							TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 5000);
+							reports.attachScreenshot(captureCurrentScreenshot());
+							sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+							driver.switchTo().defaultContent();
+							wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 							reports.log(LogStatus.PASS," Going back and Navigate to another Channel");
-							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						}
 					}
 					else
 					{
-						TestInitization.sendKeyMultipleTimes("DOWN", 1, 5000);
-						TestInitization.sendKeyMultipleTimes("ENTER", 1, 5000);
+						sendKeyMultipleTimes("DOWN", 1, 1000);
+						sendKeyMultipleTimes("ENTER", 1, 1000);
+						driver.switchTo().defaultContent();
+						wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 					}
 			}
 			else
@@ -196,12 +242,77 @@ public class RecordingScreen extends TestInitization{
 		return programDetails;
 	}
 
+	public EpisodeInfo startRecordingFromEPGScreen(String recordingType) throws InterruptedException {
+		boolean stopRecording = false;
+		//Navigate to EPG Screen
+		EpisodeInfo episodeDetails = null;
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgChannelScreen(false);
+		while(!stopRecording){
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']")).isEmpty());
+			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']")).isEmpty())
+			{
+				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Open Info Screen of ongoing program");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				episodeDetails =  new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton());
+				if (recordingType.equalsIgnoreCase("SINGLE"))
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+					{
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on opnemen to start recording");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						System.out.println(episodeDetails.toString() + episodeDetails.channelNo + episodeDetails.programDefiniton + episodeDetails.programDuration);
+						stopRecording = true;
+					}
+					else
+					{
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
+					}
+				}
+				else
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("serie opnemen"))
+					{
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on serie opnemen to start recording");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						System.out.println(episodeDetails.toString() + episodeDetails.channelNo + episodeDetails.programDefiniton + episodeDetails.programDuration);
+						stopRecording = true;
+					}
+					else
+					{
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
+					}
+					
+				}
+				
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+			
+		}
+		return episodeDetails;
+	}
+
 	/**
 	 * This function is used to delete recording from scheduled recorded list under planning option of Library
 	 * Created By Rahul Dhoundiyal
 	 */
-	public void deleteSchduledRecording(EpsiodeInfo episodeDetails,String recordingType) throws InterruptedException{
-		moveToPlanning();
+	public void deleteSchduledRecording(EpisodeInfo episodeDetails,String recordingType) throws InterruptedException{
+		moveToPlannedRecordings();
 		//Recording.moveToSingleAsset(recordedAssetName);
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		List<WebElement> recordingContentElementList;
@@ -213,8 +324,6 @@ public class RecordingScreen extends TestInitization{
 			{
 				if (recordingContentElementList.get(i).findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
 				&&
-				(recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ChannelLogoInPlannedRecording)).getCssValue("background").contains(episodeDetails.
-						programInfoImage) || !(episodeDetails.programInfoImage.contains(".jpg")))&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
 				&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDurationInPlannedRecording)).getText().split("-")[1].trim().equalsIgnoreCase(episodeDetails.programDuration))
@@ -251,10 +360,10 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 * 
 	 */
-	public boolean verifyRecordingIsScheduledOrNot(EpsiodeInfo episodeDetails,String recordingType) throws InterruptedException {
+	public boolean verifyRecordingIsScheduledOrNot(EpisodeInfo episodeDetails,String recordingType) throws InterruptedException {
 		boolean verifyRecording = false;
 		//Move to planning
-		moveToPlanning();
+		moveToPlannedRecordings();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		List<WebElement> recordingContentElementList;
 		recordingContentElementList = driver.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
@@ -263,13 +372,12 @@ public class RecordingScreen extends TestInitization{
 		{
 			if((recordingContentElementList.get(i).getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
 			{
+				
 				if (! (episodeDetails.programDefiniton == null) && recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDefinitionInPlannedRecording)).getAttribute("src").equalsIgnoreCase(episodeDetails.programDefiniton)){
+					System.out.println(recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDefinitionInPlannedRecording)).getAttribute("src"));
 					verifyRecording = true;
 				}
 				if (recordingContentElementList.get(i).findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
-				&&
-				(recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ChannelLogoInPlannedRecording)).getCssValue("background").contains(episodeDetails.
-						programInfoImage) || !(episodeDetails.programInfoImage.contains(".jpg")))
 				&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
 				&&
@@ -297,10 +405,10 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 * 
 	 */
-	public boolean verifyRecordingisDeletedOrNot(EpsiodeInfo episodeDetails, String recordingType) throws InterruptedException {
+	public boolean verifyRecordingisDeletedOrNot(EpisodeInfo episodeDetails, String recordingType) throws InterruptedException {
 		boolean verifyRecording = true;
 		//Move to planning
-		moveToPlanning();
+		moveToPlannedRecordings();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		List<WebElement> recordingContentElementList;
 		recordingContentElementList = driver.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
@@ -310,8 +418,6 @@ public class RecordingScreen extends TestInitization{
 			{
 				if (recordingContentElementList.get(i).findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
 				&&
-				(recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ChannelLogoInPlannedRecording)).getCssValue("background").contains(episodeDetails.
-						programInfoImage) || !(episodeDetails.programInfoImage.contains(".jpg")))&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
 				&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDurationInPlannedRecording)).getText().split("-")[1].trim().equalsIgnoreCase(episodeDetails.programDuration))
@@ -338,23 +444,22 @@ public class RecordingScreen extends TestInitization{
 	 * @return
 	 * Created By Rahul Dhoundiyal
 	 */
-	public boolean verifyNavigationInRecording() throws InterruptedException {
+	public boolean verifyNavigationInPlannedRecording() throws InterruptedException {
 		//Move to Planning under Library Section
-		moveToPlanning();
+		moveToPlannedRecordings();
 		boolean verifyDownwardNavigation = false;
 		boolean verifyUpwardNavigation = false;
 		String countNumber = null;
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-		
 		String totalRecordings = totalRecordingID.getText();
 		/*If there is no recording scheduled the first start multiple recording then test this scenario*/
 		if (Integer.parseInt(totalRecordings) == 0)
 		{
-			startRecordingForFutureChannel("SINGLE", 5);
-			verifyNavigationInRecording();
+			scheduleRecordingForFutureChannel("SINGLE", 5);
+			verifyNavigationInPlannedRecording();
 		}
 		/*Navigate down till last element of schdeule recording*/ 
-		reports.log(LogStatus.INFO, " Navigate down till the last element of schdeuled recordings ");
+		reports.log(LogStatus.PASS, " Navigate down till the last element of scheduled recordings ");
 		for(int i=0;i<Integer.parseInt(totalRecordings);i++){
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		}
@@ -362,7 +467,7 @@ public class RecordingScreen extends TestInitization{
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		countNumber = currentRecordingCountID.getText();
 		//Send Down Key to verify list is end and Down Key is not working
-		reports.log(LogStatus.INFO," Send DOWN Key to verify if focus is removed from last element or not ");
+		reports.log(LogStatus.PASS," Send DOWN Key to verify if focus is removed from last element or not ");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		//Verify the count number should not change
 		Assert.assertEquals(countNumber, currentRecordingCountID.getText());
@@ -374,7 +479,7 @@ public class RecordingScreen extends TestInitization{
 		}
 		//Going Upward
 		/*Navigate down till last element of schdeule recording*/ 
-		reports.log(LogStatus.INFO, " Navigate up till the top element of schdeuled recordings ");
+		reports.log(LogStatus.PASS, " Navigate up till the top element of scheduled recordings ");
 		for(int i=0;i<Integer.parseInt(totalRecordings);i++){
 			TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
 		}
@@ -382,7 +487,7 @@ public class RecordingScreen extends TestInitization{
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		countNumber = currentRecordingCountID.getText();
 		//Send Down Key to verify list is end and Down Key is not working
-		reports.log(LogStatus.INFO," Send UP Key to verify if focus is removed from top element or not ");
+		reports.log(LogStatus.PASS," Send UP Key to verify if focus is removed from top element or not ");
 		TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
 		//Verify the count number should not change
 		Assert.assertEquals(countNumber, currentRecordingCountID.getText());
@@ -394,12 +499,86 @@ public class RecordingScreen extends TestInitization{
 		}
 		return (verifyDownwardNavigation && verifyUpwardNavigation);		
 	}
+	
+	public boolean verifyNavigationInRecordedList() throws InterruptedException {
+		//Move to Planning under Library Section
+		moveToRecordedItemList();
+		boolean verifyDownwardNavigation = false;
+		boolean verifyUpwardNavigation = false;
+		String countNumber = null;
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		
+		String totalRecordings = totalRecordingID.getText();
+		/*If there is no recording scheduled the first start multiple recording then test this scenario*/
+		if (Integer.parseInt(totalRecordings) == 0)
+		{
+			reports.log(LogStatus.PASS, "No recorded items present");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		/*Navigate down till last element of schdeule recording*/ 
+		reports.log(LogStatus.PASS, " Navigate down till the last element of scheduled recordings ");
+		for(int i=0;i<Integer.parseInt(totalRecordings);i++){
+			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		}
+		reports.log(LogStatus.PASS," Verify Focus is on last element and will not go down anymore ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		countNumber = currentRecordingCountID.getText();
+		//Send Down Key to verify list is end and Down Key is not working
+		reports.log(LogStatus.PASS," Send DOWN Key to verify if focus is removed from last element or not ");
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		//Verify the count number should not change
+		Assert.assertEquals(countNumber, currentRecordingCountID.getText());
+		reports.log(LogStatus.PASS,"Focus is on last element will not go down anymore");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		if(countNumber.equalsIgnoreCase(currentRecordingCountID.getText()))
+		{
+			verifyDownwardNavigation = true;
+		}
+		//Going Upward
+		/*Navigate down till last element of schdeule recording*/ 
+		reports.log(LogStatus.PASS, " Navigate up till the top element of scheduled recordings ");
+		for(int i=0;i<Integer.parseInt(totalRecordings);i++){
+			TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
+		}
+		reports.log(LogStatus.PASS," Verify Focus is on top element and will not go up anymore ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		countNumber = currentRecordingCountID.getText();
+		//Send Down Key to verify list is end and Down Key is not working
+		reports.log(LogStatus.PASS," Send UP Key to verify if focus is removed from top element or not ");
+		TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
+		//Verify the count number should not change
+		Assert.assertEquals(countNumber, currentRecordingCountID.getText());
+		reports.log(LogStatus.PASS,"Focus is on top element will not go up anymore");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		if(countNumber.equalsIgnoreCase(currentRecordingCountID.getText()))
+		{
+			verifyUpwardNavigation = true;
+		}
+		return (verifyDownwardNavigation && verifyUpwardNavigation);		
+	}
+	
+	private void moveToRecordedItemList() throws InterruptedException {
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		TestInitization.setApplicationHubPage(2);
+		//Move to My Library
+		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
+		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
+		reports.log(LogStatus.PASS, " mijn bibliotheek Screen getting displayed ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		//Move to Planning
+		reports.log(LogStatus.PASS, " Navigate to opnames Screen ");
+		TestInitization.sendKeyMultipleTimes("ENTER",1,1000);
+		reports.log(LogStatus.PASS, " opnames Screen getting displayed ");
+		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+	}
 	/**
 	 * This function is used to delete all Single Recordings from Planned recordings
 	 * Created By Rahul Dhoundiyal
 	 */
-	public void deleteSingleRecordings() throws InterruptedException {
-		moveToPlanning();
+	public void deletePlannedSingleRecording() throws InterruptedException {
+		boolean singleRecordingDelete = false;
+		moveToPlannedRecordings();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		Integer totalRecordings = Integer.parseInt(totalRecordingID.getText());
 		for(int i=0;i<totalRecordings;i++)
@@ -414,19 +593,40 @@ public class RecordingScreen extends TestInitization{
 				reports.log(LogStatus.PASS,"Expected - Should be in Info box to delete");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-				reports.log(LogStatus.PASS,"Recording Deleted Successfully");
+				singleRecordingDelete = true;
+				break;
 			}
 			else{
 				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
-			}		
+			}
 		}	
+		if (singleRecordingDelete)
+		{
+			driver.switchTo().frame(getCurrentFrameIndex());
+			if (totalRecordings != Integer.parseInt(totalRecordingID.getText()))
+			{
+				reports.log(LogStatus.PASS,"Recording is deleted successfully and List getting updated accordingly. Total Recording Before Delete :-"+ totalRecordings + "Recordings after Delete :-" +totalRecordingID.getText());
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Recording is not deleted. Total Recording Before Delete :-"+ totalRecordings + "Recordings after Delete :-" +totalRecordingID.getText());
+			}
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "No Single Recordings present to delete");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
 	}
 	/**
 	 * This function is used to delete all Series Recordings from Planned recordings
 	 * Created By Rahul Dhoundiyal
 	 */
-	public void deleteSeriesRecordins() throws InterruptedException {
-		moveToPlanning();
+	public void deletePlannedSeriesRecording() throws InterruptedException {
+		boolean seriesRecordingDelete = false;
+		moveToPlannedRecordings();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		Integer totalRecordings = Integer.parseInt(totalRecordingID.getText());
 		for(int i=0;i<totalRecordings;i++)
@@ -447,18 +647,42 @@ public class RecordingScreen extends TestInitization{
 					TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 					reports.log(LogStatus.PASS,"Expected - Should be in Info box to delete");
 					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-					TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-					reports.log(LogStatus.PASS,"Recording Deleted Successfully");
+					TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
+					
 				}
+				seriesRecordingDelete = true;
+				break;
+			}
+			else{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
 		}
+		if(seriesRecordingDelete)
+		{
+			driver.switchTo().frame(getCurrentFrameIndex());
+			if (totalRecordings != Integer.parseInt(totalRecordingID.getText()))
+			{
+				reports.log(LogStatus.PASS,"Recording is deleted successfully and List getting updated accordingly. Total Recording Before Delete :-"+ totalRecordings + "Recordings after Delete :-" +totalRecordingID.getText());
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Recording is not deleted. Total Recording Before Delete :-"+ totalRecordings + "Recordings after Delete :-" +totalRecordingID.getText());
+			}
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "No Series Recordings present to delete");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
 	}
 	/**
 	 * This function is used to delete all Recordings from Planned recordings
 	 * Created By Rahul Dhoundiyal
 	 */
 	public void deleteAllRecordings() throws InterruptedException{
-		moveToPlanning();
+		moveToPlannedRecordings();
 		List<WebElement> recordingContentElementList = null;
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		Integer totalRecordings = 0;
@@ -467,7 +691,7 @@ public class RecordingScreen extends TestInitization{
 		if (recordingContentElementList.size() == 0)
 		{
 			reports.log(LogStatus.PASS, "No Recordings present to delete");
-			startRecordingForFutureChannel("SINGLE", 3);
+			scheduleRecordingForFutureChannel("SINGLE", 3);
 			deleteAllRecordings();
 		}
 		else
@@ -516,7 +740,7 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 */
 	public boolean verifyAllRecordingsgDeleted() throws InterruptedException {
-		moveToPlanning();
+		moveToPlannedRecordings();
 		List<WebElement> recordingContentElementList = null;
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		recordingContentElementList = driver.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
@@ -532,4 +756,381 @@ public class RecordingScreen extends TestInitization{
 			return false;
 		}
 	}
+	
+	/**
+	 * This function is used to schedule recordings on future channel from EPG Screen.
+	 * Created By Rahul Dhoundiyal
+	 */
+
+	public EpisodeInfo scheduleRecordingFromEPGScreen(String recordingType) throws InterruptedException {
+		boolean stopRecording = false;
+		//Navigate to EPG Screen
+		EpisodeInfo episodeDetails = null;
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgChannelScreen(false);
+		reports.log(LogStatus.PASS, "Navigate to Future Episodes");
+		sendKeyMultipleTimes("RIGHT", 3, 1000);
+		while(!stopRecording){
+			
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty());
+			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty())
+			{
+				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Open Info Screen of Future program");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				episodeDetails =  new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton());
+				if (recordingType.equalsIgnoreCase("SINGLE"))
+				{
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+					{
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on opnemen to start recording");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						System.out.println(episodeDetails.toString() + episodeDetails.channelNo + episodeDetails.programDefiniton + episodeDetails.programDuration);
+						stopRecording = true;
+					}
+					else
+					{
+						reports.log(LogStatus.PASS, "Already Recording is scheduled for current episode.Navigate to Future Epsiode");
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						reports.attachScreenshot(captureCurrentScreenshot());
+						TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000);
+					}
+				}
+				else
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("serie opnemen"))
+					{
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on serie opnemen to start recording");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						System.out.println(episodeDetails.toString() + episodeDetails.channelNo + episodeDetails.programDefiniton + episodeDetails.programDuration);
+						stopRecording = true;
+					}
+					else
+					{
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000);
+					}
+					
+				}
+				
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+			}
+			
+		}
+		return episodeDetails;
+	}
+
+	/**
+	 * This function is used to verify on going recording scheduled or not.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public boolean verifyOnGoingRecording(EpisodeInfo episodeDetails,String recordingType) throws InterruptedException {
+	boolean verifyRecording = false;
+	moveToOngoingandCompletedRecordingList();
+	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+	int recordingSize = Integer.parseInt(totalRecordingID.getText());
+	for(int i = 0 ; i< recordingSize;i++)
+	{
+		
+		if((focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+		{
+			if (focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+			&&
+			focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
+			&&
+			focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0).getAttribute("src").contains("ico_Ongoing_recording.png")
+					)
+			{
+				verifyRecording = true;
+				break;
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+		}
+		else
+		{
+			TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		}
+	}
+	return verifyRecording;	
+	}
+	/**
+	 * This function is used to delete planned recordings
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void stopAndVerifyOnGoingRecording() throws InterruptedException {
+		boolean onGoingRecordingDeleted = false;
+		moveToOngoingandCompletedRecordingList();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String recordingBeforeDelete = totalRecordingID.getText();
+		System.out.println(recordingBeforeDelete);
+		for (int i = 0; i< Integer.parseInt(recordingBeforeDelete);i++)
+		{	
+			reports.attachScreenshot(captureCurrentScreenshot());
+			System.out.println(focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size());
+			if (focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size()>0){
+					System.out.println(focusRecordingElement.getAttribute("assetvolume"));
+					if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))
+					{
+						deleteSingleRecording();
+					}
+					else
+					{
+						deleteSeriesRecording();
+					}
+					onGoingRecordingDeleted = true;
+					break;
+			}
+			else
+			{
+				reports.log(LogStatus.PASS, "Navigate to other recorded list item");
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+			
+		}
+		if(onGoingRecordingDeleted)
+		{
+			if (recordingBeforeDelete.equalsIgnoreCase(totalRecordingID.getText()))
+			{
+				FailTestCase("Recording not Stopped. Recording List not getting updated Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
+				
+			}
+			else
+			{
+				reports.log(LogStatus.PASS, "On Going Recording getiing deleted/stopped. Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "No On Going Recordings Present");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}	
+	}
+	/**
+	 * This function is used to delete ongoing and complete recordings
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void deleteAndVerifyRecordedItem() throws InterruptedException
+	{
+		boolean recordedItemDeleted = false;
+		moveToOngoingandCompletedRecordingList();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String recordingBeforeDelete = totalRecordingID.getText();
+		for (int i = 0; i< Integer.parseInt(recordingBeforeDelete);i++)
+		{
+			if (focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size()<=0){
+					if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))
+					{
+						deleteSingleRecording();
+					}
+					else
+					{
+						deleteSeriesRecording();
+					}
+					recordedItemDeleted = true;
+					break;
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+			
+		}
+		if(recordedItemDeleted)
+		{
+			driver.switchTo().frame(getCurrentFrameIndex());
+			if (recordingBeforeDelete.equalsIgnoreCase(totalRecordingID.getText()))
+			{
+				FailTestCase("Recording not Delete. Recording List not getting updated Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
+			}
+			else
+			{
+				reports.log(LogStatus.PASS, "Recorded Item getiing deleted Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "No Recorded Items are Present");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	/**
+	 * This function is used to delete single recording.
+	 * Created By Rahul Dhoundiyal
+	 */
+	private void deleteSingleRecording() throws InterruptedException
+	{	
+		reports.log(LogStatus.PASS, "Expected - Info Box of recorded item should be displayed ");
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		reports.log(LogStatus.PASS, "Click aflevering wissen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 200);
+		reports.log(LogStatus.PASS, "Click bevestigen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		reports.log(LogStatus.PASS,"Recording Deleted Successfully");
+	}
+	/**
+	 * This function is used to delete series recording.
+	 * Created By Rahul Dhoundiyal
+	 */
+	private void deleteSeriesRecording() throws InterruptedException
+	{
+		reports.log(LogStatus.PASS, "Expected - Info Box of recorded item should be displayed ");
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		reports.log(LogStatus.PASS, "Click on alle afleveringen wissen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Click bevestigen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		reports.log(LogStatus.PASS,"All Series Recording Deleted Successfully");
+	}
+	
+	/**
+	 * This function is used to delete series recording one by one
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void deleteSeriesRecordingOneByOne() throws InterruptedException{
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		List<WebElement> recordingContentElementList = driver.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
+		int noOfSeries = recordingContentElementList.size();
+		for(int j=0;j<noOfSeries;j++)
+		{
+			reports.log(LogStatus.PASS,"Expected - Info box containing Series Recordings");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			//Enter to Info Page
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+			//Click on Delete
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.log(LogStatus.PASS,"Expected - Should be in Info box to delete");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+			reports.log(LogStatus.PASS,"Recording Deleted Successfully");
+		}
+	}
+	/**
+	 * This function is used to schedule and verify recording on future episode.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyAndScheduleRecordingForFutureEpisode() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Schedule Recording for future episode");
+		List<EpisodeInfo> listOfAddedRecordings = scheduleRecordingForFutureChannel("SINGLE",1);
+		System.out.println(listOfAddedRecordings);
+		for (EpisodeInfo epsiodeInfo : listOfAddedRecordings) {
+			boolean verifyMultipleSingleRecordings = verifyRecordingIsScheduledOrNot(epsiodeInfo,"SINGLE");		
+			if (verifyMultipleSingleRecordings)
+			{
+				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring getting scheduled for " + epsiodeInfo.programName);
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring not getting scheduled for " + epsiodeInfo.programName);
+			}
+		}
+	}
+	/**
+	 * This function is used to start and verify recording on current episode.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyAndStartRecordingForCurrentEpisode() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Start Recording for current episode");
+		EpisodeInfo episodeDetails = startRecordingFromEPGScreen("SINGLE");
+		System.out.println(episodeDetails.toString());
+		boolean verifyOnGoingRecording = verifyOnGoingRecording(episodeDetails,"SINGLE");
+		if (verifyOnGoingRecording)
+		{	
+			reports.log(LogStatus.PASS, "Expected Output - Recording should be Started for " +episodeDetails.programName+ " Actual - Recoring getting started for " + episodeDetails.programName);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Expected Output - Recording should be started for " +episodeDetails.programName+ " Actual - Recoring not getting started for " + episodeDetails.programName);
+		}
+	}
+	/**
+	 * This function is used to navigate to Menu screen.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyNavigationToMenuScreen() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to Menu");
+		new Hub(driver).launchAndVerifyMenuScreen();
+	}
+	/**
+	 * This function is used to navigate to Shop screen.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyNavigationToShopScreen() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to Shop Screen ");
+		setApplicationHubPage(1);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(headerElement.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Navigation to Shop is Smooth. Navigated to Guide successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else{
+			FailTestCase("Navigation to Shop is not smooth.Not navigated to Shop");
+		}		
+	}
+
+	/**
+	 * This function is used to navigate to settings screen.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyNavigationToSettingScreen() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to Settings Screen");
+		setApplicationHubPage(1);
+		TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
+		TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+		driver.switchTo().defaultContent();
+		if(headerElement.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Setting", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Navigation to Settings is Smooth. Navigated to Guide successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else{
+			FailTestCase("Navigation to Settings is not smooth.Not navigated to Settings");
+		}		
+	}
+	
+	/**
+	 * This function is used to navigate to tv guide screen.
+	 * Created By Rahul Dhoundiyal
+	 */
+	public void verifyNavigationToTVGuideScreen() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to TV-Guide EPG Screen");
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgChannelScreen(true);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(EpgGuide, "TV_Guide");	
+	}
+	
+	
 }

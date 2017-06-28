@@ -11,7 +11,12 @@ import com.rsystems.utils.Unicode;
 
 public class DTVChannelTestCase extends TestInitization {
 
-@Test
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the info banner in live TV screen
+	 */
+
+	@Test
 	public void tc_BCDTVDT0105_DTVChannelInfobanner() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -37,7 +42,13 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
-@Test
+	/**
+	 * @throws InterruptedException
+	 *             Test case open the live TV and validate the corresponding
+	 *             channel number
+	 */
+
+	@Test
 	public void tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting() throws InterruptedException {
 
 		String pressChannelNumber = "5";
@@ -64,7 +75,14 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 	}
 
-@Test
+	/**
+	 * @throws InterruptedException
+	 *             Press a channel number which is not available in list also
+	 *             validate the Zap list
+	 * 
+	 */
+
+	@Test
 	public void DTV_ChannelZapViaChannelNumberNotExisting() throws InterruptedException {
 
 		ZapList zapList = new ZapList(driver);
@@ -93,7 +111,13 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 	}
 
-@Test
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the functionality of CH+/CH- and first and
+	 *             last channel
+	 */
+
+	@Test
 	public void DTV_Channel_Zap_Via_Up_Down() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -127,7 +151,13 @@ public class DTVChannelTestCase extends TestInitization {
 				"Navigate Screen to First channel");
 
 	}
-@Test
+
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the HD and SD channel
+	 */
+
+	@Test
 	public void tc_BCDTVDT0110_DTV_HD_SD_Zap() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -156,6 +186,12 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the ZAP banner item [Channel Logo ,
+	 *             channel number] After changing the channel number using RC
+	 */
+
 	@Test
 	public void DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES() throws InterruptedException {
 
@@ -182,6 +218,12 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * @throws InterruptedException
+	 *             Test case validate the functionality of pause and play from
+	 *             RC
+	 */
+
 	@Test
 	public void pause_LiveTV_play() throws InterruptedException {
 
@@ -198,6 +240,7 @@ public class DTVChannelTestCase extends TestInitization {
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
 
+		System.out.println(imageName);
 		if (imageName
 				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
 			reports.log(LogStatus.PASS, "Play button is now highlight on webpage");
@@ -205,7 +248,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 		else {
-			FailTestCase("Play button is not highlight on webpage");
+			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
 		}
 
 		Thread.sleep(5000);
@@ -228,6 +271,12 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 	}
+
+	/**
+	 * @throws InterruptedException
+	 *             test case validate the functionality of pause and play in
+	 *             back to live page
+	 */
 
 	@Test
 	public void pause_LiveTV_PLTV_BackToLive() throws InterruptedException {

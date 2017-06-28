@@ -5,117 +5,102 @@ import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.RecordingScreen;
-import com.rsystems.pages.RecordingScreen.EpsiodeInfo;
+import com.rsystems.pages.RecordingScreen.EpisodeInfo;
 import com.rsystems.utils.TestInitization;
 public class RecordingTestCase extends TestInitization {
 
-	List<EpsiodeInfo> episodeDetails = null;
+	List<EpisodeInfo> episodeDetails = null;
 	/**
-	 *  This test cases is used to schedule recording and verifying recording is started successfully or not
-	 *  Created By Rahul Dhoundiyal
-	 */
-	@Test(priority = 1)
-	public void verifyStartSingleRecording() throws InterruptedException{
-		RecordingScreen recordingScreen = new RecordingScreen(driver);
-		episodeDetails = recordingScreen.startRecordingForFutureChannel("SINGLE",1);
-		boolean verifyRecording = recordingScreen.verifyRecordingIsScheduledOrNot(episodeDetails.get(0),"SINGLE");
-		if (verifyRecording)
-		{	
-			reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +episodeDetails.get(0).programName+ " Actual - Recoring getting scheduled for " + episodeDetails.get(0).programName);
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		}
-		else
-		{
-			reports.log(LogStatus.FAIL, "Expected Output - Recording should be scheduled for " +episodeDetails.get(0).programName+ " Actual - Recoring not getting scheduled for " + episodeDetails.get(0).programName);
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		}
-		
-	}
-	/**
-	 *  This test cases is used to delete recording and verifying recording is deleted or not
-	 *  Created By Rahul Dhoundiyal
-	 */
-	@Test(priority = 2)
-	public void verifySingleAssetIsDeleted() throws InterruptedException
-	{	
-		//Delete recording
-		RecordingScreen recordingScreen = new RecordingScreen(driver);
-		recordingScreen.deleteSchduledRecording(episodeDetails.get(0),"SINGLE");
-		boolean verifyRecordingDeleted = recordingScreen.verifyRecordingisDeletedOrNot(episodeDetails.get(0),"SINGLE");
-		if (verifyRecordingDeleted){
-			reports.log(LogStatus.PASS, "Expected Output - Scheduled Recording should be deleted for " + episodeDetails.get(0).programName + " Actual Output - Scheduled Recording getting deleted for " + episodeDetails.get(0).programName + " successfully");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());	
-		}
-		else
-		{
-			reports.log(LogStatus.FAIL, "Expected Output - Scheduled Recording should be deleted for " + episodeDetails.get(0).programName + " Actual Output - Scheduled Recording not getting deleted for " + episodeDetails.get(0).programName);
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-		}
-	}
-	/**
-	 * This test case is used to set multiple single recordings
+	 * This test cases is used to verify navigation under planned recordings in Library Section
 	 * Created By Rahul Dhoundiyal
-	 */	
-	@Test(priority = 3)
-	public void verifyMultipleSingleRecordings() throws InterruptedException
+	 */
+	
+	@Test
+	public void tc_BCDTVCP1430_nPVR_Planner_Navigation() throws InterruptedException
 	{
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
-		reports.log(LogStatus.INFO,"Start Recording for 5 future episodes");
-		List<EpsiodeInfo> listOfAddedRecordings = recordingScreen.startRecordingForFutureChannel("SINGLE",5);
-		for (EpsiodeInfo epsiodeInfo : listOfAddedRecordings) {
-			boolean verifyMultipleSingleRecordings = recordingScreen.verifyRecordingIsScheduledOrNot(epsiodeInfo,"SINGLE");		
-			if (verifyMultipleSingleRecordings)
-			{
-				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring getting scheduled for " + epsiodeInfo.programName);
-				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			}
-			else
-			{
-				reports.log(LogStatus.FAIL, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring not getting scheduled for " + epsiodeInfo.programName);
-				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			}
-		}
-		
-	}
-	/**
-	 * This test case is used to navigate under planned recordings
-	 * Created By Rahul Dhoundiyal
-	 */	
-	@Test(priority = 4)
-	public void navigateUnderPlannedRecordings() throws InterruptedException
-	{
-		RecordingScreen recordingScreen = new RecordingScreen(driver);
-		boolean verifyNavigation = recordingScreen.verifyNavigationInRecording();
+		boolean verifyNavigation = recordingScreen.verifyNavigationInPlannedRecording();
 		if(verifyNavigation){
 			reports.log(LogStatus.PASS, " Naivgation is properly for scheduled recordings ");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 		else
 		{
-			reports.log(LogStatus.FAIL," Navigation is not properly for scheduled recordings ");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			FailTestCase(" Navigation is not properly for scheduled recordings ");
 		}
 	}
 	/**
-	 * This test cases is used to delete and verify all recordings from scheduled recordings
+	 * This test cases is used to verify navigation under on going and completed recordings in Library Section
 	 * Created By Rahul Dhoundiyal
 	 */
-	@Test(priority = 5)
-	public void deleteAllRecordings() throws InterruptedException
+	@Test
+	public void tc_BCDTVCP1429_nPVR_Library_Navigation() throws InterruptedException
 	{
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
-		System.out.println("Start Deleting All Scheduled Recordings");
-		recordingScreen.deleteAllRecordings();
-		boolean verifyDeleteAllRecordings = recordingScreen.verifyAllRecordingsgDeleted();
-		if (verifyDeleteAllRecordings)
-		{
-			reports.log(LogStatus.PASS,"All recordings got deleted successfully");
+		boolean verifyNavigation = recordingScreen.verifyNavigationInRecordedList();
+		if(verifyNavigation){
+			reports.log(LogStatus.PASS, " Naivgation is properly for scheduled recordings ");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 		else
 		{
-			reports.log(LogStatus.FAIL,"All recording not got deleted");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			FailTestCase(" Navigation is not properly for on going and completed recordings ");
 		}
 	}
+	/**
+	 * This test cases is used to verify navigation to different screens when recording is scheduled and start for episodes
+	 * Created By Rahul Dhoundiyal
+	 */
+	@Test
+	public void tc_BCDTVCP1419_navigation_with_recordings() throws InterruptedException{
+		//Plan recording for 2 channels
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		// Schedule Recording for Future Channel
+		recordingScreen.verifyAndScheduleRecordingForFutureEpisode();
+		//Start Recording for Current Episode
+		recordingScreen.verifyAndStartRecordingForCurrentEpisode();
+		//Verify Navigation To Menu Screen
+		recordingScreen.verifyNavigationToMenuScreen();
+		//Verify Navigation To Shop Screen
+		recordingScreen.verifyNavigationToShopScreen();
+		//Verify Navigation To Setting Screen
+		recordingScreen.verifyNavigationToSettingScreen();
+		//Verify Navigation To TV Guide Screen
+		recordingScreen.verifyNavigationToTVGuideScreen();	
+	}
+
+	/**
+	 * This test cases is used to delete single and series recording from planned recordings
+	 * Created By Rahul Dhoundiyal
+	 */
+	@Test
+	public void tc_BCDTVCP1451_Planned_nPVR_Delete() throws InterruptedException
+	{
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.deletePlannedSingleRecording();
+		recordingScreen.deletePlannedSeriesRecording();
+	}
+	
+	/**
+	 * This test cases is used to schedule recording from EPG Screen
+	 * Created By Rahul Dhoundiyal
+	 */
+	@Test
+	public void tc_BCDTVCP1423_nPVR_Schedule_EPG() throws InterruptedException
+	{
+		
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		EpisodeInfo episodeDetails = recordingScreen.scheduleRecordingFromEPGScreen("SINGLE");
+		boolean verifyOnGoingRecording = recordingScreen.verifyRecordingIsScheduledOrNot(episodeDetails,"SINGLE");
+		if (verifyOnGoingRecording)
+		{	
+			reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +episodeDetails.programName+ " Actual - Recoring getting started for " + episodeDetails.programName);
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Expected Output - Recording should be scheduled for " +episodeDetails.programName+ " Actual - Recoring not getting started for " + episodeDetails.programName);
+		}
+	}
+	
 }

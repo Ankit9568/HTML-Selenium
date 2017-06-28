@@ -544,7 +544,7 @@ public class TestInitization {
 	}
 
 	public void FailTestCase(String reason) throws InterruptedException {
-		reports.log(LogStatus.ERROR, reason);
+		reports.log(LogStatus.FAIL, reason);
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		Assert.fail(reason);
 	}

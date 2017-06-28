@@ -16,8 +16,8 @@ public class ObjectRepository {
 			"setting_normal.png" };
 	public static final String[] HubMenuItemsNLFocused = { "mijn bibliotheek", "televisie", "shop",
 			"search_active_bold.png", "setting_active_bold.png" };
-	public static final String[] Test1 = { "mijn bibliotheek", "televisie", "shop", "search_active_bold.png",
-			"setting_active_bold.png" };
+	public static final String[] HubMenuItemsFocused = { "mijn bibliotheek", "televisie", "shop", "Search",
+	"Setting" };
 	public static final String[] Test2 = { "mijn bibliotheek", "televisie", "shop", "search_active_bold.png",
 			"setting_active_bold.png" };
 
@@ -56,15 +56,15 @@ public class ObjectRepository {
 		public static final String cancelElement = "//*[@id='item_2']";
 	}
 
-	public static class RecordingElements {
+	public static class RecordingElements{
 		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
-		public static final String ChannelInfoImageXPath = "/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
+		public static final String ChannelInfoImageXPath ="/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
 		public static final String EpisodeDurationXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[2]";
 		public static final String ProgramDefinitionXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[1]/img";
 		public static final String RecordingListCSSSelector = "#recordingContent div[id^='item']";
 		public static final String ChannelNoInPlannedRecording = "recordingNumber";
-		public static final String ChannelLogoInPlannedRecording = ".logo";
+		public static final String ChannelLogoInPlannedRecording =".logo";
 		public static final String ProgramNameInPlannedRecording = ".recordingDetails h2";
 		public static final String ProgramDurationInPlannedRecording = ".recordingDetails .duration";
 		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
@@ -72,6 +72,11 @@ public class ObjectRepository {
 		public static final String currentRecordingCountID = "countNumbers";
 		public static final String totalRecordingsID = "totalItems";
 		public static final String focusRecordingElementXPath = "//div[@class='recordingList fillGradient']";
+		public static final String focusProgramCalssName = "focusProgram";
+		public static final String activeMenuItemElement = "cActiveItem";
+		public static final String ongoingRecordingIconElement = ".videoQuality .ongoing_recording img";
+		public static final String plannedRecordingTitleElement = "sTitlebar";
+		public static final String epgGuideElement = "epgGuide";
 	}
 
 	public static class VerifySystemInfoScreen {
@@ -111,5 +116,21 @@ public class ObjectRepository {
 		public static final String screenTitle = "//p[@id='headerTitle']";
 		public static final String focousChannelNumber = "//div[@class='focusBox']/ul/li[2]/div[@class='channel_details']/div/span";
 		
+	}
+	
+	public static class HubScreen{
+		public static final String headerElement = "//*[@id='headerTitle']";
+		public static final String upCanvasLineElement = "dCanvasUpLine";
+		public static final String downCanvasLineElement = "dCanvasDownLine";
+		public static final String libraryItemsElement = "//li[contains(@id,'item_m0')]";
+		public static final String shopItemsElement = "//li[contains(@id,'item_m2')]";
+		public static final String hubSearchElement = "//*[@id='dItemImage_30']/span";
+		public static final String hubSettingElement = "//*[@id='dItemImage_40']/span";
+		public static final String hubFocusElement = "cActiveMenuItem";
+	}
+	public static class MiniEPGScreen{
+		public static final String headerTimeElement = "headerDateTime";
+		public static final String currentEpisodeElement = "current";
+		public static final String activeZapBlockElement = "active";
 	}
 }
