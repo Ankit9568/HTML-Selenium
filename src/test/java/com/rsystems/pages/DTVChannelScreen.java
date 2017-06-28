@@ -68,6 +68,7 @@ public class DTVChannelScreen extends TestInitization {
 		
 		reports.log(LogStatus.PASS, "Channel Change and validation");
 		TestInitization.sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		
 		// Validation channel info

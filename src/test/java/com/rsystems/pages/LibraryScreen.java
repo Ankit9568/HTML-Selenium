@@ -1,9 +1,13 @@
 package com.rsystems.pages;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -18,6 +22,10 @@ public class LibraryScreen extends TestInitization {
 	 * This function is used to get all the Library Menu Items List
 	 * Created By Rahul Dhoundiyal
 	 */
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.LibraryElements.libraryCanvas)
+	public WebElement libraryCanvas;
+	
 	public static List<WebElement> libraryMenuItems()
 	{
 		return driver.findElements(By.xpath(ObjectRepository.LibraryElements.libraryMenuItemsXPath));
@@ -37,6 +45,7 @@ public class LibraryScreen extends TestInitization {
 	 */
 	public static void moveToLibrary() throws InterruptedException
 	{
+		reports.log(LogStatus.PASS, "Navigate the filter layer screen");
 		TestInitization.sendKeySequence("DOWN,LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 	}
 	
@@ -46,6 +55,7 @@ public class LibraryScreen extends TestInitization {
 	 */
 	public static List<String> getLibraryMenuItemsText() throws InterruptedException
 	{	
+		
 		moveToLibrary();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		List<String> libraryMenuItemList = new ArrayList<String>();
@@ -169,7 +179,7 @@ public class LibraryScreen extends TestInitization {
 			Assert.assertEquals(expectedList.get(i), actualList.get(i));
 			if (expectedList.get(i).equalsIgnoreCase(actualList.get(i)))
 			{
-				reports.log(LogStatus.PASS,"Expected"+ keyName +"- "+expectedList.get(i) + " Actual"+keyName+"- "+actualList.get(i));
+				reports.log(LogStatus.PASS,"Expected"+ keyName +"- "+expectedList.get(i) + " Actual"+keyName+"-"+actualList.get(i));
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				validateTextOrFont = true;
 			}
@@ -177,4 +187,5 @@ public class LibraryScreen extends TestInitization {
 		return validateTextOrFont;
 		
 	}
+	
 }

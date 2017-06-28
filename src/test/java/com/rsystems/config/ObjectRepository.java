@@ -16,8 +16,7 @@ public class ObjectRepository {
 			"setting_normal.png" };
 	public static final String[] HubMenuItemsNLFocused = { "mijn bibliotheek", "televisie", "shop",
 			"search_active_bold.png", "setting_active_bold.png" };
-	public static final String[] HubMenuItemsFocused = { "mijn bibliotheek", "televisie", "shop", "Search",
-	"Setting" };
+	public static final String[] HubMenuItemsFocused = { "mijn bibliotheek", "televisie", "shop", "Search", "Setting" };
 	public static final String[] Test2 = { "mijn bibliotheek", "televisie", "shop", "search_active_bold.png",
 			"setting_active_bold.png" };
 
@@ -46,6 +45,7 @@ public class ObjectRepository {
 
 	public static class LibraryElements {
 		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
+		public static final String libraryCanvas="//*[@id='dCanvasUpLine']";
 	}
 
 	public static class PIPElements {
@@ -56,15 +56,15 @@ public class ObjectRepository {
 		public static final String cancelElement = "//*[@id='item_2']";
 	}
 
-	public static class RecordingElements{
+	public static class RecordingElements {
 		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
-		public static final String ChannelInfoImageXPath ="/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
+		public static final String ChannelInfoImageXPath = "/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
 		public static final String EpisodeDurationXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[2]";
 		public static final String ProgramDefinitionXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[1]/img";
 		public static final String RecordingListCSSSelector = "#recordingContent div[id^='item']";
 		public static final String ChannelNoInPlannedRecording = "recordingNumber";
-		public static final String ChannelLogoInPlannedRecording =".logo";
+		public static final String ChannelLogoInPlannedRecording = ".logo";
 		public static final String ProgramNameInPlannedRecording = ".recordingDetails h2";
 		public static final String ProgramDurationInPlannedRecording = ".recordingDetails .duration";
 		public static final String ProgramDefinitionInPlannedRecording = ".hd_quality img";
@@ -115,10 +115,10 @@ public class ObjectRepository {
 
 		public static final String screenTitle = "//p[@id='headerTitle']";
 		public static final String focousChannelNumber = "//div[@class='focusBox']/ul/li[2]/div[@class='channel_details']/div/span";
-		
+
 	}
-	
-	public static class HubScreen{
+
+	public static class HubScreen {
 		public static final String headerElement = "//*[@id='headerTitle']";
 		public static final String upCanvasLineElement = "dCanvasUpLine";
 		public static final String downCanvasLineElement = "dCanvasDownLine";
@@ -128,9 +128,57 @@ public class ObjectRepository {
 		public static final String hubSettingElement = "//*[@id='dItemImage_40']/span";
 		public static final String hubFocusElement = "cActiveMenuItem";
 	}
-	public static class MiniEPGScreen{
+
+	public static class MiniEPGScreen {
 		public static final String headerTimeElement = "headerDateTime";
 		public static final String currentEpisodeElement = "current";
 		public static final String activeZapBlockElement = "active";
 	}
+
+	public static class Vod {
+		public static final String vodHeading = "vod-heading-main";
+		public static final String filmTitle = "poster-right-heading";
+	}
+
+	public static class HotKeys {
+		public static final String currentChannel = "channel-no";
+		public static final String channelLogo = "channel-logo";
+		public static final String headerTitle = "//*[@id='headerTitle']";
+		public static final String headerTime = "headerDateTime";
+	}
+
+	public static class RcArrowKey {
+		public static final String heading = "epgHeading";
+		public static final String type = "leftLabel";
+		public static final String epgInfo = "epgType";
+		public static final String background = "epgBackground";
+		public static final String Id = "row_1";
+
+	}
+
+	public static class TvfilterLayer {
+		public static final String televiosntitle = "menuItem_1";
+		public static final String tvId = "//*[@id='VH_0']/span";
+		public static final String now = "//*[@id='item_0_1']/span";
+		public static final String nowOnTv = "//*[@id='VH_1']/span";
+		public static final String footballTv = "//*[@id='VH_2']/span";
+		public static final String footballCalendar = "//*[@id='VH_3']/span";
+		public static final String radioStations = "//*[@id='VH_4']/span";
+		public static final String search = "//*[@id='VH_5']/span";
+	}
+	   public static class ActiveInfoBanner
+	   {
+		   public static final String channelInfo="current_channel";
+		   public static final String imgId="icon-active-preview";
+		   public static final String programID="programTitle";
+		   public static final String duration="programTime";
+		   
+	   }
+	   public static class StoreFilterLayer
+		{
+			public static final String dramaScreenDetails="//div[contains(@id,'vodDetail')]"; 
+			public static final String shopScreen="//li[@id='VH_0']/span";
+			public static final String screenID="suggesties";	
+			public static final String dramaScreen="cTitleField";
+		}	
 }
