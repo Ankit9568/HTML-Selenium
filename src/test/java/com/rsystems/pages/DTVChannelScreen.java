@@ -65,12 +65,11 @@ public class DTVChannelScreen extends TestInitization {
 	public void changeChnlAndInfoBannerValidation(Unicode unicode) throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		
+
 		reports.log(LogStatus.PASS, "Channel Change and validation");
-		TestInitization.sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(unicode.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		// Validation channel info
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.channelLogo, "Channel logo");
@@ -80,8 +79,8 @@ public class DTVChannelScreen extends TestInitization {
 		isDisplayed(dtvChannelScreen.programTitle, "Program Title");
 	}
 
-	public void openLiveTV() throws InterruptedException{
-		
+	public void openLiveTV() throws InterruptedException {
+
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 0);
 		// Get the current TV Channel number
 		reports.log(LogStatus.PASS, "Navigate Live TV");
@@ -89,5 +88,5 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
 	}
-	
+
 }
