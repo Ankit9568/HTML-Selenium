@@ -41,6 +41,9 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.DtvChannel.backToLive)
 	public WebElement backToLive;
 
+	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.rewindBtn)
+	public WebElement rewindBtn;
+	
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 

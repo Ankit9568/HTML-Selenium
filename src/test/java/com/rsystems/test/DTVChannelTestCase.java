@@ -307,10 +307,110 @@ public class DTVChannelTestCase extends TestInitization {
 
 			// Back to live button is not displayed on webpage
 			reports.log(LogStatus.PASS, "Click on Pause button");
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+			driver.switchTo().frame(getCurrentFrameIndex());
+			String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
+			String[] currentImgToArr = currentImgSource.split("/");
+			String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+			if (imageName.equalsIgnoreCase(
+					TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+				reports.log(LogStatus.PASS, "Pause Sucessfully");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+
+			else {
+				FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+			}
+
+			reports.log(LogStatus.PASS, "Play and Navigate to action list");
+			TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 			reports.attachScreenshot(captureCurrentScreenshot());
-			isDisplayed(dtvChannelScreen.pauseAndPlayImg, "Play button");
+
+			isDisplayed(dtvChannelScreen.backToLive, "Back to live TV");
+
 		}
 
 	}
+
+	public void pause_LiveTV_PLTV_cancelPopupMessage() throws InterruptedException {
+
+		/**
+		 * Pop Up functionality not implemented yet so we verify this scenario
+		 * through channel number
+		 * 
+		 */
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 0);
+
+		// wait for 2 minute for making buffer
+		Thread.sleep(120000);
+
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 0);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentChnlNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
+
+		// channel change
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 0);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String updatedChannelNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
+
+		if (currentChnlNumber.contentEquals(updatedChannelNumber)) {
+
+			FailTestCase("Pop is not showing");
+		}
+
+	}
+
+	public void Pause_LiveTV_trickplay() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+
+		reports.log(LogStatus.PASS, "Tune a channel");
+		sendKeyMultipleTimes("NUMPAD2", 1, 1000);
+
+		// Wait for 5 minute for buffering the Live program
+		Thread.sleep(30000);
+
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 2000);
+
+		String currentClassName = dtvChannelScreen.rewindBtn.getAttribute("class");
+		if (currentClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Live TV is rewind");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to rewind Live TV");
+		}
+		
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Pause button is now highlight on webpage");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Pause button is not highlight on webpage");
+		}
+
+	}
+	
+	public void pause_LiveTV_PLTV_ExceedingBuffer(){
+		
+		
+	}
+
 }

@@ -4,60 +4,47 @@
 	<listeners>
 		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
 	</listeners>
-	<!-- <test name="EPG Setting Test case "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.EPGTestCases"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> -->
-	<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> -->
-	<!-- <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> -->
-	<!-- <include name="tc_BCEPGHPG01_epg_cancel_setting" /> -->
-	<!-- <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> -->
-	<!-- <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> -->
-	<!-- <include name="tc_BCEPGHPG09_epg_scenior_font_geel" /> -->
-	<!-- <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> -->
-	<!-- <include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> -->
-	<!-- <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" /> -->
-	<!-- <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> -->
-	<!-- <include name="tc_BCEPGHPG015_epg_strak_font_geel" /> -->
-	<!-- <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> -->
-	<!-- <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" /> -->
-	<!-- <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> -->
-	<!-- <include name="tc_BCEPGHPG07_epg_customize_color_patterns" /> -->
-	<!-- <include name="tc_BCDTVHP0801_epg_hot_key" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
-	<!-- <test name="PIP Setting Test case "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.PIPTestCases"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCPIPHPG01_pip_confirmation_setting_links" /> -->
-	<!-- <include name="tc_BCPIPHPG04_pip_position_links_all_screen" /> -->
-	<!-- <include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" 
-		/> -->
-	<!-- <include name="tc_pip_001_pip_setting_ui" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
-	<test name="DTV Test case ">
+	
+	<!--  First Sprint(15_6_2017) Test case  -->
+	<test name="EPG Setting Test case ">
 		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
+			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
-					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" />
-					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" />
-					<include name="DTV_ChannelZapViaChannelNumberNotExisting" />
-					<include name="DTV_Channel_Zap_Via_Up_Down" />
-					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" />
-					<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" />
-					<include name="pause_LiveTV_play" />
-					<include name="pause_LiveTV_PLTV_BackToLive" />
+					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
+					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+					<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
+					<include name="tc_BCEPGHPG01_epg_cancel_setting" />
+					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
+					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" />
+					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
+					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
+					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
+					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
+					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
+					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
+					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
+					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
+					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
+					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
 				</methods>
 			</class>
 		</classes>
 	</test>
+	<test name="PIP Setting Test case ">
+		<classes>
+			<class name="com.rsystems.test.PIPTestCases">
+				<methods>
+					<include name="tc_BCPIPHPG01_pip_confirmation_setting_links" />
+					<include name="tc_BCPIPHPG04_pip_position_links_all_screen" />
+					<include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" />
+					<include name="tc_pip_001_pip_setting_ui" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+<!-- Second sprint(30_6_2017) Test case  -->
 
 	<test name="Hub Test cases ">
 		<classes>
@@ -82,6 +69,36 @@
 					<include name="tc_BCDTVCP1423_nPVR_Schedule_EPG" />
 					<include name="tc_BCDTVCP1419_navigation_with_recordings" />
 					<include name="tc_BCDTVCP1451_Planned_nPVR_Delete" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Mini EPG Test cases ">
+		<classes>
+			<class name="com.rsystems.test.MiniEPGTestCase">
+				<methods>
+					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
+					<include name="tc_mini_epg_on_tstv" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+<!-- 	Divide Test case in two part -->
+
+	<test name="DTV Test case ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" />
+					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" />
+					<include name="DTV_ChannelZapViaChannelNumberNotExisting" />
+					<include name="DTV_Channel_Zap_Via_Up_Down" />
+					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" />
+					<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" />
+					<include name="pause_LiveTV_play" />
+					<include name="pause_LiveTV_PLTV_BackToLive" />
 				</methods>
 			</class>
 		</classes>
@@ -146,16 +163,6 @@
 			<class name="com.rsystems.test.TvFilterLayerTestCase">
 				<methods>
 					<include name="verifyTvFilterLayerScreen" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="Mini EPG Test cases ">
-		<classes>
-			<class name="com.rsystems.test.MiniEPGTestCase">
-				<methods>
-					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
-					<include name="tc_mini_epg_on_tstv" />
 				</methods>
 			</class>
 		</classes>
