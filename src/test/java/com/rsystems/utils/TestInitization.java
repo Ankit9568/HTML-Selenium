@@ -2,6 +2,8 @@ package com.rsystems.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -39,6 +41,7 @@ import org.testng.annotations.BeforeSuite;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.pages.Hub;
 
 public class TestInitization {
 
@@ -51,22 +54,23 @@ public class TestInitization {
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-	private  static String executionReportPath = 
-			System.getProperty("user.dir") + "/ExecutionReports/ExecutionReport_"+ formatter.format(cald.getTime()).toString();
+	private static String executionReportPath = System.getProperty("user.dir") + "/ExecutionReports/ExecutionReport_"
+			+ formatter.format(cald.getTime()).toString();
+	private static String configFilePath = System.getProperty("user.dir")
+			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
 
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
-		
+
 		String extentReportFileName = "report_" + formatter.format(cald.getTime()).toString() + ".html";
 		new File(executionReportPath).mkdirs();
 		String extentReportPath = new File(executionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(executionReportPath + "/Logs/Selenium.log").getAbsolutePath();
 		String applicationLogs = new File(executionReportPath + "/Logs/Application.log").getAbsolutePath();
-		
+
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
-		
-		
+
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -85,24 +89,38 @@ public class TestInitization {
 			wait.until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
 			System.out.println("Proximus Logo Loaded");
-			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
-			System.out.println("Frame loaded");
-			Thread.sleep(2000);
-			if (driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText()
-					.equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl"))) {
-				System.out.println("HUB TV text returned is :: "
-						+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
-				System.out.println("HUB is loaded with TV showcase focused");
+
+			if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
+
+				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+				System.out.println("Frame loaded");
+				Thread.sleep(2000);
+
+				if (driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText()
+						.equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl"))) {
+					System.out.println("HUB TV text returned is :: "
+							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+					System.out.println("HUB is loaded with TV showcase focused");
+
+				} else {
+
+					System.out.println("HUB TV text returned is :: "
+							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+					System.out.println("This is not equal to Televisie ");
+
+				}
 
 			} else {
-
-				System.out.println("HUB TV text returned is :: "
-						+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
-				System.out.println("This is not equal to Televisie ");
-
+				System.out.println("STB is Unassigned");
+				// Thread.sleep(5000);
+				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder0"));
+				System.out.println("Frame loaded");
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("heading1")));
+				Thread.sleep(2000);
 			}
+		}
 
-		} catch (Throwable t) {
+		catch (Throwable t) {
 			t.printStackTrace();
 			System.out.println("HUB is not loaded with TV showcase focused " + t);
 
@@ -366,6 +384,9 @@ public class TestInitization {
 
 	public static void sendNumaricKeys(int numaricVal) throws InterruptedException {
 
+		if (numaricVal == 0) {
+			sendKeyMultipleTimes("NUMPAD" + numaricVal, 1, 0);
+		}
 		ArrayList<Integer> arrList = new ArrayList<Integer>();
 		int modval;
 
@@ -387,66 +408,70 @@ public class TestInitization {
 
 		System.out.println("Trying to set home page ");
 
-		int retryForHubScreen = 5;
-		Actions action = new Actions(driver);
+		if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
+			int retryForHubScreen = 5;
+			Actions action = new Actions(driver);
 
-		// Needs to switch home screen
-		driver.switchTo().defaultContent();
+			// Needs to switch home screen
+			driver.switchTo().defaultContent();
 
-		while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
-				&& retryForHubScreen > 0) {
-			System.out.println("Trying to press page down");
-			Thread.sleep(500);
-			action.sendKeys(Keys.PAGE_DOWN).perform();
-			retryForHubScreen--;
-		}
+			while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
+					&& retryForHubScreen > 0) {
+				System.out.println("Trying to press page down");
+				Thread.sleep(500);
+				action.sendKeys(Keys.PAGE_DOWN).perform();
+				retryForHubScreen--;
+			}
 
-		if (retryForHubScreen == 0) {
-			// Application is not on the HUB page
-			driver.navigate().refresh();
-		}
+			if (retryForHubScreen == 0) {
+				// Application is not on the HUB page
+				driver.navigate().refresh();
+			}
 
-		driver.switchTo().frame(0);
-		action.sendKeys(Keys.DOWN).perform();
+			driver.switchTo().frame(0);
+			action.sendKeys(Keys.DOWN).perform();
 
-		String className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
+			String className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
 
-		if (className.contains("cActiveMenuItem_Bold")) {
-			System.out.println("Control already on HUB page");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			return;
-		}
+			if (className.contains("cActiveMenuItem_Bold")) {
+				System.out.println("Control already on HUB page");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				return;
+			}
 
-		while (noOfRetry > 0) {
+			while (noOfRetry > 0) {
 
-			int leftMove = 5;
-			int rightMove = 5;
+				int leftMove = 5;
+				int rightMove = 5;
 
-			for (int iterator = 0; iterator <= 10; iterator++) {
+				for (int iterator = 0; iterator <= 10; iterator++) {
 
-				className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
-				if (className.contains("cActiveMenuItem_Bold")) {
-					System.out.println("Successfully set hub");
-					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-					Thread.sleep(1000);
-					noOfRetry = 0;
-					break;
-				} else {
-					// need to move left or right
-					if (leftMove > 0) {
-						action.sendKeys(Keys.LEFT).perform();
-						Thread.sleep(500);
-						leftMove--;
+					className = driver.findElement(By.id("menuItem_1")).getAttribute("class");
+					if (className.contains("cActiveMenuItem_Bold")) {
+						System.out.println("Successfully set hub");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						Thread.sleep(1000);
+						noOfRetry = 0;
+						break;
+					} else {
+						// need to move left or right
+						if (leftMove > 0) {
+							action.sendKeys(Keys.LEFT).perform();
+							Thread.sleep(500);
+							leftMove--;
 
-					}
-					if (rightMove > 0 && leftMove == 0) {
-						action.sendKeys(Keys.RIGHT).perform();
-						Thread.sleep(500);
-						rightMove--;
+						}
+						if (rightMove > 0 && leftMove == 0) {
+							action.sendKeys(Keys.RIGHT).perform();
+							Thread.sleep(500);
+							rightMove--;
+						}
 					}
 				}
+				noOfRetry--;
 			}
-			noOfRetry--;
+		} else {
+			System.out.println("STB is UnAssigned");
 		}
 	}
 
@@ -491,11 +516,7 @@ public class TestInitization {
 	private void launchWebdriver() throws IOException, InterruptedException {
 
 		String url = null;
-		FileInputStream FI = new FileInputStream(
-				System.getProperty("user.dir") + "\\src\\test\\java\\com\\rsystems\\config\\config.properties");
-		Properties PR = new Properties();
-		PR.load(FI);
-
+		Properties PR = getUpdatedProptiesFile();
 		url = PR.getProperty("URL");
 
 		boolean executionOnHTV = false;
@@ -544,7 +565,7 @@ public class TestInitization {
 	}
 
 	public void FailTestCase(String reason) throws InterruptedException {
-		Assert.fail(reason);	
+		Assert.fail(reason);
 	}
 
 	public void isDisplayed(WebElement we, String webElementName) throws InterruptedException {
@@ -582,5 +603,129 @@ public class TestInitization {
 
 		}
 
+	}
+
+	public void assignLanguageToStB(String language, String accountNumber, String pinCode)
+			throws InterruptedException, FileNotFoundException, IOException {
+
+		Properties PR = getUpdatedProptiesFile();
+		Boolean runOnUnassignedSTB = Boolean.valueOf(PR.getProperty("RunOnUnassignedSTB"));
+
+		if (!runOnUnassignedSTB) {
+			// if above variable in false in config file than unable to execute
+			// test case
+			throw new SkipException(
+					"Check STB is unassigned and set the variable RunOnUnassignedSTB=True in configuration file");
+		}
+
+		Hub hubScreen = new Hub(driver);
+		reports.log(LogStatus.PASS, "Select Language ");
+		if (language.toUpperCase().contentEquals("NL")) {
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			selectLanguage(accountNumber, pinCode);
+			// Validation for language
+			reports.log(LogStatus.PASS, "Navigate the setting screen");
+			TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+			driver.switchTo().defaultContent();
+			reports.log(LogStatus.PASS,
+					"Language changed to NL Actual Title is :" + hubScreen.headerText.getText()
+							+ "and expected title is : "
+							+ TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+
+		else if (language.toUpperCase().contentEquals("FR")) {
+
+			sendKeyMultipleTimes("UP", 1, 1000);
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
+			selectLanguage(accountNumber, pinCode);
+			reports.log(LogStatus.PASS, "Navigate the setting screen");
+			// Validation for language
+			TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
+					TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_fr"));
+			driver.switchTo().defaultContent();
+			reports.log(LogStatus.PASS,
+					"Language changed to NL Actual Title is :" + hubScreen.headerText.getText()
+							+ "and expected title is : "
+							+ TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_fr"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+
+		else {
+			FailTestCase("Given language not found.Expected Language are FL or NL");
+		}
+		ProximusContext.setLanguage(language);
+	}
+
+	private void selectLanguage(String accountNumber, String pinCode)
+			throws InterruptedException, FileNotFoundException, IOException {
+
+		boolean isFirstCharZeroForAccount = false;
+		boolean isFirstCharZeroForpinCode = false;
+		Properties PR = getUpdatedProptiesFile();
+
+		if (accountNumber.substring(0, 1).contentEquals("0")) {
+			isFirstCharZeroForAccount = true;
+		}
+
+		if (pinCode.substring(0, 1).contentEquals("0")) {
+			isFirstCharZeroForpinCode = true;
+		}
+
+		reports.log(LogStatus.PASS, "Enter account number");
+		if (isFirstCharZeroForAccount) {
+			sendNumaricKeys(0);
+		}
+
+		sendNumaricKeys(Integer.parseInt(accountNumber));
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		reports.log(LogStatus.PASS, "Enter Pin code");
+		if (isFirstCharZeroForpinCode) {
+			sendNumaricKeys(0);
+		}
+
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendNumaricKeys(Integer.parseInt(pinCode));
+		
+
+		// update the value of configuration properties file
+		PR.setProperty("RunOnUnassignedSTB", "FALSE");
+		PR.put("RunOnUnassignedSTB", "FALSE");
+		PR.store(new FileOutputStream(configFilePath), null);
+
+		driver.switchTo().defaultContent();
+
+		wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+		System.out.println("Proximus Logo Loaded");
+
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+
+		System.out.println("Frame loaded");
+		Thread.sleep(2000);
+
+		setApplicationHubPage(1);
+	}
+
+	private static Properties getUpdatedProptiesFile() {
+		Properties PR = new Properties();
+		FileInputStream FI;
+		try {
+			FI = new FileInputStream(configFilePath);
+			PR.load(FI);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return PR;
 	}
 }

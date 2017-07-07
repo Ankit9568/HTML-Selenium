@@ -1,10 +1,13 @@
 package com.rsystems.test;
 
+import java.text.ParseException;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.DTVChannelScreen;
+import com.rsystems.pages.RentMovie;
 import com.rsystems.pages.ZapList;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
@@ -228,47 +231,10 @@ public class DTVChannelTestCase extends TestInitization {
 	public void pause_LiveTV_play() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-
 		dtvChannelScreen.openLiveTV();
-
-		reports.log(LogStatus.PASS, "Press pause button");
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr = currentImgSource.split("/");
-		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-
-		System.out.println(imageName);
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Play button is now highlight on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
-
+		dtvChannelScreen.pressPauseButtonAndValidation();
 		Thread.sleep(5000);
-
-		reports.log(LogStatus.PASS, "Press play button");
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
-		currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
-		currentImgToArr = currentImgSource.split("/");
-		imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause button is now highlight on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Pause button is not highlight on webpage");
-		}
+		dtvChannelScreen.pressPlayButtonAndValidation();
 
 	}
 
@@ -335,6 +301,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
+	@Test
 	public void pause_LiveTV_PLTV_cancelPopupMessage() throws InterruptedException {
 
 		/**
@@ -345,29 +312,43 @@ public class DTVChannelTestCase extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
 
+		reports.log(LogStatus.PASS, "Press pause button");
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
+		reports.log(LogStatus.PASS, "Waiting for two minute for making buffer");
 		// wait for 2 minute for making buffer
 		Thread.sleep(120000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
+		reports.log(LogStatus.PASS, "Press play button");
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 0);
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
 		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentChnlNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
 
 		// channel change
+		reports.log(LogStatus.PASS, "Navigate to another channel");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 0);
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
 		driver.switchTo().frame(getCurrentFrameIndex());
-		String updatedChannelNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
-
-		if (currentChnlNumber.contentEquals(updatedChannelNumber)) {
-
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		if (dtvChannelScreen.chnlNoIn_Infobar.isDisplayed()) {
 			FailTestCase("Pop is not showing");
+		}
+
+		else {
+
+			reports.log(LogStatus.PASS, "pop up is visible on webpage");
+			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 	}
 
+	@Test
 	public void Pause_LiveTV_trickplay() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -375,13 +356,17 @@ public class DTVChannelTestCase extends TestInitization {
 
 		reports.log(LogStatus.PASS, "Tune a channel");
 		sendKeyMultipleTimes("NUMPAD2", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		// Wait for 5 minute for buffering the Live program
 		Thread.sleep(30000);
-
-		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 2000);
-
+		reports.log(LogStatus.PASS, "Press rewind button");
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 4000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentClassName = dtvChannelScreen.rewindBtn.getAttribute("class");
+		System.out.println("class name " + currentClassName);
 		if (currentClassName.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "Live TV is rewind");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -389,16 +374,27 @@ public class DTVChannelTestCase extends TestInitization {
 
 			FailTestCase("Unable to rewind Live TV");
 		}
-		
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-		reports.attachScreenshot(captureCurrentScreenshot());
 
+		dtvChannelScreen.pressPlayButtonAndValidation();
+	}
+
+	@Test
+	public void pause_LiveTV_PLTV_ExceedingBuffer() throws InterruptedException, ParseException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+
+		dtvChannelScreen.pressPauseButtonAndValidation();
+
+		Thread.sleep(3660000);
+
+		// validate play video automatically
 		String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
 		if (imageName
 				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause button is now highlight on webpage");
+			reports.log(LogStatus.PASS, "Play successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
@@ -407,10 +403,52 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 	}
-	
-	public void pause_LiveTV_PLTV_ExceedingBuffer(){
-		
-		
+
+	/**
+	 * 
+	 * First Locked the PLTV package then Execute
+	 * 
+	 * @throws InterruptedException
+	 */
+
+	@Test
+	public void tc_Pause_LiveTV_PLTV_package_not_assigned() throws InterruptedException {
+
+		DTVChannelScreen dtvScreen = new DTVChannelScreen(driver);
+		dtvScreen.openLiveTV();
+
+		reports.log(LogStatus.PASS, "Press pause button");
+		dtvScreen.errorMsgValidation(Unicode.VK_PAUSE.toString(),
+				TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
+		dtvScreen.errorMsgValidation(Unicode.VK_BACKWARD.toString(),
+				TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
+
+	}
+
+	@Test
+	public void tc_BCVODVD0130_VOD_FOD() throws InterruptedException {
+
+		DTVChannelScreen dtvScreen = new DTVChannelScreen(driver);
+		RentMovie rentMovie = new RentMovie(driver);
+		dtvScreen.navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			reports.log(LogStatus.FAIL, rentMovie.rentOption.getText() + "is visible on webpage");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} catch (NoSuchElementException e) {
+
+			reports.log(LogStatus.PASS, " Rent Option is not visible on webpage");
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		dtvScreen.pressPauseButtonAndValidation();
+		// navigate to menu page
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 	}
 
 }

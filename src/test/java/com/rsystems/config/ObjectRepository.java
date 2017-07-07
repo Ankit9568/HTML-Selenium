@@ -88,7 +88,10 @@ public class ObjectRepository {
 	}
 
 	public static class FilmsScreen {
-		public static final String highlighedMovie = "//li[@class='focusedItem'][2]/span";
+		public static final String highlighedMovieCategory = "//li[@class='focusedItem current']/span";
+		public static final String currentSelectedMovieName = "selectedVodTitle";
+		public static final String rentOption = "item_rent";
+		
 	}
 
 	public static class LanguageChange {
@@ -110,6 +113,8 @@ public class ObjectRepository {
 		public static final String pauseAndPlayImg = "//li[@id='play_pause']/div/img";
 		public static final String backToLive = "//div[@id='containerDiv']/div[text()='Terug naar leven']";
 		public static final String rewindBtn = "rewind";
+		public static final String errorMsg = "error-message";
+		
 	}
 
 	public static class ZapListPage {
@@ -182,4 +187,6 @@ public class ObjectRepository {
 			public static final String screenID="suggesties";	
 			public static final String dramaScreen="cTitleField";
 		}	
+	   
+	
 }
