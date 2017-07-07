@@ -1370,10 +1370,11 @@ public class RecordingScreen extends TestInitization{
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.log(LogStatus.PASS, "Info Box getting displayed with Episode Info - Click on opname stoppen");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
+		/*driver.switchTo().frame(getCurrentFrameIndex());
 		if(activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
 		{
 			sendKeyMultipleTimes("DOWN", 1, 1000);
-		}
+		}*/
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -1472,14 +1473,16 @@ public class RecordingScreen extends TestInitization{
 					driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 					if(!isOverlapping(prevStartTime, prevEndTime, sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim()),sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
 					{
-						reports.log(LogStatus.PASS, "Overlapping Episode Not Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );
-						if (prevEndTime.before(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
+						if (prevEndTime.before(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())) || prevEndTime.before(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim())))
 						{
+							reports.log(LogStatus.PASS, "Overlapping Episode Not Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );
 							sendKeyMultipleTimes("RIGHT", 1, 1000);
+							maxCount -=1;
 							continue;
 						}
 						else
 						{
+							reports.log(LogStatus.PASS, "Overlapping Episode Not Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );
 							sendKeyMultipleTimes("DOWN", 1, 1000);
 							maxCount -=1;
 							continue;

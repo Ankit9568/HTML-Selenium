@@ -360,21 +360,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 		// Wait for 5 minute for buffering the Live program
 		Thread.sleep(30000);
-		reports.log(LogStatus.PASS, "Press rewind button");
-		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 4000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentClassName = dtvChannelScreen.rewindBtn.getAttribute("class");
-		System.out.println("class name " + currentClassName);
-		if (currentClassName.contentEquals("enable active")) {
-			reports.log(LogStatus.PASS, "Live TV is rewind");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-
-			FailTestCase("Unable to rewind Live TV");
-		}
-
+		dtvChannelScreen.pressRewindButtonAndValidation();
 		dtvChannelScreen.pressPlayButtonAndValidation();
 	}
 

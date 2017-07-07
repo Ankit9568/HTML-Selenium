@@ -45,14 +45,16 @@ public class VodFeaturesTestCase extends TestInitization
 	public void tc_BCVODBG0312_VOD_Rent() throws InterruptedException
 	{
 		VodFeatures vod = new VodFeatures(driver);
-		vod.vodOnRent();
+		vod.vodOnRent(TestInitization.getExcelKeyValue("RentMovie", "POD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "PinNumber"));
 	}
 	
 	@Test
 	public void tc_BCVODVD0131_VOD_Rent_Zero_Euro() throws InterruptedException
 	{
 		VodFeatures vod = new VodFeatures(driver);
-		vod.unrentMovie();
+		vod.rentFreeMovie();
 	}
 	
 	

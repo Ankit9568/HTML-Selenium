@@ -157,11 +157,11 @@ public class ObjectRepository {
 		public static final String count="selectedVodPg";
 		public static final String container="focusedItemContainer";
 		public static final String forwardkey="//*[@id='rewind']";
-		public static final String movieName="//*[@id='item_0_0']/div[2]/h2";
+		public static final String movieName="//div[contains(@id,'item_')]/div[@class='poster-info']/h2";
 		public static final String dateTime="//*[@id='item_0_0']/div[2]/div";
 		public static final String duration="//*[@id='item_0_0']/div[2]/span";
 		public static final String totalItems="//*[@id='totalItems']";
-		public static final String valueContains="//*[@id='item_watch']";
+		public static final String lookOption="//*[@id='item_watch']";
 	}
 
 	public static class HotKeys {

@@ -229,4 +229,22 @@ public class DTVChannelScreen extends TestInitization {
 		}
 
 	}
+	
+	public void pressRewindButtonAndValidation() throws InterruptedException{
+		
+		reports.log(LogStatus.PASS, "Press rewind button");
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 4000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName = rewindBtn.getAttribute("class");
+		System.out.println("class name " + currentClassName);
+		if (currentClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Live TV is rewind");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to rewind Live TV");
+		}
+	}
 }
