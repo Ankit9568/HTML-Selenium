@@ -147,6 +147,21 @@ public class ObjectRepository {
 	public static class Vod {
 		public static final String vodHeading = "vod-heading-main";
 		public static final String filmTitle = "poster-right-heading";
+		public static final String itemPrice="//*[@id='price-text']";
+		public static final String rowId="row_1";
+		public static final String menuText="//*[@id='main-hub-nav']";
+		public static final String actie="//*[@id='item_3']";
+		public static final String mubiPass="//*[@id='item_4']";
+		public static final String rows="row-active";
+		public static final String pinContainer="//*[@id='addPin']/div";
+		public static final String count="selectedVodPg";
+		public static final String container="focusedItemContainer";
+		public static final String forwardkey="//*[@id='rewind']";
+		public static final String movieName="//*[@id='item_0_0']/div[2]/h2";
+		public static final String dateTime="//*[@id='item_0_0']/div[2]/div";
+		public static final String duration="//*[@id='item_0_0']/div[2]/span";
+		public static final String totalItems="//*[@id='totalItems']";
+		public static final String valueContains="//*[@id='item_watch']";
 	}
 
 	public static class HotKeys {
