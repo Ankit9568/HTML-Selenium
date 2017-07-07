@@ -77,4 +77,17 @@ public class HubTestCases extends TestInitization{
 		sendKeyMultipleTimes("UP", 1, 1000);
 		hubScreen.verifyAssetLine();
 	}
+	
+	/**
+	 * This test cases is used to check hub menu getting displayed when no package is assigned
+	 * Created by Rahul Dhoundiyal
+	 * 
+	 */
+	@Test
+	public void tc_Hub_menu_button_no_package() throws InterruptedException{
+		hubScreen = new Hub(driver);
+		reports.log(LogStatus.PASS, "Test When No Package Is assigned");
+		hubScreen.launchAndVerifyMenuScreen();
+	}
+
 }

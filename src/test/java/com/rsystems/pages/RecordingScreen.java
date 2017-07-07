@@ -1,7 +1,11 @@
 package com.rsystems.pages;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +63,9 @@ public class RecordingScreen extends TestInitization{
 	
 	@FindBy(how=How.ID,using = ObjectRepository.RecordingElements.epgGuideElement)
 	public WebElement EpgGuide;
+	
+	@FindBy(how = How.XPATH,using = ObjectRepository.RecordingElements.recordingIconElement)
+	public WebElement recordingIconElement;
 	
 	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.headerElement)
 	public WebElement headerElement;
@@ -135,6 +142,7 @@ public class RecordingScreen extends TestInitization{
 	 */
 	public void moveToPlannedRecordings() throws InterruptedException
 	{	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		reports.log(LogStatus.PASS, "Navigate to Hub Page");
 		TestInitization.setApplicationHubPage(2);
 		//Move to My Library
 		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
@@ -153,7 +161,8 @@ public class RecordingScreen extends TestInitization{
 	
 	private void moveToOngoingandCompletedRecordingList() throws InterruptedException {
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-		TestInitization.setApplicationHubPage(2);
+		reports.log(LogStatus.PASS, "Navigate to Hub Page");
+		TestInitization.setApplicationHubPage(1);
 		//Move to My Library
 		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
 		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
@@ -163,7 +172,7 @@ public class RecordingScreen extends TestInitization{
 		//Move to Planning
 		reports.log(LogStatus.PASS, " Navigate to opnames Screen ");
 		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
-		reports.log(LogStatus.PASS, " Ongoing and Comppleted Recording lists Screen getting displayed ");
+		reports.log(LogStatus.PASS, " Ongoing and Completed Recording lists Screen getting displayed ");
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 	} 
 	
@@ -173,16 +182,15 @@ public class RecordingScreen extends TestInitization{
 	 */
 	public List<EpisodeInfo> scheduleRecordingForFutureChannel(String recordingType,int numberOfRecording) throws InterruptedException{
 		boolean stopRecording = false;
+		String epgepisodeName = null;
 		int noOfRecordedChannel = 0;
 		List<EpisodeInfo> programDetails = new ArrayList<EpisodeInfo>();
 		//Move to Future Epsiode
-		setApplicationHubPage(1);
-		sendKeyMultipleTimes("UP", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.log(LogStatus.PASS, " DTV Channel Screen getting Displayed ");
-		// Open info banner for screenshot
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		new DTVChannelScreen(driver).openLiveTV();
+
+		Thread.sleep(1000);
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
 		sendKeyMultipleTimes("RIGHT", 2, 2000);
 		reports.log(LogStatus.PASS, " Mini EPG Screen Displayed ");
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -195,29 +203,64 @@ public class RecordingScreen extends TestInitization{
 						sendKeyMultipleTimes("ENTER", 1, 1000);
 					}
 					sendKeyMultipleTimes("RIGHT", 1, 3000);
+					reports.log(LogStatus.PASS, "SEND RIGHT KEY - Navigate to Next Episode");
 					reports.attachScreenshot(captureCurrentScreenshot());
+					Thread.sleep(1000);
+					driver.switchTo().frame(getCurrentFrameIndex());
+					epgepisodeName = driver.findElement(By.className("current")).findElement(By.tagName("h2")).getAttribute("innerText");
+					System.out.println(epgepisodeName);
+					//Enter to open Episode Info
+					sendKeyMultipleTimes("ENTER", 1, 3000);
 					if(recordingType.equalsIgnoreCase("SINGLE")){
-						//Enter to open Episode Info
-						sendKeyMultipleTimes("ENTER", 1, 3000);
+						Thread.sleep(1000);
 						reports.log(LogStatus.PASS, " Episode Info Screen getting displayed ");
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-						if (driver.findElement(By.xpath(ObjectRepository.RecordingElements.StartRecordingXPath)).getText().equalsIgnoreCase("opnemen")){
-							programDetails.add(new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton()));
-							reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+getInfoEpisodeName());
+						if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
+							programDetails.add(new EpisodeInfo(getChannelNo(), epgepisodeName, getEpisodeDuration(),getChannelDefiniton()));
+							reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+ epgepisodeName);
 							sendKeyMultipleTimes("ENTER", 1, 1000);
 							driver.switchTo().defaultContent();
 							wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
 							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 							sendKeyMultipleTimes("ENTER", 1, 1000);
-							sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+							sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 							reports.attachScreenshot(captureCurrentScreenshot());
 							noOfRecordedChannel += 1;
+						}
+						else if(activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+						{
+							sendKeyMultipleTimes("DOWN", 1, 1000);
+							Thread.sleep(1000);
+							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+							if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
+								programDetails.add(new EpisodeInfo(getChannelNo(), epgepisodeName, getEpisodeDuration(),getChannelDefiniton()));
+								reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+epgepisodeName);
+								sendKeyMultipleTimes("ENTER", 1, 1000);
+								driver.switchTo().defaultContent();
+								wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+								driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+								sendKeyMultipleTimes("ENTER", 1, 2000);
+								sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+								reports.attachScreenshot(captureCurrentScreenshot());
+								noOfRecordedChannel += 1;
+							}
+							else
+							{
+								reports.log(LogStatus.PASS, " Already recording is scheduled on  " + epgepisodeName + " epsiode. Unable to record this episode");
+								reports.attachScreenshot(captureCurrentScreenshot());
+								sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+								driver.switchTo().defaultContent();
+								wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+								driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+								reports.log(LogStatus.PASS," Going back and Navigate to another Channel");
+							}
 						}
 						else 
 						{	reports.log(LogStatus.PASS, " Already recording is scheduled on  " + getInfoEpisodeName() + " epsiode. Unable to record this episode");
 							reports.attachScreenshot(captureCurrentScreenshot());
-							sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+							sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 							driver.switchTo().defaultContent();
 							wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
 							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
@@ -243,31 +286,34 @@ public class RecordingScreen extends TestInitization{
 	}
 
 	public EpisodeInfo startRecordingFromEPGScreen(String recordingType) throws InterruptedException {
+		String epgEpisodeName = null;
 		boolean stopRecording = false;
 		//Navigate to EPG Screen
 		EpisodeInfo episodeDetails = null;
 		EpgScreen epgScreen = new EpgScreen(driver);
-		epgScreen.goToEpgChannelScreen(false);
+		epgScreen.goToEpgChannelScreen(true);
 		while(!stopRecording){
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']")).isEmpty());
 			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']")).isEmpty())
 			{
+				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-				reports.log(LogStatus.PASS, "Open Info Screen of ongoing program");
+				reports.log(LogStatus.PASS, "Info Screen of ongoing program getting displayed");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-				episodeDetails =  new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton());
 				if (recordingType.equalsIgnoreCase("SINGLE"))
 				{
 					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
 					{
-						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						episodeDetails =  new EpisodeInfo(getChannelNo(), epgEpisodeName, getEpisodeDuration(),getChannelDefiniton());
 						reports.log(LogStatus.PASS, "Click on opnemen to start recording");
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
+						reports.log(LogStatus.PASS, "Recording Starting On  : " + epgEpisodeName);
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-						System.out.println(episodeDetails.toString() + episodeDetails.channelNo + episodeDetails.programDefiniton + episodeDetails.programDuration);
 						stopRecording = true;
 					}
 					else
@@ -282,6 +328,7 @@ public class RecordingScreen extends TestInitization{
 					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 					if (activeInfoMenuItem.getText().equalsIgnoreCase("serie opnemen"))
 					{
+						episodeDetails =  new EpisodeInfo(getChannelNo(), epgEpisodeName, getEpisodeDuration(),getChannelDefiniton());
 						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 						reports.log(LogStatus.PASS, "Click on serie opnemen to start recording");
 						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -368,15 +415,12 @@ public class RecordingScreen extends TestInitization{
 		List<WebElement> recordingContentElementList;
 		recordingContentElementList = driver.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
 		reports.log(LogStatus.PASS, " Navigate to Scheduled Recording(geplande opnames) ");
+		driver.switchTo().frame(getCurrentFrameIndex());
 		for(int i=0;i<recordingContentElementList.size();i++)
 		{
 			if((recordingContentElementList.get(i).getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
 			{
 				
-				if (! (episodeDetails.programDefiniton == null) && recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDefinitionInPlannedRecording)).getAttribute("src").equalsIgnoreCase(episodeDetails.programDefiniton)){
-					System.out.println(recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramDefinitionInPlannedRecording)).getAttribute("src"));
-					verifyRecording = true;
-				}
 				if (recordingContentElementList.get(i).findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
 				&&
 				recordingContentElementList.get(i).findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
@@ -559,6 +603,7 @@ public class RecordingScreen extends TestInitization{
 	
 	private void moveToRecordedItemList() throws InterruptedException {
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		reports.log(LogStatus.PASS, "Navigate to Hub Page");
 		TestInitization.setApplicationHubPage(2);
 		//Move to My Library
 		reports.log(LogStatus.PASS, " Navigate to mijn bibliotheek Screen ");
@@ -767,7 +812,7 @@ public class RecordingScreen extends TestInitization{
 		//Navigate to EPG Screen
 		EpisodeInfo episodeDetails = null;
 		EpgScreen epgScreen = new EpgScreen(driver);
-		epgScreen.goToEpgChannelScreen(false);
+		epgScreen.goToEpgChannelScreen(true);
 		reports.log(LogStatus.PASS, "Navigate to Future Episodes");
 		sendKeyMultipleTimes("RIGHT", 3, 1000);
 		while(!stopRecording){
@@ -838,7 +883,7 @@ public class RecordingScreen extends TestInitization{
 	boolean verifyRecording = false;
 	moveToOngoingandCompletedRecordingList();
 	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-	int recordingSize = Integer.parseInt(totalRecordingID.getText());
+	int recordingSize = 15;
 	for(int i = 0 ; i< recordingSize;i++)
 	{
 		
@@ -875,8 +920,8 @@ public class RecordingScreen extends TestInitization{
 		moveToOngoingandCompletedRecordingList();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String recordingBeforeDelete = totalRecordingID.getText();
-		System.out.println(recordingBeforeDelete);
-		for (int i = 0; i< Integer.parseInt(recordingBeforeDelete);i++)
+		System.out.println("Recording List Before Delete :" +recordingBeforeDelete);
+		for (int i = 0; i< 15;i++)
 		{	
 			reports.attachScreenshot(captureCurrentScreenshot());
 			System.out.println(focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size());
@@ -884,11 +929,11 @@ public class RecordingScreen extends TestInitization{
 					System.out.println(focusRecordingElement.getAttribute("assetvolume"));
 					if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))
 					{
-						deleteSingleRecording();
+						stopSingleRecording();
 					}
 					else
 					{
-						deleteSeriesRecording();
+						stopSeriesRecording();
 					}
 					onGoingRecordingDeleted = true;
 					break;
@@ -900,19 +945,27 @@ public class RecordingScreen extends TestInitization{
 			}
 			
 		}
+		
 		if(onGoingRecordingDeleted)
 		{
-			if (recordingBeforeDelete.equalsIgnoreCase(totalRecordingID.getText()))
+			driver.switchTo().frame(getCurrentFrameIndex());
+			try
 			{
-				FailTestCase("Recording not Stopped. Recording List not getting updated Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
-				
+				if (focusRecordingElement.findElement(By.className("ongoing_recording")).isDisplayed())
+				{
+					FailTestCase("Recording not Stopped");
+				}
+				else
+				{
+					reports.log(LogStatus.PASS, "On Going Recording getting stopped.");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
 			}
-			else
+			catch(NoSuchElementException ex)
 			{
-				reports.log(LogStatus.PASS, "On Going Recording getiing deleted/stopped. Recordings Before Delete :- " + recordingBeforeDelete + " Recordings After Delete :- " +totalRecordingID.getText());
+				reports.log(LogStatus.PASS, "On Going Recording getting stopped.");
 				reports.attachScreenshot(captureCurrentScreenshot());
 			}
-			
 		}
 		else
 		{
@@ -970,18 +1023,54 @@ public class RecordingScreen extends TestInitization{
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+	private void stopSeriesRecording() throws InterruptedException {
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Info Box of recorded item should be displayed ");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		reports.log(LogStatus.PASS, "Click on alle afleveringen wissen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Click bevestigen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		reports.log(LogStatus.PASS,"All Series Recording Deleted Successfully");
+	
+	}
 	/**
 	 * This function is used to delete single recording.
 	 * Created By Rahul Dhoundiyal
 	 */
+	private void stopSingleRecording() throws InterruptedException
+	{	
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Info Box of recorded item should be displayed ");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		reports.log(LogStatus.PASS, "Click opname stoppen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Click bevestigen");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		reports.log(LogStatus.PASS,"Recording Stopped Successfully");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 3000);
+		
+		
+	}
 	private void deleteSingleRecording() throws InterruptedException
 	{	
-		reports.log(LogStatus.PASS, "Expected - Info Box of recorded item should be displayed ");
 		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Info Box of recorded item should be displayed ");
+		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("DOWN", 1, 2000);
 		reports.log(LogStatus.PASS, "Click aflevering wissen");
 		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 200);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
 		reports.log(LogStatus.PASS, "Click bevestigen");
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 3000);
@@ -993,7 +1082,10 @@ public class RecordingScreen extends TestInitization{
 	 */
 	private void deleteSeriesRecording() throws InterruptedException
 	{
-		reports.log(LogStatus.PASS, "Expected - Info Box of recorded item should be displayed ");
+		
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		reports.log(LogStatus.PASS, "Info Box of recorded item should be displayed ");
+		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		sendKeyMultipleTimes("DOWN", 1, 2000);
 		sendKeyMultipleTimes("DOWN", 1, 2000);
@@ -1002,7 +1094,7 @@ public class RecordingScreen extends TestInitization{
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		reports.log(LogStatus.PASS, "Click bevestigen");
 		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 3000);
+		sendKeyMultipleTimes("ENTER", 1, 5000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		reports.log(LogStatus.PASS,"All Series Recording Deleted Successfully");
 	}
@@ -1044,12 +1136,12 @@ public class RecordingScreen extends TestInitization{
 			boolean verifyMultipleSingleRecordings = verifyRecordingIsScheduledOrNot(epsiodeInfo,"SINGLE");		
 			if (verifyMultipleSingleRecordings)
 			{
-				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring getting scheduled for " + epsiodeInfo.programName);
+				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording getting scheduled for " + epsiodeInfo.programName);
 				reports.attachScreenshot(captureCurrentScreenshot());
 			}
 			else
 			{
-				FailTestCase("Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recoring not getting scheduled for " + epsiodeInfo.programName);
+				FailTestCase("Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording not getting scheduled for " + epsiodeInfo.programName);
 			}
 		}
 	}
@@ -1064,12 +1156,12 @@ public class RecordingScreen extends TestInitization{
 		boolean verifyOnGoingRecording = verifyOnGoingRecording(episodeDetails,"SINGLE");
 		if (verifyOnGoingRecording)
 		{	
-			reports.log(LogStatus.PASS, "Expected Output - Recording should be Started for " +episodeDetails.programName+ " Actual - Recoring getting started for " + episodeDetails.programName);
+			reports.log(LogStatus.PASS, "Expected Output - Recording should be Started for " +episodeDetails.programName+ " Actual - Recording getting started for " + episodeDetails.programName);
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 		else
 		{
-			FailTestCase("Expected Output - Recording should be started for " +episodeDetails.programName+ " Actual - Recoring not getting started for " + episodeDetails.programName);
+			FailTestCase("Expected Output - Recording should be started for " +episodeDetails.programName+ " Actual - Recording not getting started for " + episodeDetails.programName);
 		}
 	}
 	/**
@@ -1131,6 +1223,337 @@ public class RecordingScreen extends TestInitization{
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(EpgGuide, "TV_Guide");	
 	}
+	/**
+	 * This function is used to start recordings on current episode from DTV Screen
+	 * Created By Rahul Dhoundiyal
+	 */
+	public List<EpisodeInfo> startRecordingFromDTV(String recordingType,int numberOfRecording) throws InterruptedException, IOException {
+		boolean checknext = false;
+		String episodeName = null;
+		int noOfRecordedChannel = 0;
+		List<EpisodeInfo> programDetails = new ArrayList<EpisodeInfo>();
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		while(numberOfRecording != noOfRecordedChannel){
+			driver.switchTo().defaultContent();
+			if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl")))
+			{
+				dtvChannelScreen.openLiveTV();
+			}
+			if(numberOfRecording > 1 && checknext){
+				reports.log(LogStatus.PASS, "Navigate to another channel to start recording");
+				sendKeyMultipleTimes("PAGE_UP", 1, 2000);
+				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			if(recordingType.equalsIgnoreCase("SINGLE")){
+				//Enter to open Episode Info
+				TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+				driver.switchTo().frame(getCurrentFrameIndex());
+				episodeName = dtvChannelScreen.programTitle.getText();
+				System.out.println(episodeName);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+				reports.log(LogStatus.PASS, " Episode Info Screen getting displayed ");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+				if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
+					programDetails.add(new EpisodeInfo(getChannelNo(), episodeName, getEpisodeDuration(),getChannelDefiniton()));
+					reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+ getInfoEpisodeName());
+					sendKeyMultipleTimes("ENTER", 1, 1000);
+					reports.attachScreenshot(captureCurrentScreenshot());
+					checknext = true;
+					noOfRecordedChannel += 1;
+				}
+				else if (activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+				{
+					sendKeyMultipleTimes("DOWN", 1, 2000);
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+					{
+						programDetails.add(new EpisodeInfo(getChannelNo(), episodeName, getEpisodeDuration(),getChannelDefiniton()));
+						reports.log(LogStatus.PASS, " Click on opnemen to start recording on - "+getInfoEpisodeName());
+						sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.attachScreenshot(captureCurrentScreenshot());
+						checknext = true;
+						noOfRecordedChannel += 1;
+					}
+					else
+					{
+						reports.log(LogStatus.PASS, " Already recording is scheduled on  " + getInfoEpisodeName() + " epsiode. Unable to record this episode");
+						reports.attachScreenshot(captureCurrentScreenshot());
+						sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+						//sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 1000);
+						sendKeyMultipleTimes("PAGE_UP", 1, 1000);
+						reports.log(LogStatus.PASS," Going back and Navigate to another Channel");
+						sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+						reports.attachScreenshot(captureCurrentScreenshot());
+					}
+				}
+				else 
+				{	reports.log(LogStatus.PASS, " Already recording is scheduled on  " + getInfoEpisodeName() + " epsiode. Unable to record this episode");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+				//sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 1000);
+				sendKeyMultipleTimes("PAGE_UP", 1, 1000);
+				reports.log(LogStatus.PASS," Going back and Navigate to another Channel");
+				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+				reports.attachScreenshot(captureCurrentScreenshot());
+				}
+			}
+			else
+			{
+				programDetails.add(new EpisodeInfo(getChannelNo(), episodeName, getEpisodeDuration(),getChannelDefiniton()));
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				driver.switchTo().defaultContent();
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@id='headerTitle']")));
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				checknext = true;
+				noOfRecordedChannel += 1;
+			}	
+		}
+		return programDetails;
+	}
 	
+	public void verifyAndStartRecordingFromDTV() throws InterruptedException, IOException {
+		reports.log(LogStatus.PASS, "Start Recording From DTV");
+		List<EpisodeInfo> listOfAddedRecordings = startRecordingFromDTV("SINGLE",1);
+		System.out.println(listOfAddedRecordings);
+		for (EpisodeInfo epsiodeInfo : listOfAddedRecordings) {
+			boolean verifyMultipleSingleRecordings = verifyOnGoingRecording(epsiodeInfo,"SINGLE");		
+			if (verifyMultipleSingleRecordings)
+			{
+				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording getting scheduled for " + epsiodeInfo.programName);
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording not getting scheduled for " + epsiodeInfo.programName);
+			}
+		}	
+	}
 	
+	public void verifyActionMenuRecordinStop() throws InterruptedException, IOException {
+		reports.log(LogStatus.PASS, "Pre-requisite Start Recording on Going Channel To Test.");
+		List<EpisodeInfo> listOfAddedRecordings = startRecordingFromDTV("SINGLE",1);
+		new DTVChannelScreen(driver).openLiveTV();
+		Thread.sleep(1000);
+		reports.log(LogStatus.PASS, "Navigate to Channel with ongoing recording : "+ listOfAddedRecordings.get(0).channelNo);
+		sendNumaricKeys(Integer.parseInt(listOfAddedRecordings.get(0).channelNo));
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		Thread.sleep(1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.log(LogStatus.PASS, "Info Box getting displayed with Episode Info - Click on opname stoppen");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		if(activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+		{
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(driver.findElement(By.className("vodText")).getText().contains("stopzetten?")){
+			reports.log(LogStatus.PASS, "Message getting displayed to stop recording " + driver.findElement(By.className("vodText")).getText() );
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Click on Cancel");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(!driver.findElement(By.className("vodText")).getText().contains("stopzetten?")){
+			isDisplayed(driver.findElement(By.xpath(ObjectRepository.RecordingElements.recordingIconElement)),"Recording Icon");
+			reports.log(LogStatus.PASS, "Stop recording Message not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Info Box getting displayed with Episode Info - Click on opname stoppen");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(driver.findElement(By.className("vodText")).getText().contains("stopzetten?")){
+			reports.log(LogStatus.PASS, "Message getting displayed to stop recording " + driver.findElement(By.className("vodText")).getText() );
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Click on Confirm to stop recording");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(!driver.findElement(By.className("vodText")).getText().contains("stopzetten?")){
+			try{
+				if (recordingIconElement.isDisplayed())
+				{
+					FailTestCase("Recording Icon should not be displayed");
+				}
+				else
+				{
+					reports.log(LogStatus.PASS, "Recording Icon not displayed.Rcording Stopped Sucessfully");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+			}
+			catch(NoSuchElementException ex){
+				reports.log(LogStatus.PASS, "Recording Icon not displayed.Rcording Stopped Sucessfully");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			
+			reports.log(LogStatus.PASS, "Stop Recording Message not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	public void verifyAndPlanOverlappingRecordings(int numberOfRecording) throws InterruptedException, ParseException {
+		List<EpisodeInfo> episodeDetails = scheduleOverlappingRecording(numberOfRecording);
+		for (EpisodeInfo epsiodeInfo : episodeDetails){
+			boolean verifyMultipleSingleRecordings = verifyRecordingIsScheduledOrNot(epsiodeInfo,"SINGLE");		
+			if (verifyMultipleSingleRecordings)
+			{
+				reports.log(LogStatus.PASS, "Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording getting scheduled for " + epsiodeInfo.programName);
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Expected Output - Recording should be scheduled for " +epsiodeInfo.programName+ " Actual - Recording not getting scheduled for " + epsiodeInfo.programName);
+			}
+		}
+	}
+	private List<EpisodeInfo> scheduleOverlappingRecording(int numberOfRecording) throws ParseException, InterruptedException {
+		int recordedChannel = 0;
+		String prevEpisodeDuration = null;
+		String epgEpisodeName = null;
+		DateFormat sdf=new SimpleDateFormat("hh:mm");
+		Date prevStartTime = sdf.parse("00:00");
+		Date prevEndTime = sdf.parse("00:00");
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgChannelScreen(true);
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		List<EpisodeInfo> episodeDetails = new ArrayList<EpisodeInfo>();
+		boolean checkOverLap = false;
+		//move to future episode
+		sendKeyMultipleTimes("RIGHT", 4, 1000);
+		while(numberOfRecording != recordedChannel)
+		{
+			
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			System.out.println(focusProgram.findElements(By.cssSelector(ObjectRepository.RecordingElements.futureRecordingIconElement)).isEmpty());
+			if (focusProgram.findElements(By.cssSelector(ObjectRepository.RecordingElements.futureRecordingIconElement)).isEmpty())
+			{
+				if(checkOverLap)
+				{
+					driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+					if(!isOverlapping(prevStartTime, prevEndTime, sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim()),sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
+					{
+						reports.log(LogStatus.PASS, "Overlapping Episode Not Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );
+						if (prevEndTime.after(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
+						{
+							sendKeyMultipleTimes("RIGHT", 1, 1000);
+							continue;
+						}
+						else
+						{
+							sendKeyMultipleTimes("DOWN", 1, 1000);
+							continue;
+						}
+						
+					}
+					else
+					{
+						reports.log(LogStatus.PASS, "Overlapping Episode Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );	
+					}
+				}
+				prevStartTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim());
+				prevEndTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim());
+				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
+				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+				
+				reports.log(LogStatus.PASS, "Open Info Screen of Future program");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				String recordingType = "SINGLE";
+				if (recordingType.equalsIgnoreCase("SINGLE"))
+				{
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+					{
+						episodeDetails.add(new EpisodeInfo(getChannelNo(), epgEpisodeName, getEpisodeDuration(),getChannelDefiniton()));
+						prevEpisodeDuration = getEpisodeDuration();
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on opnemen to start recording - Episode TIme - " +prevEpisodeDuration);
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						recordedChannel += 1;
+						checkOverLap = true;
+					}
+					else if (activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+					{
+						sendKeyMultipleTimes("DOWN", 1, 2000);
+						if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+						{
+							episodeDetails.add(new EpisodeInfo(getChannelNo(), epgEpisodeName , getEpisodeDuration(),getChannelDefiniton()));
+							prevEpisodeDuration = getEpisodeDuration();
+							TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+							reports.log(LogStatus.PASS, "Click on opnemen to start recording - Episode TIme - "+prevEpisodeDuration);
+							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+							recordedChannel += 1;
+							checkOverLap = true;
+						}
+						else
+						{
+							reports.log(LogStatus.PASS, "Already Recording is scheduled for current episode.Navigate to Future Epsiode");
+							TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+							reports.attachScreenshot(captureCurrentScreenshot());
+							TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000);
+						}
+					}
+					else
+					{
+						reports.log(LogStatus.PASS, "Already Recording is scheduled for current episode.Navigate to Future Epsiode");
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						reports.attachScreenshot(captureCurrentScreenshot());
+						TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000);
+					}
+				}
+				else
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+					if (activeInfoMenuItem.getText().equalsIgnoreCase("serie opnemen"))
+					{
+						episodeDetails.add(new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton()));
+						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+						reports.log(LogStatus.PASS, "Click on serie opnemen to start recording");
+						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+						recordedChannel += 1;
+					}
+					else
+					{
+						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000);
+					}
+					
+				}
+				
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+				continue;
+			}
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+		}
+		return episodeDetails;
+		
+	}
+	public boolean isOverlapping(Date startDate1, Date endDate1, Date startDate2, Date endDate2)
+		      throws NullPointerException {
+		 if ((startDate1.before(startDate2) && endDate1.after(startDate2))
+			        || (startDate1.before(endDate2) && endDate1.after(endDate2))
+			        || (startDate1.before(startDate2) && endDate1.after(endDate2))
+			        || (startDate1.equals(startDate2) && endDate1.equals(endDate2))
+			        || (startDate2.before(startDate1) && endDate1.equals(endDate2))
+			        || (startDate2.before(startDate1) && endDate1.before(endDate2))
+			        || (startDate2.before(startDate1) && endDate1.after(endDate2))) {
+			      return Boolean.TRUE;
+			    }
+			    return Boolean.FALSE;
+	}
 }

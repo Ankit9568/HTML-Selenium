@@ -57,6 +57,7 @@ public class ObjectRepository {
 	}
 
 	public static class RecordingElements {
+		
 		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
 		public static final String ChannelInfoImageXPath = "/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
@@ -77,6 +78,8 @@ public class ObjectRepository {
 		public static final String ongoingRecordingIconElement = ".videoQuality .ongoing_recording img";
 		public static final String plannedRecordingTitleElement = "sTitlebar";
 		public static final String epgGuideElement = "epgGuide";
+		public static final String futureRecordingIconElement = ".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']";
+		public static final String recordingIconElement = "//*[@id='recording']";
 	}
 
 	public static class VerifySystemInfoScreen {
