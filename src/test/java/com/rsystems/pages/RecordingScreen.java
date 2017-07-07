@@ -1440,6 +1440,7 @@ public class RecordingScreen extends TestInitization{
 		}
 	}
 	private List<EpisodeInfo> scheduleOverlappingRecording(int numberOfRecording) throws ParseException, InterruptedException {
+		int maxCount = 15;
 		int recordedChannel = 0;
 		String prevEpisodeDuration = null;
 		String epgEpisodeName = null;
@@ -1453,10 +1454,15 @@ public class RecordingScreen extends TestInitization{
 		List<EpisodeInfo> episodeDetails = new ArrayList<EpisodeInfo>();
 		boolean checkOverLap = false;
 		//move to future episode
-		sendKeyMultipleTimes("RIGHT", 4, 1000);
-		while(numberOfRecording != recordedChannel)
+		sendKeyMultipleTimes("RIGHT", 3, 1000);
+		while(numberOfRecording != recordedChannel )
 		{
-			
+			if(maxCount == 0)
+			{
+				reports.log(LogStatus.PASS, "No Overlapping Epsiode Found");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				break;
+			}
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 			System.out.println(focusProgram.findElements(By.cssSelector(ObjectRepository.RecordingElements.futureRecordingIconElement)).isEmpty());
 			if (focusProgram.findElements(By.cssSelector(ObjectRepository.RecordingElements.futureRecordingIconElement)).isEmpty())
@@ -1467,7 +1473,7 @@ public class RecordingScreen extends TestInitization{
 					if(!isOverlapping(prevStartTime, prevEndTime, sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim()),sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
 					{
 						reports.log(LogStatus.PASS, "Overlapping Episode Not Found Prev Episode Timing - "+ prevEpisodeDuration + "Current Episode Timing :-" +epgScreen.focusElementProgramTime.getText() );
-						if (prevEndTime.after(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
+						if (prevEndTime.before(sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim())))
 						{
 							sendKeyMultipleTimes("RIGHT", 1, 1000);
 							continue;
@@ -1475,6 +1481,7 @@ public class RecordingScreen extends TestInitization{
 						else
 						{
 							sendKeyMultipleTimes("DOWN", 1, 1000);
+							maxCount -=1;
 							continue;
 						}
 						
@@ -1576,8 +1583,8 @@ public class RecordingScreen extends TestInitization{
 			        || (startDate2.before(startDate1) && endDate1.equals(endDate2))
 			        || (startDate2.before(startDate1) && endDate1.before(endDate2))
 			        || (startDate2.before(startDate1) && endDate1.after(endDate2))) {
-			      return Boolean.TRUE;
+			      return true;
 			    }
-			    return Boolean.FALSE;
+			    return false;
 	}
 }
