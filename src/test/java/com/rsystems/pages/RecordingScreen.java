@@ -298,7 +298,7 @@ public class RecordingScreen extends TestInitization{
 			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']")).isEmpty())
 			{
 				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
-				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+				TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
 				reports.log(LogStatus.PASS, "Info Screen of ongoing program getting displayed");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
@@ -316,9 +316,31 @@ public class RecordingScreen extends TestInitization{
 						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 						stopRecording = true;
 					}
+					else if (activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+					{
+						sendKeyMultipleTimes("DOWN", 1, 2000);
+						if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
+						{
+							episodeDetails =  new EpisodeInfo(getChannelNo(), epgEpisodeName, getEpisodeDuration(),getChannelDefiniton());
+							TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+							reports.log(LogStatus.PASS, "Click on opnemen to start recording");
+							reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+							driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+							stopRecording = true;
+						}
+						else
+						{
+							reports.log(LogStatus.PASS, "Already Recording is scheduled for current episode.Navigate to Future Epsiode");
+							TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+							reports.attachScreenshot(captureCurrentScreenshot());
+							TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
+						}
+					}
 					else
 					{
+						reports.log(LogStatus.PASS, "Already Recording is scheduled for current episode.Navigate to Future Epsiode");
 						TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+						reports.attachScreenshot(captureCurrentScreenshot());
 						TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
 					}
 				}
@@ -808,6 +830,7 @@ public class RecordingScreen extends TestInitization{
 	 */
 
 	public EpisodeInfo scheduleRecordingFromEPGScreen(String recordingType) throws InterruptedException {
+		String epgEpisodeName = null;
 		boolean stopRecording = false;
 		//Navigate to EPG Screen
 		EpisodeInfo episodeDetails = null;
@@ -821,11 +844,12 @@ public class RecordingScreen extends TestInitization{
 			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty());
 			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty())
 			{
+				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 				reports.log(LogStatus.PASS, "Open Info Screen of Future program");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-				episodeDetails =  new EpisodeInfo(getChannelNo(), getInfoEpisodeName(), getEpisodeDuration(),getChannelDefiniton());
+				episodeDetails =  new EpisodeInfo(getChannelNo(), epgEpisodeName, getEpisodeDuration(),getChannelDefiniton());
 				if (recordingType.equalsIgnoreCase("SINGLE"))
 				{
 					if (activeInfoMenuItem.getText().equalsIgnoreCase("opnemen"))
