@@ -199,8 +199,6 @@
 			</class>
 		</classes>
 	</test>
-
-
 	<test name="VOD test cases">
 		<classes>
 			<class name="com.rsystems.test.VodFeaturesTestCase">
