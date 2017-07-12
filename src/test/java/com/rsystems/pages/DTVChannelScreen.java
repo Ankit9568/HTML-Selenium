@@ -157,7 +157,6 @@ public class DTVChannelScreen extends TestInitization {
 		/** Loop for find and rent movie */
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-		
 
 		reports.log(LogStatus.PASS, "Select " + movieName);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -229,13 +228,13 @@ public class DTVChannelScreen extends TestInitization {
 		}
 
 	}
-	
-	public void pressRewindButtonAndValidation() throws InterruptedException{
-		
+
+	public void pressRewindButtonAndValidation() throws InterruptedException {
+
 		reports.log(LogStatus.PASS, "Press rewind button");
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 4000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentClassName = rewindBtn.getAttribute("class");
 		System.out.println("class name " + currentClassName);
@@ -247,4 +246,18 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("Unable to rewind Live TV");
 		}
 	}
+
+	public void tuneToChannel(int channelNumber) throws InterruptedException {
+		sendNumaricKeys(channelNumber);
+		Thread.sleep(2000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (new DTVChannelScreen(driver).chnlNoIn_Infobar.getText().equalsIgnoreCase(String.valueOf(channelNumber))) {
+			reports.log(LogStatus.PASS, "Tuned to Channel " + channelNumber);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Not Tuned to Channel");
+		}
+	}
+
 }
