@@ -1,7 +1,5 @@
 package com.rsystems.pages;
 
-import static org.testng.Assert.assertEquals;
-
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -72,6 +70,10 @@ public class VodFeatures extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.lookOption)
 	public WebElement lookOption;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.highlightFilm)
+	public WebElement highlightFilm;
+	
 
 	public void navigateToShopScreen() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Navigate to the Shop Screen");

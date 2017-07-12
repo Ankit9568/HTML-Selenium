@@ -7,6 +7,7 @@ public class ObjectRepository {
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
+	
 	public static final String HubTVItem = "//li[@id='menuItem_1']";
 	public static final String HubLibraryItem = "//li[@id='menuItem_0']";
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
@@ -162,6 +163,8 @@ public class ObjectRepository {
 		public static final String duration="//*[@id='item_0_0']/div[2]/span";
 		public static final String totalItems="//*[@id='totalItems']";
 		public static final String lookOption="//*[@id='item_watch']";
+		public static final String highlightFilm = "//div[@id='rowContainer']/ul[1]/li[@class='active']/span[@id='store-left-title']";
+		
 	}
 
 	public static class HotKeys {
