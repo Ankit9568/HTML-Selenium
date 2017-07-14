@@ -3,18 +3,23 @@ package com.rsystems.pages;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.pages.RecordingScreen.EpisodeInfo;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
 public class Pvr extends TestInitization
 {
 	WebDriver driver;
+	EpisodeInfo episodeDetails = null;
 	public Pvr(WebDriver driver) 
 	{
 		this.driver = driver;
@@ -22,12 +27,27 @@ public class Pvr extends TestInitization
 	}
 	@FindBy(how = How.XPATH, using = ObjectRepository.DtvChannel.pauseAndPlayImg)
 	public WebElement pauseAndPlayImg;
-	public void navigateToTheVODPlayback() throws InterruptedException
+	
+	@FindBy(how = How.ID,using = ObjectRepository.DtvChannel.forward)
+	public WebElement forward;
+	
+	
+	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException
 	{
+		
+		// Start a recording
+		
+
+		RecordingScreen record = new RecordingScreen(driver);
+		String recordingType = "SINGLE";
+		
+		
 		reports.log(LogStatus.PASS, "Navigate to Library Screen");
-		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
-		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().equalsIgnoreCase("mijn bibliotheek")){
+		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
+		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim().equalsIgnoreCase("mijn bibliotheek"))
+		{
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -46,49 +66,65 @@ public class Pvr extends TestInitization
 		{
 			FailTestCase("Recording List not getting displayed");
 		}
+		
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
+		for(int i = 0 ; i< recordingSize;i++)
+		{
+			
+			if((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+			{
+				if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+				&&
+				record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
+				&&
+				record.focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0).getAttribute("src").contains("ico_Ongoing_recording.png")
+						)
+				{
+					break;
+				}
+				else
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+				}
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+	
 		reports.log(LogStatus.PASS, "PVR Playback video is playing");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		Thread.sleep(3000);
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 3000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
 			reports.log(LogStatus.PASS, "Playback Video is playing.Play button is now highlight on webpage");
 			reports.attachScreenshot(captureCurrentScreenshot());
-			sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
 		}
 
 		else {
 			FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
 		}
-
-
-		/*  sendKeyMultipleTimes("UP", 1, 1000);
-	   sendKeyMultipleTimes("RIGHT", 1, 1000);
-	   sendKeyMultipleTimes("ENTER", 1, 1000);
-	   sendKeyMultipleTimes("DOWN", 1, 1000);
-	   sendKeyMultipleTimes("ENTER", 1, 1000);
-	   reports.attachScreenshot(captureCurrentScreenshot());
-	   sendNumaricKeys(1);
-	   sendNumaricKeys(1);
-	   sendNumaricKeys(1);
-	   sendNumaricKeys(1);*/
-
+		
+		
 	}
 
 	public void PvrPlayBackMenu() throws InterruptedException
 	{
-		navigateToTheVODPlayback();
 
-		reports.log(LogStatus.PASS, "Forwarding the Video Playback");
-		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-
-		reports.attachScreenshot(captureCurrentScreenshot());
-
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording","RecordingChannelNumber", "name_nl")));
+		
+		navigateToThePVRPlayback(episodeDetails);
 
 		reports.log(LogStatus.PASS, "Backward the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(),1,4000);
@@ -103,8 +139,10 @@ public class Pvr extends TestInitization
 
 			FailTestCase("Unable to rewind Live TV");
 		}
-
-
+		
+		reports.log(LogStatus.PASS, "Forwarding the Video Playback");
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		
 		reports.log(LogStatus.PASS, "Playing the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -112,8 +150,7 @@ public class Pvr extends TestInitization
 		String currentImgSource = pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
 			reports.log(LogStatus.PASS, "play Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -121,8 +158,6 @@ public class Pvr extends TestInitization
 		else {
 			FailTestCase("Pause button is not highlight on webpage");
 		}
-
-
 
 		reports.log(LogStatus.PASS, "Pause the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
@@ -143,22 +178,32 @@ public class Pvr extends TestInitization
 			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
 		}
 
-
+		
 		reports.log(LogStatus.PASS, "Stop the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		EpgScreen epgScreen = new EpgScreen(driver);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgScreen.displayChannelDescription, "Channel Description");
 	}	
 
 	public void PvrRcTrickPlay() throws InterruptedException
 	{
-		navigateToTheVODPlayback();
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		reports.log(LogStatus.PASS, "Start Recording to verify PVR Playback");
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording","RecordingChannelNumber", "name_nl")));
+		navigateToThePVRPlayback(episodeDetails);
 
 		reports.log(LogStatus.PASS, "Forwarding the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		dtvChannelScreen.pressForwardButtonAndValidation();
 
 
 		reports.log(LogStatus.PASS, "Returning to the Main Menu");
@@ -174,8 +219,8 @@ public class Pvr extends TestInitization
 			FailTestCase("Library Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
-		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		//TestInitization.setApplicationHubPage(2);
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Rewinding the video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(),1,4000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -203,17 +248,21 @@ public class Pvr extends TestInitization
 			FailTestCase("Shop Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
-		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		//TestInitization.setApplicationHubPage(2);
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Forwarding the Video Playback");
+		 
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
+		
+		dtvChannelScreen.pressForwardButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Pressing on the PVR hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().equalsIgnoreCase("mijn bibliotheek")){
+		driver.switchTo().defaultContent();
+		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText());
+		System.out.println(getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))){
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -223,10 +272,10 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Forwarding the Video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		dtvChannelScreen.pressForwardButtonAndValidation();
 
 
 		reports.log(LogStatus.PASS, "Rewinding the video Playback");
@@ -235,7 +284,7 @@ public class Pvr extends TestInitization
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentClassName1 = new DTVChannelScreen(driver).rewindBtn.getAttribute("class");
 		System.out.println("class name " + currentClassName1);
-		if (currentClassName1.contentEquals("enable")) {
+		if (currentClassName1.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "Live TV is rewind");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
@@ -244,19 +293,22 @@ public class Pvr extends TestInitization
 		}
 
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
-		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		//TestInitization.setApplicationHubPage(2);
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Pressing on the Pause button");
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
+		
+		 dtvChannelScreen.pressForwardButtonAndValidation();
+		
 		reports.log(LogStatus.PASS, "Rewinding the video Playback");
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 4000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
 		currentClassName1 = new DTVChannelScreen(driver).rewindBtn.getAttribute("class");
 		System.out.println("class name " + currentClassName1);
-		if (currentClassName1.contentEquals("enable")) {
+		if (currentClassName1.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "Live TV is rewind");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
@@ -284,6 +336,7 @@ public class Pvr extends TestInitization
 		reports.log(LogStatus.PASS, "Pressing on the PVR button");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().defaultContent();
 		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().equalsIgnoreCase("mijn bibliotheek")){
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -294,7 +347,7 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Pressing on the Pause button");
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -327,8 +380,8 @@ public class Pvr extends TestInitization
 			FailTestCase("Shop Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
-		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
+		//TestInitization.setApplicationHubPage(2);
+		navigateToThePVRPlayback(episodeDetails);
 		reports.log(LogStatus.PASS, "Pressing on the Pause button");
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -360,55 +413,45 @@ public class Pvr extends TestInitization
 		{
 			FailTestCase("Library Screen not getting displayed");
 		}
+		
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 
 	}
 
 	public void VODplayback() throws InterruptedException
 	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Forward the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
-		reports.log(LogStatus.PASS, "Pause the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource1 = pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr1 = currentImgSource1.split("/");
-		String imageName1 = currentImgToArr1[(currentImgToArr1.length) - 1];
-
-		System.out.println(imageName1);
-		if (imageName1
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause Successfully");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
-
-		reports.log(LogStatus.PASS, "Play the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
-		reports.log(LogStatus.PASS, "Stopping the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
+		setApplicationHubPage(2);
+
+		
 	}
 
 	public void VodRCKeysTrickplay() throws InterruptedException
 	{
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Forward the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1,0);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressForwardButtonAndValidation();
 		reports.log(LogStatus.PASS, "Press on the Menu key");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1,0);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -421,13 +464,22 @@ public class Pvr extends TestInitization
 		{
 			FailTestCase("Library Screen not getting displayed");
 		}
+		
+		
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Press on the Forward key");
-		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-
+		
+		
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		
+		
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		
 		reports.log(LogStatus.PASS, "Press on Demand Hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(),1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -442,20 +494,16 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Press on the back key");
-		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(),1, 4000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentClassName1 = new DTVChannelScreen(driver).rewindBtn.getAttribute("class");
-		System.out.println("class name " + currentClassName1);
-		if (currentClassName1.contentEquals("enable")) {
-			reports.log(LogStatus.PASS, "Live TV is rewind");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-
-			FailTestCase("Unable to rewind Live TV");
-		}
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		
 		reports.log(LogStatus.PASS, "Press on PVR Hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(),1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -469,61 +517,19 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Press on the Forward key");
-		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		
 
-
-		reports.log(LogStatus.PASS, "Pause the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(),1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource1 = pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr1 = currentImgSource1.split("/");
-		String imageName1 = currentImgToArr1[(currentImgToArr1.length) - 1];
-
-		System.out.println(imageName1);
-		if (imageName1
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause Successfully");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
-		reports.log(LogStatus.PASS, "Press the Back key");
-		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(),1, 4000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		currentClassName1 = new DTVChannelScreen(driver).rewindBtn.getAttribute("class");
-		System.out.println("class name " + currentClassName1);
-		if (currentClassName1.contentEquals("enable")) {
-			reports.log(LogStatus.PASS, "Live TV is rewind");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-
-			FailTestCase("Unable to rewind Live TV");
-		}
-		reports.log(LogStatus.PASS, "Pause the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(),1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		currentImgSource1 = pauseAndPlayImg.getAttribute("src");
-		currentImgToArr1 = currentImgSource1.split("/");
-		imageName1 = currentImgToArr1[(currentImgToArr1.length) - 1];
-
-		System.out.println(imageName1);
-		if (imageName1
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause Successfully");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		dtvChannelScreen.pressPauseButtonAndValidation();
+	
 		reports.log(LogStatus.PASS, "Pressing the PVR key");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(),1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -537,25 +543,14 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Pause the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(),1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		currentImgSource1 = pauseAndPlayImg.getAttribute("src");
-		currentImgToArr1 = currentImgSource1.split("/");
-		imageName1 = currentImgToArr1[(currentImgToArr1.length) - 1];
-
-		System.out.println(imageName1);
-		if (imageName1
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause Successfully");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		
+		dtvChannelScreen.pressPauseButtonAndValidation();
 		reports.log(LogStatus.PASS, "Pressing the on demand hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(),1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -570,25 +565,13 @@ public class Pvr extends TestInitization
 		}
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 		TestInitization.setApplicationHubPage(2);
-		navigateToTheVODPlayback();
-		reports.log(LogStatus.PASS, "Pause the Video");
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(),1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		currentImgSource1 = pauseAndPlayImg.getAttribute("src");
-		currentImgToArr1 = currentImgSource1.split("/");
-		imageName1 = currentImgToArr1[(currentImgToArr1.length) - 1];
-
-		System.out.println(imageName1);
-		if (imageName1
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Pause Successfully");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-		}
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		sendKeyMultipleTimes("ENTER", 1	, 3000);
+		sendKeyMultipleTimes("ENTER", 1	, 1000);
+		dtvChannelScreen.pressPauseButtonAndValidation();
 		reports.log(LogStatus.PASS, "Press Menu key hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(),1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());	
@@ -604,4 +587,5 @@ public class Pvr extends TestInitization
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 
 	}
+ 
 }

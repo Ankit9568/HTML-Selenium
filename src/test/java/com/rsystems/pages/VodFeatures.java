@@ -75,34 +75,21 @@ public class VodFeatures extends TestInitization {
 	public WebElement highlightFilm;
 	
 
-	public void navigateToShopScreen() throws InterruptedException {
-		reports.log(LogStatus.PASS, "Navigate to the Shop Screen");
-		sendKeyMultipleTimes("DOWN", 1, 1000);
-		sendKeyMultipleTimes("RIGHT", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-	}
+	@FindBy(how = How.XPATH,using = ObjectRepository.ZapListPage.screenTitle)
+	public WebElement shopHeader;
 
-	public boolean naviagteToVideoOndemandScreen() throws InterruptedException {
-		navigateToShopScreen();
-		reports.log(LogStatus.PASS, "Navigate to the Films Screen");
+	public void naviagteToVideoOndemandScreen() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		
+		reports.log(LogStatus.PASS, "Trailer is started");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		reports.log(LogStatus.PASS, "Navigate to the Video Screen");
-		sendKeyMultipleTimes("LEFT", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("LEFT", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("LEFT", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("RIGHT", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.log(LogStatus.PASS, "Trailer is getting started");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+
 		reports.log(LogStatus.PASS, "Press stop button from RC");
 		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -110,7 +97,7 @@ public class VodFeatures extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String headingVODHeadingDetails = vodHeading.getText();
 		System.out.println("Vod heading :: " + headingVODHeadingDetails);
-		String expectedheadingVODHeadingDetails = getExcelKeyValue("Films", "VodHeading", "name_nl");
+		String expectedheadingVODHeadingDetails = getExcelKeyValue("RentMovie", "FOD", "MovieName");
 		System.out.println("Expected heading :: " + expectedheadingVODHeadingDetails);
 
 		if (headingVODHeadingDetails.equalsIgnoreCase(expectedheadingVODHeadingDetails)) {
@@ -124,10 +111,10 @@ public class VodFeatures extends TestInitization {
 					+ " and Expected VOD heading details is : " + expectedheadingVODHeadingDetails
 					+ " Test case Failed");
 		}
-		return true;
 	}
 
-	public boolean navigateToVideoOnDemandScreenHotkey() throws InterruptedException {
+
+	public void navigateToVideoOnDemandScreenHotkey() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Navigate to the On demand Screen by Hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 0);
@@ -144,15 +131,13 @@ public class VodFeatures extends TestInitization {
 					"Actual Title of the On Demand Screen is : " + actualTitleShop
 							+ " and Expected Title of the On Demand Screen is: " + expectedTitleShop
 							+ " Test case successfully Passed");
+			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
-			reports.log(LogStatus.FAIL, "Actual Title of the On Demand Screen is: " + actualTitleShop
+			FailTestCase("Actual Title of the On Demand Screen is: " + actualTitleShop
 					+ " and Expected Title of the On Demand Screen is : " + expectedTitleShop + " Test case Failed");
 		}
 
-		return true;
-
 	}
-
 	public void vodOnRent(String parentCategry, String movieName, String pinNumber) throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -160,7 +145,7 @@ public class VodFeatures extends TestInitization {
 		dtvChannelScreen.navigateToFilmScreenAndRentMovie(parentCategry, movieName);
 
 		reports.log(LogStatus.PASS, "Navigate to PIN Screen");
-		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -170,6 +155,7 @@ public class VodFeatures extends TestInitization {
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
+		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Moving back to the Menu screen");
@@ -178,7 +164,7 @@ public class VodFeatures extends TestInitization {
 
 	}
 
-	public void rentFreeMovie() throws InterruptedException {
+	public void validateFreeMovieInformation() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
@@ -190,7 +176,7 @@ public class VodFeatures extends TestInitization {
 		String priceOfItem = itemPrice.getText();
 		System.out.println("Price of Items :" + priceOfItem);
 
-		isDisplayed(lookOption, "Look Option ");
+		isDisplayed(lookOption,"Look Option");
 
 		if (priceOfItem.contentEquals(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Rate")))
 

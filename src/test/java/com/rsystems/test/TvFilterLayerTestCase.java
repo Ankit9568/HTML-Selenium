@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.TvFilterLayer;
 import com.rsystems.utils.TestInitization;
-import com.rsystems.utils.Unicode;
 
 public class TvFilterLayerTestCase extends TestInitization
 {

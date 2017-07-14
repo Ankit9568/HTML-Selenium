@@ -12,15 +12,15 @@ public class PvrTestCase extends TestInitization
 	{
 		Pvr p = new Pvr(driver);
 		p.PvrPlayBackMenu();
-		TestInitization.setApplicationHubPage(2);
+		
 	}
 	
-	@Test      
+    @Test      
 	public void TP008_PVRRCKeysduringTrickplay() throws InterruptedException
 	{
 		Pvr p = new Pvr(driver);
 		p.PvrRcTrickPlay();
-		TestInitization.setApplicationHubPage(2);
+		
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class PvrTestCase extends TestInitization
 	{
 		Pvr p = new Pvr(driver);
 		p.VODplayback();
-		TestInitization.setApplicationHubPage(2);
+		
 	}
 	
 	@Test
@@ -36,8 +36,7 @@ public class PvrTestCase extends TestInitization
 	{
 		Pvr p = new Pvr(driver);
 		p.VodRCKeysTrickplay();
-		TestInitization.setApplicationHubPage(2);
+		
 	}
-	
 	
 }

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.pages.RecordingScreen.EpisodeInfo;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
@@ -248,10 +249,12 @@ public class DTVChannelScreen extends TestInitization {
 	}
 
 	public void tuneToChannel(int channelNumber) throws InterruptedException {
+		
 		sendNumaricKeys(channelNumber);
 		Thread.sleep(2000);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		if (new DTVChannelScreen(driver).chnlNoIn_Infobar.getText().equalsIgnoreCase(String.valueOf(channelNumber))) {
 			reports.log(LogStatus.PASS, "Tuned to Channel " + channelNumber);
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -259,5 +262,72 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("Not Tuned to Channel");
 		}
 	}
+	 public void pressForwardButtonAndValidation() throws InterruptedException{
+			
+		    Pvr pvr = new Pvr(driver);
+			reports.log(LogStatus.PASS, "Press forward button");
+			sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+			
+			driver.switchTo().frame(getCurrentFrameIndex());
+			String currentClassName = pvr.forward.getAttribute("class");
+			System.out.println("class name " + currentClassName);
+			if (currentClassName.contentEquals("enable active")) 
+			{
+				reports.log(LogStatus.PASS, "Live TV is forwarded");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			} 
+			else {
+
+				FailTestCase("Unable to forward Live TV");
+			}
+		}
+	 
+	 public EpisodeInfo startRecording(int channelNumber) throws InterruptedException {
+
+			DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+			RecordingScreen recordingElement = new RecordingScreen(driver);
+			sendNumaricKeys(channelNumber);
+			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			String episodeName = dtvChannelScreen.programTitle.getText();
+			Thread.sleep(3000);
+			EpisodeInfo episodeDetails = null;
+			reports.log(LogStatus.PASS, "Navigate to program information screen");
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+			if(recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+			{
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+			if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
+				episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName, recordingElement.getEpisodeDuration(),recordingElement.getChannelDefiniton());
+				reports.log(LogStatus.PASS, " Click on opnemen to start recording on - ");
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen")){
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				sendKeyMultipleTimes("ENTER", 1, 2000);
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				if(recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
+				{
+					sendKeyMultipleTimes("DOWN", 1, 1000);
+				}
+				if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
+					episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName, recordingElement.getEpisodeDuration(),recordingElement.getChannelDefiniton());
+					reports.log(LogStatus.PASS, " Click on opnemen to start recording on - ");
+					sendKeyMultipleTimes("ENTER", 1, 1000);
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+			}
+			return episodeDetails;
+
+		}
 
 }

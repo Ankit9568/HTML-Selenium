@@ -118,7 +118,7 @@ public class ObjectRepository {
 		public static final String backToLive = "//div[@id='containerDiv']/div[text()='Terug naar leven']";
 		public static final String rewindBtn = "rewind";
 		public static final String errorMsg = "error-message";
-		
+		public static final String forward="forward";
 	}
 
 	public static class ZapListPage {
@@ -143,6 +143,19 @@ public class ObjectRepository {
 		public static final String headerTimeElement = "headerDateTime";
 		public static final String currentEpisodeElement = "current";
 		public static final String activeZapBlockElement = "active";
+		
+		
+		// My object
+		public static final String highligheVideotitle = "//li[@class='active']/span";
+		public static final String videoPlayer = "//ul[@id='focusedItemContainer']/li[2]/div[@class='videoPlayer']";
+		public static final String highlightVideoLeftTitle = "//li[@class='active']/span/../../li[1]/span";
+		public static final String highlightVideoRightTitle = "//li[@class='active']/span/../../li[3]/span";
+		public static final String activeTileProgramTime = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
+		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
+		public static final String onGoingRecordingIcon = "recording-icon ongoing";
+		
+		
+		
 	}
 
 	public static class Vod {

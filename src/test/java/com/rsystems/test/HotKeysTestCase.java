@@ -48,7 +48,7 @@ public class HotKeysTestCase extends TestInitization {
 	@Test
 	public void tc_BCDTVRAD0503_navigateRadioToDtvScreen() throws InterruptedException {
 		HotKeysNavigation keys = new HotKeysNavigation(driver);
-		keys.navigateToRadioScreenToDTvScreen();
+		keys.navigateToRadioScreen();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		DTVChannelScreen dtv = new DTVChannelScreen(driver);
 		dtv.openLiveTV();

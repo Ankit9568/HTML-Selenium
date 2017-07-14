@@ -25,7 +25,7 @@ public class MiniEPGTestCase extends TestInitization {
 			miniEPGScreen = new MiniEPGScreen(driver);
 			DTVChannelScreen dtvChannel = new DTVChannelScreen(driver);
 			dtvChannel.openLiveTV();
-			miniEPGScreen.launchAndVerifyZapScreen();
+			miniEPGScreen.launchAndVerifyMiniEpgScreen();
 			reports.log(LogStatus.PASS, "Wait for 10 sec Zap banner should dismissed and navigate to LiveTv");
 			Thread.sleep(10000);
 			driver.switchTo().defaultContent();
