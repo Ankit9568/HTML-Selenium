@@ -174,84 +174,91 @@
 
 	<!-- Sprint 3 -->
 
-	<test name="UnAssingedSTBTestCases">
-		<classes>
-			<class name="com.rsystems.test.UnAssingedSTBTestCases">
-				<methods>
-					<include name="tc_BCCOMML0210_LANG007_Assignment" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- 	<test name="UnAssingedSTBTestCases"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.UnAssingedSTBTestCases"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_BCCOMML0210_LANG007_Assignment" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Recording Test cases ">
-		<classes>
-			<class name="com.rsystems.test.RecordingTestCase">
-				<methods>
+<!-- 	<test name="Recording Test cases "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.RecordingTestCase"> -->
+<!-- 				<methods> -->
 
-					<include name="tc_BCDTVCP1406_Perform_Instant_nPVR_Recording" />
-					<include name="tc_BCDTVCP1448_Recorded_nPVR_Delete" />
-					<include
-						name="tc_BCDTVCP1409_No_Conflict_Between_nPVR_Planned_Recordings" />
-					<include name="tc_BCDTVCP1414_Stop_nPVR_Recording_Action_Menu" />
-					<include name="tc_BCDTVCP1407_nPVR_Planned_To_Record" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="VOD test cases">
-		<classes>
-			<class name="com.rsystems.test.VodFeaturesTestCase">
-				<methods>
-					<include name="tc_BCVODBG0312_VOD_Rent" />
-					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
-					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="PVR test cases">
-		<classes>
-			<class name="com.rsystems.test.PvrTestCase">
-				<methods>
-					<include name="TP007_PVRTrickplaymenufromPVR" />
-					<include name="TP008_PVRRCKeysduringTrickplay" />
-					<include name="TP009_VOD_TrickplaymenufromVODplayback" />
-					<include name="TP010_VODRCKeysduringTrickplay" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- 					<include name="tc_BCDTVCP1406_Perform_Instant_nPVR_Recording" /> -->
+<!-- 					<include name="tc_BCDTVCP1448_Recorded_nPVR_Delete" /> -->
+<!-- 					<include -->
+<!-- 						name="tc_BCDTVCP1409_No_Conflict_Between_nPVR_Planned_Recordings" /> -->
+<!-- 					<include name="tc_BCDTVCP1414_Stop_nPVR_Recording_Action_Menu" /> -->
+<!-- 					<include name="tc_BCDTVCP1407_nPVR_Planned_To_Record" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+<!-- 	<test name="VOD test cases"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.VodFeaturesTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_BCVODBG0312_VOD_Rent" /> -->
+<!-- 					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" /> -->
+<!-- 					<include name="tc_BCVODVD0114_VOD_Current_Rentals" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+<!-- 	<test name="PVR test cases"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.PvrTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="TP007_PVRTrickplaymenufromPVR" /> -->
+<!-- 					<include name="TP008_PVRRCKeysduringTrickplay" /> -->
+<!-- 					<include name="TP009_VOD_TrickplaymenufromVODplayback" /> -->
+<!-- 					<include name="TP010_VODRCKeysduringTrickplay" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="DTV Test case ">
-		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
-				<methods>
-					<include name="pause_LiveTV_PLTV_cancelPopupMessage" />
-					<include name="Pause_LiveTV_trickplay" />
-					<include name="tc_BCVODVD0130_VOD_FOD" />
-					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- 	<test name="DTV Test case "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.DTVChannelTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
+<!-- 					<include name="Pause_LiveTV_trickplay" /> -->
+<!-- 					<include name="tc_BCVODVD0130_VOD_FOD" /> -->
+<!-- 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 <!-- When no package assign  -->
-<test name="Hub Test cases ">
-		<classes>
-			<class name="com.rsystems.test.HubTestCases">
-				<methods>
-					<include name="tc_Hub_menu_button_no_package" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- <test name="Hub Test cases "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.HubTestCases"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_Hub_menu_button_no_package" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
 	<test name="DTV Test case ">
 		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
+			<class name="com.rsystems.test.MiniEpg1">
 				<methods>
-					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
+					<include name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include name="tc_77655_A_Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include name="tc_77655_B_Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" />
+					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" />
+					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
+					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" />
+					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" />
 				</methods>
 			</class>
 		</classes>

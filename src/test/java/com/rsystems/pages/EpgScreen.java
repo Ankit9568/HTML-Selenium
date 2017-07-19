@@ -879,4 +879,8 @@ public class EpgScreen extends TestInitization {
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
 	}
+
+
+
+
 }
