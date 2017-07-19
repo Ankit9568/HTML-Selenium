@@ -153,13 +153,9 @@ public class ObjectRepository {
 		public static final String cutvIconOnZapTile = "//div[@class='focusBox']/ul/li[2]/div[@class='channel_details']/div/span[@class='cutv-icon']";
 		public static final String replaybleOrNoReplayableIcon = "//div[@class='focusBox']/ul/li[2]/div[@class='media-content']/div/span/img";
 		public static final String textWithDurationInEPG = "//div[@class='focusBox']/ul/li[2]/div[3]/span[@class='future_past']";
-		
 		public static final String recordingIconMiniEpg  = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[@class='recording-icon ongoing']";
 		public static final String cutvIconMiniEpg = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[contains(@class,'recording-icon')]/../span[2]/img";
 		public static final String hdratingIcon = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[1]/../span[@class = 'hd-rating']";
-
-		
-		// My object
 		public static final String highligheVideotitle = "//li[@class='active']/span";
 		public static final String videoPlayer = "//ul[@id='focusedItemContainer']/li[2]/div[@class='videoPlayer']";
 		public static final String highlightVideoLeftTitle = "//li[@class='active']/span/../../li[1]/span";
