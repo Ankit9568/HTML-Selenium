@@ -163,9 +163,8 @@ public class ObjectRepository {
 		public static final String activeTileProgramTime = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
 		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 		public static final String onGoingRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoing']";
-		
-		
-		
+		public static final String previousProgramTitle="//*[@id='VH_0']/span";
+		public static final String programTitle="//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 	}
 
 	public static class Vod {

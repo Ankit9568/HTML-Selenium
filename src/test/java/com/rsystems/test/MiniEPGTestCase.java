@@ -278,5 +278,10 @@ public class MiniEPGTestCase extends TestInitization {
 			miniEPGScreen.verifyTileAppearance("FUTURE");
 		}
 
-
+		public void tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMini_EPG() throws InterruptedException, ParseException{
+			
+			MiniEPGScreen  miniEPGScreen = new MiniEPGScreen(driver);
+			miniEPGScreen.validateMiniEpgprogramAfterProgramEnded();
+			
+		}
 }
