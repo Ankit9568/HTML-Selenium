@@ -61,7 +61,7 @@ public class MiniEPGScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.activeTileHeading)
 	public WebElement activeTileHeading;
 
-	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.onGoingRecordingIcon)
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.onGoingRecordingIcon)
 	public WebElement onGoingRecordingIcon;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.currentChannelNumber)
@@ -140,6 +140,7 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		reports.log(LogStatus.PASS, "Previous Program tile should be on Left Side");
 		sendKeyMultipleTimes("LEFT", 2, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
 		if (activeZapBlock.getText().equalsIgnoreCase(previous)) {
 			reports.log(LogStatus.PASS, "Previous program is on Left Side");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -148,6 +149,7 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		reports.log(LogStatus.PASS, "Future Program tiles should be on Right Side");
 		sendKeyMultipleTimes("RIGHT", 3, 500);
+		driver.switchTo().frame(getCurrentFrameIndex());
 		if (activeZapBlock.getText().equalsIgnoreCase(future)) {
 			reports.log(LogStatus.PASS, "Future program is on Right Side");
 			reports.attachScreenshot(captureCurrentScreenshot());

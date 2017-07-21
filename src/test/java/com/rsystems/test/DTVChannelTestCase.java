@@ -430,7 +430,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 		}
 
-		sendKeyMultipleTimes("DOWN", 1, 1000);
+	
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		dtvScreen.pressPauseButtonAndValidation();
 		// navigate to menu page
