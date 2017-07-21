@@ -164,7 +164,8 @@ public class ObjectRepository {
 		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 		public static final String onGoingRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoing']";
 		public static final String previousProgramTitle="//*[@id='VH_0']/span";
-		
+		public static final String centerTitle="//*[@id='VH_1']/span";
+		public static final String nextProgramTitle="//*[@id='VH_2']/span";
 		public static final String programDetailsScreen = "vodName";
 		public static final String actionItemList = "cItem";
 		public static final String recordingIconOnInfo = "programRecording";

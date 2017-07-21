@@ -110,17 +110,26 @@ public class MiniEPGScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.textWithDurationInEPG)
 	public WebElement textWithDurationInEPG;
 
-	@FindBy(how=How.CLASS_NAME,using = ObjectRepository.MiniEPGScreen.programDetailsScreen)
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.programDetailsScreen)
 	public WebElement programDetailsScreen;
-	
-	@FindBy(how=How.CLASS_NAME,using = ObjectRepository.MiniEPGScreen.recordingIconOnInfo)
+
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.recordingIconOnInfo)
 	public WebElement recordingIconOnInfo;
-	
-	@FindAll({@FindBy(className = ObjectRepository.MiniEPGScreen.actionItemList)})
+
+	@FindAll({ @FindBy(className = ObjectRepository.MiniEPGScreen.actionItemList) })
 	public List<WebElement> actionItemList;
-	
+
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.programTitle)
 	public WebElement programTitle;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.centerTitle)
+	public WebElement centerTitle;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.nextProgramTitle)
+	public WebElement nextProgramTitle;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.previousProgramTitle)
+	public WebElement previousProgramTitle;
 
 	public void launchDTV(boolean hotKey) throws InterruptedException {
 		if (hotKey) {
@@ -1322,7 +1331,7 @@ public class MiniEPGScreen extends TestInitization {
 			FailTestCase(expectedTitle + " Screen not getting displayed");
 		}
 	}
-	
+
 	public void verifyMiniEPGTVGuide() throws InterruptedException {
 		String minEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
 		String prevTileTitle = null;
@@ -1331,60 +1340,57 @@ public class MiniEPGScreen extends TestInitization {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		dtvChannelScreen.openLiveTV();
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString()	, 1	, 0);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")){
+		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
 			reports.log(LogStatus.PASS, "Tune To CUTV Enabled Channel");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Not Tuned to CUTV Channel");
 		}
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		validateScreenTitles(minEPGScreenTitle);
 		reports.log(LogStatus.PASS, "Navigate to far-east tv guide");
-		
-		while(true)
-		{
+
+		while (true) {
 			driver.switchTo().frame(getCurrentFrameIndex());
-			if(miniEPGChannelName.getText().equalsIgnoreCase("tv-gids"))
-			{
+			if (miniEPGChannelName.getText().equalsIgnoreCase("tv-gids")) {
 				reports.log(LogStatus.PASS, "Focus is on " + miniEPGChannelName.getText());
 				reports.attachScreenshot(captureCurrentScreenshot());
 				break;
-			}
-			else
-			{	prevTileEpisodeDuration = miniEPGEpisodeDuration.getText();
+			} else {
+				prevTileEpisodeDuration = miniEPGEpisodeDuration.getText();
 				prevTileTitle = miniEPGChannelName.getText();
 				sendKeyMultipleTimes("RIGHT", 1, 1000);
 			}
 		}
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgGuide,"TV Guide");
+		isDisplayed(epgGuide, "TV Guide");
 
-		if(new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(prevTileTitle) && new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(prevTileEpisodeDuration)){
-			reports.log(LogStatus.PASS, "Focus should on Latest Program Shouwn on Mini EPG- " +prevTileTitle +  " Actual focus is on " +new EpgScreen(driver).focusElemntInEpg.getText());
+		if (new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(prevTileTitle)
+				&& new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(prevTileEpisodeDuration)) {
+			reports.log(LogStatus.PASS, "Focus should on Latest Program Shouwn on Mini EPG- " + prevTileTitle
+					+ " Actual focus is on " + new EpgScreen(driver).focusElemntInEpg.getText());
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Focus should on Latest Program Shouwn on Mini EPG- " + prevTileTitle + " Actual focus is on "
+					+ new EpgScreen(driver).focusElemntInEpg.getText());
 		}
-		else{
-			FailTestCase("Focus should on Latest Program Shouwn on Mini EPG- " +prevTileTitle +  " Actual focus is on " +new EpgScreen(driver).focusElemntInEpg.getText() );
-		}
-		
+
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen,"Program Details Screen");
+		isDisplayed(programDetailsScreen, "Program Details Screen");
 		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgGuide,"TV Guide");
-		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);	
+		isDisplayed(epgGuide, "TV Guide");
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
 	}
-	
+
 	public void validateMiniEPGAccessToNonWatchedCUTVBlackListProgramDetails() throws InterruptedException {
 		String zapListScreenTitle = getExcelKeyValue("screenTitles", "ZapList", "name_nl");
 		String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
-		
+
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		String presentTitle = null;
 		dtvChannelScreen.openLiveTV();
@@ -1392,13 +1398,11 @@ public class MiniEPGScreen extends TestInitization {
 		sendKeyMultipleTimes("UP", 1, 1000);
 		validateScreenTitles(zapListScreenTitle);
 		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
-		while(true)
-		{
+		while (true) {
 			sendKeyMultipleTimes("DOWN", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
 			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
-			if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size()>0)
-			{
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() > 0) {
 				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				break;
@@ -1407,13 +1411,13 @@ public class MiniEPGScreen extends TestInitization {
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		validateScreenTitles(miniEPGScreenTitle);
 		reports.log(LogStatus.PASS, "Navigate to BlackListed Past Program");
-		while(true)
-		{
+		while (true) {
 			sendKeyMultipleTimes("LEFT", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
 			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size());
-			if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size()==0 || driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).get(0).getAttribute("src").contains("blacklist-icon.png"))
-			{
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size() == 0
+					|| driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).get(0)
+							.getAttribute("src").contains("blacklist-icon.png")) {
 				reports.log(LogStatus.PASS, "Past BlackList Program Found");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				presentTitle = miniEPGChannelName.getAttribute("innerText");
@@ -1423,30 +1427,25 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		Thread.sleep(2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) || programDetailsScreen.isDisplayed())
-		{
-			reports.log(LogStatus.PASS , "Program Details of BlackList Episode getting displayed");
+		if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) || programDetailsScreen.isDisplayed()) {
+			reports.log(LogStatus.PASS, "Program Details of BlackList Episode getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else{
+		} else {
 			FailTestCase("Program Details of Black List Episode not getting displayed");
 		}
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
-		for (int i = 0 ;i<actionItemList.size();i++)
-		{
+		for (int i = 0; i < actionItemList.size(); i++) {
 			System.out.println(actionItemList.get(i).getText());
-			if(actionItemList.get(i).getText().equalsIgnoreCase("kijken"))
-			{
+			if (actionItemList.get(i).getText().equalsIgnoreCase("kijken")) {
 				FailTestCase("Watch option should not be displayed for BlackListed Programs");
-			}
-			else
-			{
-				reports.log(LogStatus.PASS, "Action Item Present - "+actionItemList.get(i).getText());
+			} else {
+				reports.log(LogStatus.PASS, "Action Item Present - " + actionItemList.get(i).getText());
 			}
 			sendKeyMultipleTimes("DOWN", 1, 1000);
-		}		
+		}
 	}
+
 	public void validateMiniEPGAccessToNonWatchedCUTVNonBlackListProgramDetails() throws InterruptedException {
 		String zapListScreenTitle = getExcelKeyValue("screenTitles", "ZapList", "name_nl");
 		String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
@@ -1457,13 +1456,11 @@ public class MiniEPGScreen extends TestInitization {
 		sendKeyMultipleTimes("UP", 1, 1000);
 		validateScreenTitles(zapListScreenTitle);
 		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
-		while(true)
-		{
+		while (true) {
 			sendKeyMultipleTimes("DOWN", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
 			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
-			if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size()>0)
-			{
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() > 0) {
 				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				break;
@@ -1472,13 +1469,13 @@ public class MiniEPGScreen extends TestInitization {
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		validateScreenTitles(miniEPGScreenTitle);
 		reports.log(LogStatus.PASS, "Navigate to Non BlackListed Past Program");
-		while(true)
-		{
+		while (true) {
 			sendKeyMultipleTimes("LEFT", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
 			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size());
-			if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size()>0 && driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).get(0).getAttribute("src").contains("cutv-icon.png"))
-			{
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).size() > 0
+					&& driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconMiniEpg)).get(0)
+							.getAttribute("src").contains("cutv-icon.png")) {
 				reports.log(LogStatus.PASS, "Past Replayable Program Found");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				presentTitle = miniEPGChannelName.getAttribute("innerText");
@@ -1487,55 +1484,41 @@ public class MiniEPGScreen extends TestInitization {
 			}
 		}
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) ||  programDetailsScreen.isDisplayed() )
-		{
-			reports.log(LogStatus.PASS , "Program Details of Non - BlackList Episode getting displayed");
+		if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) || programDetailsScreen.isDisplayed()) {
+			reports.log(LogStatus.PASS, "Program Details of Non - BlackList Episode getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else{
+		} else {
 			FailTestCase("Program Details of non Black List Episode not getting displayed");
 		}
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		List<String> actionListText = new ArrayList<String>();
-		for(int i =0 ;i<actionItemList.size();i++)
-		{
+		for (int i = 0; i < actionItemList.size(); i++) {
 			actionListText.add(actionItemList.get(i).getText());
 		}
-		if(actionListText.contains("kijken"))
-		{
+		if (actionListText.contains("kijken")) {
 			reports.log(LogStatus.PASS, "Watch Option getting dsiplayed for Non black Listed Program");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Watch Option should be dsiplayed for Non black Listed Program");
 		}
-		for (int i = 0 ;i<actionItemList.size();i++)
-		{
-			reports.log(LogStatus.PASS, "Action Item Present - "+actionItemList.get(i).getText());
+		for (int i = 0; i < actionItemList.size(); i++) {
+			reports.log(LogStatus.PASS, "Action Item Present - " + actionItemList.get(i).getText());
 			sendKeyMultipleTimes("DOWN", 1, 1000);
 		}
-		for (int i =0 ;i<actionItemList.size()-1;i++)
-		{
+		for (int i = 0; i < actionItemList.size() - 1; i++) {
 			sendKeyMultipleTimes("UP", 1, 1000);
 		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		try
-		{
-			if(miniEPGChannelName.isDisplayed())
-			{
+		try {
+			if (miniEPGChannelName.isDisplayed()) {
 				FailTestCase("Mini EPG not getting dismissed");
-			}
-			else
-			{
+			} else {
 				reports.log(LogStatus.PASS, "Mini EPG got dismissed");
 				reports.attachScreenshot(captureCurrentScreenshot());
 			}
-		}
-		catch(NoSuchElementException ex)
-		{
+		} catch (NoSuchElementException ex) {
 			reports.log(LogStatus.PASS, "Mini EPG got dismissed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -1559,111 +1542,105 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 	}
+
 	public void validateMiniEPGAccessToNonWatchedCUTVCurrentProgramDetails() throws InterruptedException {
 		String zapListScreenTitle = getExcelKeyValue("screenTitles", "ZapList", "name_nl");
-		String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
-		
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		String presentTitle = null;
-		dtvChannelScreen.openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(2000);
-		sendKeyMultipleTimes("UP", 1, 1000);
-		validateScreenTitles(zapListScreenTitle);
-		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
-		while(true)
-		{
-			sendKeyMultipleTimes("DOWN", 1, 1000);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
-			if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size()>0)
-			{
-				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
-				reports.attachScreenshot(captureCurrentScreenshot());
-				break;
-			}
-		}
-		sendKeyMultipleTimes("RIGHT", 1, 1500);
-		validateScreenTitles(miniEPGScreenTitle);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		presentTitle = miniEPGChannelName.getAttribute("innerText");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		try{
-			if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) || programDetailsScreen.isDisplayed())
-			{
-				reports.log(LogStatus.PASS , "Program Details of Current Episode getting displayed");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-			else{
-				FailTestCase("Program Details of Current Episode not getting displayed");
-			}
-		}
-		catch(NoSuchElementException ex)
-		{
-			FailTestCase("Program Details of Current Episode not getting displayed");
-		}	
+        String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+        
+        DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+        dtvChannelScreen.openLiveTV();
+        sendNumaricKeys(1);
+        Thread.sleep(2000);
+        sendKeyMultipleTimes("UP", 1, 1000);
+        validateScreenTitles(zapListScreenTitle);
+        reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
+        while(true)
+        {
+              sendKeyMultipleTimes("DOWN", 1, 1000);
+              driver.switchTo().frame(getCurrentFrameIndex());
+              System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
+              if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size()>0)
+              {
+                    reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
+                    reports.attachScreenshot(captureCurrentScreenshot());
+                    break;
+              }
+        }
+        sendKeyMultipleTimes("RIGHT", 1, 1500);
+        validateScreenTitles(miniEPGScreenTitle);
+        driver.switchTo().frame(getCurrentFrameIndex());
+        miniEPGChannelName.getAttribute("innerText");
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        Thread.sleep(1000);
+        TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().frame(getCurrentFrameIndex());
+        String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
+        String[] currentImgToArr = currentImgSource.split("/");
+        String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+        System.out.println(imageName);
+        if (imageName
+                    .equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+              reports.log(LogStatus.PASS, "Full Screen Video is playing successfully");
+              reports.attachScreenshot(captureCurrentScreenshot());
+        }
+
+        else {
+              FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+        }
+        sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);    
+
 	}
-	
-	public void verifyMiniEPGonLongFinishedCUTV() throws ParseException,InterruptedException {
+
+	public void verifyMiniEPGonLongFinishedCUTV() throws ParseException, InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		String miniEPGExpectedscreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
 		dtvChannelScreen.openLiveTV();
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
 		Thread.sleep(1000);
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString()	, 1	, 0);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (cutvIcon.getAttribute("src").contains("cutv-icon.png")){
+		if (cutvIcon.getAttribute("src").contains("cutv-icon.png")) {
 			reports.log(LogStatus.PASS, "Tuned To CUTV Channel " + cutvChannelNumber);
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Not Tuned to CUTV Channel");
 		}
 		Thread.sleep(2000);
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		try{
-			if(epgGuide.isDisplayed())
-			{
+		try {
+			if (epgGuide.isDisplayed()) {
 				reports.log(LogStatus.PASS, "TV Guide Displayed");
 				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-			else
-			{
+			} else {
 				FailTestCase("Tv Guide not displayed");
 			}
-		}
-		catch(NoSuchElementException ex)
-		{
+		} catch (NoSuchElementException ex) {
 			FailTestCase("TV Guide not displayed");
 		}
 		driver.switchTo().defaultContent();
-		DateFormat sdf=new SimpleDateFormat("hh:mm");
+		DateFormat sdf = new SimpleDateFormat("hh:mm");
 		System.out.println(Calendar.DATE);
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.HOUR, -32);
-		System.out.println("Before 32 hr: "+c.getTime());
+		System.out.println("Before 32 hr: " + c.getTime());
 		String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
 		System.out.println(c.get(Calendar.DAY_OF_MONTH));
 		Date date1 = sdf.parse(c.getTime().toString().split(" ")[3]);
 		System.out.println(sdf.parse(c.getTime().toString().split(" ")[3]));
-		while (true)
-		{
+		while (true) {
 			driver.switchTo().frame(getCurrentFrameIndex());
 			sendKeyMultipleTimes("LEFT", 1, 1000);
-			if (dayHeading.getText().contains(day))
-			{
+			if (dayHeading.getText().contains(day)) {
 				Date date2 = sdf.parse(new EpgScreen(driver).focusElementProgramTime.getText().split(">")[0].trim());
 				System.out.println(date2.before(date1));
-				if(date2.before(date1))
-				{
+				if (date2.before(date1)) {
 					System.out.println("Found");
 					reports.log(LogStatus.PASS, "CUTV Program started 32 hrs ago found");
 					reports.attachScreenshot(captureCurrentScreenshot());
-					
+
 					sendKeyMultipleTimes("ENTER", 1, 1000);
 					reports.log(LogStatus.PASS, "Start playing CUTV playout of program started 32 hrs ago");
 					reports.attachScreenshot(captureCurrentScreenshot());
@@ -1676,33 +1653,28 @@ public class MiniEPGScreen extends TestInitization {
 		sendKeyMultipleTimes("LEFT", 1, 1000);
 		driver.switchTo().defaultContent();
 		wait.until(ExpectedConditions.visibilityOf(headerText));
-		if(headerText.getText().equalsIgnoreCase(miniEPGExpectedscreenTitle)){
+		if (headerText.getText().equalsIgnoreCase(miniEPGExpectedscreenTitle)) {
 			driver.switchTo().frame(getCurrentFrameIndex());
-			if(activeZapBlock.getText().equalsIgnoreCase("bezig"))
-			{
-				reports.log(LogStatus.PASS, "Press LEFT Key - Mini EPG Screen getting displayed and Current focus on " +activeZapBlock.getText() + " tile" );
+			if (activeZapBlock.getText().equalsIgnoreCase("bezig")) {
+				reports.log(LogStatus.PASS, "Press LEFT Key - Mini EPG Screen getting displayed and Current focus on "
+						+ activeZapBlock.getText() + " tile");
 				reports.attachScreenshot(captureCurrentScreenshot());
+			} else {
+				FailTestCase("Press LEFT Key - Mini EPG Screen getting displayed and Current focus on "
+						+ activeZapBlock.getText() + " tile. Focus should be on bezig");
 			}
-			else
-			{
-				FailTestCase("Press LEFT Key - Mini EPG Screen getting displayed and Current focus on " +activeZapBlock.getText() + " tile. Focus should be on bezig" );
-			}
-			
-		}
-		else
-		{
+
+		} else {
 			FailTestCase("Press LEFT Key - Mini EPG Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Validate Left-far Tile is tv-gids");
 		validateFirstOrRightTile("LEFT", "tv-gids", 15);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		while(true)
-		{
-			sendKeyMultipleTimes("RIGHT", 1	, 1000);
+		while (true) {
+			sendKeyMultipleTimes("RIGHT", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
-			if(activeZapBlock.getAttribute("innerText").equalsIgnoreCase("bezig"))
-			{
-				reports.log(LogStatus.PASS , "Navigated to Active Episode Tile");
+			if (activeZapBlock.getAttribute("innerText").equalsIgnoreCase("bezig")) {
+				reports.log(LogStatus.PASS, "Navigated to Active Episode Tile");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				break;
 			}
@@ -1710,12 +1682,10 @@ public class MiniEPGScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Validate Right-far Tile is tv-gids");
 		validateFirstOrRightTile("RIGHT", "tv-gids", 25);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		while(true)
-		{
-			sendKeyMultipleTimes("LEFT", 1	, 1000);
-			if(activeZapBlock.getText().equalsIgnoreCase("bezig"))
-			{
-				reports.log(LogStatus.PASS , "Navigated to Active Episode Tile");
+		while (true) {
+			sendKeyMultipleTimes("LEFT", 1, 1000);
+			if (activeZapBlock.getText().equalsIgnoreCase("bezig")) {
+				reports.log(LogStatus.PASS, "Navigated to Active Episode Tile");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				break;
 			}
@@ -1727,13 +1697,133 @@ public class MiniEPGScreen extends TestInitization {
 		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName.equalsIgnoreCase(
-				TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
 			reports.log(LogStatus.PASS, "Full Screen Vidoe is playing");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else {
+		} else {
 			FailTestCase("Not navigated to Full Scren Video");
-		}	
+		}
+	}
+
+	public void verifyTitleOfMiniEPGScreen() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Checking the Center Title of the screen");
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		String centerTitleofTheScreen = centerTitle.getText();
+		System.out.println("centerTitleofTheScreen" + centerTitleofTheScreen);
+		if (centerTitleofTheScreen
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("screenTitles", "CenterTitle", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Center title is matched with the actual title of the screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Center title is not matched with the actual title of the screen");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 500);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		reports.log(LogStatus.PASS, "Checking the Previous Program Title of the screen");
+		TestInitization.sendKeyMultipleTimes("LEFT", 1, 500);
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		String previousProgramTitleoftheScreen = previousProgramTitle.getText();
+		System.out.println("previousProgramTitleoftheScreen " + previousProgramTitleoftheScreen);
+		if (previousProgramTitleoftheScreen
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("screenTitles", "PreviousScreenTitle", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Previous Screen title is matched with the actual title of the screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Previous Screen title is not matched with the actual title of the screen");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 500);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		reports.log(LogStatus.PASS, "Checking the Next Program Title of the screen");
+		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 500);
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		String nextProgramTitleoftheScreen = nextProgramTitle.getText();
+		System.out.println("nextProgramTitleoftheScreen " + nextProgramTitleoftheScreen);
+		if (nextProgramTitleoftheScreen
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("screenTitles", "NextScreenTitle", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Next Screen title is matched with the actual title of the screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Next Screen title is not matched with the actual title of the screen");
+		}
+
+	}
+
+	public void miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel() throws NumberFormatException, InterruptedException {
+		launchDTV(true);
+
+		String cutvChannel = TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(cutvChannel));
+		while (true) {
+			sendKeyMultipleTimes("UP", 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() > 0) {
+				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				break;
+			}
+		}
+		reports.log(LogStatus.PASS, "Pressing on RIGHT key will reach to the MiniEPG screen");
+		sendKeyMultipleTimes("RIGHT", 1, 500);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		verifyTitleOfMiniEPGScreen();
+
+	}
+
+	public void miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel_partII() throws InterruptedException {
+
+		launchDTV(true);
+		String zapTitle = TestInitization.getExcelKeyValue("screenTitles", "ZapList", "name_nl");
+		String cutvChannel = TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(cutvChannel));
+
+		sendKeySequence("UP", 1000, zapTitle);
+		navigateToMiniEpgAndValidationTV_Gids();
+
+		setApplicationHubPage(2);
+		launchDTV(true);
+
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(cutvChannel));
+
+		sendKeySequence("UP", 1000, zapTitle);
+
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+
+		verifyTitleOfMiniEPGScreen();
+
+		// Auto Close miniEPG & Zaplist after 10 seconds
+
+		launchDTV(true);
+		reports.log(LogStatus.PASS, "Navigate to Mini EPG screen");
+		sendKeySequence("RIGHT", 1, getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		ZapList zar = new ZapList(driver);
+		String screenTitileofThePage = zar.screenTitle.getText();
+		Thread.sleep(10000);
+		reports.log(LogStatus.PASS, "After 10 seconds it should close and returns to Zaplist screen");
+
+		driver.switchTo().defaultContent();
+
+		if (TestInitization.getExcelKeyValue("screenTitles", "ZapList", "name_nl")
+				.equalsIgnoreCase(screenTitileofThePage)) {
+			reports.log(LogStatus.PASS, "Reached to the zaplist page");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Not navigate to zaplist");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		Thread.sleep(10000);
+		reports.log(LogStatus.PASS, "After 10 seconds it should close and returns to Full screen live TV");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		DTVChannelScreen dtvchannel = new DTVChannelScreen(driver);
+		reports.log(LogStatus.PASS, "Verifying Play button in Live TV");
+		dtvchannel.pressPauseButtonAndValidation();
+
 	}
 }

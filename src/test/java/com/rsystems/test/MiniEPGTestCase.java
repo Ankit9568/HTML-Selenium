@@ -276,13 +276,13 @@ public class MiniEPGTestCase extends TestInitization {
 		miniEPGScreen.verifyTileAppearance("FUTURE");
 	}
 
-	public void tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMini_EPG()
-			throws InterruptedException, ParseException {
-
-		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
-		miniEPGScreen.validateMiniEpgprogramAfterProgramEnded();
-
-	}
+//	public void tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMini_EPG()
+//			throws InterruptedException, ParseException {
+//
+//		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+//		miniEPGScreen.validateMiniEpgprogramAfterProgramEnded();
+//
+//	}
 
 
 	/**
@@ -399,4 +399,27 @@ public class MiniEPGTestCase extends TestInitization {
 		miniEPGScreen = new MiniEPGScreen(driver);
 		miniEPGScreen.verifyTileAppearance("PAST");
 	}
+
+	
+    @Test
+	public void tc_Mini_EPG_Mini_CUTV_enabled_channel_PartI() throws InterruptedException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel();
+	 }
+		
+	
+	 @Test
+	public void tc_Mini_EPG_Mini_CUTV_enabled_channel_PartII() throws InterruptedException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen. miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel_partII();
+	 }
+	 
+	 @Test
+	public void tc_Mini_EPG_Mini_CUTV_enabled_channel_PartIII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel_partIII();
+	 }
 }
