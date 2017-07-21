@@ -934,11 +934,11 @@ public class MiniEPGScreen extends TestInitization {
 		System.out.println(timingOftheNextProgram.split(">")[1].trim());
 
 		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
-		while (!headerTime.getText().split(" ")[4].trim()
-				.equalsIgnoreCase(timingOftheNextProgram.split(">")[1].trim())) {
-			sendKeyMultipleTimes("LEFT", 1, 500);
-			sendKeyMultipleTimes("RIGHT", 1, 500);
-		}
+		 while(!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim()))
+		    {
+		    	sendKeyMultipleTimes("LEFT", 1, 500);
+		    	sendKeyMultipleTimes("RIGHT", 1, 500);
+		    }
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
