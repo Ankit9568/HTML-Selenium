@@ -372,11 +372,12 @@ public class MiniEPGScreen extends TestInitization {
 
 		// Forcibly move to live screen and again move next to Live TV
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
-		TestInitization.sendKeyMultipleTimes("RIGHT", 2, 100);
+		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 100);
 		driver.switchTo().frame(getCurrentFrameIndex());
 
 		if (currentTimeTileTime.contentEquals(activeTileProgramTime.getText())) {
-			FailTestCase("Next to Live tile currently not in focous");
+			FailTestCase("Next to Live tile currently not in focous expected next to liveTile Time : " + currentTimeTileTime + " expected next to live time : " + activeTileProgramTime.getText());
 		}
 
 		int maxRightCount = Integer
