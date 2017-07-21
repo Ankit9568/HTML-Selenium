@@ -257,9 +257,10 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		if (new DTVChannelScreen(driver).chnlNoIn_Infobar.getText().equalsIgnoreCase(String.valueOf(channelNumber))) {
 			reports.log(LogStatus.PASS, "Tuned to Channel " + channelNumber);
+			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
-			FailTestCase("Not Tuned to Channel");
+			FailTestCase("Not Tuned to Channel " + channelNumber);
 		}
 	}
 	 public void pressForwardButtonAndValidation() throws InterruptedException{

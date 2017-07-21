@@ -81,17 +81,17 @@
 				<methods>
 <!-- 					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" /> -->
 <!-- 					<include name="tc_mini_epg_on_tstv" /> -->
-<!-- 					<include -->
-<!-- 						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" /> -->
-<!-- 					<include -->
-<!-- 						name="tc_77655_A_Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" /> -->
-<!-- 					<include -->
-<!-- 						name="tc_77655_B_Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" /> -->
-<!-- 					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" /> -->
+					<include
+						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include
+						name="tc_77655_A_MiniEPGBehaviourFromFullScreenLiveTVOnCUTVChannel" />
+					<include
+						name="tc_77655_B_MiniEPGBehaviourFrmFullScreenLiveTVOnCUTVChannel" />
+					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" />
 					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" />
-<!-- 					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" /> -->
-<!-- 					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" /> -->
-<!-- 					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" /> -->
+	<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
+	<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" />
+	<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" />
 				</methods>
 			</class>
 		</classes>
