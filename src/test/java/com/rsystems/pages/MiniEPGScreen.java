@@ -1545,50 +1545,48 @@ public class MiniEPGScreen extends TestInitization {
 
 	public void validateMiniEPGAccessToNonWatchedCUTVCurrentProgramDetails() throws InterruptedException {
 		String zapListScreenTitle = getExcelKeyValue("screenTitles", "ZapList", "name_nl");
-        String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
-        
-        DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-        dtvChannelScreen.openLiveTV();
-        sendNumaricKeys(1);
-        Thread.sleep(2000);
-        sendKeyMultipleTimes("UP", 1, 1000);
-        validateScreenTitles(zapListScreenTitle);
-        reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
-        while(true)
-        {
-              sendKeyMultipleTimes("DOWN", 1, 1000);
-              driver.switchTo().frame(getCurrentFrameIndex());
-              System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
-              if(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size()>0)
-              {
-                    reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
-                    reports.attachScreenshot(captureCurrentScreenshot());
-                    break;
-              }
-        }
-        sendKeyMultipleTimes("RIGHT", 1, 1500);
-        validateScreenTitles(miniEPGScreenTitle);
-        driver.switchTo().frame(getCurrentFrameIndex());
-        miniEPGChannelName.getAttribute("innerText");
-        sendKeyMultipleTimes("ENTER", 1, 1000);
-        Thread.sleep(1000);
-        TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
-        reports.attachScreenshot(captureCurrentScreenshot());
-        driver.switchTo().frame(getCurrentFrameIndex());
-        String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
-        String[] currentImgToArr = currentImgSource.split("/");
-        String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-        System.out.println(imageName);
-        if (imageName
-                    .equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-              reports.log(LogStatus.PASS, "Full Screen Video is playing successfully");
-              reports.attachScreenshot(captureCurrentScreenshot());
-        }
+		String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
 
-        else {
-              FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-        }
-        sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);    
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(2000);
+		sendKeyMultipleTimes("UP", 1, 1000);
+		validateScreenTitles(zapListScreenTitle);
+		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
+		while (true) {
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() > 0) {
+				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				break;
+			}
+		}
+		sendKeyMultipleTimes("RIGHT", 1, 1500);
+		validateScreenTitles(miniEPGScreenTitle);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		miniEPGChannelName.getAttribute("innerText");
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		Thread.sleep(1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentImgSource = dtvChannelScreen.pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		System.out.println(imageName);
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Full Screen Video is playing successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 
 	}
 
@@ -1798,27 +1796,12 @@ public class MiniEPGScreen extends TestInitization {
 
 		verifyTitleOfMiniEPGScreen();
 
-		// Auto Close miniEPG & Zaplist after 10 seconds
-
 		launchDTV(true);
 		reports.log(LogStatus.PASS, "Navigate to Mini EPG screen");
 		sendKeySequence("RIGHT", 1, getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
-		ZapList zar = new ZapList(driver);
-		String screenTitileofThePage = zar.screenTitle.getText();
-		Thread.sleep(10000);
-		reports.log(LogStatus.PASS, "After 10 seconds it should close and returns to Zaplist screen");
 
-		driver.switchTo().defaultContent();
-
-		if (TestInitization.getExcelKeyValue("screenTitles", "ZapList", "name_nl")
-				.equalsIgnoreCase(screenTitileofThePage)) {
-			reports.log(LogStatus.PASS, "Reached to the zaplist page");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not navigate to zaplist");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
 		Thread.sleep(10000);
+
 		reports.log(LogStatus.PASS, "After 10 seconds it should close and returns to Full screen live TV");
 		reports.attachScreenshot(captureCurrentScreenshot());
 		DTVChannelScreen dtvchannel = new DTVChannelScreen(driver);
