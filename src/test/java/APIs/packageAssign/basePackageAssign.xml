@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubscriberAPI>
+<version>4.2.0</version>
+    <SubscriberPackageAssign>
+<subscriberPackage>
+    <subscriberDataAttributes>
+        <accountNumber>12345</accountNumber>
+    </subscriberDataAttributes>
+    <packageData>
+        <packageId>10</packageId>
+        <packageLocked>0</packageLocked>
+        <usoc>496</usoc>
+        <packageRateCode>P1</packageRateCode>
+        <subscriptionStartDate>10/02/2003</subscriptionStartDate>
+        <subscriptionEndDate>10/01/2004</subscriptionEndDate>
+    </packageData>
+</subscriberPackage>
+    </SubscriberPackageAssign>
+</SubscriberAPI>

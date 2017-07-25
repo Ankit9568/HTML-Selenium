@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="SubscriberAPI" type="SubscriberAPIType"/>
+  <xs:complexType name="subscriberDataAttributesType">
+    <xs:sequence>
+      <xs:element type="xs:short" name="accountNumber"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="packageDataType">
+    <xs:sequence>
+      <xs:element type="xs:byte" name="packageId"/>
+      <xs:element type="xs:byte" name="packageLocked"/>
+      <xs:element type="xs:short" name="usoc"/>
+      <xs:element type="xs:string" name="packageRateCode"/>
+      <xs:element type="xs:string" name="subscriptionStartDate"/>
+      <xs:element type="xs:string" name="subscriptionEndDate"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subscriberPackageType">
+    <xs:sequence>
+      <xs:element type="subscriberDataAttributesType" name="subscriberDataAttributes"/>
+      <xs:element type="packageDataType" name="packageData"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberPackageUnassignType">
+    <xs:sequence>
+      <xs:element type="subscriberPackageType" name="subscriberPackage"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberAPIType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="version"/>
+      <xs:element type="SubscriberPackageUnassignType" name="SubscriberPackageUnassign"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

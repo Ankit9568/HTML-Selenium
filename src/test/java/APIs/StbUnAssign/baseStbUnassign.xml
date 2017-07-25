@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SubscriberAPI>
+<version>4.2.0</version>
+  <SubscriberSTBUnassign>
+   <subscriberDataAttributes>
+    <accountNumber>12344</accountNumber>
+   </subscriberDataAttributes>
+   <subscriberSTB>
+    <equipmentId>219</equipmentId>
+    <macAddress>00300529FDD8</macAddress>
+    <serialNumber>YBDG001022</serialNumber>
+   </subscriberSTB>
+</SubscriberSTBUnassign>
+</SubscriberAPI>

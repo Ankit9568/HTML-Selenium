@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="SubscriberAPI" type="SubscriberAPIType"/>
+  <xs:complexType name="subscriberDataAttributesType">
+    <xs:sequence>
+      <xs:element type="xs:short" name="accountNumber"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subscriberSTBType">
+    <xs:sequence>
+      <xs:element type="xs:int" name="equipmentId"/>
+      <xs:element type="xs:string" name="macAddress"/>
+      <xs:element type="xs:int" name="serialNumber"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberSTBAssignType">
+    <xs:sequence>
+      <xs:element type="subscriberDataAttributesType" name="subscriberDataAttributes"/>
+      <xs:element type="subscriberSTBType" name="subscriberSTB"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberAPIType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="version"/>
+      <xs:element type="SubscriberSTBAssignType" name="SubscriberSTBAssign"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
