@@ -3,12 +3,12 @@
   <xs:element name="SubscriberAPI" type="SubscriberAPIType"/>
   <xs:complexType name="subscriberDataAttributesType">
     <xs:sequence>
-      <xs:element type="xs:short" name="accountNumber"/>
+      <xs:element type="xs:string" name="accountNumber"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="subscriberSTBType">
     <xs:sequence>
-      <xs:element type="xs:short" name="equipmentId"/>
+      <xs:element type="xs:string" name="equipmentId"/>
       <xs:element type="xs:string" name="macAddress"/>
       <xs:element type="xs:string" name="serialNumber"/>
     </xs:sequence>

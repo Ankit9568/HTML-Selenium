@@ -8,9 +8,9 @@
   </xs:complexType>
   <xs:complexType name="packageDataType">
     <xs:sequence>
-      <xs:element type="xs:byte" name="packageId"/>
-      <xs:element type="xs:byte" name="packageLocked"/>
-      <xs:element type="xs:short" name="usoc"/>
+      <xs:element type="xs:string" name="packageId"/>
+      <xs:element type="xs:string" name="packageLocked"/>
+      <xs:element type="xs:string" name="usoc"/>
       <xs:element type="xs:string" name="packageRateCode"/>
       <xs:element type="xs:string" name="subscriptionStartDate"/>
       <xs:element type="xs:string" name="subscriptionEndDate"/>
