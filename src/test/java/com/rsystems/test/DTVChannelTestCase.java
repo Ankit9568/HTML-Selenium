@@ -640,4 +640,57 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
+	
+/**
+ * This test cases is verify back to live option in past program
+ * @throws InterruptedException
+ */
+@Test
+public void tc_CUBTL0602_back_to_live_other_channel() throws InterruptedException{
+	
+	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+	dtvChannelScreen.verifyBackToLiveOption();
+}
+
+/**
+ * This test cases is used to watch start over past program
+ * @throws InterruptedException
+ */
+@Test
+public void tc_CUSO0504_start_over_watch_past_program() throws InterruptedException{
+	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+	dtvChannelScreen.verifyStartOverPastProgram();
+}
+
+
+/**
+ * This test cases is used to back to live same channel
+ * @throws InterruptedException
+ */
+@Test
+public void tc_CUBTL0601_back_to_live_same_channel() throws InterruptedException{
+	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+	dtvChannelScreen.verifyBackToLiveOptionOnSameChannel();
+}
+/**
+ * This test cases is used to verify action item list in past, future,current program details 
+ * @throws InterruptedException
+ */
+@Test
+public void tc_CUSO0501_start_over_list_actions() throws InterruptedException{
+	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+	dtvChannelScreen.verifyActionItemList();
+}
+
+/**
+ * This test cases is used to watch already watched past program
+ * @throws InterruptedException
+ */
+@Test
+public void tc_CUSO0505_start_over_watch_started_program() throws InterruptedException{
+	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+	dtvChannelScreen.verifyStartOverWatchStartedProgram();
+}
+
+
 }
