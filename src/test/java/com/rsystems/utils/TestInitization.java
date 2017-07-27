@@ -642,7 +642,7 @@ public class TestInitization {
 			sendKeyMultipleTimes("UP", 1, 1000);
 			sendKeyMultipleTimes("ENTER", 1, 1000);
 			reports.attachScreenshot(captureCurrentScreenshot());
-			
+
 			selectLanguage(accountNumber, pinCode);
 			reports.log(LogStatus.PASS, "Navigate the setting screen");
 			// Validation for language
@@ -694,7 +694,6 @@ public class TestInitization {
 
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendNumaricKeys(Integer.parseInt(pinCode));
-		
 
 		// update the value of configuration properties file
 		PR.setProperty("RunOnUnassignedSTB", "FALSE");
@@ -728,4 +727,7 @@ public class TestInitization {
 
 		return PR;
 	}
+
+
+
 }

@@ -6,6 +6,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 
+import com.rsystems.utils.PackageInformation;
+
 import APIs.StbAssign.ObjectFactory;
 import APIs.StbAssign.SubscriberAPIType;
 import APIs.StbAssign.SubscriberDataAttributesType;
@@ -82,20 +84,18 @@ public class STBAPIs {
 		new RequestResponseValidation().postRequest();
 	}
 
-	public void stbPackageAssign(String accountNumber, String subscriberApiVersion, String packageId,
-			String packageLock, String usoc, String packageRateCode, String subscriptionStartDate,
-			String subcriptionEndDate) throws Exception {
+	public void stbPackageAssign(PackageInformation packageInformation) throws Exception {
 
 		PackageDataType packageDataType = new PackageDataType();
-		packageDataType.setPackageId(packageId);
-		packageDataType.setPackageLocked(packageLock);
-		packageDataType.setUsoc(usoc);
-		packageDataType.setPackageRateCode(packageRateCode);
-		packageDataType.setSubscriptionStartDate(subscriptionStartDate);
-		packageDataType.setSubscriptionEndDate(subcriptionEndDate);
+		packageDataType.setPackageId(packageInformation.getPackageId());
+		packageDataType.setPackageLocked(packageInformation.getPackageLock());
+		packageDataType.setUsoc(packageInformation.getPackageUsoc());
+		packageDataType.setPackageRateCode(packageInformation.getPackageRateCode());
+		packageDataType.setSubscriptionStartDate(packageInformation.getSubscriptionStartDate());
+		packageDataType.setSubscriptionEndDate(packageInformation.getSubcriptionEndDate());
 
 		APIs.packageAssign.SubscriberDataAttributesType subscriberDataAttributesType = new APIs.packageAssign.SubscriberDataAttributesType();
-		subscriberDataAttributesType.setAccountNumber(accountNumber);
+		subscriberDataAttributesType.setAccountNumber(packageInformation.getStbAccoutNumber());
 
 		SubscriberPackageType subscriberPackageType = new SubscriberPackageType();
 		subscriberPackageType.setPackageData(packageDataType);
@@ -105,7 +105,7 @@ public class STBAPIs {
 		subscriberPackageAssignType.setSubscriberPackage(subscriberPackageType);
 
 		APIs.packageAssign.SubscriberAPIType subscriberAPIType = new APIs.packageAssign.SubscriberAPIType();
-		subscriberAPIType.setVersion(subscriberApiVersion);
+		subscriberAPIType.setVersion(packageInformation.getSubscriberApiVersion());
 		subscriberAPIType.setSubscriberPackageAssign(subscriberPackageAssignType);
 
 		JAXBContext jaxbContext = JAXBContext.newInstance(APIs.packageAssign.SubscriberAPIType.class);
@@ -122,20 +122,20 @@ public class STBAPIs {
 
 	}
 
-	public void stbPackageUnAssign(String accountNumber, String subscriberApiVersion, String packageId,
-			String packageLock, String usoc, String packageRateCode, String subscriptionStartDate,
-			String subcriptionEndDate) throws Exception {
+	public void stbPackageUnAssign(PackageInformation packageInformation)
+
+			throws Exception {
 
 		APIs.packageUnassign.PackageDataType packageDataType = new APIs.packageUnassign.PackageDataType();
-		packageDataType.setPackageId(packageId);
-		packageDataType.setPackageLocked(packageLock);
-		packageDataType.setUsoc(usoc);
-		packageDataType.setPackageRateCode(packageRateCode);
-		packageDataType.setSubscriptionStartDate(subscriptionStartDate);
-		packageDataType.setSubscriptionEndDate(subcriptionEndDate);
+		packageDataType.setPackageId(packageInformation.getPackageId());
+		packageDataType.setPackageLocked(packageInformation.getPackageLock());
+		packageDataType.setUsoc(packageInformation.getPackageUsoc());
+		packageDataType.setPackageRateCode(packageInformation.getPackageRateCode());
+		packageDataType.setSubscriptionStartDate(packageInformation.getSubscriptionStartDate());
+		packageDataType.setSubscriptionEndDate(packageInformation.getSubcriptionEndDate());
 
 		APIs.packageUnassign.SubscriberDataAttributesType subscriberDataAttributesType = new APIs.packageUnassign.SubscriberDataAttributesType();
-		subscriberDataAttributesType.setAccountNumber(accountNumber);
+		subscriberDataAttributesType.setAccountNumber(packageInformation.getStbAccoutNumber());
 
 		APIs.packageUnassign.SubscriberPackageType subscriberPackageType = new APIs.packageUnassign.SubscriberPackageType();
 		subscriberPackageType.setPackageData(packageDataType);
@@ -145,7 +145,7 @@ public class STBAPIs {
 		subscriberPackageAssignType.setSubscriberPackage(subscriberPackageType);
 
 		APIs.packageUnassign.SubscriberAPIType subscriberAPIType = new APIs.packageUnassign.SubscriberAPIType();
-		subscriberAPIType.setVersion(subscriberApiVersion);
+		subscriberAPIType.setVersion(packageInformation.getSubscriberApiVersion());
 		subscriberAPIType.setSubscriberPackageUnassign(subscriberPackageAssignType);
 
 		JAXBContext jaxbContext = JAXBContext.newInstance(APIs.packageUnassign.SubscriberAPIType.class);

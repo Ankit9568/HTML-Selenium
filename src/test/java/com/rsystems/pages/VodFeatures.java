@@ -70,13 +70,21 @@ public class VodFeatures extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.lookOption)
 	public WebElement lookOption;
-	
+
 	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.highlightFilm)
 	public WebElement highlightFilm;
-	
 
-	@FindBy(how = How.XPATH,using = ObjectRepository.ZapListPage.screenTitle)
+	@FindBy(how = How.XPATH, using = ObjectRepository.ZapListPage.screenTitle)
 	public WebElement shopHeader;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.leftPannelPosition)
+	public WebElement leftPannel;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.activeSortOption)
+	public WebElement activeSortOption;
+
+	@FindBy(how = How.ID, using = ObjectRepository.Vod.topMovieHeading)
+	public WebElement topMovieHeading;
 
 	public void naviagteToVideoOndemandScreen() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -84,7 +92,7 @@ public class VodFeatures extends TestInitization {
 		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
-		
+
 		reports.log(LogStatus.PASS, "Trailer is started");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -113,7 +121,6 @@ public class VodFeatures extends TestInitization {
 		}
 	}
 
-
 	public void navigateToVideoOnDemandScreenHotkey() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Navigate to the On demand Screen by Hot key");
@@ -138,6 +145,7 @@ public class VodFeatures extends TestInitization {
 		}
 
 	}
+
 	public void vodOnRent(String parentCategry, String movieName, String pinNumber) throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -147,7 +155,7 @@ public class VodFeatures extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to PIN Screen");
 
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(pinContainer, "Pin Container");
 
@@ -164,6 +172,31 @@ public class VodFeatures extends TestInitization {
 
 	}
 
+	public void RentGrpMovie(String movieName, String pinNumber) throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		// highlight rented Movie
+		dtvChannelScreen.validateMovieExistInGrp(movieName);
+
+		reports.log(LogStatus.PASS, "Navigate to PIN Screen");
+
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(pinContainer, "Pin Container");
+
+		sendNumaricKeys(Integer.parseInt(pinNumber));
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+
+		reports.log(LogStatus.PASS, "Moving back to the Menu screen");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+	}
+
 	public void validateFreeMovieInformation() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -176,7 +209,7 @@ public class VodFeatures extends TestInitization {
 		String priceOfItem = itemPrice.getText();
 		System.out.println("Price of Items :" + priceOfItem);
 
-		isDisplayed(lookOption,"Look Option");
+		isDisplayed(lookOption, "Look Option");
 
 		if (priceOfItem.contentEquals(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Rate")))
 
@@ -194,7 +227,13 @@ public class VodFeatures extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
 				TestInitization.getExcelKeyValue("RentMovie", "POD", "PinNumber"));
 
-		String movieTitle = TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName");
+		validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
+
+	}
+
+	public void validateMovieRentedAndPlay(String movieTitle) throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
 		setApplicationHubPage(2);
 
@@ -210,11 +249,23 @@ public class VodFeatures extends TestInitization {
 				.findElements(By.xpath("//div[contains(@id,'item_')]/div[@class='poster-info']/h2"));
 
 		for (WebElement movie : listOfMovie) {
-
+			
+			
 			if (movie.getText().contentEquals(movieTitle)) {
 
 				reports.log(LogStatus.PASS, "Movie succsesfully rented");
 				reports.attachScreenshot(captureCurrentScreenshot());
+				sendKeyMultipleTimes("ENTER", 2, 1000);
+				driver.switchTo().frame(getCurrentFrameIndex());
+				new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+				reports.log(LogStatus.PASS, "Movie " + movieTitle + " found in Renterd Folder and play sucessfully");
+				reports.attachScreenshot(captureCurrentScreenshot());
+
+				// Navigate to move Category
+				dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+						TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
+						TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
+				sendKeyMultipleTimes("ENTER", 1, 1000);
 
 				return;
 			}
@@ -222,5 +273,4 @@ public class VodFeatures extends TestInitization {
 		}
 		FailTestCase("Movie not rented");
 	}
-
 }

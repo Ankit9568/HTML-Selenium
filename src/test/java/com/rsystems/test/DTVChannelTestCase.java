@@ -6,11 +6,17 @@ import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.rsystems.config.ObjectRepository.FilmsScreen;
 import com.rsystems.pages.DTVChannelScreen;
+import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.pages.RentMovie;
+import com.rsystems.pages.VodFeatures;
 import com.rsystems.pages.ZapList;
+import com.rsystems.utils.PackageInformation;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
+
+import APIs.STBAPIs;
 
 public class DTVChannelTestCase extends TestInitization {
 
@@ -430,11 +436,208 @@ public class DTVChannelTestCase extends TestInitization {
 
 		}
 
-	
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		dtvScreen.pressPauseButtonAndValidation();
 		// navigate to menu page
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+	}
+@Test
+	public void tc_CUSUB0201_basic() throws Exception {
+
+		// Assign basic subscription of CUTV channel
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		STBAPIs stbApis = new STBAPIs();
+		
+		// Assign old package some time old package assign with lock value so we first assign and unassigns package
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+		
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+
+		dtvChannelScreen.openCutvEnableChannelFromTvGuide();
+		
+		try {
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
+			driver.switchTo().frame(getCurrentFrameIndex());
+
+			if (dtvChannelScreen.chnlNoIn_Infobar.isDisplayed()) {
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+		}
+
+		catch (NoSuchElementException e) {
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+			FailTestCase("Unable to start CUTV channel.Start current program functionality not working");
+		}
+
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+		isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+	}
+@Test
+	public void tc_CUSUB0202_premium() throws Exception {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		STBAPIs stbApis = new STBAPIs();
+		// Some time package not assign to STB so we first assign package and than unassigns according to the testing condition 
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+				
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		dtvChannelScreen.openLiveTV();
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
+		String programTitleInEpg = dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 2, 4000);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String titleInInfoBanner = dtvChannelScreen.programTitle.getText();
+
+		if (!programTitleInEpg.equalsIgnoreCase(titleInInfoBanner)) {
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+			FailTestCase("Channel Info banner is not updated. Title from EPG : " + programTitleInEpg
+					+ " program title in Info banner " + titleInInfoBanner);
+		}
+
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		dtvChannelScreen.pressForwardButtonAndValidation();
+
+		TestInitization.sendKeySequence("ENTER", 1000, "televisie");
+
+		isDisplayed(dtvChannelScreen.backToLive, "Back to live option");
+
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+	}
+
+@Test
+	public void tc_Single_Asset_Variant_Group_Purchase() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		// Navigate the group item of VODs
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
+
+		// check and VOD in a single group
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+
+		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
+
+		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
+
+		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
+		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
+
+		// highlight the VOD3
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+
+		// validate the PIN container is displayed
+		isDisplayed(vodFeatures.pinContainer, "Pin Container");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		dtvChannelScreen.pressForwardButtonAndValidation();
+
+	}
+	
+	@Test
+	public void tc_Single_Asset_Variant_Group_Package_Lock_Unlock() throws Exception {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		STBAPIs stbApis = new STBAPIs();
+		
+		// Navigate the group item of VODs
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
+
+		// check and VOD in a single group
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+
+		
+
+		stbApis.stbPackageUnAssign(new PackageInformation("Spiderman2"));
+
+		// waiting for 20 second for updation package
+		Thread.sleep(15000);
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 2, 1000);
+		
+		// check and VOD in a single group
+		sendKeyMultipleTimes("ENTER", 2, 1000);
+		dtvChannelScreen.validateMovieNotExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+
+		stbApis.stbPackageAssign(new PackageInformation("Spiderman2"));
+		// waiting for 20 second for updation package
+		Thread.sleep(15000);
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 2, 1000);
+		// check and VOD in a single group
+		sendKeyMultipleTimes("ENTER", 2, 1000);
+
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+
+	}
+@Test
+	public void tc_StoreEvolution_ChangeSortingOfCategory() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		VodFeatures vodFeatures = new VodFeatures(driver);
+
+		// Navigate the group item of VODs
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
+
+		// back to parent category
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
+		
+		if (vodFeatures.leftPannel.getAttribute("class").equalsIgnoreCase("cStoreLeftSection")) {
+			reports.log(LogStatus.PASS, "Sorting criteria found in left side on page");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Sorting criteria does not found in left side on page");
+		}
+		dtvChannelScreen.changeSortingOptionAndValidation(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "SortingOptionName"),
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "First Movie Order"));
+		dtvChannelScreen.changeSortingOptionAndValidation(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
+		dtvChannelScreen.changeSortingOptionAndValidation(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "First Movie Order"));
+		dtvChannelScreen.changeSortingOptionAndValidation(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "SortingOptionName"),
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "First Movie Order"));
+
 	}
 
 }

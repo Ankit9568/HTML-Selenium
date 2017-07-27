@@ -76,67 +76,65 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<test name="Mini EPG Test cases ">
-		<classes>
-			<class name="com.rsystems.test.MiniEPGTestCase">
-				<methods>
-					<!-- <include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" /> -->
-					<!-- <include name="tc_mini_epg_on_tstv" /> -->
-					<include
-						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
-					<include
-						name="tc_77655_A_MiniEPGBehaviourFromFullScreenLiveTVOnCUTVChannel" />
-					<include
-						name="tc_77655_B_MiniEPGBehaviourFrmFullScreenLiveTVOnCUTVChannel" />
-					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" />
-					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" />
-					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
-					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" />
-					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" />
+<!-- 	<test name="Mini EPG Test cases "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.MiniEPGTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" /> -->
+<!-- 					<include name="tc_mini_epg_on_tstv" /> -->
+<!-- 					<include -->
+<!-- 						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" /> -->
+<!-- 					<include -->
+<!-- 						name="tc_77655_A_MiniEPGBehaviourFromFullScreenLiveTVOnCUTVChannel" /> -->
+<!-- 					<include -->
+<!-- 						name="tc_77655_B_MiniEPGBehaviourFrmFullScreenLiveTVOnCUTVChannel" /> -->
+<!-- 					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" /> -->
+<!-- 					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" /> -->
+<!-- 					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" /> -->
+<!-- 					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" /> -->
+<!-- 					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" /> -->
 
-					<include name="tc_77664_mini_epg_On_Zaplist_CUTVEnabledChannel" />
-					<include name="tc_77665_mini_epg_On_Zaplist_CUTVDisabledChannel" />
-					<include name="tc_77680_A_Min_EPG_Access_Details_Screen" />
-					<include name="tc_77676_mini_epg_right_side_tv_guide_tile" />
-					<include name="tc_77680_B_Min_EPG_Access_Details_Screen" />
-					<include name="tc_77680_D_Min_EPG_Access_Details_Screen" />
-					<include name="tc_77680_E_Min_EPG_Access_Details_Screen" />
-					<include name="tc_77680_C_Min_EPG_Access_Details_Screen" />
-					<include name="tc_77674_Mini_EPG_On_CUTV_long_finished_airing" />
-					<include name="tc_77656_Mini_EPG_Video_tile_appearance" />
-					<include name="tc_77659_Mini_EPG_Past_tile_appearance" />
+<!-- 					<include name="tc_77664_mini_epg_On_Zaplist_CUTVEnabledChannel" /> -->
+<!-- 					<include name="tc_77665_mini_epg_On_Zaplist_CUTVDisabledChannel" /> -->
+<!-- 					<include name="tc_77680_A_Min_EPG_Access_Details_Screen" /> -->
+<!-- 					<include name="tc_77676_mini_epg_right_side_tv_guide_tile" /> -->
+<!-- 					<include name="tc_77680_B_Min_EPG_Access_Details_Screen" /> -->
+<!-- 					<include name="tc_77680_D_Min_EPG_Access_Details_Screen" /> -->
+<!-- 					<include name="tc_77680_E_Min_EPG_Access_Details_Screen" /> -->
+<!-- 					<include name="tc_77680_C_Min_EPG_Access_Details_Screen" /> -->
+<!-- 					<include name="tc_77674_Mini_EPG_On_CUTV_long_finished_airing" /> -->
+<!-- 					<include name="tc_77656_Mini_EPG_Video_tile_appearance" /> -->
+<!-- 					<include name="tc_77659_Mini_EPG_Past_tile_appearance" /> -->
 
-					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartIII" />
-					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartII" />
-					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartI" />
+<!-- 					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartIII" /> -->
+<!-- 					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartII" /> -->
+<!-- 					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartI" /> -->
 
 
 
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 	<!-- Divide Test case in two part -->
 
-	<!-- <test name="DTV Test case "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.DTVChannelTestCase"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCDTVDT0105_DTVChannelInfobanner" /> -->
-	<!-- <include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" 
-		/> -->
-	<!-- <include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
-	<!-- <include name="DTV_Channel_Zap_Via_Up_Down" /> -->
-	<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
-	<!-- <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
-		/> -->
-	<!-- <include name="pause_LiveTV_play" /> -->
-	<!-- <include name="pause_LiveTV_PLTV_BackToLive" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+	<test name="DTV Test case ">
+	<classes>
+		<class name="com.rsystems.test.DTVChannelTestCase">
+			<methods>
+				<include name="tc_CUSUB0202_premium" />
+<!-- 				<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" /> -->
+<!-- 				<include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
+<!-- 				<include name="DTV_Channel_Zap_Via_Up_Down" /> -->
+<!-- 				<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
+<!-- 				<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" /> -->
+<!-- 				<include name="pause_LiveTV_play" /> -->
+<!-- 				<include name="pause_LiveTV_PLTV_BackToLive" /> -->
+			</methods>
+		</class>
+	</classes>
+</test>
 
 	<!-- <test name="Infobanner Test case"> -->
 	<!-- <classes> -->

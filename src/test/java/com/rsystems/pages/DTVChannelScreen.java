@@ -49,6 +49,12 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.DtvChannel.errorMsg)
 	public WebElement errorMsg;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusElementCUTVIcon)
+	public WebElement focusElementcutvIcon;
+
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.RecordingElements.epgGuideElement)
+	public WebElement epgGuide;
+
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 
@@ -121,6 +127,7 @@ public class DTVChannelScreen extends TestInitization {
 
 	public void navigateToFilmScreenAndRentMovie(String parentCategory, String movieName) throws InterruptedException {
 
+		setApplicationHubPage(2);
 		int maxRetryCount = 20;
 		RentMovie rentMovie = new RentMovie(driver);
 
@@ -249,7 +256,7 @@ public class DTVChannelScreen extends TestInitization {
 	}
 
 	public void tuneToChannel(int channelNumber) throws InterruptedException {
-		
+
 		sendNumaricKeys(channelNumber);
 		Thread.sleep(2000);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
@@ -263,72 +270,225 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("Not Tuned to Channel " + channelNumber);
 		}
 	}
-	 public void pressForwardButtonAndValidation() throws InterruptedException{
-			
-		    Pvr pvr = new Pvr(driver);
-			reports.log(LogStatus.PASS, "Press forward button");
-			sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+
+	public void pressForwardButtonAndValidation() throws InterruptedException {
+
+		Pvr pvr = new Pvr(driver);
+		reports.log(LogStatus.PASS, "Press forward button");
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName = pvr.forward.getAttribute("class");
+		System.out.println("class name " + currentClassName);
+		if (currentClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Live TV is forwarded");
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
 
-			
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String currentClassName = pvr.forward.getAttribute("class");
-			System.out.println("class name " + currentClassName);
-			if (currentClassName.contentEquals("enable active")) 
-			{
-				reports.log(LogStatus.PASS, "Live TV is forwarded");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			} 
-			else {
-
-				FailTestCase("Unable to forward Live TV");
-			}
+			FailTestCase("Unable to forward Live TV");
 		}
-	 
-	 public EpisodeInfo startRecording(int channelNumber) throws InterruptedException {
+	}
 
-			DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-			RecordingScreen recordingElement = new RecordingScreen(driver);
-			sendNumaricKeys(channelNumber);
-			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-			String episodeName = dtvChannelScreen.programTitle.getText();
-			Thread.sleep(3000);
-			EpisodeInfo episodeDetails = null;
-			reports.log(LogStatus.PASS, "Navigate to program information screen");
+	public EpisodeInfo startRecording(int channelNumber) throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		RecordingScreen recordingElement = new RecordingScreen(driver);
+		sendNumaricKeys(channelNumber);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		String episodeName = dtvChannelScreen.programTitle.getText();
+		Thread.sleep(3000);
+		EpisodeInfo episodeDetails = null;
+		reports.log(LogStatus.PASS, "Navigate to program information screen");
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten")) {
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+		}
+		if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")) {
+			episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName,
+					recordingElement.getEpisodeDuration(), recordingElement.getChannelDefiniton());
+			reports.log(LogStatus.PASS, " Click on opnemen to start recording on - ");
 			sendKeyMultipleTimes("ENTER", 1, 1000);
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen")) {
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			sendKeyMultipleTimes("ENTER", 1, 2000);
 			sendKeyMultipleTimes("DOWN", 1, 1000);
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-			if(recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
-			{
+			if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten")) {
 				sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
-			if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
-				episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName, recordingElement.getEpisodeDuration(),recordingElement.getChannelDefiniton());
+			if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")) {
+				episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName,
+						recordingElement.getEpisodeDuration(), recordingElement.getChannelDefiniton());
 				reports.log(LogStatus.PASS, " Click on opnemen to start recording on - ");
 				sendKeyMultipleTimes("ENTER", 1, 1000);
 				reports.attachScreenshot(captureCurrentScreenshot());
 			}
-			else if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen")){
-				sendKeyMultipleTimes("ENTER", 1, 1000);
-				sendKeyMultipleTimes("ENTER", 1, 2000);
-				sendKeyMultipleTimes("DOWN", 1, 1000);
-				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-				if(recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("herstarten"))
-				{
-					sendKeyMultipleTimes("DOWN", 1, 1000);
-				}
-				if (recordingElement.activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")){
-					episodeDetails = recordingElement.new EpisodeInfo(recordingElement.getChannelNo(), episodeName, recordingElement.getEpisodeDuration(),recordingElement.getChannelDefiniton());
-					reports.log(LogStatus.PASS, " Click on opnemen to start recording on - ");
-					sendKeyMultipleTimes("ENTER", 1, 1000);
-					reports.attachScreenshot(captureCurrentScreenshot());
-				}
-			}
-			return episodeDetails;
+		}
+		return episodeDetails;
 
+	}
+
+	public void openCutvEnableChannelFromTvGuide() throws InterruptedException {
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		reports.log(LogStatus.PASS, "Navigae to CUTV Enabled action list from tv guide");
+		sendKeySequence("ENTER", 1000, "televisie");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Navigate to watch movie");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+	}
+
+	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {
+
+		reports.log(LogStatus.PASS, "Open TV Guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		reports.log(LogStatus.PASS, "Navigate to Past Program");
+		EpgScreen epgScreen = new EpgScreen(driver);
+		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		System.out.println("Current Program Duration " + presentTmeStartTime);
+		int noOfTry = 10;
+		while (noOfTry > 0) {
+			try {
+				driver.switchTo().frame(getCurrentFrameIndex());
+				System.out.println(
+						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
+				System.out.println(focusElementcutvIcon.getAttribute("src"));
+				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
+						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+				}
+			} catch (NoSuchElementException ex) {
+
+			}
+			noOfTry -= 1;
+			sendKeyMultipleTimes("LEFT", 1, 1000);
 		}
 
+		return epgScreen.focusElemntInEpg.getText();
+	}
+
+	public void validateMovieExistInGrp(String foundMovieName) throws InterruptedException {
+		VodFeatures vodFeatures = new VodFeatures(driver);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		
+
+		int maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				return;
+
+			}
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			maxcount--;
+		}
+
+		maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				return;
+
+			}
+			sendKeyMultipleTimes("UP", 1, 1000);
+			maxcount--;
+		}
+
+		FailTestCase("Movie not found in group Expected Movie name : " + foundMovieName + " Actual movie name : "
+				+ vodFeatures.vodHeading.getText());
+	}
+
+	public void validateMovieNotExistInGrp(String foundMovieName) throws InterruptedException {
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		driver.switchTo().frame(getCurrentFrameIndex());
+
+		int maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+				FailTestCase("Movie found in group " + foundMovieName);
+			}
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			maxcount--;
+		}
+
+		maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+				FailTestCase("Movie found in group " + foundMovieName);
+			}
+			sendKeyMultipleTimes("UP", 1, 1000);
+			maxcount--;
+		}
+		reports.log(LogStatus.PASS, "Movie " + foundMovieName + "is not found in grp ");
+		reports.attachScreenshot(captureCurrentScreenshot());
+	}
+
+	public void changeSortingOptionAndValidation(String sortingOption, String FirstMovieName)
+			throws InterruptedException {
+
+		boolean sortingOptionFound = false;
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		int maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.activeSortOption.getText().equalsIgnoreCase(sortingOption)) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Sorting option " + sortingOption + " has been selected");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				sortingOptionFound = true;
+				break;
+
+			}
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			maxcount--;
+		}
+
+		maxcount = 20;
+		while (maxcount > 0 && !sortingOptionFound) {
+
+			if (vodFeatures.activeSortOption.getText().equalsIgnoreCase(sortingOption)) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Sorting option " + sortingOption + " has been selected");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				sortingOptionFound = true;
+				break;
+
+			}
+			sendKeyMultipleTimes("UP", 1, 1000);
+			maxcount--;
+		}
+
+		if (!sortingOptionFound) {
+			FailTestCase(sortingOption + " option is not availiable in sorting pannel");
+		}
+		RentMovie rentMovie = new RentMovie(driver);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (rentMovie.currentSelectedMovieName.getText().equalsIgnoreCase(FirstMovieName)) {
+			reports.log(LogStatus.PASS, "Movie list has been updated. First movie is " + FirstMovieName);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Movie list is not updated Acutal First Movie Name : "
+					+ rentMovie.currentSelectedMovieName.getText() + " expected First Movie Name : " + FirstMovieName);
+		}
+
+	}
 }
