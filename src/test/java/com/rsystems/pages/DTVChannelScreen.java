@@ -60,6 +60,8 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.RecordingElements.epgGuideElement)
 	public WebElement epgGuide;
 
+	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.infoBanner)
+	public WebElement infoBanner;
 	
 
 	@FindAll({ @FindBy(className = ObjectRepository.MiniEPGScreen.actionItemList) })
@@ -141,6 +143,7 @@ public class DTVChannelScreen extends TestInitization {
 
 	public void navigateToFilmScreenAndRentMovie(String parentCategory, String movieName) throws InterruptedException {
 
+		reports.log(LogStatus.PASS, "Navigate to HUb page");
 		setApplicationHubPage(2);
 		int maxRetryCount = 20;
 		RentMovie rentMovie = new RentMovie(driver);
@@ -350,14 +353,17 @@ public class DTVChannelScreen extends TestInitization {
 	}
 
 	public void openCutvEnableChannelFromTvGuide() throws InterruptedException {
+		
+		reports.log(LogStatus.PASS, "Open TV Guide and navigate to CUTV Enabled channel.");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
-		reports.log(LogStatus.PASS, "Navigae to CUTV Enabled action list from tv guide");
-		sendKeySequence("ENTER", 1000, "televisie");
 		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Navigae to CUTV Enabled channel action list from tv guide");
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));		
+		sendKeySequence("ENTER", 1000, "televisie");
 		reports.log(LogStatus.PASS, "Navigate to watch movie");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
 	}
 
 	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {

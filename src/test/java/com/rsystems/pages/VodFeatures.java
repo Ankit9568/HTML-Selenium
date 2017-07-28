@@ -186,13 +186,17 @@ public class VodFeatures extends TestInitization {
 		isDisplayed(pinContainer, "Pin Container");
 
 		sendNumaricKeys(Integer.parseInt(pinNumber));
+		// for auto switch to next page 
+		Thread.sleep(2000);
+		reports.log(LogStatus.PASS, "Navite to Movie");
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
-
-		reports.log(LogStatus.PASS, "Moving back to the Menu screen");
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		
+		reports.log(LogStatus.PASS, "Navigate back to the Menu screen");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 	}
@@ -234,10 +238,10 @@ public class VodFeatures extends TestInitization {
 	public void validateMovieRentedAndPlay(String movieTitle) throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-
+		reports.log(LogStatus.PASS, "Navigate to the VOD rental Folder");
 		setApplicationHubPage(2);
 
-		reports.log(LogStatus.PASS, "Navigate to the VOD rental Folder");
+		
 		sendKeySequence("LEFT,ENTER", 1000, "mijn bibliotheek");
 		sendKeyMultipleTimes("LEFT", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -255,8 +259,19 @@ public class VodFeatures extends TestInitization {
 
 				reports.log(LogStatus.PASS, "Movie succsesfully rented");
 				reports.attachScreenshot(captureCurrentScreenshot());
-				sendKeyMultipleTimes("ENTER", 2, 1000);
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				
+				reports.log(LogStatus.PASS, "Click on Watch Option");
+				sendKeyMultipleTimes("ENTER", 1, 5000);
+				reports.attachScreenshot(captureCurrentScreenshot());
+				
+				reports.log(LogStatus.PASS, "Validating movie is open or not.");
+				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 				driver.switchTo().frame(getCurrentFrameIndex());
+				isDisplayed(dtvChannelScreen.infoBanner, "Info banner ");
+				
+				sendKeyMultipleTimes("ENTER", 1, 6000);
+				Thread.sleep(4000);
 				new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 				reports.log(LogStatus.PASS, "Movie " + movieTitle + " found in Renterd Folder and play sucessfully");
 				reports.attachScreenshot(captureCurrentScreenshot());

@@ -6,7 +6,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
-import com.rsystems.config.ObjectRepository.FilmsScreen;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.pages.RentMovie;
@@ -514,10 +513,11 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 		dtvChannelScreen.pressPauseButtonAndValidation();
-		dtvChannelScreen.pressPlayButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
 		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
 
+		reports.log(LogStatus.PASS, "Navigate to action list screen.");
 		TestInitization.sendKeySequence("ENTER", 1000, "televisie");
 
 		isDisplayed(dtvChannelScreen.backToLive, "Back to live option");

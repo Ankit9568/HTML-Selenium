@@ -120,6 +120,7 @@ public class ObjectRepository {
 		public static final String rewindBtn = "rewind";
 		public static final String errorMsg = "error-message";
 		public static final String forward="forward";
+		public static final String infoBanner = "player_controls";
 	}
 
 	public static class ZapListPage {
