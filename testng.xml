@@ -11,7 +11,7 @@
 	<class name="com.rsystems.test.EPGTestCases">
 	<methods>
 	<include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
-	<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+	<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
 	<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
 	<include name="tc_BCEPGHPG01_epg_cancel_setting" />
 	<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
@@ -26,7 +26,7 @@
 	<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
 	<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
 	<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
-	<include name="tc_BCDTVHP0801_epg_hot_key" />
+	<include name="tc_BCDTVHP0801_epg_hot_key" /> -->
 	</methods>
 	</class>
 	</classes>
