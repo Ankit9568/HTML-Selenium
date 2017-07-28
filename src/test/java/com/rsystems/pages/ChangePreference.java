@@ -56,21 +56,27 @@ public class ChangePreference extends TestInitization
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		String currentStatusLanguage=position.getText();
 	    System.out.println(currentStatusLanguage +" " +language);
-		if(!currentStatusLanguage.equalsIgnoreCase(language))
+	    
+	    if(currentStatusLanguage.equalsIgnoreCase(language))
+	    {
+	      reports.log(LogStatus.PASS, "No changes required. Already " + language + " is set");
+	      reports.attachScreenshot(captureCurrentScreenshot());
+	      return;
+	    }
+	    else if(!currentStatusLanguage.equalsIgnoreCase(language))
 		{
 			TestInitization.sendKeyMultipleTimes("RIGHT", 1, 2000); 
 			TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
 			System.out.println("title "+confirm.getText());
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			reports.attachScreenshot(captureCurrentScreenshot());
 			TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
 			reports.log(LogStatus.PASS, "Language changed to "+ language);
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+			reports.attachScreenshot(captureCurrentScreenshot());
 			ProximusContext.setLanguage(language);
 		}
 		else
 		{
-		 System.out.println("No changes required. Already " + language + " is set");
-		 reports.log(LogStatus.FAIL, "Either the language you have entered is not in the list or its a default setting language");
+		 FailTestCase("The Language you have entered is not in the list");
 		 reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
     }

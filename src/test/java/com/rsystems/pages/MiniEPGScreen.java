@@ -888,8 +888,10 @@ public class MiniEPGScreen extends TestInitization {
 		HashMap<Integer, Long> cutvChanel = null;
 		launchDTV(true);
 		String screenTitle = TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		cutvChanel = getCUTVChannelMinRemainingTime();
+		
 		System.out.println(cutvChanel.toString());
 		long minValue = Integer.MAX_VALUE;
 		int channelKeyWithMinBuffer = 0;
@@ -931,14 +933,14 @@ public class MiniEPGScreen extends TestInitization {
 
 		driver.switchTo().defaultContent();
 		System.out.println(headerTime.getText().split(" ")[4].trim());
-		System.out.println(timingOftheNextProgram.split(">")[1].trim());
+		System.out.println(timingOftheNextProgram.split(">")[0].trim());
 
 		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
-		 while(!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim()))
-		    {
-		    	sendKeyMultipleTimes("LEFT", 1, 500);
-		    	sendKeyMultipleTimes("RIGHT", 1, 500);
-		    }
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim())) {
+			sendKeyMultipleTimes("LEFT", 1, 500);
+			sendKeyMultipleTimes("RIGHT", 1, 500);
+		}
+
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -948,15 +950,15 @@ public class MiniEPGScreen extends TestInitization {
 		System.out.println("Program Time :" + timingasPerNextProgram);
 
 		reports.log(LogStatus.PASS, "Verify whether the future program is getting updated or not");
-		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)
-				&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) {
-			reports.log(LogStatus.PASS,
-					"Expected next title of the program " + nextProgramTitleoftheScreen + "Current title of the program"
-							+ nextTitleOfTheProgram + "Timing as per next program" + timingasPerNextProgram
-							+ "Timing as on the Next program is " + timingOftheNextProgram + "");
+		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) 
+		{ 
+			reports.log(LogStatus.PASS,"Expected next title of the program:::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Future Program is not getting updated");
+		} 
+		else 
+		{
+			FailTestCase(" Expected next title of the program::::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 	}

@@ -46,4 +46,37 @@ public class VodFeaturesTestCase extends TestInitization
 		vod.rentalVodDeatils();
 	}
 	 
+	
+	// Verifying the Poster is getting changed when a new VOD is added to the category	
+    @Test
+	public void tc_StoreEvolutionDefaultPosterLeafCategory() throws InterruptedException
+	{
+		VodFeatures vod = new VodFeatures(driver);
+		vod.storeEvolutionDefaultPosterOfLeafCategory();
+	}
+	
+// Verifying the poster is getting changed when a new poster is added for NL and FR    
+	@Test
+	public void tc_StoreEvolutionPosterleafCategory() throws InterruptedException
+	{
+		VodFeatures vod = new VodFeatures(driver);
+		vod.storeEvolutionPosterLeafCategory();
+	}
+	
+// Verifying whether a default poster is getting changed when there is no picture under category and VOD	
+   @Test
+	public void tc_storeEvolutionDefaultposternonleafCategory() throws InterruptedException
+	{
+		VodFeatures vod = new VodFeatures(driver);
+		vod.storeEvolutionDefaultposternonleafCategory();
+	}
+   
+//Checking for the non-leaf category where there is a different poster for NL & FR   
+   @Test
+   public void tc_StoreEvolutionPosternonleafCategory() throws InterruptedException
+   {
+	   VodFeatures vod = new VodFeatures(driver);
+	   vod.storeEvolutionPosternonleafCategory();
+   }
 }
+

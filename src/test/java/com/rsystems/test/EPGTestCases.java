@@ -1,20 +1,13 @@
 package com.rsystems.test;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.ChangePreference;
-import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.EpgScreen;
-import com.rsystems.pages.MiniEPGScreen;
-import com.rsystems.pages.RecordingScreen;
 import com.rsystems.utils.TestInitization;
-import com.rsystems.utils.Unicode;
 
 public class EPGTestCases extends TestInitization {
 

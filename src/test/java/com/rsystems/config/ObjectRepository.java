@@ -197,6 +197,8 @@ public class ObjectRepository {
 		public static final String leftPannelPosition = "//div[@id='dStoreRightSection']/../div[1]";
 		public static final String activeSortOption = "//div[@class='cSortOption cActiveSortOption']/span[1]";
 		public static final String topMovieHeading = "flavour-title";
+		public static final String filmsCategoryPoster="//ul[@id='focusedItemContainer']/li[2]/img";
+		public static final String leafPoster="//*[@id='dItemImageHalf_00']";
 	}
 
 	public static class HotKeys {
