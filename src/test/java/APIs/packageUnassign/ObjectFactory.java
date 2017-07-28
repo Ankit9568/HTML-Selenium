@@ -81,7 +81,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SubscriberAPIType }{@code >}}*
+     * Create an instance of {@link JAXBElement }{@code <}{@link SubscriberAPIType }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "SubscriberAPI")
