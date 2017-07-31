@@ -54,7 +54,7 @@ public class TestInitization {
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-	private static String executionReportPath = System.getProperty("user.dir") + "/ExecutionReports/ExecutionReport_"
+	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\ExecutionReport_"
 			+ formatter.format(cald.getTime()).toString();
 	private static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
@@ -62,11 +62,11 @@ public class TestInitization {
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
-		String extentReportFileName = "report_" + formatter.format(cald.getTime()).toString() + ".html";
-		new File(executionReportPath).mkdirs();
-		String extentReportPath = new File(executionReportPath + "/" + extentReportFileName).getAbsolutePath();
-		String seleniumLogs = new File(executionReportPath + "/Logs/Selenium.log").getAbsolutePath();
-		String applicationLogs = new File(executionReportPath + "/Logs/Application.log").getAbsolutePath();
+		String extentReportFileName = "index.html";
+		new File(currentExecutionReportPath).mkdirs();
+		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
+		String seleniumLogs = new File(currentExecutionReportPath + "/Logs/Selenium.log").getAbsolutePath();
+		String applicationLogs = new File(currentExecutionReportPath + "/Logs/Application.log").getAbsolutePath();
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
@@ -153,10 +153,11 @@ public class TestInitization {
 	}
 
 	@AfterSuite
-	public void suiteEndReached() {
+	public void suiteEndReached() throws IOException {
 
 		log.info("Logger Info:: Inside suiteEndReached Method");
 		driver.quit();
+		new ReportGeneration().dashBoardGenerator();
 
 	}
 
@@ -174,7 +175,7 @@ public class TestInitization {
 		// formatter.format(cald.getTime()).toString());
 		String captureFileName = currentMethodName + formatter.format(cald.getTime()).toString() + ".jpg";
 
-		captureFilePath = executionReportPath + "/screenshots" + "/" + captureFileName;
+		captureFilePath = currentExecutionReportPath + "/screenshots" + "/" + captureFileName;
 
 		// System.out.println("Image to be captured as :: " + captureFilePath);
 		// log.info("Image to be captured as :: " + captureFilePath);
@@ -714,7 +715,7 @@ public class TestInitization {
 		setApplicationHubPage(1);
 	}
 
-	private static Properties getUpdatedProptiesFile() {
+	public static Properties getUpdatedProptiesFile() {
 		Properties PR = new Properties();
 		FileInputStream FI;
 		try {
