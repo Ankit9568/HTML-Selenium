@@ -17,7 +17,11 @@ public class ReportGeneration {
 
 	private String generateOptionsValue(final File folder) throws IOException {
 
-		String buildVersion = TestInitization.getUpdatedProptiesFile().getProperty("BuildVersion");
+		String buildVersion = null;
+		buildVersion = System.getProperty("BuildVersion");
+		if (buildVersion == null || buildVersion.contentEquals("")) {
+			buildVersion = TestInitization.getUpdatedProptiesFile().getProperty("BuildVersion");
+		}
 
 		String optionValues = "";
 		for (File folder1 : folder.listFiles()) {

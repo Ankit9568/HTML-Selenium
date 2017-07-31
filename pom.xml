@@ -116,7 +116,11 @@
 					<suiteXmlFiles>
 						<!-- TestNG suite XML files -->
 						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
+					</suiteXmlFiles>                               
+                    <systemPropertyVariables>
+                             <browserName>${BuildVersion}</browserName>
+                   </systemPropertyVariables>
+					
 				</configuration>
 			</plugin>
 		</plugins>
