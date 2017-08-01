@@ -115,7 +115,7 @@
 				<configuration>
 					<suiteXmlFiles>
 						<!-- TestNG suite XML files -->
-						<suiteXmlFile>testng.xml</suiteXmlFile>
+						<suiteXmlFile>BVTSuite.xml</suiteXmlFile>
 					</suiteXmlFiles>                               
                     <systemPropertyVariables>
                              <BuildVersion>${BuildVersion}</BuildVersion>
