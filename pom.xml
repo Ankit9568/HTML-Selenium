@@ -118,7 +118,8 @@
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>                               
                     <systemPropertyVariables>
-                             <browserName>${BuildVersion}</browserName>
+                             <BuildVersion>${BuildVersion}</BuildVersion>
+                             <STBIP>${STBIP}</STBIP>
                    </systemPropertyVariables>
 					
 				</configuration>

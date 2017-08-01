@@ -54,8 +54,12 @@ public class TestInitization {
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\ExecutionReport_"
-			+ formatter.format(cald.getTime()).toString();
+
+	public static String currentExecutionFoldername = "ExecutionReport_" + formatter.format(cald.getTime()).toString();
+
+	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
+			+ currentExecutionFoldername;
+
 	private static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
 
@@ -529,7 +533,13 @@ public class TestInitization {
 			// Start WebDriver by reusing existing widget UI
 			capability.setCapability("browserStartWindow", "*");
 			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-			String stbIP = PR.getProperty("STBIP");
+			
+			String stbIP = null;
+			stbIP = System.getProperty("STBIP");
+			if (stbIP == null || stbIP.contentEquals("")) {
+				stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
+			}
+			
 			driver = new RemoteWebDriver(new URL("http://" + stbIP + ":9517"), capability);
 			// driver = new RemoteWebDriver(new
 			// URL("http://10.67.196.111:9517"), capability);
@@ -728,7 +738,5 @@ public class TestInitization {
 
 		return PR;
 	}
-
-
 
 }

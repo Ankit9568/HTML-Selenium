@@ -53,7 +53,7 @@ public class ReportGeneration {
 
 				+ "<base target='_blan'>" +
 
-				"<iframe id='main_iframe'" + "src='" + TestInitization.currentExecutionReportPath + "\\index.html'>"
+				"<iframe id='main_iframe'" + "src='./" +TestInitization.currentExecutionFoldername + "/index.html'>"
 				+ "</iframe>"
 
 				+ "<body>"
