@@ -337,7 +337,7 @@ public class EpgScreen extends TestInitization {
 			List<WebElement> listOfPrgrm = chnl.findElements(By.xpath("./li[contains(@class,'program')]"));
 			System.out.println("list of program" + listOfPrgrm.size());
 			for (WebElement program : listOfPrgrm) {
-				WebElement we = program.findElement(By.xpath("./div/p[@class='programTitle']"));
+				WebElement we = program.findElement(By.xpath("./div/p[contains(@class,'programTitle')]"));
 
 				if (expectedFontSize.equalsIgnoreCase(we.getCssValue("font-size"))
 						&& expectedFontFamily.equalsIgnoreCase(we.getCssValue("font-family"))

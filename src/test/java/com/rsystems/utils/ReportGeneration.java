@@ -66,8 +66,7 @@ public class ReportGeneration {
 
 				+ "      <div class='col-md-4' id='dropdownDiv' div style='position: fixed; bottom: 100%; top: 40px; width:20%; >"
 				+ "<form>" + " <fieldset>" + " <div class='form-group'>" + "<form name='change'>"
-				+ "  <SELECT NAME='options' id='ddMainMenu'>" + "<option selected = 'true'> Select Report </option>"
-
+				+ "  <SELECT NAME='options' id='ddMainMenu'>" 
 				+ optionValues
 
 				+ "</SELECT>" + " </form> " + "</div>" + "</fieldset>" + " </form>" + "</div>" + " </div>" + "</main>"

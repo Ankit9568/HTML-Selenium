@@ -63,6 +63,7 @@ public class TestInitization {
 	private static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
 
+	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
