@@ -36,6 +36,8 @@ public class ReportGeneration {
 	}
 
 	private void createDashboardHtml(String optionValues) throws IOException {
+		
+		System.out.println("Trying to create dashboard  report");
 		FileWriter fw = null;
 		BufferedWriter bw = null;
 		String dashboardHtml = "<!DOCTYPE html>" + "<html lang='en'><head><style type'text/css'>"
