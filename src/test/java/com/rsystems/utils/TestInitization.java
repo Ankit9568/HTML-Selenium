@@ -63,12 +63,13 @@ public class TestInitization {
 	private static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
 
-	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
+		new File(currentExecutionReportPath + "/Logs").mkdirs();
+		
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(currentExecutionReportPath + "/Logs/Selenium.log").getAbsolutePath();
 		String applicationLogs = new File(currentExecutionReportPath + "/Logs/Application.log").getAbsolutePath();
@@ -161,9 +162,9 @@ public class TestInitization {
 	public void suiteEndReached() throws IOException {
 
 		log.info("Logger Info:: Inside suiteEndReached Method");
-		driver.quit();
+		System.out.println("Trying to quit webdriver");
 		new ReportGeneration().dashBoardGenerator();
-
+		driver.quit();
 	}
 
 	public static String captureCurrentScreenshot() throws InterruptedException {
@@ -189,7 +190,6 @@ public class TestInitization {
 		try {
 			FileUtils.copyFile(srcFile, new File(captureFilePath));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Exception while taking screenshot");
 			log.info("Exception while taking screenshot");
 
@@ -534,13 +534,13 @@ public class TestInitization {
 			// Start WebDriver by reusing existing widget UI
 			capability.setCapability("browserStartWindow", "*");
 			capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-			
+
 			String stbIP = null;
 			stbIP = System.getProperty("STBIP");
 			if (stbIP == null || stbIP.contentEquals("")) {
 				stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
 			}
-			
+
 			driver = new RemoteWebDriver(new URL("http://" + stbIP + ":9517"), capability);
 			// driver = new RemoteWebDriver(new
 			// URL("http://10.67.196.111:9517"), capability);
