@@ -85,7 +85,7 @@ public class TestInitization {
 		
 		Properties props = new Properties();
 		props.load(new FileInputStream(System.getProperty("user.dir")
-				+ "\\src\\test\\java\\com\\rsystems\\log4j.properties"));
+				+ "\\src\\test\\java\\log4j.properties"));
 		PropertyConfigurator.configure(props);
 		
 		reports.init(extentReportPath, true);
