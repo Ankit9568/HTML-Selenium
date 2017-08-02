@@ -69,16 +69,10 @@ public class TestInitization {
 
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
-		new File(currentExecutionReportPath + "/Logs").mkdirs();
-		new File(currentExecutionReportPath + "/Logs/Selenium.log").createNewFile();
-		new File(currentExecutionReportPath + "/Logs/Application.log").createNewFile();
-
+		
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(currentExecutionReportPath + "/Logs/Selenium.log").getAbsolutePath();
 		String applicationLogs = new File(currentExecutionReportPath + "/Logs/Application.log").getAbsolutePath();
-
-		System.out.println("Selenium logs path " + seleniumLogs);
-		System.out.println("ApplicationLogs log path " + applicationLogs);
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
