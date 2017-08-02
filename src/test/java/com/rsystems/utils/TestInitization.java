@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -81,7 +82,8 @@ public class TestInitization {
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
-
+		BasicConfigurator.configure();
+		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
