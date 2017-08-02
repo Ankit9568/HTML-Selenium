@@ -1,4 +1,6 @@
 package com.rsystems.test;
+import java.awt.AWTException;
+
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;

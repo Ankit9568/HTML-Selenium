@@ -16,8 +16,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -82,7 +82,11 @@ public class TestInitization {
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
-		BasicConfigurator.configure();
+		
+		Properties props = new Properties();
+		props.load(new FileInputStream(System.getProperty("user.dir")
+				+ "\\src\\test\\java\\com\\rsystems\\log4j.properties"));
+		PropertyConfigurator.configure(props);
 		
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
