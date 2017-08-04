@@ -78,23 +78,12 @@
 					<include name="tc_hub_navigation_asset_line" />
 					<include name="tc_sf001_hub" />
 					<include name="tc_hub_asset_line_in_hub" />
-
 				</methods>
 			</class>
 		</classes>
 	</test>
 
 
-	<test name="Mini EPG Test cases ">
-		<classes>
-			<class name="com.rsystems.test.MiniEPGTestCase">
-				<methods>
-					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
-					<include name="tc_mini_epg_on_tstv" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 
 	<!-- Divide Test case in two part -->
 
@@ -114,6 +103,7 @@
 					<include name="Pause_LiveTV_trickplay" />
 					<include name="tc_BCVODVD0130_VOD_FOD" />
 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
 				</methods>
 			</class>
 		</classes>
@@ -292,6 +282,9 @@
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI" />
 					<include
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII" />
+						
+					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
+					<include name="tc_mini_epg_on_tstv" />
 				</methods>
 			</class>
 		</classes>
@@ -300,14 +293,14 @@
 	<!-- Sprint 3 -->
 
 	<test name="UnAssingedSTBTestCases">
-	<classes>
-		<class name="com.rsystems.test.UnAssingedSTBTestCases">
-			<methods>
-				<include name="tc_BCCOMML0210_LANG007_Assignment" />
-			</methods>
-		</class>
-	</classes>
-</test>
+		<classes>
+			<class name="com.rsystems.test.UnAssingedSTBTestCases">
+				<methods>
+					<include name="tc_BCCOMML0210_LANG007_Assignment" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 	<!-- When no package assign -->
 	<!-- <test name="Hub Test cases "> -->
@@ -320,16 +313,6 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<!-- When PLTV package Not assign -->
-	<test name="Hub Test cases ">
-	<classes>
-		<class name="com.rsystems.test.DTVChannelTestCase">
-			<methods>
-				<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
-			</methods>
-		</class>
-	</classes>
-</test>
-	
+
 </suite>
 
