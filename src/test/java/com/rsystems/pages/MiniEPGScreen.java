@@ -142,6 +142,12 @@ public class MiniEPGScreen extends TestInitization {
 
 	@FindBy(how = How.ID,using = ObjectRepository.RcArrowKey.notificationMsg)
 	public WebElement notificationMsg;
+		
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.logo)
+	public WebElement logo;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.programTiming)
+	public WebElement programTiming;
 	
 	public void launchDTV(boolean hotKey) throws InterruptedException {
 		if (hotKey) {
@@ -863,11 +869,11 @@ public class MiniEPGScreen extends TestInitization {
 
 		driver.switchTo().defaultContent();
 		System.out.println(headerTime.getText().split(" ")[4].trim());
-		System.out.println(timingOftheNextProgram.split(">")[1].trim());
+		System.out.println(timingOftheNextProgram.split(">")[0].trim());
 
 		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
 		while (!headerTime.getText().split(" ")[4].trim()
-				.equalsIgnoreCase(timingOftheNextProgram.split(">")[1].trim())) {
+				.equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim())) {
 			sendKeyMultipleTimes("LEFT", 1, 500);
 			sendKeyMultipleTimes("RIGHT", 1, 500);
 		}
@@ -2217,4 +2223,597 @@ public class MiniEPGScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(onGoingRecordingIcon, "On Going Recording Icon on Past Tile Post recording timespan");
 	}
+	
+	public void miniEPGMiniEPGonzaplistNottunedCUTVdisabledchannel() throws InterruptedException
+	{
+		//Pressing Up arrow will open Zaplist and verifying the focused tuned channel
+		
+		launchDTV(true);
+		String zapTitle = TestInitization.getExcelKeyValue("screenTitles","ZapList","name_nl");
+		String cutvChannel  = TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		String miniEPGTitle = getExcelKeyValue("screenTitles","LiveTV","name_nl");
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(cutvChannel));
+		reports.log(LogStatus.PASS, "Pressing up arrow to invoke the zaplist");
+	    sendKeySequence("UP", 1000, zapTitle);
+	    launchDTV(true);
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(cutvChannel));
+		//Pressing down arrow to navigate to CUTV disabled channel
+		reports.log(LogStatus.PASS, "Pressing Down arrow to navigate to CUTV disabled channel");
+		int maxTry = 20;
+		while (maxTry > 0) {
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
+			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() == 0) {
+				reports.log(LogStatus.PASS, "CUTV Disabled Channel Found");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				break;
+			}
+			maxTry -=1;
+		}
+		reports.log(LogStatus.PASS, "Navigate to Mini EPG screen");
+		sendKeySequence("LEFT",1,miniEPGTitle);		
+		//Verifying the Titles of the miniEPG screen
+		verifyTitleOfMiniEPGScreen();
+	}		
+	
+	public void miniEPGMiniEPGonzaplistNottunedCUTVdisabledchannelPartII() throws InterruptedException
+	{
+
+		//Navigate to Zaplist screen
+		String zapTitle = TestInitization.getExcelKeyValue("screenTitles", "ZapList", "name_nl");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+
+		reports.log(LogStatus.PASS, "Navigate to Zaplist screen");
+		sendKeySequence("UP", 1, zapTitle);
+
+		//Navigate to miniEpg screen
+		reports.log(LogStatus.PASS, "Navigate to MiniEpg screen");
+		sendKeySequence("LEFT",1,getExcelKeyValue("screenTitles","LiveTV","name_nl"));
+		//Pressing back button will return to Zaplist and verifying the same
+
+		reports.log(LogStatus.PASS, "Pressing Back button will navigate to Zaplist screen");
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+		ZapList zar = new ZapList(driver);
+		driver.switchTo().defaultContent();
+		String screenTitileofThePage=zar.screenTitle.getText();
+		System.out.println(screenTitileofThePage);
+		if(zapTitle.equalsIgnoreCase(screenTitileofThePage))
+		{
+			reports.log(LogStatus.PASS, "Reached to the zaplist page");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not navigate to zaplist");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Pressing Back button from Zaplist screen will navigate to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 500);
+		DTVChannelScreen dtvchannel = new DTVChannelScreen(driver);
+		dtvchannel.pressPauseButtonAndValidation();
+	}
+	
+	
+	public void miniEPGMiniEPGTSTVfinishedAiringCUTVdisabledChannel_PartI() throws InterruptedException, ParseException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);		
+		HashMap<Integer,Long> cutvChanel = getCUTVDisabledChannelMinRemainingTime();
+		System.out.println(cutvChanel.toString());
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+
+		//Pause TV for 
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		Thread.sleep(6000);
+
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(cutvChanel.get(channelKeyWithMinBuffer)*6000);
+		dtvChannelScreen.pressRewindButtonAndValidation();
+
+		Thread.sleep(1800);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		//verifying the TV grid title from extreme left & extreme right
+
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		verifyTitleOfMiniEPGScreen();
+	}
+	
+	public void miniEPGMiniEPGTSTVfinishedAiringCUTVdisabledChannel_PartII() throws InterruptedException, ParseException 
+	{
+		navigateLeftRightToVerifyFutureProgrammeCUTVdisabled();	
+	}
+	
+	
+	//Left Right Navigation for CUTV enabled
+	public void navigateLeftRightToVerifyFutureProgrammeCUTVEnabled() throws InterruptedException, ParseException
+	{
+		HashMap<Integer, Long> cutvChanel = null;
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		cutvChanel = getCUTVChannelMinRemainingTime();
+		
+		System.out.println(cutvChanel.toString());
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+
+		reports.log(LogStatus.PASS, "Pressing RIGHT key will reach to the MiniEPG Screen");
+		sendKeySequence("RIGHT", 500, screenTitle);
+		sendKeyMultipleTimes("RIGHT", 1, 800);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String nextProgramTitleoftheScreen = programTitle.getText();
+		String timingOftheNextProgram = activeTileProgramTime.getText();
+		reports.log(LogStatus.PASS, "Pressing RIGHT key to get the Next Program Details");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		System.out.println("Next Program Title:: " + nextProgramTitleoftheScreen);
+		System.out.println("Program Time :" + timingOftheNextProgram);
+		reports.log(LogStatus.PASS, "Tune to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		reports.log(LogStatus.PASS, "Pressing Right key will navigate to EPG screen");
+		sendKeyMultipleTimes("RIGHT", 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().defaultContent();
+		System.out.println(headerTime.getText().split(" ")[4].trim());
+		System.out.println(timingOftheNextProgram.split(">")[0].trim());
+
+		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim())) {
+			sendKeyMultipleTimes("LEFT", 1, 500);
+			sendKeyMultipleTimes("RIGHT", 1, 500);
+		}
+		
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String nextTitleOfTheProgram = programTitle.getText();
+		System.out.println("nextTitleOfTheProgram ::" + nextTitleOfTheProgram);
+		String timingasPerNextProgram = activeTileProgramTime.getText();
+		System.out.println("Program Time :" + timingasPerNextProgram);
+
+		reports.log(LogStatus.PASS, "Verify whether the future program is getting updated or not");
+		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) 
+		{ 
+			reports.log(LogStatus.PASS,"Expected next title of the program:::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} 
+		else 
+		{
+			FailTestCase(" Expected next title of the program::::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}	
+		
+	}
+	
+	
+	//Left & Right navigation for CUTVdisabled
+	public void navigateLeftRightToVerifyFutureProgrammeCUTVdisabled() throws InterruptedException, ParseException
+	{
+		HashMap<Integer, Long> cutvChanel = null;
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		cutvChanel = getCUTVDisabledChannelMinRemainingTime();
+		
+		System.out.println(cutvChanel.toString());
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+
+		reports.log(LogStatus.PASS, "Pressing RIGHT key will reach to the MiniEPG Screen");
+		sendKeySequence("RIGHT", 1000, screenTitle);
+
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+
+		String nextProgramTitleoftheScreen = programTitle.getText();
+		System.out.println("Next Program Title:: " + nextProgramTitleoftheScreen);
+		String timingOftheNextProgram = activeTileProgramTime.getText();
+		System.out.println("Program Time :" + timingOftheNextProgram);
+		
+		reports.log(LogStatus.PASS, "Pressing RIGHT key to get the Next Program Details");
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+
+		reports.log(LogStatus.PASS, "Tune to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+	
+
+		reports.log(LogStatus.PASS, "Pressing Right key will navigate to EPG screen");
+		sendKeyMultipleTimes("RIGHT", 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().defaultContent();
+		System.out.println(headerTime.getText().split(" ")[4].trim());
+		
+        String nextProgramTime=timingOftheNextProgram.split(">")[0].trim();
+        System.out.println(nextProgramTime);
+		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(nextProgramTime)) {
+			sendKeyMultipleTimes("LEFT", 1, 500);
+			sendKeyMultipleTimes("RIGHT", 1, 500);
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String nextTitleOfTheProgram = programTitle.getText();
+		System.out.println("nextTitleOfTheProgram ::" + nextTitleOfTheProgram);
+		String timingasPerNextProgram = activeTileProgramTime.getText();
+		System.out.println("Program Time :" + timingasPerNextProgram);
+
+		reports.log(LogStatus.PASS, "Verify whether the future program is getting updated or not");
+		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) 
+		{ 
+			reports.log(LogStatus.PASS,"Expected next title of the program:::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} 
+		else 
+		{
+			FailTestCase(" Expected next title of the program::::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}	
+		
+	}
+	
+	
+
+	private HashMap<Integer, Long> getCUTVDisabledChannelMinRemainingTime() throws ParseException, InterruptedException {
+		long minBufferTime = 0;
+		ArrayList<Integer> cutvList = new ArrayList<Integer>();
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_1", "Values")));
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_2", "Values")));
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_3", "Values")));
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_4", "Values")));
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_5", "Values")));
+		cutvList.add(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel_6", "Values")));
+		HashMap<Integer, Long> channelTiming = new HashMap<Integer, Long>();
+		EpgScreen epgScreen = new EpgScreen(driver);
+		ArrayList<String> episodeName = new ArrayList<String>();
+		ArrayList<String> episodeTiming = new ArrayList<String>();
+		DateFormat sdf = new SimpleDateFormat("hh:mm");
+		for (Integer channel : cutvList) {
+			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+			sendNumaricKeys(channel);
+			Thread.sleep(2000);
+			sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			Date episodeTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim());
+			System.out.println(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim());
+			episodeName.add(epgScreen.focusElemntInEpg.getText());
+			episodeTiming.add(epgScreen.focusElementProgramTime.getText().trim());
+			System.out.println(epgScreen.focusElemntInEpg.getText());
+			driver.switchTo().defaultContent();
+			Date currentTime = sdf.parse(headerTime.getText().split(" ")[4].trim());
+			System.out.println(headerTime.getText().split(" ")[4].trim());
+			long diff = episodeTime.getTime() - currentTime.getTime();
+			long diffSec = diff / 1000;
+			minBufferTime = diffSec / 60;
+			if (minBufferTime > 2 && minBufferTime < 30) {
+				channelTiming.put(channel, minBufferTime);
+			}
+		}
+		return channelTiming;
+	}
+	
+	
+	public void miniEPG_ongoingAiring_CUTVenabledchannel() throws InterruptedException, ParseException
+	{
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles","LiveTV", "name_nl");
+		reports.log(LogStatus.PASS, "Navigate DTV to find CUTV enabled channel");
+		
+		HashMap<Integer,Long> cutvChanel = getCUTVChannelMinRemainingTime();
+		
+
+		System.out.println(cutvChanel.toString());
+		
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+		
+		//Pause TV for 
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(6000);
+		
+		
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		Thread.sleep(cutvChanel.get(channelKeyWithMinBuffer)*6000);
+		
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		Thread.sleep(1800);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		
+		sendKeyMultipleTimes("UP", 1, 2000);
+	
+		driver.switchTo().frame(getCurrentFrameIndex());
+		
+		isDisplayed(notificationMsg, "Notificaton Message");
+		
+		//cancel the program continuation
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		//Return to Live TV
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(2000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		
+		
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		//Right click will navigate to miniepg screen
+		sendKeySequence("RIGHT", 1000, screenTitle);
+		
+		//verifying the TV grid title from extreme left & extreme right
+		navigateToMiniEpgAndValidationTV_Gids();
+		
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		
+	}
+	
+	
+	public void miniEPG_ongoingAiring_CUTVenabledchannel_partII() throws InterruptedException, ParseException
+	{
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles","LiveTV","name_nl");
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Moving to MiniEPG screen");
+		sendKeySequence("RIGHT", 1, screenTitle);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(logo, "Previous Program logo");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTitle, "Previous program title");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTiming, "Previous program timing");
+		
+		
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(logo, "Current Program logo");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTitle, "Current program title");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTiming, "Current program timing");
+		
+		
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(logo, "Future Program logo");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTitle, "Future program title");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programTiming, "Future program timing");
+		
+		
+		//Navigating to MiniEPG untill the program ends
+		navigateLeftRightToVerifyFutureProgrammeCUTVEnabled();
+		
+		//Auto close miniEPG
+		Thread.sleep(1000);
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		dtv.pressPauseButtonAndValidation();
+	}
+	
+	public void mini_EPG_CUTV_ongoingAiring() throws InterruptedException, ParseException
+	{
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		launchDTV(true);
+		
+		HashMap<Integer,Long> cutvChanel = getCUTVChannelMinRemainingTime();
+		
+
+		System.out.println(cutvChanel.toString());
+		
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+		
+		//Pause TV for 
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(6000);
+		
+		
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		Thread.sleep(cutvChanel.get(channelKeyWithMinBuffer)*6000);
+		
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		Thread.sleep(1800);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		
+		sendKeyMultipleTimes("UP", 1, 2000);
+	
+		driver.switchTo().frame(getCurrentFrameIndex());
+		
+		isDisplayed(notificationMsg, "Zapping will interrupt TSTV warning message");
+		
+		//cancel the program continuation
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		//Return to Live TV
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(2000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		
+		//Right click will navigate to miniepg screen
+		sendKeySequence("RIGHT", 1000, screenTitle);
+		
+		//verifying the TV grid title from extreme left & extreme right
+		navigateToMiniEpgAndValidationTV_Gids();
+		
+	}
+	
+	
+	public void mini_EPG_CUTV_ongoingAiring_PartII() throws InterruptedException, ParseException
+	{
+		
+		//Navigating to MiniEPG untill the program ends
+		navigateLeftRightToVerifyFutureProgrammeCUTVEnabled();
+		
+		
+		//Waiting for 10 seconds 
+		reports.log(LogStatus.PASS, "Moving to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Moving to MiniEPG Screen");
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		Thread.sleep(10000);
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		reports.log(LogStatus.PASS, "To validate whether reached to MiniEPG screen or not");
+		dtv.pressPauseButtonAndValidation();
+	}
+	
+	public void miniEPG_TSTV_longfinishedairing_CUTVdisabledhannel() throws InterruptedException, ParseException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		String screenTitle = TestInitization.getExcelKeyValue("screenTitles","LiveTV", "name_nl");
+		HashMap<Integer,Long> cutvChanel = getCUTVDisabledChannelMinRemainingTime();
+		
+
+		System.out.println(cutvChanel.toString());
+		
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : cutvChanel.keySet()) {
+			Long value = cutvChanel.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+
+		// Opening Live TV
+		dtvChannelScreen.openLiveTV();
+
+		// Tuning to Channel
+		dtvChannelScreen.tuneToChannel(channelKeyWithMinBuffer);
+		
+		//Pause TV for 
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(6000);
+		
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		Thread.sleep(cutvChanel.get(channelKeyWithMinBuffer)*6000);
+		
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		Thread.sleep(1800);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		//Right click will navigate to miniepg screen
+		sendKeySequence("RIGHT", 1000, screenTitle);
+		
+		//verifying the TV grid title from extreme left & extreme right
+		verifyTitleOfMiniEPGScreen();
+
+		
+	}
+	
+	public void miniEPG_TSTV_longfinishedairing_CUTVdisabledhannel_PartII() throws InterruptedException, ParseException
+	{
+		navigateLeftRightToVerifyFutureProgrammeCUTVdisabled();
+		
+	}	
 }

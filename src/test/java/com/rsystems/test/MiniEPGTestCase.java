@@ -451,4 +451,99 @@ public class MiniEPGTestCase extends TestInitization {
 		 miniEPGScreen = new MiniEPGScreen(driver);
 		 miniEPGScreen.verifyMiniEPGLifeSpanOfScheduledRecording();
 	 }
+	 @Test
+	 public void tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMiniEPG()throws InterruptedException, ParseException 
+	 {
+
+		 MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.validateMiniEpgprogramAfterProgramEnded();
+
+	 }
+
+	 @Test
+	 public void tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTVdisabled() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGonzaplistNottunedCUTVdisabledchannel();
+	 }
+
+	 
+	 @Test
+	 public void tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTV_PartII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGonzaplistNottunedCUTVdisabledchannelPartII();
+	 }
+    
+	 
+	 @Test
+	 public void tc_77669_MiniEPG_finishedairingCUTV() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGTSTVfinishedAiringCUTVdisabledChannel_PartI();
+	 }
+	 
+	 @Test
+	 public void tc_77669_MiniEPG_finishedairingCUTV_PartII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPGMiniEPGTSTVfinishedAiringCUTVdisabledChannel_PartII();
+	 }
+	 
+	 
+
+
+	 @Test
+	 public void tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPG_ongoingAiring_CUTVenabledchannel();
+	 }
+
+	 
+	 
+	 @Test
+	 public void tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel_PartII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPG_ongoingAiring_CUTVenabledchannel_partII();
+	 }
+	 
+	 
+	 //Moving back to the current program previous program, restarting the same, return to zaplist , confirmation message should appear in the zaplist
+	 
+	 @Test
+	 public void tc_77671_Mini_EPG_CUTV_ongoingAiring() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.mini_EPG_CUTV_ongoingAiring();
+		 
+	 }
+	 
+	 
+	 //This test case is checking the successor program title after navigating in the Miniepg screen until the current program ends
+	 
+	 @Test
+	 public void tc_77671_Mini_EPG_CUTV_ongoingAiring_PartII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.mini_EPG_CUTV_ongoingAiring_PartII();
+		 
+	 }
+	 
+	 @Test
+	 public void tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPG_TSTV_longfinishedairing_CUTVdisabledhannel();
+		 
+	 }
+	 
+	 @Test
+	 public void tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII() throws InterruptedException, ParseException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.miniEPG_TSTV_longfinishedairing_CUTVdisabledhannel_PartII();
+		 
+	 }
 }

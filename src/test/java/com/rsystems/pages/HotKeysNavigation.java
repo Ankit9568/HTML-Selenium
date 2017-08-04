@@ -51,11 +51,20 @@ public class HotKeysNavigation extends TestInitization {
 	public boolean navigateToRadioScreen() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Returning to the Hub Screen");
 		TestInitization.setApplicationHubPage(2);
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to the Radio Screen");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel Number"); 
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(dtvChannelScreen.programTitle, "Program Title");
 		return true;
 	}
 
