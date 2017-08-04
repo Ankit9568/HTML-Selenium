@@ -5,6 +5,8 @@ import static org.testng.Assert.assertEquals;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -131,6 +133,16 @@ public class MiniEPGScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.previousProgramTitle)
 	public WebElement previousProgramTitle;
 
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.futureRecordingIcon)
+	public WebElement futureRecordingIcon;
+	
+	@FindBy(how = How.CLASS_NAME,using = ObjectRepository.RecordingElements.activeMenuItemElement)
+	public WebElement activeInfoMenuItem;
+
+	@FindBy(how = How.ID,using = ObjectRepository.RcArrowKey.notificationMsg)
+	public WebElement notificationMsg;
+	
 	public void launchDTV(boolean hotKey) throws InterruptedException {
 		if (hotKey) {
 			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
@@ -377,7 +389,8 @@ public class MiniEPGScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 
 		if (currentTimeTileTime.contentEquals(activeTileProgramTime.getText())) {
-			FailTestCase("Next to Live tile currently not in focous expected next to liveTile Time : " + currentTimeTileTime + " expected next to live time : " + activeTileProgramTime.getText());
+			FailTestCase("Next to Live tile currently not in focous expected next to liveTile Time : "
+					+ currentTimeTileTime + " expected next to live time : " + activeTileProgramTime.getText());
 		}
 
 		int maxRightCount = Integer
@@ -888,10 +901,10 @@ public class MiniEPGScreen extends TestInitization {
 		HashMap<Integer, Long> cutvChanel = null;
 		launchDTV(true);
 		String screenTitle = TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
-		
+
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		cutvChanel = getCUTVChannelMinRemainingTime();
-		
+
 		System.out.println(cutvChanel.toString());
 		long minValue = Integer.MAX_VALUE;
 		int channelKeyWithMinBuffer = 0;
@@ -936,7 +949,8 @@ public class MiniEPGScreen extends TestInitization {
 		System.out.println(timingOftheNextProgram.split(">")[0].trim());
 
 		reports.log(LogStatus.PASS, "Moving LEFT & RIGHT in the EPG screen untill the program ends");
-		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim())) {
+		while (!headerTime.getText().split(" ")[4].trim()
+				.equalsIgnoreCase(timingOftheNextProgram.split(">")[0].trim())) {
 			sendKeyMultipleTimes("LEFT", 1, 500);
 			sendKeyMultipleTimes("RIGHT", 1, 500);
 		}
@@ -950,14 +964,16 @@ public class MiniEPGScreen extends TestInitization {
 		System.out.println("Program Time :" + timingasPerNextProgram);
 
 		reports.log(LogStatus.PASS, "Verify whether the future program is getting updated or not");
-		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) 
-		{ 
-			reports.log(LogStatus.PASS,"Expected next title of the program:::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+		if (nextTitleOfTheProgram.equalsIgnoreCase(nextProgramTitleoftheScreen)
+				&& timingasPerNextProgram.equalsIgnoreCase(timingOftheNextProgram)) {
+			reports.log(LogStatus.PASS, "Expected next title of the program:::" + nextProgramTitleoftheScreen
+					+ "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::"
+					+ timingasPerNextProgram + "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		} 
-		else 
-		{
-			FailTestCase(" Expected next title of the program::::" + nextProgramTitleoftheScreen + "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::" + timingasPerNextProgram+ "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
+		} else {
+			FailTestCase(" Expected next title of the program::::" + nextProgramTitleoftheScreen
+					+ "Current title of the program::::" + nextTitleOfTheProgram + "Timing as per next program ::::"
+					+ timingasPerNextProgram + "Timing as on the Next program is ::::" + timingOftheNextProgram + "");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
@@ -1811,5 +1827,394 @@ public class MiniEPGScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Verifying Play button in Live TV");
 		dtvchannel.pressPauseButtonAndValidation();
 
+	}
+
+	public void verifyLongStayInProgramDetailsScreen() throws ParseException, InterruptedException {
+		String miniEPGExpectedscreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		String future = getExcelKeyValue("MiniEPGScreen", "Future", "name_nl");
+		String current = getExcelKeyValue("MiniEPGScreen", "InProgress", "name_nl");
+		long minBufferTime = 0;
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		HashMap<Integer, Long> channelTiming = findProgramWithMinRemainingTime(2, 30);
+		if (channelTiming.isEmpty()) {
+			DateFormat sdf = new SimpleDateFormat("hh:mm");
+			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+			sendNumaricKeys(47);
+			Thread.sleep(2000);
+			sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			Date episodeTime = sdf.parse(new EpgScreen(driver).focusElementProgramTime.getText().split(" ")[2].trim());
+			Thread.sleep(3000);
+			driver.switchTo().defaultContent();
+			Date currentTime = sdf.parse(headerTime.getText().split(" ")[4].trim());
+			System.out.println(headerTime.getText().split(" ")[4].trim());
+			long diff = episodeTime.getTime() - currentTime.getTime();
+			long diffSec = diff / 1000;
+			minBufferTime = diffSec / 60;
+			channelTiming.put(46, minBufferTime);
+		}
+		System.out.println(channelTiming);
+		long minValue = Integer.MAX_VALUE;
+		int channelKeyWithMinBuffer = 0;
+		for (Integer key : channelTiming.keySet()) {
+			Long value = channelTiming.get(key);
+			if (value < minValue) {
+				minValue = value;
+				channelKeyWithMinBuffer = key;
+			}
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(channelKeyWithMinBuffer);
+		Thread.sleep(3000);
+		reports.log(LogStatus.PASS, "Navigate to Mini EPG Screen");
+		sendKeySequence("RIGHT", 800, miniEPGExpectedscreenTitle);
+		// sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 500);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (activeZapBlock.getText().equalsIgnoreCase(future)) {
+			reports.log(LogStatus.PASS, "Press Right Key - Focus is on next Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Fcous should be on " + future);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		String episodeDuration = miniEPGEpisodeDuration.getText();
+		String episodeName = miniEPGChannelName.getText();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Wait in this screen till current program ends");
+		Thread.sleep(channelTiming.get(channelKeyWithMinBuffer) * 60000);
+		sendKeySequence("PAGE_DOWN", 800, miniEPGExpectedscreenTitle);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (activeZapBlock.getText().equalsIgnoreCase(current)
+				&& miniEPGEpisodeDuration.getText().equalsIgnoreCase(episodeDuration)) {
+			reports.log(LogStatus.PASS,
+					"Press Back Key - Mini EPG Screen getting displayed and Focus is on channel which is live"
+							+ episodeName);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase(
+					"Press Back Key - Mini EPG Screen should getting displayed and Focus is not on channel which is live");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		Thread.sleep(1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		System.out.println(imageName);
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Full Screen Video is playing successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+	}
+
+	public HashMap<Integer, Long> findProgramWithMinRemainingTime(int minTime, int maxTime)
+			throws ParseException, InterruptedException {
+		long minBufferTime = 0;
+		int noOfChannel = 20;
+		HashMap<Integer, Long> channelTiming = new HashMap<Integer, Long>();
+		EpgScreen epgScreen = new EpgScreen(driver);
+		ArrayList<String> episodeName = new ArrayList<String>();
+		ArrayList<String> episodeTiming = new ArrayList<String>();
+		DateFormat sdf = new SimpleDateFormat("hh:mm");
+		for (int i = 1; i <= noOfChannel; i++) {
+			sendNumaricKeys(i);
+			Thread.sleep(2000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			Date episodeTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim());
+			System.out.println(epgScreen.focusElementProgramTime.getText().split(" ")[2].trim());
+			episodeName.add(epgScreen.focusElemntInEpg.getText());
+			episodeTiming.add(epgScreen.focusElementProgramTime.getText().trim());
+			System.out.println(epgScreen.focusElemntInEpg.getText());
+			driver.switchTo().defaultContent();
+			Date currentTime = sdf.parse(headerTime.getText().split(" ")[4].trim());
+			System.out.println(headerTime.getText().split(" ")[4].trim());
+			long diff = episodeTime.getTime() - currentTime.getTime();
+			long diffSec = diff / 1000;
+			minBufferTime = diffSec / 60;
+			if (minBufferTime > minTime && minBufferTime < maxTime) {
+				channelTiming.put(i, minBufferTime);
+			}
+		}
+		return channelTiming;
+	}
+
+	public void verifyStayinFutureProgramDetailsScreen() throws InterruptedException {
+		String miniEPGExpectedscreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		String future = getExcelKeyValue("MiniEPGScreen", "Future", "name_nl");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(2);
+		Thread.sleep(5000);
+		// sendKeySequence("RIGHT", 1, miniEPGExpectedscreenTitle);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (activeZapBlock.getText().equalsIgnoreCase(future)) {
+			reports.log(LogStatus.PASS, "Press Right Key - Focus is on next Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Focus should be on " + future);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Wait in this screen for atleaset 15 min");
+		Thread.sleep(16 * 60000);
+		reports.log(LogStatus.PASS, "Press Back key - Mini EPG Screen should displayed");
+		sendKeySequence("PAGE_DOWN", 800, miniEPGExpectedscreenTitle);
+	}
+
+	public void verifyMiniEPGBehaviourOnCUTVDisabledChannel() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
+		String miniEPGExpectedTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		String miniEPGNowTitle = getExcelKeyValue("MiniEPGScreen", "InProgress", "name_nl");
+		String miniEPGPastTitle = getExcelKeyValue("MiniEPGScreen", "Previous", "name_nl");
+		String miniEPGFutureTitle = getExcelKeyValue("MiniEPGScreen", "Future", "name_nl");
+		boolean foundLiveTile = false;
+		dtvChannelScreen.openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
+			FailTestCase("Not Tuned to CUTV Disabled Channel");
+		} else {
+			reports.log(LogStatus.PASS, "Tune To CUTV Disabled Channel " + cutvChannelNumber);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		Thread.sleep(2000);
+		reports.log(LogStatus.PASS, "Navigate to Mini EPG");
+		TestInitization.sendKeySequence("RIGHT", 1000, miniEPGExpectedTitle);
+
+		navigateToMiniEpgAndValidateObject(highligheVideotitle, "Active tile title ");
+		navigateToMiniEpgAndValidateObject(videoPlayer, "Active tile video player ");
+		reports.log(LogStatus.PASS, "Validate Left tile position");
+		navigateToMiniEpgAndValidateObject(highlightVideoLeftTitle, "Left tile title ");
+		reports.log(LogStatus.PASS, "Validate right tile position");
+		navigateToMiniEpgAndValidateObject(highlightVideoRightTitle, "Right tile title ");
+
+		sendKeyMultipleTimes("LEFT", 2, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String episodeDuration = miniEPGEpisodeDuration.getText();
+		if (activeZapBlock.getText().equalsIgnoreCase(miniEPGPastTitle)) {
+			reports.log(LogStatus.PASS, "Press Left Key - Past Program Tile getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press Left Key - Past program tile should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		if (miniEPGEpisodeDuration.getText().equalsIgnoreCase(episodeDuration)) {
+			reports.log(LogStatus.PASS, "Press Left Key Again - Nothing happenss.Focus is on last focus tile");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press Left Key - Focus should be on last focus tile");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		if (activeZapBlock.getText().equalsIgnoreCase(miniEPGNowTitle)) {
+			reports.log(LogStatus.PASS, "Press RIGHT KEY - Current Program Tile getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press RIGHT KEY - Current Program Tile should displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		if (activeZapBlock.getText().equalsIgnoreCase(miniEPGFutureTitle)) {
+			reports.log(LogStatus.PASS, "Press RIGHT KEY - FUTURE Program Tile getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press RIGHT KEY - FUTURE Program Tile should displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Validate Right-far Tile is tv-gids");
+		validateFirstOrRightTile("RIGHT", "tv-gids", 25);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Press Left Key One By One until Live Tile getting displayed");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		while (!activeZapBlock.getText().equalsIgnoreCase(miniEPGNowTitle)) {
+			sendKeyMultipleTimes("LEFT", 1, 1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			if (activeZapBlock.getText().equalsIgnoreCase(miniEPGNowTitle)) {
+				foundLiveTile = true;
+			}
+		}
+		if (foundLiveTile) {
+			reports.log(LogStatus.PASS, "Live Tile getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase(":Live Tile not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		if (activeZapBlock.getText().equalsIgnoreCase(miniEPGPastTitle)) {
+			reports.log(LogStatus.PASS, "Prevoius Tile getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Previous Tile not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+		Thread.sleep(1000);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		System.out.println(imageName);
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Press BACK Key - Full Screen Video is playing successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+	}
+
+	public void verifyMiniEPGLifeSpanOfScheduledRecording() throws InterruptedException {
+		String zapListScreenTitle = getExcelKeyValue("screenTitles", "ZapList", "name_nl");
+		String miniEPGScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		String miniEPGFutureTitle = getExcelKeyValue("MiniEPGScreen", "Future", "name_nl");
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		sendNumaricKeys(46);
+		Thread.sleep(2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (notificationMsg.isDisplayed()) {
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			sendNumaricKeys(46);
+			Thread.sleep(2000);
+		}
+		Thread.sleep(2000);
+		reports.log(LogStatus.PASS, "Open Zap Screen");
+		sendKeySequence("UP", 1000, zapListScreenTitle);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.log(LogStatus.PASS, "Navigate to Not-tuned channel");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Open Mini EPG Screen");
+		sendKeySequence("RIGHT", 800, miniEPGScreenTitle);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (activeZapBlock.getText().equalsIgnoreCase(miniEPGFutureTitle)) {
+			reports.log(LogStatus.PASS, "Focus is on Future Tile");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Focus is not on Future Tile");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		String episodeDuration = miniEPGEpisodeDuration.getText().trim().split(" ")[0];
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime lt = LocalTime.parse(episodeDuration);
+		String date1 = df.format(lt.plusMinutes(-5));
+		String date2 = df.format(lt.plusMinutes(4));
+		System.out.println(date2);
+		System.out.println(date1);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Future Program Details Screen");
+		reports.log(LogStatus.PASS, "Schedule Recording on Future Episode");
+		if (activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen")) {
+			sendKeyMultipleTimes("ENTER", 1, 2000);
+			sendKeyMultipleTimes("ENTER", 1, 2000);
+			sendKeyMultipleTimes("ENTER", 1, 2000);
+			Thread.sleep(3000);
+		} else {
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			Thread.sleep(3000);
+		}
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(futureRecordingIcon, "Future Recording Icon");
+		sendKeyMultipleTimes("PAGE_DOWN", 2, 1000);
+		reports.log(LogStatus.PASS, "Navigate to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(46);
+		Thread.sleep(2000);
+		reports.log(LogStatus.PASS, "Open Zap Screen");
+		sendKeySequence("UP", 800, zapListScreenTitle);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.log(LogStatus.PASS, "Navigate to Not-tuned channel");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Open Mini EPG Screen");
+		sendKeySequence("RIGHT", 800, miniEPGScreenTitle);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(futureRecordingIcon, "Future Recording Icon on Future");
+		reports.log(LogStatus.PASS, "Navigate to Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(46);
+		Thread.sleep(2000);
+		driver.switchTo().defaultContent();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		System.out.println(headerTime.getText().split(" ")[4].trim());
+		reports.log(LogStatus.PASS, "Wait till pre-recording timespan");
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(date1)) {
+			System.out.println(headerTime.getText());
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		}
+		reports.log(LogStatus.PASS, "Open Zap Screen");
+		sendKeySequence("UP", 800, zapListScreenTitle);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.log(LogStatus.PASS, "Navigate to Not-tuned channel");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Open Mini EPG Screen");
+		sendKeySequence("RIGHT", 800, miniEPGScreenTitle);
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(onGoingRecordingIcon, "On Going Recording Icon on Future Tile Pre recording timespan");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(46);
+		Thread.sleep(2000);
+		driver.switchTo().defaultContent();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		System.out.println(headerTime.getText().split(" ")[4].trim());
+		reports.log(LogStatus.PASS, "Wait till start of program");
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(episodeDuration)) {
+			System.out.println(headerTime.getText());
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		}
+		sendKeySequence("UP", 800, zapListScreenTitle);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeySequence("RIGHT", 800, miniEPGScreenTitle);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(onGoingRecordingIcon, "On Going Recording Icon on Present Tile");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		sendNumaricKeys(46);
+		Thread.sleep(2000);
+		driver.switchTo().defaultContent();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		System.out.println(headerTime.getText().split(" ")[4].trim());
+		reports.log(LogStatus.PASS, "Wait till  post-recording timespan");
+		while (!headerTime.getText().split(" ")[4].trim().equalsIgnoreCase(date2)) {
+			System.out.println(headerTime.getText());
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeySequence("UP", 800, zapListScreenTitle);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeySequence("RIGHT", 800, miniEPGScreenTitle);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(onGoingRecordingIcon, "On Going Recording Icon on Past Tile Post recording timespan");
 	}
 }

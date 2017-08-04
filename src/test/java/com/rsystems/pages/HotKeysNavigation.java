@@ -13,7 +13,7 @@ import com.rsystems.utils.Unicode;
 
 public class HotKeysNavigation extends TestInitization {
 
-	static WebDriver driver;
+	 WebDriver driver;
 
 	public HotKeysNavigation(WebDriver driver) {
 		this.driver = driver;

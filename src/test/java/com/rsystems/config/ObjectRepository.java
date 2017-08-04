@@ -7,7 +7,6 @@ public class ObjectRepository {
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
-	
 	public static final String HubTVItem = "//li[@id='menuItem_1']";
 	public static final String HubLibraryItem = "//li[@id='menuItem_0']";
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
@@ -47,7 +46,7 @@ public class ObjectRepository {
 
 	public static class LibraryElements {
 		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
-		public static final String libraryCanvas="//*[@id='dCanvasUpLine']";
+		public static final String libraryCanvas = "//*[@id='dCanvasUpLine']";
 	}
 
 	public static class PIPElements {
@@ -59,7 +58,7 @@ public class ObjectRepository {
 	}
 
 	public static class RecordingElements {
-		
+
 		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
 		public static final String ChannelInfoImageXPath = "/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
@@ -96,7 +95,7 @@ public class ObjectRepository {
 		public static final String highlighedMovieCategory = "//li[@class='focusedItem current']/span";
 		public static final String currentSelectedMovieName = "selectedVodTitle";
 		public static final String rentOption = "item_rent";
-		
+
 	}
 
 	public static class LanguageChange {
@@ -119,7 +118,7 @@ public class ObjectRepository {
 		public static final String backToLive = "//div[@id='containerDiv']/div[text()='Terug naar leven']";
 		public static final String rewindBtn = "rewind";
 		public static final String errorMsg = "error-message";
-		public static final String forward="forward";
+		public static final String forward = "forward";
 		public static final String infoBanner = "player_controls";
 	}
 
@@ -155,7 +154,7 @@ public class ObjectRepository {
 		public static final String cutvIconOnZapTile = "//div[@class='focusBox']/ul/li[2]/div[@class='channel_details']/div/span[@class='cutv-icon']";
 		public static final String replaybleOrNoReplayableIcon = "//div[@class='focusBox']/ul/li[2]/div[@class='media-content']/div/span/img";
 		public static final String textWithDurationInEPG = "//div[@class='focusBox']/ul/li[2]/div[3]/span[@class='future_past']";
-		public static final String recordingIconMiniEpg  = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[@class='recording-icon ongoing']";
+		public static final String recordingIconMiniEpg = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[@class='recording-icon ongoing']";
 		public static final String cutvIconMiniEpg = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[contains(@class,'recording-icon')]/../span[2]/img";
 		public static final String hdratingIcon = "//div[@class='focusBox']/ul/li[2]/div[3]/div/span[1]/../span[@class = 'hd-rating']";
 		public static final String highligheVideotitle = "//li[@class='active']/span";
@@ -165,40 +164,41 @@ public class ObjectRepository {
 		public static final String activeTileProgramTime = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
 		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 		public static final String onGoingRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoing']";
-		public static final String previousProgramTitle="//*[@id='VH_0']/span";
-		public static final String centerTitle="//*[@id='VH_1']/span";
-		public static final String nextProgramTitle="//*[@id='VH_2']/span";
+		public static final String previousProgramTitle = "//*[@id='VH_0']/span";
+		public static final String centerTitle = "//*[@id='VH_1']/span";
+		public static final String nextProgramTitle = "//*[@id='VH_2']/span";
 		public static final String programDetailsScreen = "vodName";
 		public static final String actionItemList = "cItem";
 		public static final String recordingIconOnInfo = "programRecording";
-		public static final String programTitle="//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
-		    
+		public static final String programTitle = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
+		public static final String futureRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoingfuture']";
+
 	}
 
 	public static class Vod {
 		public static final String vodHeading = "vod-heading-main";
 		public static final String filmTitle = "poster-right-heading";
-		public static final String itemPrice="//*[@id='price-text']";
-		public static final String rowId="row_1";
-		public static final String menuText="//*[@id='main-hub-nav']";
-		public static final String actie="//*[@id='item_3']";
-		public static final String mubiPass="//*[@id='item_4']";
-		public static final String rows="row-active";
-		public static final String pinContainer="//*[@id='addPin']/div";
-		public static final String count="selectedVodPg";
-		public static final String container="focusedItemContainer";
-		public static final String forwardkey="//*[@id='rewind']";
-		public static final String movieName="//div[contains(@id,'item_')]/div[@class='poster-info']/h2";
-		public static final String dateTime="//*[@id='item_0_0']/div[2]/div";
-		public static final String duration="//*[@id='item_0_0']/div[2]/span";
-		public static final String totalItems="//*[@id='totalItems']";
-		public static final String lookOption="//*[@id='item_watch']";
+		public static final String itemPrice = "//*[@id='price-text']";
+		public static final String rowId = "row_1";
+		public static final String menuText = "//*[@id='main-hub-nav']";
+		public static final String actie = "//*[@id='item_3']";
+		public static final String mubiPass = "//*[@id='item_4']";
+		public static final String rows = "row-active";
+		public static final String pinContainer = "//*[@id='addPin']/div";
+		public static final String count = "selectedVodPg";
+		public static final String container = "focusedItemContainer";
+		public static final String forwardkey = "//*[@id='rewind']";
+		public static final String movieName = "//div[contains(@id,'item_')]/div[@class='poster-info']/h2";
+		public static final String dateTime = "//*[@id='item_0_0']/div[2]/div";
+		public static final String duration = "//*[@id='item_0_0']/div[2]/span";
+		public static final String totalItems = "//*[@id='totalItems']";
+		public static final String lookOption = "//*[@id='item_watch']";
 		public static final String highlightFilm = "//div[@id='rowContainer']/ul[1]/li[@class='active']/span[@id='store-left-title']";
 		public static final String leftPannelPosition = "//div[@id='dStoreRightSection']/../div[1]";
 		public static final String activeSortOption = "//div[@class='cSortOption cActiveSortOption']/span[1]";
 		public static final String topMovieHeading = "flavour-title";
-		public static final String filmsCategoryPoster="//ul[@id='focusedItemContainer']/li[2]/img";
-		public static final String leafPoster="//*[@id='dItemImageHalf_00']";
+		public static final String filmsCategoryPoster = "//ul[@id='focusedItemContainer']/li[2]/img";
+		public static final String leafPoster = "//*[@id='dItemImageHalf_00']";
 	}
 
 	public static class HotKeys {
@@ -214,6 +214,8 @@ public class ObjectRepository {
 		public static final String epgInfo = "epgType";
 		public static final String background = "epgBackground";
 		public static final String Id = "row_1";
+		public static final String notificationMsg="confimation-popup";
+
 
 	}
 
@@ -227,21 +229,20 @@ public class ObjectRepository {
 		public static final String radioStations = "//*[@id='VH_4']/span";
 		public static final String search = "//*[@id='VH_5']/span";
 	}
-	   public static class ActiveInfoBanner
-	   {
-		   public static final String channelInfo="current_channel";
-		   public static final String imgId="icon-active-preview";
-		   public static final String programID="programTitle";
-		   public static final String duration="programTime";
-		   
-	   }
-	   public static class StoreFilterLayer
-		{
-			public static final String dramaScreenDetails="//div[contains(@id,'vodDetail')]"; 
-			public static final String shopScreen="//li[@id='VH_0']/span";
-			public static final String screenID="suggesties";	
-			public static final String dramaScreen="cTitleField";
-		}	
-	   
-	
+
+	public static class ActiveInfoBanner {
+		public static final String channelInfo = "current_channel";
+		public static final String imgId = "icon-active-preview";
+		public static final String programID = "programTitle";
+		public static final String duration = "programTime";
+
+	}
+
+	public static class StoreFilterLayer {
+		public static final String dramaScreenDetails = "//div[contains(@id,'vodDetail')]";
+		public static final String shopScreen = "//li[@id='VH_0']/span";
+		public static final String screenID = "suggesties";
+		public static final String dramaScreen = "cTitleField";
+	}
+
 }

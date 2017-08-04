@@ -19,6 +19,8 @@ public class ActivateInfoBannerTestCase extends TestInitization
 	@Test
 	public void tc_BCDTVIB0603_verifyInfoBannerScreen() throws InterruptedException
 	{
+		
+		
 		ActivateInfobanner active = new ActivateInfobanner(driver);
 		active.navigateToActivateInfoBannerScreen();
 		if(active.verifyActiveInfoBannerScreen())
