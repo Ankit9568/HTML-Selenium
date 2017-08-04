@@ -422,4 +422,33 @@ public class MiniEPGTestCase extends TestInitization {
 		 miniEPGScreen = new MiniEPGScreen(driver);
 		 miniEPGScreen.miniEPGMiniEPGonzaplistNottunedCUTVenabledchannel_partIII();
 	 }
+	 
+	 
+	 @Test
+	 public void tc_77677_A_Mini_EPG_Long_stays_in_Program_Details_screen() throws InterruptedException, ParseException
+	 {
+		 
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.verifyLongStayInProgramDetailsScreen();
+	 }
+	 @Test
+	 public void tc_77677_B_Mini_EPG_Long_stays_in_Program_Details_screen() throws InterruptedException, ParseException
+	 {
+		 
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.verifyStayinFutureProgramDetailsScreen();
+	 }
+	 
+	 @Test
+	 public void tc_77661_Mini_EPG_Behaviour_Live_TV_On_CUTVDisabledChannel() throws InterruptedException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.verifyMiniEPGBehaviourOnCUTVDisabledChannel();
+	 }
+	 @Test
+	 public void tc_77673_Mini_EPG_Lifespan_scheduled_recording() throws InterruptedException
+	 {
+		 miniEPGScreen = new MiniEPGScreen(driver);
+		 miniEPGScreen.verifyMiniEPGLifeSpanOfScheduledRecording();
+	 }
 }

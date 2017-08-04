@@ -399,21 +399,32 @@ public class DTVChannelTestCase extends TestInitization {
 	 * 
 	 * First Locked the PLTV package then Execute
 	 * 
-	 * @throws InterruptedException
+	 * @throws Exception
 	 */
 
 	@Test
-	public void tc_Pause_LiveTV_PLTV_package_not_assigned() throws InterruptedException {
+	public void tc_Pause_LiveTV_PLTV_package_not_assigned() throws Exception {
 
-		DTVChannelScreen dtvScreen = new DTVChannelScreen(driver);
-		dtvScreen.openLiveTV();
+		STBAPIs stbApis = new STBAPIs();
+		try {
 
-		reports.log(LogStatus.PASS, "Press pause button");
-		dtvScreen.errorMsgValidation(Unicode.VK_PAUSE.toString(),
-				TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
-		dtvScreen.errorMsgValidation(Unicode.VK_BACKWARD.toString(),
-				TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
+			stbApis.stbPackageUnAssign(new PackageInformation("Pause Live TV"));
+			stbApis.stbPackageUnAssign(new PackageInformation("Pause Live TV Free"));
 
+			DTVChannelScreen dtvScreen = new DTVChannelScreen(driver);
+			dtvScreen.openLiveTV();
+
+			reports.log(LogStatus.PASS, "Press pause button");
+			dtvScreen.errorMsgValidation(Unicode.VK_PAUSE.toString(),
+					TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
+			dtvScreen.errorMsgValidation(Unicode.VK_BACKWARD.toString(),
+					TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
+		} finally {
+
+			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV"));
+			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV Free"));
+
+		}
 	}
 
 	@Test
@@ -440,24 +451,26 @@ public class DTVChannelTestCase extends TestInitization {
 		// navigate to menu page
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 	}
-@Test
+
+	@Test
 	public void tc_CUSUB0201_basic() throws Exception {
 
 		// Assign basic subscription of CUTV channel
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		STBAPIs stbApis = new STBAPIs();
-		
-		// Assign old package some time old package assign with lock value so we first assign and unassigns package
+
+		// Assign old package some time old package assign with lock value so we
+		// first assign and unassigns package
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
-		
+
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 
 		dtvChannelScreen.openCutvEnableChannelFromTvGuide();
-		
+
 		try {
 			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
 			driver.switchTo().frame(getCurrentFrameIndex());
@@ -483,23 +496,26 @@ public class DTVChannelTestCase extends TestInitization {
 
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
 	}
-@Test
+
+	@Test
 	public void tc_CUSUB0202_premium() throws Exception {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
 		STBAPIs stbApis = new STBAPIs();
-		// Some time package not assign to STB so we first assign package and than unassigns according to the testing condition 
+		// Some time package not assign to STB so we first assign package and
+		// than unassigns according to the testing condition
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
-				
+
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
 
 		dtvChannelScreen.openLiveTV();
-		dtvChannelScreen.tuneToChannel(Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(
+				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
 		String programTitleInEpg = dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 2, 4000);
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
@@ -525,7 +541,7 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 	}
 
-@Test
+	@Test
 	public void tc_Single_Asset_Variant_Group_Purchase() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -562,13 +578,13 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 	}
-	
+
 	@Test
 	public void tc_Single_Asset_Variant_Group_Package_Lock_Unlock() throws Exception {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		STBAPIs stbApis = new STBAPIs();
-		
+
 		// Navigate the group item of VODs
 		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
@@ -581,14 +597,12 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
 
-		
-
 		stbApis.stbPackageUnAssign(new PackageInformation("Spiderman2"));
 
 		// waiting for 20 second for updation package
 		Thread.sleep(15000);
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 2, 1000);
-		
+
 		// check and VOD in a single group
 		sendKeyMultipleTimes("ENTER", 2, 1000);
 		dtvChannelScreen.validateMovieNotExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
@@ -605,7 +619,8 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
 
 	}
-@Test
+
+	@Test
 	public void tc_StoreEvolution_ChangeSortingOfCategory() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -618,7 +633,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 		// back to parent category
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
-		
+
 		if (vodFeatures.leftPannel.getAttribute("class").equalsIgnoreCase("cStoreLeftSection")) {
 			reports.log(LogStatus.PASS, "Sorting criteria found in left side on page");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -640,57 +655,61 @@ public class DTVChannelTestCase extends TestInitization {
 
 	}
 
-	
-/**
- * This test cases is verify back to live option in past program
- * @throws InterruptedException
- */
-@Test
-public void tc_CUBTL0602_back_to_live_other_channel() throws InterruptedException{
-	
-	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-	dtvChannelScreen.verifyBackToLiveOption();
-}
+	/**
+	 * This test cases is verify back to live option in past program
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUBTL0602_back_to_live_other_channel() throws InterruptedException {
 
-/**
- * This test cases is used to watch start over past program
- * @throws InterruptedException
- */
-@Test
-public void tc_CUSO0504_start_over_watch_past_program() throws InterruptedException{
-	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-	dtvChannelScreen.verifyStartOverPastProgram();
-}
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyBackToLiveOption();
+	}
 
+	/**
+	 * This test cases is used to watch start over past program
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUSO0504_start_over_watch_past_program() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyStartOverPastProgram();
+	}
 
-/**
- * This test cases is used to back to live same channel
- * @throws InterruptedException
- */
-@Test
-public void tc_CUBTL0601_back_to_live_same_channel() throws InterruptedException{
-	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-	dtvChannelScreen.verifyBackToLiveOptionOnSameChannel();
-}
-/**
- * This test cases is used to verify action item list in past, future,current program details 
- * @throws InterruptedException
- */
-@Test
-public void tc_CUSO0501_start_over_list_actions() throws InterruptedException{
-	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-	dtvChannelScreen.verifyActionItemList();
-}
+	/**
+	 * This test cases is used to back to live same channel
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUBTL0601_back_to_live_same_channel() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyBackToLiveOptionOnSameChannel();
+	}
 
-/**
- * This test cases is used to watch already watched past program
- * @throws InterruptedException
- */
-@Test
-public void tc_CUSO0505_start_over_watch_started_program() throws InterruptedException{
-	DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-	dtvChannelScreen.verifyStartOverWatchStartedProgram();
-}
+	/**
+	 * This test cases is used to verify action item list in past,
+	 * future,current program details
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUSO0501_start_over_list_actions() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyActionItemList();
+	}
 
+	/**
+	 * This test cases is used to watch already watched past program
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUSO0505_start_over_watch_started_program() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyStartOverWatchStartedProgram();
+	}
 
 }

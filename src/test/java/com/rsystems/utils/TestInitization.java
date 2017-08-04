@@ -61,7 +61,7 @@ public class TestInitization {
 	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
 			+ currentExecutionFoldername;
 
-	private static String configFilePath = System.getProperty("user.dir")
+	protected static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
 
 	@BeforeSuite
