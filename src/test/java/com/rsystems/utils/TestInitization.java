@@ -148,7 +148,12 @@ public class TestInitization {
 		System.out.println("Testcase name is :::::: " + method.getName());
 		currentMethodName = method.getName();
 		reports.log(LogStatus.PASS, "Start Step : Start with the focus on HUB Text Line");
-		TestInitization.setApplicationHubPage(2);
+		try{
+			TestInitization.setApplicationHubPage(2);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
