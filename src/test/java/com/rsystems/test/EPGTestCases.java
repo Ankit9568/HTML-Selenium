@@ -853,5 +853,14 @@ public class EPGTestCases extends TestInitization {
 		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
 	}
 
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_EPG_Up_Down_Navigation() throws InterruptedException{
+		tc_BCDTVHP0801_epg_hot_key();
+	}
 
+	
 }

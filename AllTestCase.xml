@@ -104,16 +104,6 @@
 					<include name="tc_BCVODVD0130_VOD_FOD" />
 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
 					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
-					<include name="tc_CUBTL0602_back_to_live_other_channel" />
-					<include name="tc_CUSO0504_start_over_watch_past_program" />
-					<include name="tc_CUBTL0601_back_to_live_same_channel" />
-					<include name="tc_CUSO0505_start_over_watch_started_program" />
-					<include name="tc_CUSO0501_start_over_list_actions" />
-					<include name="tc_CUSUB0201_basic" />
-					<include name="tc_CUSUB0202_premium" />
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
-					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
-					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
 				</methods>
 			</class>
 		</classes>
@@ -190,8 +180,8 @@
 		<classes>
 			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
-					<include name="tc_StoreEvolutionPosternonleafCategory" />
-					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
+					<!-- <include name="tc_StoreEvolutionPosternonleafCategory" /> -->
+					<!-- <include name="tc_StoreEvolutionDefaultPosterLeafCategory" /> -->
 					<include name="tc_BCVODBG0312_VOD_Rent" />
 					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
 					<include name="tc_StoreEvolutionPosterleafCategory" />
@@ -213,6 +203,29 @@
 			</class>
 		</classes>
 	</test>
+
+	<test name="DTV Test case Divide">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="tc_CUBTL0602_back_to_live_other_channel" />
+					<include name="tc_CUSO0504_start_over_watch_past_program" />
+					<include name="tc_CUBTL0601_back_to_live_same_channel" />
+					<include name="tc_CUSO0505_start_over_watch_started_program" />
+					<include name="tc_CUSO0501_start_over_list_actions" />
+					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" />
+
+					<include name="tc_BCVODVD0130_VOD_FOD" />
+					<include name="tc_CUSUB0201_basic" />
+					<include name="tc_CUSUB0202_premium" />
+					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
+					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
 
 	<!--- Mini EPG Test Cases -->
 
@@ -269,7 +282,7 @@
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI" />
 					<include
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII" />
-
+						
 					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
 					<include name="tc_mini_epg_on_tstv" />
 				</methods>

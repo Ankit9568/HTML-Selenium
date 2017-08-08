@@ -32,7 +32,7 @@ public class ExceptionTrap extends TestInitization {
 		boolean matchedRegisteredException = false;
 		if (testResult.getStatus() == ITestResult.SKIP) {
 			log.debug("Logger.debug " +  testResult.getMethod().getMethodName() + " : "+ getExceptionStackTrace());
-			reports.log(LogStatus.ERROR, testResult.getThrowable().getLocalizedMessage().split("\n")[0]);
+			reports.log(LogStatus.FAIL, testResult.getThrowable().getLocalizedMessage().split("\n")[0]);
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 			return;
 		}
