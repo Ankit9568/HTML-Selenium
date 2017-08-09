@@ -7,6 +7,7 @@ public class ObjectRepository {
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
+	
 	public static final String HubTVItem = "//li[@id='menuItem_1']";
 	public static final String HubLibraryItem = "//li[@id='menuItem_0']";
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
@@ -138,6 +139,7 @@ public class ObjectRepository {
 		public static final String hubSearchElement = "//*[@id='dItemImage_30']/span";
 		public static final String hubSettingElement = "//*[@id='dItemImage_40']/span";
 		public static final String hubFocusElement = "cActiveMenuItem";
+		public static final String menuItemContainer = "dMenuList";
 	}
 
 	public static class MiniEPGScreen {
