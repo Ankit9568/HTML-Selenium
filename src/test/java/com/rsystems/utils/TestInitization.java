@@ -56,11 +56,8 @@ public class TestInitization {
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
 
-	public static String currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
-			+ formatter.format(cald.getTime()).toString();
-
-	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
-			+ currentExecutionFoldername;
+	public static String currentExecutionFoldername ;
+	public static String currentExecutionReportPath ;
 
 	protected static String configFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
@@ -68,6 +65,12 @@ public class TestInitization {
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
+		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
+				+ formatter.format(cald.getTime()).toString();
+		
+		currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
+				+ currentExecutionFoldername;
+		
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
 
