@@ -27,8 +27,8 @@ public class ReportGeneration {
 		for (File folder1 : folder.listFiles()) {
 
 			if (folder1.isDirectory()) {
-				optionValues = optionValues.concat("<option value = './" + folder1.getName() + "/index.html'>BuildVer_"
-						+ buildVersion + "_" + folder1.getName() + "</option>\n");
+				optionValues = optionValues.concat("<option value = './" + folder1.getName() + "/index.html'>"
+						+ folder1.getName() + "</option>\n");
 			}
 		}
 		return optionValues;
@@ -36,7 +36,7 @@ public class ReportGeneration {
 	}
 
 	private void createDashboardHtml(String optionValues) throws IOException {
-		
+
 		System.out.println("Trying to create dashboard  report");
 		FileWriter fw = null;
 		BufferedWriter bw = null;
@@ -55,7 +55,7 @@ public class ReportGeneration {
 
 				+ "<base target='_blan'>" +
 
-				"<iframe id='main_iframe'" + "src='./" +TestInitization.currentExecutionFoldername + "/index.html'>"
+				"<iframe id='main_iframe'" + "src='./" + TestInitization.currentExecutionFoldername + "/index.html'>"
 				+ "</iframe>"
 
 				+ "<body>"
@@ -66,8 +66,7 @@ public class ReportGeneration {
 
 				+ "      <div class='col-md-4' id='dropdownDiv' div style='position: fixed; bottom: 100%; top: 40px; width:20%; >"
 				+ "<form>" + " <fieldset>" + " <div class='form-group'>" + "<form name='change'>"
-				+ "  <SELECT NAME='options' id='ddMainMenu'>" 
-				+ optionValues
+				+ "  <SELECT NAME='options' id='ddMainMenu'>" + optionValues
 
 				+ "</SELECT>" + " </form> " + "</div>" + "</fieldset>" + " </form>" + "</div>" + " </div>" + "</main>"
 				+ "<script>"

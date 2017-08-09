@@ -56,7 +56,8 @@ public class TestInitization {
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
 
-	public static String currentExecutionFoldername = "ExecutionReport_" + formatter.format(cald.getTime()).toString();
+	public static String currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
+			+ formatter.format(cald.getTime()).toString();
 
 	public static String currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
 			+ currentExecutionFoldername;
@@ -69,19 +70,18 @@ public class TestInitization {
 
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
-		
+
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(currentExecutionReportPath + "/Logs/Selenium.log").getAbsolutePath();
 		String applicationLogs = new File(currentExecutionReportPath + "/Logs/Application.log").getAbsolutePath();
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
-		
+
 		Properties props = new Properties();
-		props.load(new FileInputStream(System.getProperty("user.dir")
-				+ "\\src\\test\\java\\log4j.properties"));
+		props.load(new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\java\\log4j.properties"));
 		PropertyConfigurator.configure(props);
-		
+
 		reports.init(extentReportPath, true);
 		reports.config().reportHeadline("HTML Client Automation Testing");
 		reports.config().reportTitle("Regression Test Execution");
@@ -148,10 +148,9 @@ public class TestInitization {
 		System.out.println("Testcase name is :::::: " + method.getName());
 		currentMethodName = method.getName();
 		reports.log(LogStatus.PASS, "Start Step : Start with the focus on HUB Text Line");
-		try{
+		try {
 			TestInitization.setApplicationHubPage(2);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -751,6 +750,15 @@ public class TestInitization {
 		}
 
 		return PR;
+	}
+
+	private static String getBuildVersion() {
+		String buildVersion = null;
+		buildVersion = System.getProperty("BuildVersion");
+		if (buildVersion == null || buildVersion.contentEquals("")) {
+			buildVersion = TestInitization.getUpdatedProptiesFile().getProperty("BuildVersion");
+		}
+		return buildVersion;
 	}
 
 }
