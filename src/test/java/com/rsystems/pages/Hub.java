@@ -501,7 +501,7 @@ public class Hub extends TestInitization {
 
 	public void verifyFocousLineMoveUp() throws InterruptedException {
 
-		if (menuItemContainer.getAttribute("class").contentEquals("cMenuList colorWhite")) {
+		if (menuItemContainer.getAttribute("class").trim().contentEquals("cMenuList")) {
 			reports.log(LogStatus.PASS,
 					"Focous is move up on the asset line and asset corresponding to text entry should be now focoused");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -512,7 +512,7 @@ public class Hub extends TestInitization {
 
 	public void verifyFocousLineMoveDown() throws InterruptedException {
 
-		if (menuItemContainer.getAttribute("class").contentEquals("cMenuList")) {
+		if (menuItemContainer.getAttribute("class").trim().contentEquals("cMenuList colorWhite")) {
 			reports.log(LogStatus.PASS,
 					"Focus should move down on the text line and text entry corresponding to asset item should be now focused.");
 			reports.attachScreenshot(captureCurrentScreenshot());

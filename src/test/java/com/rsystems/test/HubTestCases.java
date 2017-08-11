@@ -97,7 +97,14 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Test When No Package Is assigned");
 		hubScreen.launchAndVerifyMenuScreen();
 	}
-
+/**
+ * 
+ * @author Ankit.Agarwal1
+ * @throws InterruptedException
+ * Test case validate the Hub_Up-Down navigation in HUB
+ */
+	
+	@Test
 	public void tc_Hub_Up_Down_navigation_in_HUB() throws InterruptedException {
 
 		Hub hub = new Hub(driver);
@@ -110,4 +117,6 @@ public class HubTestCases extends TestInitization {
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		hub.verifyFocousLineMoveDown();
 	}
+	
+	
 }

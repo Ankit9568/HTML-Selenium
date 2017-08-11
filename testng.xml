@@ -30,7 +30,7 @@
 			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
 					<include name="tc_EPG_Past_Program_Options" />
-<!-- 					<include name="tc_EPG_Up_Down_Navigation" /> -->
+					<include name="tc_EPG_Up_Down_Navigation" />
 					<!-- <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> -->
 					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> -->
 					<!-- <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> -->
@@ -70,36 +70,36 @@
 	<!-- Second sprint(30_6_2017) Test case -->
 
 
-<!-- 	<test name="Hub Test cases "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.HubTestCases"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_Hub_Up_Down_navigation_in_HUB" /> -->
+	<test name="Hub Test cases ">
+		<classes>
+			<class name="com.rsystems.test.HubTestCases">
+				<methods>
+					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
 					<!-- <include name="tc_Hub_Menu_Button" /> -->
 					<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
 					<!-- <include name="tc_hub_navigation_asset_line" /> -->
 					<!-- <include name="tc_sf001_hub" /> -->
 					<!-- <include name="tc_hub_asset_line_in_hub" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="Language Change Test case"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.LanguageChangeTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_PREF_language_FR" /> -->
-<!-- 					<include name="tc_PREF_language_NL" /> -->
+	<test name="Language Change Test case">
+		<classes>
+			<class name="com.rsystems.test.LanguageChangeTestCase">
+				<methods>
+					<include name="tc_PREF_language_FR" />
+					<include name="tc_PREF_language_NL" />
 					<!-- <include name="tc_Hub_Menu_Button" /> -->
 					<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
 					<!-- <include name="tc_hub_navigation_asset_line" /> -->
 					<!-- <include name="tc_sf001_hub" /> -->
 					<!-- <include name="tc_hub_asset_line_in_hub" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 
 

@@ -6,8 +6,10 @@ import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.ChangePreference;
+import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.EpgScreen;
 import com.rsystems.utils.TestInitization;
+import com.rsystems.utils.Unicode;
 
 public class EPGTestCases extends TestInitization {
 
@@ -788,7 +790,7 @@ public class EPGTestCases extends TestInitization {
 	 * 
 	 * 
 	 * @throws InterruptedException
-	 * Verify the EPG screen using pressing hot key 
+	 *             Verify the EPG screen using pressing hot key
 	 */
 	@Test
 	public void tc_BCDTVHP0801_epg_hot_key() throws InterruptedException {
@@ -856,11 +858,27 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
+	 * Test case validate the EPG_Up_Down_Navigation
 	 */
 	@Test
-	public void tc_EPG_Up_Down_Navigation() throws InterruptedException{
+	public void tc_EPG_Up_Down_Navigation() throws InterruptedException {
 		tc_BCDTVHP0801_epg_hot_key();
 	}
 
-	
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 * Test case validate the EPG_Past Program_Options
+	 */
+	@Test
+	public void tc_EPG_Past_Program_Options() throws NumberFormatException, InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		dtvChannelScreen.openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
+	}
 }

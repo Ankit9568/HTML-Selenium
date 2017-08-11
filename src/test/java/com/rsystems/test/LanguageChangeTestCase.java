@@ -1,10 +1,10 @@
 package com.rsystems.test;
 
-import org.apache.commons.logging.Log;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.ChangePreference;
+import com.rsystems.pages.SettingScreen;
 import com.rsystems.utils.TestInitization;
 
 public class LanguageChangeTestCase extends TestInitization {
@@ -78,12 +78,46 @@ public class LanguageChangeTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Test case validate the PREF_language_FR
+	 */
+			
 	@Test
-	public void tc_PREF_language_FR() throws InterruptedException{
-		
+	public void tc_PREF_language_FR() throws InterruptedException {
+
+		SettingScreen settingScreen = new SettingScreen(driver);
 		reports.log(LogStatus.PASS, "Naviget the setting screen");
 		TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
 				TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+
+		settingScreen.validateSettingOption();
+
+		ChangePreference pref = new ChangePreference(driver);
+		pref.navigateToMyPreference();
+	
+		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_FR", "name_nl"));
 		
+		// setting default to NL
+		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
+
 	}
+
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Test case validate the PREF_language_NL
+	 */
+			
+	@Test
+	public void tc_PREF_language_NL() throws InterruptedException {
+
+		ChangePreference pref = new ChangePreference(driver);
+		pref.navigateToMyPreference();
+		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
+	}
+
 }

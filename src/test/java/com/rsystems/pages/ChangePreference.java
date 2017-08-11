@@ -62,6 +62,7 @@ public class ChangePreference extends TestInitization
 	    {
 	      reports.log(LogStatus.PASS, "No changes required. Already " + language + " is set");
 	      reports.attachScreenshot(captureCurrentScreenshot());
+	      TestInitization.sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
 	      return;
 	    }
 	    else if(!currentStatusLanguage.equalsIgnoreCase(language))

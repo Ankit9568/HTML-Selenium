@@ -7,7 +7,6 @@ public class ObjectRepository {
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
-	
 	public static final String HubTVItem = "//li[@id='menuItem_1']";
 	public static final String HubLibraryItem = "//li[@id='menuItem_0']";
 	public static final String HubStoreItem = "//li[@id='menuItem_2']";
@@ -174,8 +173,8 @@ public class ObjectRepository {
 		public static final String recordingIconOnInfo = "programRecording";
 		public static final String programTitle = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 		public static final String futureRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoingfuture']";
-		public static final String logo="//ul[@id='focusedItemContainer']/li[2]/div[@class='channel_details']/div[@class='logo']/img";
-		public static final String programTiming="//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
+		public static final String logo = "//ul[@id='focusedItemContainer']/li[2]/div[@class='channel_details']/div[@class='logo']/img";
+		public static final String programTiming = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
 	}
 
 	public static class Vod {
@@ -217,8 +216,7 @@ public class ObjectRepository {
 		public static final String epgInfo = "epgType";
 		public static final String background = "epgBackground";
 		public static final String Id = "row_1";
-		public static final String notificationMsg="confimation-popup";
-
+		public static final String notificationMsg = "confimation-popup";
 
 	}
 
@@ -248,4 +246,7 @@ public class ObjectRepository {
 		public static final String dramaScreen = "cTitleField";
 	}
 
+	public static class SettingScreen {
+		public static final String activeOption = "//div[@class='cItem cActiveItem']";
+	}
 }
