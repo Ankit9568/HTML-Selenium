@@ -1,6 +1,7 @@
 package com.rsystems.test;
 import org.testng.annotations.Test;
 
+import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.LibraryScreen;
 import com.rsystems.utils.TestInitization;
 public class LibraryTestCase extends TestInitization {
@@ -16,6 +17,7 @@ public class LibraryTestCase extends TestInitization {
 	{
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		libraryScreen.moveToLibrary();
+		reports.log(LogStatus.PASS, "Verify Two Lines getting displayed on Hub Page");
 		libraryScreen.verifyTwoLinesInLibraryScreen("Level2");
 		libraryScreen.verifyLineMovementInLibraryScreen();
 		libraryScreen.verifyLinesInLibrarySubMenuScreen("Level3");

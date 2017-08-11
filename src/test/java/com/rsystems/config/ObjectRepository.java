@@ -42,6 +42,9 @@ public class ObjectRepository {
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
 		public static final String focusElementProgramTiminig = "//li[@class = 'program focusProgram']/div/p[contains(@class,'programTiming')]";
 		public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
+		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div";
+		public static final String epgNonFocussedCell = "//li[@class='program']/div";
+	
 	}
 
 	public static class LibraryElements {
@@ -131,8 +134,8 @@ public class ObjectRepository {
 
 	public static class HubScreen {
 		public static final String headerElement = "//*[@id='headerTitle']";
-		public static final String upCanvasLineElement = "dCanvasUpLine";
-		public static final String downCanvasLineElement = "dCanvasDownLine";
+		public static final String upCanvasLineElement = "dUpperCanvasContainer";
+		public static final String downCanvasLineElement = "dLowerCanvasContainer";
 		public static final String libraryItemsElement = "//li[contains(@id,'item_m0')]";
 		public static final String shopItemsElement = "//li[contains(@id,'item_m2')]";
 		public static final String hubSearchElement = "//*[@id='dItemImage_30']/span";
@@ -217,6 +220,7 @@ public class ObjectRepository {
 		public static final String background = "epgBackground";
 		public static final String Id = "row_1";
 		public static final String notificationMsg = "confimation-popup";
+		public static final String firstChannelNumberInEPG = "//*[@id='colCh0']/span/span";
 
 	}
 

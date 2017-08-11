@@ -881,4 +881,28 @@ public class EPGTestCases extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 	}
+
+
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases to validate two lines in EPG Screen
+	 */
+	@Test
+	public void tc_SF008_EPG() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verifyLinesInEPGScreen();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validate gradient in focussed cell of EPG Screen
+	 */
+	@Test
+	public void tc_EPG_Gradient_of_Focused_Cell() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verifyGradientOnEPG();
+	}
+
 }

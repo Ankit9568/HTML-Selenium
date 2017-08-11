@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
+import com.rsystems.utils.Unicode;
 
 public class RcArrowKeys extends TestInitization {
 	WebDriver driver;
@@ -30,7 +31,12 @@ public class RcArrowKeys extends TestInitization {
 	public WebElement Id;
 	@FindBy(how = How.ID, using = ObjectRepository.StoreFilterLayer.screenID)
 	public WebElement screenID;
-
+	@FindBy(how = How.XPATH, using = ObjectRepository.HubScreen.headerElement)
+	public WebElement headerText;
+	@FindBy(how = How.XPATH, using = ObjectRepository.RcArrowKey.firstChannelNumberInEPG)
+	public WebElement firstChannelNumberInEPG;
+	@FindBy(how = How.CLASS_NAME, using = "dayHeading")
+	public WebElement dayHeading;
 	public boolean verifyNavigationToEpgScreen() throws InterruptedException {
 
 		EpgScreen epg = new EpgScreen(driver);
@@ -120,5 +126,132 @@ public class RcArrowKeys extends TestInitization {
 
 		}
 
+	}
+
+
+	public void verifyDTVHotKey() throws InterruptedException {
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 2000);
+		Thread.sleep(1000);
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+	}
+	public void verifyNumericKeys() throws InterruptedException {
+		verifyRCNumericKeyOnEPG();
+		verifyRCNumericKeyOnDTV();
+		verifyRCNumericKeyOnLibrary();
+		verifyRCNumericKeyOnShop();
+		
+	}
+
+	private void verifyRCNumericKeyOnShop() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to Shop Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))){
+			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Shop Screen not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Send Numeric Key");
+		sendNumaricKeys(5);
+		Thread.sleep(2000);
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))){
+			reports.log(LogStatus.PASS, "Nothing happens. User is on Shop Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Used tuned from Shop Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+	}
+
+	private void verifyRCNumericKeyOnLibrary() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to Library Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))){
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Library Screen not getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Send Numeric Key");
+		sendNumaricKeys(5);
+		Thread.sleep(2000);
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))){
+			reports.log(LogStatus.PASS, "Nothing happens. User is on Library Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Used tuned from Library Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+
+	private void verifyRCNumericKeyOnDTV() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		dtvChannelScreen.tuneToChannel(8);
+	}
+
+	private void verifyRCNumericKeyOnEPG() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to EPG Screen");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		sendNumaricKeys(3);
+		Thread.sleep(2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(firstChannelNumberInEPG.getAttribute("innerText").trim().equalsIgnoreCase("3")){
+			reports.log(LogStatus.PASS, "user moved to channel no "+firstChannelNumberInEPG.getAttribute("innerText").trim());
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("User should be moved to Channel 3");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+	}
+	
+	public void verifyRCUEPGNavigation() throws InterruptedException {
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Navigate to TV Guide");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String dateOnEPG = dayHeading.getText();
+		reports.log(LogStatus.PASS, "Press Forward Key");
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		if(!dayHeading.getText().equalsIgnoreCase(dateOnEPG))
+		{
+			reports.log(LogStatus.PASS, "User moved horizontally from one day to another");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Press Forward Key - Used not moved horizontally from one day to another");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
+		String focusElement = new EpgScreen(driver).focusElemntInEpg.getText();
+		reports.log(LogStatus.PASS, "Press Ch- key");
+		sendUnicodeMultipleTimes(Unicode.VK_CHANNEL_MINUS.toString(), 1, 1000);
+		if(new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(focusElement)){
+			reports.log(LogStatus.PASS, "Nothing happens. Focus is on current episode");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Press CH- Key : Focus changed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
 	}
 }

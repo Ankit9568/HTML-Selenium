@@ -22,4 +22,36 @@ public class RcArrowKeysTestCase extends TestInitization {
 		RecordingScreen record = new RecordingScreen(driver);
 		record.verifyNavigationInPlannedRecording();
 	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validated TV Keyof RCU
+	 */
+	@Test
+	public void tc_RCU_Digital_TV_NTE11() throws InterruptedException
+	{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyDTVHotKey();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validate numeric keys on different screens
+	 */
+	@Test
+	public void tc_RCU_Numeric_keys() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyNumericKeys();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test case is used to validate navigation under EPG Screen
+	 */
+	@Test
+	public void tc_RCU_EPG_Navigation() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUEPGNavigation();
+	}
 }

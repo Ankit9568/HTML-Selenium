@@ -84,6 +84,16 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusElementProgramTiminig)
 	public WebElement focusElementProgramTime;
 
+	
+	@FindBy(how = How.XPATH,using= ObjectRepository.EpgScreen.epgFocussedCell)
+	public WebElement epgFocussedCell;
+	
+	@FindBy(how = How.XPATH,using= ObjectRepository.EpgScreen.epgNonFocussedCell)
+	public WebElement epgNonFocussedCell;
+	
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.activeZapBlockElement)
+	public WebElement activeElement;
+	
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -855,4 +865,77 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
+	public void verifyLinesInEPGScreen() throws InterruptedException {
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		goToEpgChannelScreen(false);
+		reports.log(LogStatus.PASS, "Verify Two Lines in EPG Screen");
+		libraryScreen.verifyTwoLinesInLibraryScreen("Level3");
+		reports.log(LogStatus.PASS, "Verify Opacity of Two Lines getting displayed on EPG Page");
+		libraryScreen.verifyOpactiyOfLines();
+		reports.log(LogStatus.PASS, "Verify Line movements while navigate in EPG");
+		verifyMovementsInUpAndDownLine();
+	}
+
+	public void verifyGradientOnEPG() throws InterruptedException {
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (new Hub(driver).focusHubElement.getText()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))) {
+			reports.log(LogStatus.PASS,
+					"Expected Output - Focus should be on " + getExcelKeyValue("screenTitles", "LiveTV", "name_nl")
+							+ ". Actual Output - Focus is on " + new Hub(driver).focusHubElement.getText());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Test cases is failed as Initial Focus is not on "
+					+ getExcelKeyValue("screenTitles", "LiveTV", "name_nl") + " Actual Focus is on "
+					+ new Hub(driver).focusHubElement.getText());
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (activeElement.getText().equalsIgnoreCase(getExcelKeyValue("TvFilterLayer", "TvGrid", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Expected Output - Focus should be on tv-gids. Actual Output - Focus is on "
+					+ activeElement.getText());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Test cases is failed as Initial Focus is not on tv-gids.  Actual Focus is on "
+					+ activeElement.getText());
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		if (epgFocussedCell.getCssValue("background").contains("epg-gradient.png")) {
+			reports.log(LogStatus.PASS, "EPG gradient is displayed in focussed cell");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("EPG graient not present on focussed cell");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+
+	public void verifyMovementsInUpAndDownLine() throws InterruptedException {
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		boolean checkMovement = false;
+		String initialUpLine = libraryScreen.upCanvasLine.getAttribute("style");
+		String initialDownLine = libraryScreen.downCanvasLine.getAttribute("style");
+		
+		int itemSize = driver.findElements(By.className("cItem")).size();
+		for (int i = 0; i <= itemSize - 1; i++) {
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			if (!(libraryScreen.upCanvasLine.getAttribute("style").equalsIgnoreCase(initialUpLine)
+					&& libraryScreen.upCanvasLine.getAttribute("style").equalsIgnoreCase(initialDownLine))) {
+				checkMovement = true;
+				break;
+			}
+
+		}
+		if (checkMovement) {
+			FailTestCase("No movement in Line should happen");
+
+		} else {
+			reports.log(LogStatus.PASS, "No movements in line");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
 }

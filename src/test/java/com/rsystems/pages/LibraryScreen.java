@@ -219,7 +219,6 @@ public class LibraryScreen extends TestInitization {
 		return level;
 	}
 	public  void verifyTwoLinesInLibraryScreen(String lineLevel) throws InterruptedException {
-		reports.log(LogStatus.PASS, "Verify Two Lines getting displayed on Hub Page");
 		driver.switchTo().defaultContent();
 		if (upCanvasLine.isDisplayed())
 		{
