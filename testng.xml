@@ -25,33 +25,33 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<test name="EPG Setting Test case ">
-		<classes>
-			<class name="com.rsystems.test.EPGTestCases">
-				<methods>
-					<include name="tc_EPG_Past_Program_Options" />
-					<include name="tc_EPG_Up_Down_Navigation" />
-					<!-- <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> -->
-					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> -->
-					<!-- <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> -->
-					<!-- <include name="tc_BCEPGHPG01_epg_cancel_setting" /> -->
-					<!-- <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> -->
-					<!-- <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> -->
-					<!-- <include name="tc_BCEPGHPG09_epg_scenior_font_geel" /> -->
-					<!-- <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> -->
-					<!-- <include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> -->
-					<!-- <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" /> -->
-					<!-- <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> -->
-					<!-- <include name="tc_BCEPGHPG015_epg_strak_font_geel" /> -->
-					<!-- <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> -->
-					<!-- <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" /> -->
-					<!-- <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> -->
-					<!-- <include name="tc_BCEPGHPG07_epg_customize_color_patterns" /> -->
-					<!-- <include name="tc_BCDTVHP0801_epg_hot_key" /> -->
-				</methods>
-			</class>
-		</classes>
-	</test>
+	<!-- <test name="EPG Setting Test case "> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.EPGTestCases"> -->
+	<!-- <methods> -->
+	<!-- <include name="tc_EPG_Past_Program_Options" /> -->
+	<!-- <include name="tc_EPG_Up_Down_Navigation" /> -->
+	<!-- <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> -->
+	<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> -->
+	<!-- <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> -->
+	<!-- <include name="tc_BCEPGHPG01_epg_cancel_setting" /> -->
+	<!-- <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> -->
+	<!-- <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> -->
+	<!-- <include name="tc_BCEPGHPG09_epg_scenior_font_geel" /> -->
+	<!-- <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> -->
+	<!-- <include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> -->
+	<!-- <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" /> -->
+	<!-- <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> -->
+	<!-- <include name="tc_BCEPGHPG015_epg_strak_font_geel" /> -->
+	<!-- <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> -->
+	<!-- <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" /> -->
+	<!-- <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> -->
+	<!-- <include name="tc_BCEPGHPG07_epg_customize_color_patterns" /> -->
+	<!-- <include name="tc_BCDTVHP0801_epg_hot_key" /> -->
+	<!-- </methods> -->
+	<!-- </class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
 	<!-- <test name="PIP Test case "> -->
 	<!-- <classes> -->
@@ -70,36 +70,36 @@
 	<!-- Second sprint(30_6_2017) Test case -->
 
 
-	<test name="Hub Test cases ">
-		<classes>
-			<class name="com.rsystems.test.HubTestCases">
-				<methods>
-					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
-					<!-- <include name="tc_Hub_Menu_Button" /> -->
-					<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
-					<!-- <include name="tc_hub_navigation_asset_line" /> -->
-					<!-- <include name="tc_sf001_hub" /> -->
-					<!-- <include name="tc_hub_asset_line_in_hub" /> -->
-				</methods>
-			</class>
-		</classes>
-	</test>
+	<!-- <test name="Hub Test cases "> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.HubTestCases"> -->
+	<!-- <methods> -->
+	<!-- <include name="tc_Hub_Up_Down_navigation_in_HUB" /> -->
+	<!-- <include name="tc_Hub_Menu_Button" /> -->
+	<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
+	<!-- <include name="tc_hub_navigation_asset_line" /> -->
+	<!-- <include name="tc_sf001_hub" /> -->
+	<!-- <include name="tc_hub_asset_line_in_hub" /> -->
+	<!-- </methods> -->
+	<!-- </class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
-	<test name="Language Change Test case">
-		<classes>
-			<class name="com.rsystems.test.LanguageChangeTestCase">
-				<methods>
-					<include name="tc_PREF_language_FR" />
-					<include name="tc_PREF_language_NL" />
-					<!-- <include name="tc_Hub_Menu_Button" /> -->
-					<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
-					<!-- <include name="tc_hub_navigation_asset_line" /> -->
-					<!-- <include name="tc_sf001_hub" /> -->
-					<!-- <include name="tc_hub_asset_line_in_hub" /> -->
-				</methods>
-			</class>
-		</classes>
-	</test>
+	<!-- <test name="Language Change Test case"> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.LanguageChangeTestCase"> -->
+	<!-- <methods> -->
+	<!-- <include name="tc_PREF_language_FR" /> -->
+	<!-- <include name="tc_PREF_language_NL" /> -->
+	<!-- <include name="tc_Hub_Menu_Button" /> -->
+	<!-- <include name="tc_HUB_Navigation_Text_Line" /> -->
+	<!-- <include name="tc_hub_navigation_asset_line" /> -->
+	<!-- <include name="tc_sf001_hub" /> -->
+	<!-- <include name="tc_hub_asset_line_in_hub" /> -->
+	<!-- </methods> -->
+	<!-- </class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
 
 
@@ -117,39 +117,40 @@
 	<!-- Divide Test case in two part -->
 
 
-	<!-- <test name="DTV Test case "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.DTVChannelTestCase"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCDTVDT0105_DTVChannelInfobanner" /> -->
-	<!-- <include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" 
-		/> -->
-	<!-- <include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
-	<!-- <include name="DTV_Channel_Zap_Via_Up_Down" /> -->
-	<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
-	<!-- <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
-		/> -->
-	<!-- <include name="pause_LiveTV_play" /> -->
-	<!-- <include name="pause_LiveTV_PLTV_BackToLive" /> -->
-	<!-- <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
-	<!-- <include name="Pause_LiveTV_trickplay" /> -->
-	<!-- <include name="tc_BCVODVD0130_VOD_FOD" /> -->
-	<!-- <include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
-	<!-- <include name="tc_CUBTL0602_back_to_live_other_channel" /> -->
-	<!-- <include name="tc_CUSO0504_start_over_watch_past_program" /> -->
-	<!-- <include name="tc_CUBTL0601_back_to_live_same_channel" /> -->
-	<!-- <include name="tc_CUSO0505_start_over_watch_started_program" /> -->
-	<!-- <include name="tc_CUSO0501_start_over_list_actions" /> -->
-	<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
-	<!-- <include name="tc_CUSUB0201_basic" /> -->
-	<!-- <include name="tc_CUSUB0202_premium" /> -->
-	<!-- <include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
-	<!-- <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" /> -->
-	<!-- <include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+	<test name="DTV Test case ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<!-- <include name="tc_BCDTVDT0105_DTVChannelInfobanner" /> -->
+					<!-- <include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" 
+						/> -->
+					<!-- <include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
+					<!-- <include name="DTV_Channel_Zap_Via_Up_Down" /> -->
+					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
+					<!-- <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
+						/> -->
+					<include name="pause_LiveTV_play" />
+					<!-- <include name="pause_LiveTV_PLTV_BackToLive" /> -->
+					<!-- <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
+					<!-- <include name="Pause_LiveTV_trickplay" /> -->
+					<!-- <include name="tc_BCVODVD0130_VOD_FOD" /> -->
+					<!-- <include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
+					<!-- <include name="tc_CUBTL0602_back_to_live_other_channel" /> -->
+					<!-- <include name="tc_CUSO0504_start_over_watch_past_program" /> -->
+					<!-- <include name="tc_CUBTL0601_back_to_live_same_channel" /> -->
+					<!-- <include name="tc_CUSO0505_start_over_watch_started_program" /> -->
+					<!-- <include name="tc_CUSO0501_start_over_list_actions" /> -->
+					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
+					<!-- <include name="tc_CUSUB0201_basic" /> -->
+					<!-- <include name="tc_CUSUB0202_premium" /> -->
+					<!-- <include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
+					<!-- <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" 
+						/> -->
+					<!-- <include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 	<!-- <test name="Infobanner Test case"> -->
 	<!-- <classes> -->

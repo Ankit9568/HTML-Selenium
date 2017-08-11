@@ -67,6 +67,21 @@ public class Hub extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.HubScreen.menuItemContainer)
 	public WebElement menuItemContainer;
 
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.tvGuideFilter)
+	public WebElement tvGuideFilter;
+	
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.storeFilter)
+	public WebElement storeFilter;
+	
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.search)
+	public WebElement search;
+	
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.setting)
+	public WebElement setting;
+	
+	@FindBy(how=How.XPATH,using = ObjectRepository.HubScreen.recordingMenu)
+	public WebElement recordingMenu;
+	
 	public List<WebElement> hubMenuItems() {
 		/*
 		 * This function will check the different elements present on the screen
@@ -521,4 +536,56 @@ public class Hub extends TestInitization {
 		}
 	}
 
+	
+	   public void hub_Text_line() throws InterruptedException
+	   {
+		   
+		   driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		 
+		   List<String> MenuItem=getHubMenuItemsText();
+		   System.out.println(MenuItem);
+		   boolean checkMenuText = false; 
+		   for(int i=0;i<MenuItem.size();i++)
+		   {
+			 System.out.println(MenuItem.get(i));
+			 System.out.println(ObjectRepository.HubMenuItemsNL[i]);
+			 if(!MenuItem.get(i).replace(")", "").equalsIgnoreCase(ObjectRepository.HubMenuItemsNL[i]))
+			  {
+				 checkMenuText  =true;
+				 break;
+			  }
+		   }
+		   if(!checkMenuText)
+		   {
+			   reports.log(LogStatus.PASS, "Verify Menu Text Items should contains "+MenuItem.size());
+			   reports.attachScreenshot(captureCurrentScreenshot());
+		   }
+		   else
+		   {
+			   FailTestCase("Verify Menu Text "+MenuItem.size());
+		   }
+		   
+		   int menuLibraryCoordinate=recordingMenu.getLocation().getY();
+		   System.out.println("Recording position: "+menuLibraryCoordinate);
+		   int tvGuideFilterCordinate=tvGuideFilter.getLocation().getY();
+		   System.out.println("TV guide position :"+tvGuideFilterCordinate);
+		   int storeFilterCoordinate=storeFilter.getLocation().getY();
+		   System.out.println("Store Filter co-ordinates "+storeFilterCoordinate);
+		   int searchCoordinate=search.getLocation().getY();
+		   System.out.println("Search co-ordinates "+searchCoordinate);
+		   int settingCoordinate=setting.getLocation().getY();
+		   System.out.println("Serttigs corodinates"+settingCoordinate);
+		   
+		   if(menuLibraryCoordinate==tvGuideFilterCordinate && storeFilterCoordinate==searchCoordinate && searchCoordinate==settingCoordinate)
+		   { 
+		   reports.log(LogStatus.PASS, "mijn bibliotheek corordinate "+menuLibraryCoordinate+ " televisie corordinate "+tvGuideFilterCordinate+" shop corordinate "+storeFilterCoordinate+
+		   " Search cordinate "+searchCoordinate+" Settings co-ordinate "+settingCoordinate+" all are in the same line ");
+		   reports.attachScreenshot(captureCurrentScreenshot());
+		   }    
+		   else
+		   {
+			   FailTestCase("Elemets were not in the same line");
+			   reports.attachScreenshot(captureCurrentScreenshot());
+		   }
+	   }
 }

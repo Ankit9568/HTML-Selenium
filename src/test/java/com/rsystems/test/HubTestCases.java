@@ -118,5 +118,18 @@ public class HubTestCases extends TestInitization {
 		hub.verifyFocousLineMoveDown();
 	}
 	
-	
+	/**
+	 * This test cases is used to Go to HUB and check the no. of entries in text line
+	 * Created by Pritam Dutta
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test
+	public void tc_hub_Text_line() throws InterruptedException
+	{
+		
+		Hub hub = new Hub(driver);
+		hub.hub_Text_line();
+		
+	}
 }

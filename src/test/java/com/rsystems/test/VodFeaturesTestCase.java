@@ -78,5 +78,16 @@ public class VodFeaturesTestCase extends TestInitization
 	   VodFeatures vod = new VodFeatures(driver);
 	   vod.storeEvolutionPosternonleafCategory();
    }
+
+
+
+   // VOD trickplay
+   @Test
+   public void tc_TP009_VOD_Trick_play_menu_from_VOD_playback() throws InterruptedException
+   {
+	   VodFeatures vod = new VodFeatures(driver);
+	   vod.TP009_VOD_Trick_play_menufrom_VODplayback();
+   }
+   
 }
 

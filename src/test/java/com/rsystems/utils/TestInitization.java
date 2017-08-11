@@ -430,6 +430,7 @@ public class TestInitization {
 		System.out.println("Trying to set home page ");
 
 		if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
+			sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 			int retryForHubScreen = 5;
 			Actions action = new Actions(driver);
 

@@ -69,6 +69,12 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.programDetailsScreen)
 	public WebElement programDetailsScreen;
 
+	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.stopBtn)
+	public WebElement stopBtn;
+	
+	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.enablePausePlayButton)
+	public WebElement enablePausePlayButton;
+	
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 
@@ -214,20 +220,23 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
+		
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentImgSource = pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-
+		String currentClassName = enablePausePlayButton.getAttribute("class");
+		System.out.println("class name " + currentClassName);
 		System.out.println(imageName);
 		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))&& currentClassName.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "Pause Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 		else {
 			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
+			
 		}
 	}
 
@@ -240,14 +249,17 @@ public class DTVChannelScreen extends TestInitization {
 		String currentImgSource = pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		String currentClassName = enablePausePlayButton.getAttribute("class");
+		System.out.println("class name " + currentClassName);
 		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))&& currentClassName.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "play Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 		else {
 			FailTestCase("Pause button is not highlight on webpage");
+			
 		}
 
 	}
@@ -357,6 +369,7 @@ public class DTVChannelScreen extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 		reports.log(LogStatus.PASS, "Navigae to CUTV Enabled channel action list from tv guide");
 		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		Thread.sleep(5000);
 		sendKeySequence("ENTER", 1000, "televisie");
 		reports.log(LogStatus.PASS, "Navigate to watch movie");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -885,6 +898,24 @@ public class DTVChannelScreen extends TestInitization {
 			maxRetryCount = maxRetryCount - 1;
 			sendKeyMultipleTimes("RIGHT", 1, 1000);
 
+		}
+	}
+	public void pressStopButtonAndValidation() throws InterruptedException {
+
+		reports.log(LogStatus.PASS, "Press Stop button");
+		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(),1,4000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName =stopBtn.getAttribute("class");
+		
+		System.out.println("class name " + currentClassName);
+		if (currentClassName.contentEquals("enable")) {
+			reports.log(LogStatus.PASS, "Live TV is Stopped");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to stop Live TV");
 		}
 	}
 

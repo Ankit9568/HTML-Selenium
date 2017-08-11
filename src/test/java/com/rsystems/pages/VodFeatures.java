@@ -497,4 +497,25 @@ public class VodFeatures extends TestInitization {
 		change.navigateToMyPreference();
 		change.languageChange("NL");
 	}
+	
+	public void TP009_VOD_Trick_play_menufrom_VODplayback() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+		TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+	    TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
+		dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		dtvChannelScreen.pressStopButtonAndValidation();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		dtvChannelScreen.pressPlayButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+
+	}
 }

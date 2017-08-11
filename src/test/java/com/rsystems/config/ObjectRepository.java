@@ -123,6 +123,9 @@ public class ObjectRepository {
 		public static final String errorMsg = "error-message";
 		public static final String forward = "forward";
 		public static final String infoBanner = "player_controls";
+		public static final String enablePausePlayButton="play_pause";
+		public static final String stopBtn="stop";
+		public static final String playerBar="//div[@id='player_controls']";
 	}
 
 	public static class ZapListPage {
@@ -142,6 +145,11 @@ public class ObjectRepository {
 		public static final String hubSettingElement = "//*[@id='dItemImage_40']/span";
 		public static final String hubFocusElement = "cActiveMenuItem";
 		public static final String menuItemContainer = "dMenuList";
+		public static final String recordingMenu="//section[@id='dMenuList']/ul/li[@id='menuItem_0']";
+		public static final String tvGuideFilter="//section[@id='dMenuList']/ul/li[@id='menuItem_1']";	
+		public static final String storeFilter="//section[@id='dMenuList']/ul/li[@id='menuItem_2']";
+		public static final String search="//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
+		public static final String setting="//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
 	}
 
 	public static class MiniEPGScreen {

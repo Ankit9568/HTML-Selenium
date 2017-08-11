@@ -1,6 +1,7 @@
 package com.rsystems.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,6 +30,13 @@ public class Pvr extends TestInitization
 	public WebElement forward;
 	
 	
+	@FindBy(how = How.XPATH,using = ObjectRepository.DtvChannel.playerBar)
+	public WebElement playerBar;
+	
+	@FindBy(how = How.XPATH,using = ObjectRepository.ZapListPage.screenTitle)
+	public WebElement screenTitle;
+	
+
 	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException
 	{
 		
@@ -460,5 +468,363 @@ public class Pvr extends TestInitization
 		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
 
 	}
+	
+	
+	public void TP003_TSTV_Trick_playmenufromFullscreen_TV() throws InterruptedException
+	{
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		dtv.openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		Thread.sleep(10000);
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 3000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		dtv.pressRewindButtonAndValidation();
+		dtv.pressForwardButtonAndValidation();
+		dtv.pressPauseButtonAndValidation();
+		dtv.pressPlayButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 1000);
+		try
+		{
+		if(playerBar.isDisplayed())
+		{
+			FailTestCase("Recording button is highlighted");
+		}
+		
+		else
+		{
+			reports.log(LogStatus.PASS, "Nothing should happen in case of Recording Button");
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
+		}
+		}
+		catch(NoSuchElementException e)
+		{
+			reports.log(LogStatus.PASS, "Nothing should happen in case of Recording Button");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		dtv.pressStopButtonAndValidation();
+	
+	}
+	
+	
+	public void TP006_DTV_RC_Keys_Trickplay() throws InterruptedException
+	{
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		String expectedScreenTitleMenu=getExcelKeyValue("screenTitles","home","name_nl");
+		System.out.println(expectedScreenTitleMenu);
+		String expectedScreenTitleOndemandScreen=getExcelKeyValue("screenTitles","Shop","name_nl");
+		System.out.println(expectedScreenTitleOndemandScreen);
+		String expectedScreenTitlePVRScreen=getExcelKeyValue("screenTitles","Library","name_nl");
+		System.out.println(expectedScreenTitlePVRScreen);
+		
+		dtv.openLiveTV();
+		dtv.pressRewindButtonAndValidation();
+		reports.log(LogStatus.PASS, "Moving to the Menu Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 500);
+		driver.switchTo().defaultContent();
+		String menuTitle=screenTitle.getText();
+		System.out.println(menuTitle);
+		if(expectedScreenTitleMenu.equalsIgnoreCase(menuTitle))
+		{
+			reports.log(LogStatus.PASS, "Menu Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Menu Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		dtv.openLiveTV();
+		dtv.pressForwardButtonAndValidation();
+		reports.log(LogStatus.PASS, "Moving to the Ondemand Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(),1,1000);
+		driver.switchTo().defaultContent();
+		String onDemandScreenTitle=screenTitle.getText();
+		System.out.println(onDemandScreenTitle);
+		if(expectedScreenTitleOndemandScreen.equalsIgnoreCase(onDemandScreenTitle))
+		{
+			reports.log(LogStatus.PASS, "Ondemand Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Ondemand Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+        
+		dtv.openLiveTV();
+		dtv.pressRewindButtonAndValidation();
+        reports.log(LogStatus.PASS, "Moving to the PVR screen");
+        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+        driver.switchTo().defaultContent();
+		String PVRScreenTitle=screenTitle.getText();
+		System.out.println(PVRScreenTitle);
+		if(expectedScreenTitlePVRScreen.equalsIgnoreCase(PVRScreenTitle))
+		{
+			reports.log(LogStatus.PASS, "PVR Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the PVR Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+       
+        
+        
+        dtv.openLiveTV();
+        dtv.pressForwardButtonAndValidation();
+        reports.log(LogStatus.PASS, "Pressing Back Key");
+        sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        
+        dtv.openLiveTV();
+        dtv.pressPauseButtonAndValidation();
+        reports.log(LogStatus.PASS, "Pressing Back Key");
+        sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        
+        dtv.openLiveTV();
+        dtv.pressPauseButtonAndValidation();
+        reports.log(LogStatus.PASS, "Moving to the PVR screen");
+        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+        driver.switchTo().defaultContent();
+		String PVRScreenTitleTwo=screenTitle.getText();
+		if(expectedScreenTitlePVRScreen.equalsIgnoreCase(PVRScreenTitleTwo))
+		{
+			reports.log(LogStatus.PASS, "PVR Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the PVR Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+       
+       
+        dtv.openLiveTV();
+        dtv.pressPauseButtonAndValidation();
+        reports.log(LogStatus.PASS, "Moving to the Ondemand screen");
+        sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().defaultContent();
+		String onDemandScreenTitleTwo=screenTitle.getText();
+		if(expectedScreenTitleOndemandScreen.equalsIgnoreCase(onDemandScreenTitleTwo))
+		{
+			reports.log(LogStatus.PASS, "Ondemand Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Ondemand Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+        
+        
+        
+        dtv.openLiveTV();
+        dtv.pressPauseButtonAndValidation();
+        reports.log(LogStatus.PASS, "Moving to the Menu screen");
+        sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+        driver.switchTo().defaultContent();
+		String menuTitleTwo=screenTitle.getText();
+		if(expectedScreenTitleMenu.equalsIgnoreCase(menuTitleTwo))
+		{
+			reports.log(LogStatus.PASS, "Menu Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Menu Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+        
+	} 
+	
+	
+	public void TP005_DTV_Trick_playmenufromFullscreen_TV() throws InterruptedException
+	{
+		
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		Pvr pvr = new Pvr(driver);
+		dtv.openLiveTV();
+		sendNumaricKeys(4);
+		//Forwarding video should not happen anything
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName = pvr.forward.getAttribute("class");
+		System.out.println("class name " + currentClassName);
+		try
+		{
+		if (currentClassName.contentEquals("enable active"))
+		{
+			FailTestCase("Forward button is highlighted");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} 
+		else 
+		{
+			reports.log(LogStatus.PASS, "Forward button is not highlighted");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		}
+		catch(NoSuchElementException e)
+		{
+			reports.log(LogStatus.PASS, "Forward button is not highlighted");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		//rewind & validate
+		dtv.pressRewindButtonAndValidation();
+		
+		//pause & validate
+		dtv.pressPauseButtonAndValidation();
+		
+		//play & validate
+		dtv.pressPlayButtonAndValidation();
+		
+		//stop & validate
+		dtv.pressStopButtonAndValidation();
+	}
+	
+	
+	public void TP004_TSTV_RC_Keys_during_Trickplay() throws InterruptedException
+	{
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		String expectedScreenTitleMenu=getExcelKeyValue("screenTitles","home","name_nl");
+		String expectedScreenTitleOndemandScreen=getExcelKeyValue("screenTitles","Shop","name_nl");
+		String expectedScreenTitlePVRScreen=getExcelKeyValue("screenTitles","Library","name_nl");
+		dtv.openLiveTV();
+		
+		dtv.pressRewindButtonAndValidation();
+		reports.log(LogStatus.PASS, "Moving to the Menu Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		driver.switchTo().defaultContent();
+		String menuTitle=screenTitle.getText();
+		if(expectedScreenTitleMenu.equalsIgnoreCase(menuTitle))
+		{
+			reports.log(LogStatus.PASS, "Menu Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Menu Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		
+		dtv.openLiveTV();
+		
+		dtv.pressForwardButtonAndValidation();
+        reports.log(LogStatus.PASS, "Moving to the Ondemand screen");
+        sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().defaultContent();
+		String onDemandScreenTitleTwo=screenTitle.getText();
+		if(expectedScreenTitleOndemandScreen.equalsIgnoreCase(onDemandScreenTitleTwo))
+		{
+			reports.log(LogStatus.PASS, "Ondemand Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the Ondemand Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		dtv.openLiveTV();
+		
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 5000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		
+		dtv.pressRewindButtonAndValidation();
+		reports.log(LogStatus.PASS, "Moving to the PVR screen");
+        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+        driver.switchTo().defaultContent();
+		String PVRScreenTitleTwo=screenTitle.getText();
+		if(expectedScreenTitlePVRScreen.equalsIgnoreCase(PVRScreenTitleTwo))
+		{
+			reports.log(LogStatus.PASS, "PVR Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the PVR Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		
+		dtv.openLiveTV();
+		
+		dtv.pressForwardButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Back Key");
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
+		dtv.pressPlayButtonAndValidation();
+		
+		dtv.pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Back Key");
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
+		dtv.pressPlayButtonAndValidation();
+		
+		dtv.pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Moving to the PVR screen");
+        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+        driver.switchTo().defaultContent();
+		String PVRScreenTitleThree=screenTitle.getText();
+		if(expectedScreenTitlePVRScreen.equalsIgnoreCase(PVRScreenTitleThree))
+		{
+			reports.log(LogStatus.PASS, "PVR Screen is reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Not reached to the PVR Screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		dtv.openLiveTV();
+		dtv.pressPauseButtonAndValidation();
+		 reports.log(LogStatus.PASS, "Moving to the Ondemand screen");
+	        sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+	        reports.attachScreenshot(captureCurrentScreenshot());
+	        driver.switchTo().defaultContent();
+			String onDemandScreenTitleThree=screenTitle.getText();
+			if(expectedScreenTitleOndemandScreen.equalsIgnoreCase(onDemandScreenTitleThree))
+			{
+				reports.log(LogStatus.PASS, "Ondemand Screen is reached");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Not reached to the Ondemand Screen");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			
+		
+			dtv.openLiveTV();
+			dtv.pressPauseButtonAndValidation();
+			reports.log(LogStatus.PASS, "Moving to the Menu Screen");
+			sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+			driver.switchTo().defaultContent();
+			String menuTitleTwo=screenTitle.getText();
+			if(expectedScreenTitleMenu.equalsIgnoreCase(menuTitleTwo))
+			{
+				reports.log(LogStatus.PASS, "Menu Screen is reached");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Not reached to the Menu Screen");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			
+		
+	}
+	
+	
+	
  
 }
