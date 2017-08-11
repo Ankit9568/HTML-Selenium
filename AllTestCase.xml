@@ -48,6 +48,8 @@
 					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
 					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
 					<include name="tc_BCDTVHP0801_epg_hot_key" />
+					<include name="tc_EPG_Past_Program_Options" />
+					<include name="tc_EPG_Up_Down_Navigation" />
 				</methods>
 			</class>
 		</classes>
@@ -78,6 +80,7 @@
 					<include name="tc_hub_navigation_asset_line" />
 					<include name="tc_sf001_hub" />
 					<include name="tc_hub_asset_line_in_hub" />
+					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
 				</methods>
 			</class>
 		</classes>
@@ -282,7 +285,7 @@
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI" />
 					<include
 						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII" />
-						
+
 					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
 					<include name="tc_mini_epg_on_tstv" />
 				</methods>
@@ -312,7 +315,16 @@
 	<!-- </class> -->
 	<!-- </classes> -->
 	<!-- </test> -->
-
+	<test name="Language Change Test case">
+		<classes>
+			<class name="com.rsystems.test.LanguageChangeTestCase">
+				<methods>
+					<include name="tc_PREF_language_FR" />
+					<include name="tc_PREF_language_NL" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 </suite>
 
