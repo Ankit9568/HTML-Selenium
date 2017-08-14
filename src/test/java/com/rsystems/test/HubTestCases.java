@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.Hub;
+import com.rsystems.pages.LibraryScreen;
 import com.rsystems.utils.TestInitization;
 
 public class HubTestCases extends TestInitization {
@@ -97,13 +98,14 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Test When No Package Is assigned");
 		hubScreen.launchAndVerifyMenuScreen();
 	}
-/**
- * 
- * @author Ankit.Agarwal1
- * @throws InterruptedException
- * Test case validate the Hub_Up-Down navigation in HUB
- */
-	
+
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 *             Test case validate the Hub_Up-Down navigation in HUB
+	 */
+
 	@Test
 	public void tc_Hub_Up_Down_navigation_in_HUB() throws InterruptedException {
 
@@ -117,30 +119,34 @@ public class HubTestCases extends TestInitization {
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		hub.verifyFocousLineMoveDown();
 	}
-	
+
 	/**
-	 * This test cases is used to Go to HUB and check the no. of entries in text line
-	 * Created by Pritam Dutta
-	 * @throws InterruptedException 
+	 * This test cases is used to Go to HUB and check the no. of entries in text
+	 * line Created by Pritam Dutta
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test
-	public void tc_hub_Text_line() throws InterruptedException
-	{
-		
+	public void tc_hub_Text_line() throws InterruptedException {
+
 		Hub hub = new Hub(driver);
 		hub.hub_Text_line();
-		
+
 	}
 
 	/**
 	 * @author Ankit.Agarwal1
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
-	public void tc_Hub_Selecting_elements_in_asset_line() throws InterruptedException{
-		
-		sendKeySequence("LEFT", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
-		
+	public void tc_Hub_Selecting_elements_in_asset_line() throws InterruptedException {
+
+		Hub hub = new Hub(driver);
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		sendKeySequence("LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		libraryScreen.libraryElementDisplayed();
+		sendKeySequence("PAGEDOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 		
 		
 	}

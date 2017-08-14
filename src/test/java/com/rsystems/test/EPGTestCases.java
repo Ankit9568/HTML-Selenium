@@ -2,6 +2,7 @@ package com.rsystems.test;
 
 import java.util.HashMap;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -840,25 +841,34 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verifyDefaultType();
 		// Navigate to EPG Guide and Verify epg Setting;
 		reports.log(LogStatus.PASS, "Navigate to EPG and verify settings");
-		if (epgScreen.validationEpgCss(epgSetting, true)) {
-			reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			System.out.println("Verification of EPG changes OK");
-		} else {
-			reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
-			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-			System.out.println("Verification of EPG changes OK");
+		try {
+			if (epgScreen.validationEpgCss(epgSetting, true)) {
+				reports.log(LogStatus.PASS, "Verification of changes in EPG Passed");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				System.out.println("Verification of EPG changes OK");
+			} else {
+				reports.log(LogStatus.FAIL, "Verification of changes in EPG Failed");
+				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+				System.out.println("Verification of EPG changes OK");
+			}
 		}
 		// Set to Default language - NL
+		catch (SkipException e) {
+			setApplicationHubPage(1);
+			pref.navigateToMyPreference();
+			pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
+			throw e;
+		}
 		setApplicationHubPage(1);
 		pref.navigateToMyPreference();
 		pref.changeAndVerifyLanguage(TestInitization.getExcelKeyValue("parameters", "language_NL", "name_nl"));
+
 	}
 
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 * Test case validate the EPG_Up_Down_Navigation
+	 *             Test case validate the EPG_Up_Down_Navigation
 	 */
 	@Test
 	public void tc_EPG_Up_Down_Navigation() throws InterruptedException {
@@ -869,7 +879,7 @@ public class EPGTestCases extends TestInitization {
 	 * @author Ankit.Agarwal1
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
-	 * Test case validate the EPG_Past Program_Options
+	 *             Test case validate the EPG_Past Program_Options
 	 */
 	@Test
 	public void tc_EPG_Past_Program_Options() throws NumberFormatException, InterruptedException {
@@ -882,25 +892,25 @@ public class EPGTestCases extends TestInitization {
 		dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 	}
 
-
-	
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases to validate two lines in EPG Screen
+	 *             Test cases to validate two lines in EPG Screen
 	 */
 	@Test
-	public void tc_SF008_EPG() throws InterruptedException{
+	public void tc_SF008_EPG() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyLinesInEPGScreen();
 	}
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to validate gradient in focussed cell of EPG Screen
+	 *             Test cases is used to validate gradient in focussed cell of
+	 *             EPG Screen
 	 */
 	@Test
-	public void tc_EPG_Gradient_of_Focused_Cell() throws InterruptedException{
+	public void tc_EPG_Gradient_of_Focused_Cell() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyGradientOnEPG();
 	}

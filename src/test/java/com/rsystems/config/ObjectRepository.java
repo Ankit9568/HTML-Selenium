@@ -50,6 +50,7 @@ public class ObjectRepository {
 	public static class LibraryElements {
 		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
 		public static final String libraryCanvas = "//*[@id='dCanvasUpLine']";
+		public static final String libraryElementRowContainer = "rowContainer";
 	}
 
 	public static class PIPElements {
@@ -150,6 +151,7 @@ public class ObjectRepository {
 		public static final String storeFilter="//section[@id='dMenuList']/ul/li[@id='menuItem_2']";
 		public static final String search="//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
 		public static final String setting="//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
+		
 	}
 
 	public static class MiniEPGScreen {
