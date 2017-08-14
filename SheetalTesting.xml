@@ -1,0 +1,37 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+
+	<test name="DTV Test case ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+				
+					<include name="pause_LiveTV_play" />
+					<!-- <include name="pause_LiveTV_PLTV_BackToLive" /> -->
+					<!-- <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
+					<!-- <include name="Pause_LiveTV_trickplay" /> -->
+					<!-- <include name="tc_BCVODVD0130_VOD_FOD" /> -->
+					<!-- <include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
+					<!-- <include name="tc_CUBTL0602_back_to_live_other_channel" /> -->
+					<!-- <include name="tc_CUSO0504_start_over_watch_past_program" /> -->
+					<!-- <include name="tc_CUBTL0601_back_to_live_same_channel" /> -->
+					<!-- <include name="tc_CUSO0505_start_over_watch_started_program" /> -->
+					<!-- <include name="tc_CUSO0501_start_over_list_actions" /> -->
+					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
+					<!-- <include name="tc_CUSUB0201_basic" /> -->
+					<!-- <include name="tc_CUSUB0202_premium" /> -->
+					<!-- <include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
+					<!-- <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" 
+						/> -->
+<!-- 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+

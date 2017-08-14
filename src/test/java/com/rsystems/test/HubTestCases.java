@@ -132,4 +132,16 @@ public class HubTestCases extends TestInitization {
 		hub.hub_Text_line();
 		
 	}
+
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException 
+	 */
+	public void tc_Hub_Selecting_elements_in_asset_line() throws InterruptedException{
+		
+		sendKeySequence("LEFT", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		
+		
+		
+	}
 }
