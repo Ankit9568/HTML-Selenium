@@ -7,6 +7,16 @@
 
 	<!-- First Sprint(15_6_2017) Test case -->
 
+	<test name="UnAssingedSTBTestCases">
+		<classes>
+			<class name="com.rsystems.test.UnAssingedSTBTestCases">
+				<methods>
+					<include name="tc_BCCOMML0210_LANG007_Assignment" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
 	<test name="Recording Test cases ">
 		<classes>
 			<class name="com.rsystems.test.RecordingTestCase">
@@ -279,15 +289,7 @@
 
 	<!-- Sprint 3 -->
 
-	<test name="UnAssingedSTBTestCases">
-		<classes>
-			<class name="com.rsystems.test.UnAssingedSTBTestCases">
-				<methods>
-					<include name="tc_BCCOMML0210_LANG007_Assignment" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+
 
 	<!-- When no package assign -->
 	<!-- <test name="Hub Test cases "> -->
