@@ -1,10 +1,15 @@
 package com.rsystems.test;
 
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+
 import com.rsystems.pages.Hub;
 import com.rsystems.pages.LibraryScreen;
+import com.rsystems.pages.StoreFilterLayer;
+import com.rsystems.pages.TvFilterLayer;
+import com.rsystems.pages.VodFeatures;
 import com.rsystems.utils.TestInitization;
 
 public class HubTestCases extends TestInitization {
@@ -139,14 +144,47 @@ public class HubTestCases extends TestInitization {
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
 	 */
+	@Test
 	public void tc_Hub_Selecting_elements_in_asset_line() throws InterruptedException {
 
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
-		sendKeySequence("LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
-		libraryScreen.libraryElementDisplayed();
-		sendKeySequence("PAGEDOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		StoreFilterLayer storeFilterLayer = new StoreFilterLayer(driver);
+		sendKeySequence("LEFT,UP,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		libraryScreen.libraryElementActionListDisplayed();
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		sendKeySequence("DOWN,RIGHT,RIGHT,UP,ENTER", 1000,
+				TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		storeFilterLayer.actionItemValidation();
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+
+		sendKeySequence("DOWN,RIGHT,UP,ENTER", 1000,
+				TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
+
+		// Search button functionality not working
+	}
+
+	@Test
+	public void tc_Hub_Selecting_elements_in_text_line() throws InterruptedException {
+
+		TvFilterLayer tvFilterLayer = new TvFilterLayer(driver);
+		Hub hub = new Hub(driver);
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		
+		sendKeySequence("ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		isDisplayed(tvFilterLayer.now, "Nu tile ");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		sendKeySequence("LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		isDisplayed(libraryScreen.libraryElementRowContainer, "Library Element row container ");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		isDisplayed(vodFeatures.shopScreen, "highlight tile title");
+		
 		
 		
 	}

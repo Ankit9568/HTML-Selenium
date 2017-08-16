@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,9 @@ public class TestInitization {
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
+		System.setOut(createLoggingProxy(System.out));
+        System.setErr(createLoggingProxy(System.err));
+        
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
 				+ formatter.format(cald.getTime()).toString();
 		
@@ -765,4 +769,16 @@ public class TestInitization {
 		return buildVersion;
 	}
 
+/**
+ * @param realPrintStream
+ * @return
+ * override the console logger with proximus logger also add time and date in console
+ */
+	    public static PrintStream createLoggingProxy(final PrintStream realPrintStream) {
+	        return new PrintStream(realPrintStream) {
+	            public void print(final String string) {
+	                log.info(string);
+	            }
+	        };
+	    }
 }

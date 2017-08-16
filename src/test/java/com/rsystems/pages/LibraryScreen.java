@@ -388,16 +388,19 @@ public class LibraryScreen extends TestInitization {
 		}
 	}
 
-	public void libraryElementDisplayed() throws InterruptedException {
+	public void libraryElementActionListDisplayed() throws InterruptedException {
 
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (libraryElementRowContainer.isDisplayed()) {
-			reports.log(LogStatus.PASS, "Library showcase item is visible on webpage");
+
+		List<WebElement> actionList = driver.findElements(By.xpath("//div[@id='sContainerDiv']/div"));
+		if (actionList.size() > 0) {
+			reports.log(LogStatus.PASS, "Action menu of library screen is visible");
 			reports.attachScreenshot(captureCurrentScreenshot());
+
 		}
 
 		else {
-			FailTestCase("Library showcase item is not visible on webpage");
+			FailTestCase("Action menu of library screen is not visible");
 		}
 	}
 }
