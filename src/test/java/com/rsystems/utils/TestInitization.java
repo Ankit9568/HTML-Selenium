@@ -57,36 +57,43 @@ public class TestInitization {
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
 
-	public static String currentExecutionFoldername ;
-	public static String currentExecutionReportPath ;
+	public static String currentExecutionFoldername;
+	public static String currentExecutionReportPath;
 
-	protected static String configFilePath = System.getProperty("user.dir")
-			+ "\\src\\test\\java\\com\\rsystems\\config\\config.properties";
+	protected static String configFilePath = System.getProperty("user.dir") + File.pathSeparator + "src"
+			+ File.pathSeparator + "test" + File.pathSeparator + "java" + File.pathSeparator + "com"
+			+ File.pathSeparator + "rsystems" + File.pathSeparator + "config" + File.pathSeparator
+			+ "config.properties";
 
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
 		System.setOut(createLoggingProxy(System.out));
-        System.setErr(createLoggingProxy(System.err));
-        
+		System.setErr(createLoggingProxy(System.err));
+
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
 				+ formatter.format(cald.getTime()).toString();
-		
-		currentExecutionReportPath = System.getProperty("user.dir") + "\\ExecutionReports\\"
-				+ currentExecutionFoldername;
-		
+
+		currentExecutionReportPath = System.getProperty("user.dir") + File.pathSeparator + "ExecutionReports"
+				+ File.pathSeparator + currentExecutionFoldername;
+
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
 
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
-		String seleniumLogs = new File(currentExecutionReportPath + "/Logs/Selenium.log").getAbsolutePath();
-		String applicationLogs = new File(currentExecutionReportPath + "/Logs/Application.log").getAbsolutePath();
+		String seleniumLogs = new File(
+				currentExecutionReportPath + File.pathSeparator + "Logs" + File.pathSeparator + "Selenium.log")
+						.getAbsolutePath();
+		String applicationLogs = new File(
+				currentExecutionReportPath + File.pathSeparator + "Logs" + File.pathSeparator + "Application.log")
+						.getAbsolutePath();
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
 
 		Properties props = new Properties();
-		props.load(new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\java\\log4j.properties"));
+		props.load(new FileInputStream(System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
+				+ "test" + File.pathSeparator + "java" + File.pathSeparator + "log4j.properties"));
 		PropertyConfigurator.configure(props);
 
 		reports.init(extentReportPath, true);
@@ -215,7 +222,7 @@ public class TestInitization {
 			e.printStackTrace();
 		}
 
-		captureFilePath = "./screenshots\\" + captureFileName;
+		captureFilePath = "./screenshots"+File.pathSeparator + captureFileName;
 		return captureFilePath;
 
 	}
@@ -769,16 +776,16 @@ public class TestInitization {
 		return buildVersion;
 	}
 
-/**
- * @param realPrintStream
- * @return
- * override the console logger with proximus logger also add time and date in console
- */
-	    public static PrintStream createLoggingProxy(final PrintStream realPrintStream) {
-	        return new PrintStream(realPrintStream) {
-	            public void print(final String string) {
-	                log.info(string);
-	            }
-	        };
-	    }
+	/**
+	 * @param realPrintStream
+	 * @return override the console logger with proximus logger also add time
+	 *         and date in console
+	 */
+	public static PrintStream createLoggingProxy(final PrintStream realPrintStream) {
+		return new PrintStream(realPrintStream) {
+			public void print(final String string) {
+				log.info(string);
+			}
+		};
+	}
 }

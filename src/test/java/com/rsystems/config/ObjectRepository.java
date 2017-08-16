@@ -1,9 +1,12 @@
 package com.rsystems.config;
 
+import java.io.File;
+
 public class ObjectRepository {
 
-	public static final String excelFilePath = System.getProperty("user.dir")
-			+ "/src/test/java/com/rsystems/config/testdata.xlsx";
+	public static final String excelFilePath = System.getProperty("user.dir") + File.pathSeparator + "src"
+			+ File.pathSeparator + "test" + File.pathSeparator + "java" + File.pathSeparator + "com"
+			+ File.pathSeparator + "rsystems" + File.pathSeparator + "config" + File.pathSeparator + "testdata.xlsx";
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
@@ -44,7 +47,7 @@ public class ObjectRepository {
 		public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
 		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div";
 		public static final String epgNonFocussedCell = "//li[@class='program']/div";
-	
+
 	}
 
 	public static class LibraryElements {
@@ -124,9 +127,9 @@ public class ObjectRepository {
 		public static final String errorMsg = "error-message";
 		public static final String forward = "forward";
 		public static final String infoBanner = "player_controls";
-		public static final String enablePausePlayButton="play_pause";
-		public static final String stopBtn="stop";
-		public static final String playerBar="//div[@id='player_controls']";
+		public static final String enablePausePlayButton = "play_pause";
+		public static final String stopBtn = "stop";
+		public static final String playerBar = "//div[@id='player_controls']";
 	}
 
 	public static class ZapListPage {
@@ -146,12 +149,12 @@ public class ObjectRepository {
 		public static final String hubSettingElement = "//*[@id='dItemImage_40']/span";
 		public static final String hubFocusElement = "cActiveMenuItem";
 		public static final String menuItemContainer = "dMenuList";
-		public static final String recordingMenu="//section[@id='dMenuList']/ul/li[@id='menuItem_0']";
-		public static final String tvGuideFilter="//section[@id='dMenuList']/ul/li[@id='menuItem_1']";	
-		public static final String storeFilter="//section[@id='dMenuList']/ul/li[@id='menuItem_2']";
-		public static final String search="//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
-		public static final String setting="//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
-		
+		public static final String recordingMenu = "//section[@id='dMenuList']/ul/li[@id='menuItem_0']";
+		public static final String tvGuideFilter = "//section[@id='dMenuList']/ul/li[@id='menuItem_1']";
+		public static final String storeFilter = "//section[@id='dMenuList']/ul/li[@id='menuItem_2']";
+		public static final String search = "//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
+		public static final String setting = "//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
+
 	}
 
 	public static class MiniEPGScreen {

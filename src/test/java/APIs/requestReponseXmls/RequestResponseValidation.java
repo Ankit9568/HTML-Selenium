@@ -15,10 +15,12 @@ import org.w3c.dom.Document;
 
 public class RequestResponseValidation {
 
-	public static String responseXml = System.getProperty("user.dir")
-			+ "\\src\\test\\java\\APIs\\requestReponseXmls\\Response.xml";
-	public static String requestXml = System.getProperty("user.dir")
-			+ "\\src\\test\\java\\APIs\\requestReponseXmls\\Request.xml";
+	public static String responseXml = System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
+			+ "test" + File.pathSeparator + "java" + File.pathSeparator + "APIs" + File.pathSeparator
+			+ "requestReponseXmls" + File.pathSeparator + "Response.xml";
+	public static String requestXml = System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
+			+ "test" + File.pathSeparator + "java" + File.pathSeparator + "APIs" + File.pathSeparator
+			+ "requestReponseXmls" + File.pathSeparator + "Request.xml";
 
 	private boolean responseValidation() throws Exception {
 
@@ -29,11 +31,10 @@ public class RequestResponseValidation {
 
 		String msgRecieved = doc.getElementsByTagName("Message").item(0).getTextContent();
 		String responseCode = doc.getElementsByTagName("Code").item(0).getTextContent();
-		
-		if(msgRecieved.equalsIgnoreCase("SUCCESS") && responseCode.equalsIgnoreCase("0")){
+
+		if (msgRecieved.equalsIgnoreCase("SUCCESS") && responseCode.equalsIgnoreCase("0")) {
 			System.out.println("API hit Sucessfully");
-		}
-		else{
+		} else {
 			throw new Exception(msgRecieved);
 		}
 		System.out.println(msgRecieved);
