@@ -163,7 +163,7 @@ public class HubTestCases extends TestInitization {
 		sendKeySequence("DOWN,RIGHT,UP,ENTER", 1000,
 				TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
 
-		// Search button functionality not working
+		// Search button functionality not implemented
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class HubTestCases extends TestInitization {
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		VodFeatures vodFeatures = new VodFeatures(driver);
-		
+
 		sendKeySequence("ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
 		isDisplayed(tvFilterLayer.now, "Nu tile ");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
@@ -184,8 +184,9 @@ public class HubTestCases extends TestInitization {
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 		isDisplayed(vodFeatures.shopScreen, "highlight tile title");
-		
-		
-		
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		sendKeySequence("RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
+		// Search button functionality not implemented
 	}
 }
