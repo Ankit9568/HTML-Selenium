@@ -4,9 +4,9 @@ import java.io.File;
 
 public class ObjectRepository {
 
-	public static final String excelFilePath = System.getProperty("user.dir") + File.pathSeparator + "src"
-			+ File.pathSeparator + "test" + File.pathSeparator + "java" + File.pathSeparator + "com"
-			+ File.pathSeparator + "rsystems" + File.pathSeparator + "config" + File.pathSeparator + "testdata.xlsx";
+	public static final String excelFilePath = System.getProperty("user.dir") + File.separator  + "src"
+			+ File.separator  + "test" + File.separator  + "java" + File.separator  + "com"
+			+ File.separator  + "rsystems" + File.separator  + "config" + File.separator  + "testdata.xlsx";
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
@@ -266,4 +266,7 @@ public class ObjectRepository {
 	public static class SettingScreen {
 		public static final String activeOption = "//div[@class='cItem cActiveItem']";
 	}
+	
+	
+	
 }

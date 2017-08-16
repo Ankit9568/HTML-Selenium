@@ -60,11 +60,14 @@ public class TestInitization {
 	public static String currentExecutionFoldername;
 	public static String currentExecutionReportPath;
 
-	protected static String configFilePath = System.getProperty("user.dir") + File.pathSeparator + "src"
-			+ File.pathSeparator + "test" + File.pathSeparator + "java" + File.pathSeparator + "com"
-			+ File.pathSeparator + "rsystems" + File.pathSeparator + "config" + File.pathSeparator
+	protected static String configFilePath = System.getProperty("user.dir") + File.separator  + "src"
+			+ File.separator + "test" + File.separator  + "java" + File.separator  + "com"
+			+ File.separator  + "rsystems" + File.separator  + "config" + File.separator 
 			+ "config.properties";
 
+	
+	
+	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
@@ -75,26 +78,26 @@ public class TestInitization {
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
 				+ formatter.format(cald.getTime()).toString();
 
-		currentExecutionReportPath = System.getProperty("user.dir") + File.pathSeparator + "ExecutionReports"
-				+ File.pathSeparator + currentExecutionFoldername;
+		currentExecutionReportPath = System.getProperty("user.dir") + File.separator  + "ExecutionReports"
+				+ File.separator  + currentExecutionFoldername;
 
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
 
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(
-				currentExecutionReportPath + File.pathSeparator + "Logs" + File.pathSeparator + "Selenium.log")
+				currentExecutionReportPath + File.separator  + "Logs" + File.separator  + "Selenium.log")
 						.getAbsolutePath();
 		String applicationLogs = new File(
-				currentExecutionReportPath + File.pathSeparator + "Logs" + File.pathSeparator + "Application.log")
+				currentExecutionReportPath + File.separator  + "Logs" + File.separator  + "Application.log")
 						.getAbsolutePath();
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
 
 		Properties props = new Properties();
-		props.load(new FileInputStream(System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
-				+ "test" + File.pathSeparator + "java" + File.pathSeparator + "log4j.properties"));
+		props.load(new FileInputStream(System.getProperty("user.dir") + File.separator  + "src" + File.separator 
+				+ "test" + File.separator  + "java" + File.separator  + "log4j.properties"));
 		PropertyConfigurator.configure(props);
 
 		reports.init(extentReportPath, true);
@@ -223,7 +226,7 @@ public class TestInitization {
 			e.printStackTrace();
 		}
 
-		captureFilePath = "./screenshots"+File.pathSeparator + captureFileName;
+		captureFilePath = "./screenshots"+File.separator  + captureFileName;
 		return captureFilePath;
 
 	}

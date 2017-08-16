@@ -15,12 +15,12 @@ import org.w3c.dom.Document;
 
 public class RequestResponseValidation {
 
-	public static String responseXml = System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
-			+ "test" + File.pathSeparator + "java" + File.pathSeparator + "APIs" + File.pathSeparator
-			+ "requestReponseXmls" + File.pathSeparator + "Response.xml";
-	public static String requestXml = System.getProperty("user.dir") + File.pathSeparator + "src" + File.pathSeparator
-			+ "test" + File.pathSeparator + "java" + File.pathSeparator + "APIs" + File.pathSeparator
-			+ "requestReponseXmls" + File.pathSeparator + "Request.xml";
+	public static String responseXml = System.getProperty("user.dir") + File.separator  + "src" + File.separator 
+			+ "test" + File.separator  + "java" + File.separator  + "APIs" + File.separator 
+			+ "requestReponseXmls" + File.separator  + "Response.xml";
+	public static String requestXml = System.getProperty("user.dir") + File.separator  + "src" + File.separator 
+			+ "test" + File.separator  + "java" + File.separator  + "APIs" + File.separator 
+			+ "requestReponseXmls" + File.separator  + "Request.xml";
 
 	private boolean responseValidation() throws Exception {
 
