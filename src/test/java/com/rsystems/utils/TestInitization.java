@@ -66,8 +66,8 @@ public class TestInitization {
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
-		System.setOut(createLoggingProxy(System.out));
-        System.setErr(createLoggingProxy(System.err));
+		//System.setOut(createLoggingProxy(System.out));
+        //System.setErr(createLoggingProxy(System.err));
         
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
 				+ formatter.format(cald.getTime()).toString();
