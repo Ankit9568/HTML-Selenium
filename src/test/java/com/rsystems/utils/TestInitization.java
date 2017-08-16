@@ -68,6 +68,7 @@ public class TestInitization {
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
+
 		System.setOut(createLoggingProxy(System.out));
 		System.setErr(createLoggingProxy(System.err));
 
