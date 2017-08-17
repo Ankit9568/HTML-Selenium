@@ -113,10 +113,12 @@ public class Pvr extends TestInitization {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
+		handlePopupIfExist();
 		episodeDetails = new DTVChannelScreen(driver).startRecording(
 				Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 
 		navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
@@ -145,11 +147,12 @@ public class Pvr extends TestInitization {
 	public void PvrRcTrickPlay() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
+		handlePopupIfExist();
 		reports.log(LogStatus.PASS, "Start Recording to verify PVR Playback");
 		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(
 				Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Returning to the Main Menu");
@@ -165,7 +168,7 @@ public class Pvr extends TestInitization {
 		}
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Pressing on the Ondemand Hot key");
@@ -181,7 +184,7 @@ public class Pvr extends TestInitization {
 		}
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Pressing on the PVR hot key");
@@ -202,13 +205,13 @@ public class Pvr extends TestInitization {
 		TestInitization.setApplicationHubPage(2);
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
@@ -234,7 +237,7 @@ public class Pvr extends TestInitization {
 		TestInitization.setApplicationHubPage(2);
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Pressing on the Ondemand hot key button");
@@ -250,7 +253,7 @@ public class Pvr extends TestInitization {
 		}
 
 		navigateToThePVRPlayback(episodeDetails);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Pressing on the Menu button");
@@ -279,7 +282,8 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		handlePopupIfExist();
+		
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		dtvChannelScreen.pressPlayButtonAndValidation();
@@ -298,7 +302,8 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		handlePopupIfExist();
+		
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		reports.log(LogStatus.PASS, "Press on the Menu key");
@@ -321,7 +326,7 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Press on Demand Hot key");
@@ -342,7 +347,7 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
@@ -364,7 +369,7 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
@@ -388,7 +393,7 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		handlePopupIfExist();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		reports.log(LogStatus.PASS, "Pressing the on demand hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
@@ -408,6 +413,7 @@ public class Pvr extends TestInitization {
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		handlePopupIfExist();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		reports.log(LogStatus.PASS, "Press Menu key hot key");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
@@ -426,6 +432,7 @@ public class Pvr extends TestInitization {
 	public void TP003_TSTV_Trick_playmenufromFullscreen_TV() throws InterruptedException {
 		DTVChannelScreen dtv = new DTVChannelScreen(driver);
 		dtv.openLiveTV();
+		handlePopupIfExist();
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
 		Thread.sleep(10000);
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 3000);
