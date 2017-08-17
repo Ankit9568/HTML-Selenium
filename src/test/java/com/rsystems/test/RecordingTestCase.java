@@ -58,6 +58,8 @@ public class RecordingTestCase extends TestInitization {
 		//Plan recording for 2 channels
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
 		// Schedule Recording for Future Channel
+		recordingScreen.deleteAllRecordings();
+		recordingScreen.stopAllOnGoingRecording();
 		recordingScreen.verifyAndScheduleRecordingForFutureEpisode();
 		//Start Recording for Current Episode
 		recordingScreen.verifyAndStartRecordingForCurrentEpisode();
@@ -92,6 +94,7 @@ public class RecordingTestCase extends TestInitization {
 	{
 		
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.deleteAllRecordings();
 		EpisodeInfo episodeDetails = recordingScreen.scheduleRecordingFromEPGScreen("SINGLE");
 		boolean verifyOnGoingRecording = recordingScreen.verifyRecordingIsScheduledOrNot(episodeDetails,"SINGLE");
 		if (verifyOnGoingRecording)
@@ -114,6 +117,7 @@ public class RecordingTestCase extends TestInitization {
 	{
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
 		// Start Recording from EPG Screen
+		recordingScreen.stopAllOnGoingRecording();
 		recordingScreen.verifyAndStartRecordingForCurrentEpisode();
 		// Start Recording while watching TV
 		recordingScreen.verifyAndStartRecordingFromDTV();
@@ -126,6 +130,7 @@ public class RecordingTestCase extends TestInitization {
 	public void tc_BCDTVCP1407_nPVR_Planned_To_Record() throws InterruptedException
 	{
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.deleteAllRecordings();
 		reports.log(LogStatus.PASS,"Start Recording for "+ getExcelKeyValue("Recording", "No_Of_Recording", "name_nl") +" future episodes");
 		List<EpisodeInfo> listOfAddedRecordings = recordingScreen.scheduleRecordingForFutureChannel("SINGLE",Integer.parseInt(getExcelKeyValue("Recording", "No_Of_Recording", "name_nl")));
 		for (EpisodeInfo epsiodeInfo : listOfAddedRecordings) {
@@ -170,6 +175,7 @@ public class RecordingTestCase extends TestInitization {
 	@Test
 	public void tc_BCDTVCP1409_No_Conflict_Between_nPVR_Planned_Recordings() throws InterruptedException, ParseException{
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.deleteAllRecordings();
 		recordingScreen.verifyAndPlanOverlappingRecordings(2);
 	}
 }

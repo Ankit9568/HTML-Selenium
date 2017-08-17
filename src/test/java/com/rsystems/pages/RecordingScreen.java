@@ -183,6 +183,7 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 */
 	public List<EpisodeInfo> scheduleRecordingForFutureChannel(String recordingType,int numberOfRecording) throws InterruptedException{
+		
 		boolean stopRecording = false;
 		String epgepisodeName = null;
 		int noOfRecordedChannel = 0;
@@ -523,8 +524,8 @@ public class RecordingScreen extends TestInitization{
 		/*If there is no recording scheduled the first start multiple recording then test this scenario*/
 		if (Integer.parseInt(totalRecordings) == 0)
 		{
-			scheduleRecordingForFutureChannel("SINGLE", 5);
-			verifyNavigationInPlannedRecording();
+			scheduleRecordingForFutureChannel("SINGLE", 3);
+			return(verifyNavigationInPlannedRecording());
 		}
 		/*Navigate down till last element of schdeule recording*/ 
 		reports.log(LogStatus.PASS, " Navigate down till the last element of scheduled recordings ");
@@ -751,7 +752,15 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 */
 	public void deleteAllRecordings() throws InterruptedException{
-		moveToPlannedRecordings();
+		//moveToPlannedRecordings();
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
+		TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+		TestInitization.sendKeyMultipleTimes("DOWN",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
 		List<WebElement> recordingContentElementList = null;
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		Integer totalRecordings = 0;
@@ -759,9 +768,7 @@ public class RecordingScreen extends TestInitization{
 		/*If there is no recordings under Scheduled Recording then first start recording for multiple episode and try again to deleteAll*/
 		if (recordingContentElementList.size() == 0)
 		{
-			reports.log(LogStatus.PASS, "No Recordings present to delete");
-			scheduleRecordingForFutureChannel("SINGLE", 3);
-			deleteAllRecordings();
+			return;
 		}
 		else
 		{
@@ -775,10 +782,7 @@ public class RecordingScreen extends TestInitization{
 					//Click on Delete
 					driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 					TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-					reports.log(LogStatus.PASS,"Expected - Should be in Info box to delete");
-					reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 					TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-					reports.log(LogStatus.PASS,"Recording Deleted Successfully");;
 				}
 				else{
 					TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -787,17 +791,10 @@ public class RecordingScreen extends TestInitization{
 					int noOfSeries = recordingContentElementList.size();
 					for(int j=0;j<noOfSeries;j++)
 					{
-						reports.log(LogStatus.PASS,"Expected - Info box containing Series Recordings");
-						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
-						//Enter to Info Page
 						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-						//Click on Delete
 						driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-						reports.log(LogStatus.PASS,"Expected - Should be in Info box to delete");
-						reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 						TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-						reports.log(LogStatus.PASS,"Recording Deleted Successfully");
 					}
 				}
 				
@@ -999,6 +996,37 @@ public class RecordingScreen extends TestInitization{
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}	
 	}
+	
+	
+	public void stopAllOnGoingRecording() throws InterruptedException
+	{
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		sendKeyMultipleTimes("DOWN",1,1000);
+		TestInitization.sendKeyMultipleTimes("LEFT",1,1000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
+		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String recordingBeforeDelete = totalRecordingID.getText();
+		System.out.println("Recording List Before Delete :" +recordingBeforeDelete);
+		for (int i = 0; i< 15;i++)
+		{	
+			if (focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size()>0){
+				if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))
+				{
+					stopSingleRecording();
+				}
+				else
+				{
+					stopSeriesRecording();
+				}
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+
+		}
+	}
 	/**
 	 * This function is used to delete ongoing and complete recordings
 	 * Created By Rahul Dhoundiyal
@@ -1049,6 +1077,34 @@ public class RecordingScreen extends TestInitization{
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+	
+	public void deleteRecordedItems() throws InterruptedException
+	{
+		boolean recordedItemDeleted = false;
+		moveToOngoingandCompletedRecordingList();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String recordingBeforeDelete = totalRecordingID.getText();
+		for (int i = 0; i< 60;i++)
+		{
+			if (focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size()<=0){
+					if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))
+					{
+						deleteSingleRecording();
+					}
+					else
+					{
+						deleteSeriesRecording();
+					}
+					recordedItemDeleted = true;
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+			
+		}
+	}
+	
 	private void stopSeriesRecording() throws InterruptedException {
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		reports.log(LogStatus.PASS, "Info Box of recorded item should be displayed ");
@@ -1592,4 +1648,5 @@ public class RecordingScreen extends TestInitization{
 			    }
 			    return false;
 	}
+	
 }
