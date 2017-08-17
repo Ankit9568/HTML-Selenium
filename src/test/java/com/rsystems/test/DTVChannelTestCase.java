@@ -646,6 +646,8 @@ public class DTVChannelTestCase extends TestInitization {
 		} else {
 			FailTestCase("Sorting criteria does not found in left side on page");
 		}
+		String popularMovieName =dtvChannelScreen.getMovieNameForSpecificCategory(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"));
 
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "SortingOptionName"),
@@ -654,8 +656,7 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
 
-		String popularMovieName =dtvChannelScreen.getMovieNameForSpecificCategory(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"));
+		
 				
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
