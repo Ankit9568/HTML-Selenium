@@ -446,7 +446,7 @@ public class MiniEPGTestCase extends TestInitization {
 		 miniEPGScreen.verifyMiniEPGBehaviourOnCUTVDisabledChannel();
 	 }
 	 @Test
-	 public void tc_77673_Mini_EPG_Lifespan_scheduled_recording() throws InterruptedException
+	 public void tc_77673_Mini_EPG_Lifespan_scheduled_recording() throws InterruptedException, ParseException
 	 {
 		 miniEPGScreen = new MiniEPGScreen(driver);
 		 miniEPGScreen.verifyMiniEPGLifeSpanOfScheduledRecording();
