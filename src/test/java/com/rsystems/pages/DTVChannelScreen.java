@@ -71,10 +71,10 @@ public class DTVChannelScreen extends TestInitization {
 
 	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.stopBtn)
 	public WebElement stopBtn;
-	
+
 	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.enablePausePlayButton)
 	public WebElement enablePausePlayButton;
-	
+
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 
@@ -220,7 +220,6 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
-		
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentImgSource = pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
@@ -228,15 +227,15 @@ public class DTVChannelScreen extends TestInitization {
 		String currentClassName = enablePausePlayButton.getAttribute("class");
 		System.out.println("class name " + currentClassName);
 		System.out.println(imageName);
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))&& currentClassName.contentEquals("enable active")) {
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))
+				&& currentClassName.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "Pause Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 		else {
 			FailTestCase("Play button is not highlight on webpage.Might be video is not playing on STB");
-			
+
 		}
 	}
 
@@ -251,15 +250,15 @@ public class DTVChannelScreen extends TestInitization {
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
 		String currentClassName = enablePausePlayButton.getAttribute("class");
 		System.out.println("class name " + currentClassName);
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))&& currentClassName.contentEquals("enable active")) {
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))
+				&& currentClassName.contentEquals("enable active")) {
 			reports.log(LogStatus.PASS, "play Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
 		else {
 			FailTestCase("Pause button is not highlight on webpage");
-			
+
 		}
 
 	}
@@ -285,6 +284,7 @@ public class DTVChannelScreen extends TestInitization {
 	public void tuneToChannel(int channelNumber) throws InterruptedException {
 
 		sendNumaricKeys(channelNumber);
+		handlePopupIfExist();
 		Thread.sleep(2000);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -364,13 +364,16 @@ public class DTVChannelScreen extends TestInitization {
 
 	public void openCutvEnableChannelFromTvGuide() throws InterruptedException {
 
-		reports.log(LogStatus.PASS, "Open TV Guide and navigate to CUTV Enabled channel.");
+		reports.log(LogStatus.PASS, "Open TV Guide.");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		reports.log(LogStatus.PASS, "Navigae to CUTV Enabled channel action list from tv guide");
 		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
 		Thread.sleep(5000);
-		sendKeySequence("ENTER", 1000, "televisie");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Navigate to action list.");
+		sendKeySequence("ENTER", 5000, "televisie");
+
 		reports.log(LogStatus.PASS, "Navigate to watch movie");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -519,6 +522,50 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("Movie list is not updated Acutal First Movie Name : "
 					+ rentMovie.currentSelectedMovieName.getText() + " expected First Movie Name : " + FirstMovieName);
 		}
+
+	}
+
+	public String getMovieNameForSpecificCategory(String sortingOption) throws InterruptedException {
+		boolean sortingOptionFound = false;
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		int maxcount = 20;
+		while (maxcount > 0) {
+			if (vodFeatures.activeSortOption.getText().equalsIgnoreCase(sortingOption)) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Sorting option " + sortingOption + " has been selected");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				sortingOptionFound = true;
+				break;
+
+			}
+			sendKeyMultipleTimes("DOWN", 1, 1000);
+			maxcount--;
+		}
+
+		maxcount = 20;
+		while (maxcount > 0 && !sortingOptionFound) {
+
+			if (vodFeatures.activeSortOption.getText().equalsIgnoreCase(sortingOption)) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				reports.log(LogStatus.PASS, "Sorting option " + sortingOption + " has been selected");
+				reports.attachScreenshot(captureCurrentScreenshot());
+				sortingOptionFound = true;
+				break;
+
+			}
+			sendKeyMultipleTimes("UP", 1, 1000);
+			maxcount--;
+		}
+
+		if (!sortingOptionFound) {
+			FailTestCase(sortingOption + " option is not availiable in sorting pannel");
+		}
+		RentMovie rentMovie = new RentMovie(driver);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		return rentMovie.currentSelectedMovieName.getText();
 
 	}
 
@@ -828,7 +875,7 @@ public class DTVChannelScreen extends TestInitization {
 	public void navigateToFilmScreenVerifyPoster(String postername) throws InterruptedException {
 
 		int maxRetryCount = 40;
-		
+
 		VodFeatures vodFeatures = new VodFeatures(driver);
 
 		reports.log(LogStatus.PASS, "Navigate to the filterlayer screen");
@@ -902,15 +949,16 @@ public class DTVChannelScreen extends TestInitization {
 
 		}
 	}
+
 	public void pressStopButtonAndValidation() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Press Stop button");
-		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(),1,4000);
+		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 4000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentClassName =stopBtn.getAttribute("class");
-		
+		String currentClassName = stopBtn.getAttribute("class");
+
 		System.out.println("class name " + currentClassName);
 		if (currentClassName.contentEquals("enable")) {
 			reports.log(LogStatus.PASS, "Live TV is Stopped");

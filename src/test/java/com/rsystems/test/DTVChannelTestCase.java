@@ -263,7 +263,7 @@ public class DTVChannelTestCase extends TestInitization {
 		reports.log(LogStatus.PASS, "Changed channel to 1");
 		TestInitization.sendNumaricKeys(1);
 		handlePopupIfExist();
-		
+
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Navigate to action list");
@@ -522,12 +522,14 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
 		String programTitleInEpg = dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 2, 4000);
+		handlePopupIfExist();
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String titleInInfoBanner = dtvChannelScreen.programTitle.getText();
 
 		if (!programTitleInEpg.equalsIgnoreCase(titleInInfoBanner)) {
 			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1);
 			FailTestCase("Channel Info banner is not updated. Title from EPG : " + programTitleInEpg
 					+ " program title in Info banner " + titleInInfoBanner);
 		}
@@ -644,15 +646,19 @@ public class DTVChannelTestCase extends TestInitization {
 		} else {
 			FailTestCase("Sorting criteria does not found in left side on page");
 		}
+
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "First Movie Order"));
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
+
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "First Movie Order"));
+				dtvChannelScreen.getMovieNameForSpecificCategory(
+						TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName")));
+
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "First Movie Order"));

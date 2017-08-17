@@ -7,9 +7,9 @@
                 <accountNumber>0811</accountNumber>
             </subscriberDataAttributes>
             <packageData>
-                <packageId>5211</packageId>
+                <packageId>5210</packageId>
                 <packageLocked>0</packageLocked>
-                <usoc>TVREPLAYF</usoc>
+                <usoc>TVREPLAY</usoc>
                 <packageRateCode>PD</packageRateCode>
                 <subscriptionStartDate>25/07/2017</subscriptionStartDate>
                 <subscriptionEndDate>31/12/2020</subscriptionEndDate>

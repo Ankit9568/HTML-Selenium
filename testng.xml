@@ -189,7 +189,7 @@
 					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
 					<!-- <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
 						/> -->
-					<include name="pause_LiveTV_play" />
+<!-- 					<include name="pause_LiveTV_play" /> -->
 <!-- 					<include name="pause_LiveTV_PLTV_BackToLive" /> -->
 					<!-- <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
 					<!-- <include name="Pause_LiveTV_trickplay" /> -->
@@ -201,12 +201,12 @@
 					<!-- <include name="tc_CUSO0505_start_over_watch_started_program" /> -->
 					<!-- <include name="tc_CUSO0501_start_over_list_actions" /> -->
 					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
-					<include name="tc_CUSUB0201_basic" />
-					<!-- <include name="tc_CUSUB0202_premium" /> -->
-					<!-- <include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
+<!-- 					<include name="tc_CUSUB0201_basic" /> -->
+<!-- 					<include name="tc_CUSUB0202_premium" /> -->
+<!-- 					<include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
 					<!-- <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" 
 						/> -->
-					<!-- <include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
+					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
 				</methods>
 			</class>
 		</classes>

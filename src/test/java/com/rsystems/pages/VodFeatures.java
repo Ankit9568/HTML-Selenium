@@ -197,7 +197,7 @@ public class VodFeatures extends TestInitization {
 		sendNumaricKeys(Integer.parseInt(pinNumber));
 		// for auto switch to next page
 		Thread.sleep(2000);
-		reports.log(LogStatus.PASS, "Navite to Movie");
+		reports.log(LogStatus.PASS, "Navigate to Movie");
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
@@ -294,6 +294,7 @@ public class VodFeatures extends TestInitization {
 
 				reports.log(LogStatus.PASS, "Click on Watch Option");
 				sendKeyMultipleTimes("ENTER", 1, 5000);
+				handlePopupIfExist();
 				reports.attachScreenshot(captureCurrentScreenshot());
 
 				reports.log(LogStatus.PASS, "Validating movie is open or not.");

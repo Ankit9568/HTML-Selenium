@@ -1,0 +1,69 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+	<test name="Language Change Test case">
+		<classes>
+			<class name="com.rsystems.test.LanguageChangeTestCase">
+				<methods>
+					<include name="tc_PREF_language_NL" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Hub Test cases ">
+		<classes>
+			<class name="com.rsystems.test.HubTestCases">
+				<methods>
+					<include name="tc_Hub_Menu_Button" />
+					<include name="tc_HUB_Navigation_Text_Line" />
+					<include name="tc_hub_navigation_asset_line" />
+					<include name="tc_sf001_hub" />
+					<include name="tc_hub_asset_line_in_hub" />
+					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
+					<include name="tc_hub_Text_line" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="PIP Test cases ">
+		<classes>
+			<class name="com.rsystems.test.PIPTestCases">
+				<methods>
+					<include name="tc_BCPIPHPG01_pip_confirmation_setting_links" />
+					<include name="tc_BCPIPHPG04_pip_position_links_all_screen" />
+					<include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" />
+					<include name="tc_pip_001_pip_setting_ui" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+		<test name="Hotkey Test case">
+		<classes>
+			<class name="com.rsystems.test.HotKeysTestCase">
+				<methods>
+					<include name="tc_BCDTVDT0101_navigateMultipleScreensToDTV" />
+					<include name="tc_BCDTVRAD0501_navigateToRadioScreen" />
+					<include name="tc_BCDTVRAD0503_navigateRadioToDtvScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="RcArrow Keys TestCase">
+		<classes>
+			<class name="com.rsystems.test.RcArrowKeysTestCase">
+				<methods>
+					<include name="tc_BCREMC0107_verifyNavigationEpgScreen" />
+					<include name="tc_RCU_Digital_TV_NTE11" />
+					<include name="tc_RCU_Numeric_keys" />
+					<include name="tc_RCU_EPG_Navigation" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+
