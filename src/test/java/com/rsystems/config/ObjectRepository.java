@@ -4,9 +4,9 @@ import java.io.File;
 
 public class ObjectRepository {
 
-	public static final String excelFilePath = System.getProperty("user.dir") + File.separator  + "src"
-			+ File.separator  + "test" + File.separator  + "java" + File.separator  + "com"
-			+ File.separator  + "rsystems" + File.separator  + "config" + File.separator  + "testdata.xlsx";
+	public static final String excelFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
+			+ "config" + File.separator + "testdata.xlsx";
 
 	/*-----------------HUB Menu Item Locators------------------------*/
 
@@ -47,7 +47,8 @@ public class ObjectRepository {
 		public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
 		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div";
 		public static final String epgNonFocussedCell = "//li[@class='program']/div";
-
+		public static final String focousElementChannelNumber = "//li[@id='colCh0']/span/span[1]";
+		public static final String actionList = "//div[@id='containerDiv']/div[contains(@class,'cItem')]";
 	}
 
 	public static class LibraryElements {
@@ -266,7 +267,5 @@ public class ObjectRepository {
 	public static class SettingScreen {
 		public static final String activeOption = "//div[@class='cItem cActiveItem']";
 	}
-	
-	
-	
+
 }

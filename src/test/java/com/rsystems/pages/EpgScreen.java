@@ -84,16 +84,18 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusElementProgramTiminig)
 	public WebElement focusElementProgramTime;
 
-	
-	@FindBy(how = How.XPATH,using= ObjectRepository.EpgScreen.epgFocussedCell)
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.epgFocussedCell)
 	public WebElement epgFocussedCell;
-	
-	@FindBy(how = How.XPATH,using= ObjectRepository.EpgScreen.epgNonFocussedCell)
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.epgNonFocussedCell)
 	public WebElement epgNonFocussedCell;
-	
+
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.MiniEPGScreen.activeZapBlockElement)
 	public WebElement activeElement;
-	
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focousElementChannelNumber)
+	public WebElement focousElementChannelNumber;
+
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -915,11 +917,12 @@ public class EpgScreen extends TestInitization {
 	}
 
 	public void verifyMovementsInUpAndDownLine() throws InterruptedException {
+
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		boolean checkMovement = false;
 		String initialUpLine = libraryScreen.upCanvasLine.getAttribute("style");
 		String initialDownLine = libraryScreen.downCanvasLine.getAttribute("style");
-		
+
 		int itemSize = driver.findElements(By.className("cItem")).size();
 		for (int i = 0; i <= itemSize - 1; i++) {
 			sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -936,6 +939,25 @@ public class EpgScreen extends TestInitization {
 		} else {
 			reports.log(LogStatus.PASS, "No movements in line");
 			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+
+	public void channelChangeAndValidation() throws InterruptedException {
+
+		sendNumaricKeys(1);
+		Thread.sleep(5000);
+		reports.log(LogStatus.PASS, " Navigate to 30 channel");
+		sendNumaricKeys(30);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		Thread.sleep(5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (focousElementChannelNumber.getText().contentEquals("30")) {
+			reports.log(LogStatus.PASS, "Successfully navigate to 30 channel number");
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		} else {
+			FailTestCase("Unable to navigate to expected channel : 30 and Actual channel : "
+					+ focousElementChannelNumber.getText());
 		}
 	}
 }

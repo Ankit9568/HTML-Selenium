@@ -1,10 +1,8 @@
 package com.rsystems.test;
 
-import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
-
 import com.rsystems.pages.Hub;
 import com.rsystems.pages.LibraryScreen;
 import com.rsystems.pages.StoreFilterLayer;
@@ -150,16 +148,22 @@ public class HubTestCases extends TestInitization {
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		StoreFilterLayer storeFilterLayer = new StoreFilterLayer(driver);
+		reports.log(LogStatus.PASS, "Navigate to library screen");
 		sendKeySequence("LEFT,UP,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 		libraryScreen.libraryElementActionListDisplayed();
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		
+		reports.log(LogStatus.PASS, "Navigate to shop screen");
 		sendKeySequence("DOWN,RIGHT,RIGHT,UP,ENTER", 1000,
 				TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 		storeFilterLayer.actionItemValidation();
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 
+		reports.log(LogStatus.PASS, "Navigate to search screen");
 		sendKeySequence("DOWN,RIGHT,UP,ENTER", 1000,
 				TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
 
@@ -173,19 +177,32 @@ public class HubTestCases extends TestInitization {
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		VodFeatures vodFeatures = new VodFeatures(driver);
-
+		
+		reports.log(LogStatus.PASS, "Navigate to television screen");
 		sendKeySequence("ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(tvFilterLayer.now, "Nu tile ");
-		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
+		
+		reports.log(LogStatus.PASS, "Navigate to library screen");
 		sendKeySequence("LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(libraryScreen.libraryElementRowContainer, "Library Element row container ");
-		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
+		
+		reports.log(LogStatus.PASS, "Navigate to shop screen");
 		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(vodFeatures.shopScreen, "highlight tile title");
-		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		
+		reports.log(LogStatus.PASS, "Navigate to search screen");
 		sendKeySequence("RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
 		// Search button functionality not implemented
 	}

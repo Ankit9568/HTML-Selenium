@@ -585,6 +585,7 @@ public class Hub extends TestInitization {
 
 	public void verifyFocousElementText(String expectedFocousElementText) throws InterruptedException {
 
+		driver.switchTo().frame(getCurrentFrameIndex());
 		if (focusHubElement.getText().trim().contentEquals(expectedFocousElementText)) {
 			reports.log(LogStatus.PASS, "Focous Element hub page " + focusHubElement.getText() + " and focous element "
 					+ expectedFocousElementText);

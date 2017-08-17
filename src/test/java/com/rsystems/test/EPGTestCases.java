@@ -1,16 +1,22 @@
 package com.rsystems.test;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.rsystems.config.ObjectRepository;
 import com.rsystems.pages.ChangePreference;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.EpgScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
+
+import repackage.Repackage;
 
 public class EPGTestCases extends TestInitization {
 
@@ -915,4 +921,53 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verifyGradientOnEPG();
 	}
 
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test
+	public void tc_EPG_Numeric_Navigation() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to Tv guide.");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		epgScreen.channelChangeAndValidation();
+	}
+@Test
+	public void tc_EPG_Ongoing_Program_Options() throws InterruptedException {
+
+		Boolean pauseBtnFound = false;
+		Boolean recordBtnFound = false;
+
+		reports.log(LogStatus.PASS, "Navigate the Live TV");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		reports.log(LogStatus.PASS, "Select On goining program");
+		sendKeySequence("ENTER", 1000, "televisie");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> actionList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		reports.log(LogStatus.PASS, "Validation the action list");
+		for (WebElement option : actionList) {
+			if (option.getText().contentEquals("pauzeren")) {
+				pauseBtnFound = true;
+				reports.log(LogStatus.PASS, "Pause button found");
+			} else if (option.getText().contentEquals("opnemen")) {
+				recordBtnFound = true;
+				reports.log(LogStatus.PASS, "Record button found");
+			}
+
+			else if (option.getText().contentEquals("serie opnemen")) {
+				reports.log(LogStatus.PASS, "Record Series found");
+			}
+
+			else if (option.getText().contentEquals("zendercatalogus")) {
+				reports.log(LogStatus.PASS, "Channel Catalog found");
+			}
+		}
+
+		if (!(pauseBtnFound && recordBtnFound)) {
+			FailTestCase("Pause or Record button is not found");
+		}
+	}
 }

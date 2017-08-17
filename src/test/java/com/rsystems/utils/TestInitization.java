@@ -413,7 +413,7 @@ public class TestInitization {
 		} else {
 			System.out.println("Not reached at the desired screen");
 			throw new SkipException("Not reached at the desired screen" + "Actual Screen Title : "
-					+ screenTitleAfterNavigation + "Expected Screen Title : " + expectedScreenTitle);
+					+ screenTitleAfterNavigation + " Expected Screen Title : " + expectedScreenTitle);
 		}
 
 	}

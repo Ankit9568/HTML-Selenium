@@ -89,7 +89,7 @@ public class LanguageChangeTestCase extends TestInitization {
 	public void tc_PREF_language_FR() throws InterruptedException {
 
 		SettingScreen settingScreen = new SettingScreen(driver);
-		reports.log(LogStatus.PASS, "Naviget the setting screen");
+		reports.log(LogStatus.PASS, "Navigate the setting screen");
 		TestInitization.sendKeysSequenceUpdated("RIGHT,RIGHT,RIGHT,ENTER", 2000,
 				TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
 

@@ -1,7 +1,5 @@
 package com.rsystems.test;
 
-import java.io.File;
-
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
