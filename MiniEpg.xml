@@ -1,0 +1,68 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+	<test name="Mini EPG Test cases ">
+		<classes>
+			<class name="com.rsystems.test.MiniEPGTestCase">
+				<methods>
+
+					<include
+						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include
+						name="tc_77655_A_MiniEPGBehaviourFromFullScreenLiveTVOnCUTVChannel" />
+					<include
+						name="tc_77655_B_MiniEPGBehaviourFrmFullScreenLiveTVOnCUTVChannel" />
+					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" />
+					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" />
+					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
+					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" />
+					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" />
+
+					<include name="tc_77664_mini_epg_On_Zaplist_CUTVEnabledChannel" />
+					<include name="tc_77665_mini_epg_On_Zaplist_CUTVDisabledChannel" />
+					<include name="tc_77680_A_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77676_mini_epg_right_side_tv_guide_tile" />
+					<include name="tc_77680_B_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_D_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_E_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_C_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77674_Mini_EPG_On_CUTV_long_finished_airing" />
+					<include name="tc_77656_Mini_EPG_Video_tile_appearance" />
+					<include name="tc_77659_Mini_EPG_Past_tile_appearance" />
+
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartIII" />
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartII" />
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartI" />
+
+					<include
+						name="tc_77661_Mini_EPG_Behaviour_Live_TV_On_CUTVDisabledChannel" />
+					<include name="tc_77673_Mini_EPG_Lifespan_scheduled_recording" />
+					<include name="tc_77677_B_Mini_EPG_Long_stays_in_Program_Details_screen" />
+					<include name="tc_77677_A_Mini_EPG_Long_stays_in_Program_Details_screen" />
+					<include
+						name="tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMiniEPG" />
+					<include name="tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTVdisabled" />
+					<include name="tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTV_PartII" />
+					<include name="tc_77669_MiniEPG_finishedairingCUTV" />
+					<include name="tc_77669_MiniEPG_finishedairingCUTV_PartII" />
+					<include name="tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel" />
+					<include
+						name="tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel_PartII" />
+					<include name="tc_77671_Mini_EPG_CUTV_ongoingAiring" />
+					<include name="tc_77671_Mini_EPG_CUTV_ongoingAiring_PartII" />
+					<include
+						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI" />
+					<include
+						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII" />
+
+					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
+					<include name="tc_mini_epg_on_tstv" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+
