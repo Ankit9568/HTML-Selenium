@@ -257,10 +257,13 @@ public class DTVChannelTestCase extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to DTV Screen");
 		TestInitization.sendKeyMultipleTimes("UP", 1, 1000);
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Changed channel to 1");
 		TestInitization.sendNumaricKeys(1);
+		handlePopupIfExist();
+		
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Navigate to action list");
@@ -447,6 +450,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		handlePopupIfExist();
 		dtvScreen.pressPauseButtonAndValidation();
 		// navigate to menu page
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);

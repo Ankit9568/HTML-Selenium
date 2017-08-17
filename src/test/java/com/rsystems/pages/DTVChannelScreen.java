@@ -552,6 +552,8 @@ public class DTVChannelScreen extends TestInitization {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		Thread.sleep(3000);
+		handlePopupIfExist();
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {

@@ -44,6 +44,7 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.pages.Hub;
+import com.rsystems.pages.MiniEPGScreen;
 
 public class TestInitization {
 
@@ -60,17 +61,12 @@ public class TestInitization {
 	public static String currentExecutionFoldername;
 	public static String currentExecutionReportPath;
 
-	protected static String configFilePath = System.getProperty("user.dir") + File.separator  + "src"
-			+ File.separator + "test" + File.separator  + "java" + File.separator  + "com"
-			+ File.separator  + "rsystems" + File.separator  + "config" + File.separator 
-			+ "config.properties";
+	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
+			+ "config" + File.separator + "config.properties";
 
-	
-	
-	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
-
 
 		System.setOut(createLoggingProxy(System.out));
 		System.setErr(createLoggingProxy(System.err));
@@ -78,26 +74,26 @@ public class TestInitization {
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
 				+ formatter.format(cald.getTime()).toString();
 
-		currentExecutionReportPath = System.getProperty("user.dir") + File.separator  + "ExecutionReports"
-				+ File.separator  + currentExecutionFoldername;
+		currentExecutionReportPath = System.getProperty("user.dir") + File.separator + "ExecutionReports"
+				+ File.separator + currentExecutionFoldername;
 
 		String extentReportFileName = "index.html";
 		new File(currentExecutionReportPath).mkdirs();
 
 		String extentReportPath = new File(currentExecutionReportPath + "/" + extentReportFileName).getAbsolutePath();
 		String seleniumLogs = new File(
-				currentExecutionReportPath + File.separator  + "Logs" + File.separator  + "Selenium.log")
+				currentExecutionReportPath + File.separator + "Logs" + File.separator + "Selenium.log")
 						.getAbsolutePath();
 		String applicationLogs = new File(
-				currentExecutionReportPath + File.separator  + "Logs" + File.separator  + "Application.log")
+				currentExecutionReportPath + File.separator + "Logs" + File.separator + "Application.log")
 						.getAbsolutePath();
 
 		System.setProperty("seleniumLogs", seleniumLogs);
 		System.setProperty("ApplicationLogs", applicationLogs);
 
 		Properties props = new Properties();
-		props.load(new FileInputStream(System.getProperty("user.dir") + File.separator  + "src" + File.separator 
-				+ "test" + File.separator  + "java" + File.separator  + "log4j.properties"));
+		props.load(new FileInputStream(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+				+ File.separator + "java" + File.separator + "log4j.properties"));
 		PropertyConfigurator.configure(props);
 
 		reports.init(extentReportPath, true);
@@ -226,7 +222,7 @@ public class TestInitization {
 			e.printStackTrace();
 		}
 
-		captureFilePath = "./screenshots"+File.separator  + captureFileName;
+		captureFilePath = "./screenshots" + File.separator + captureFileName;
 		return captureFilePath;
 
 	}
@@ -791,5 +787,16 @@ public class TestInitization {
 				log.info(string);
 			}
 		};
+	}
+
+	public static void handlePopupIfExist() throws InterruptedException {
+		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (miniEPGScreen.notificationMsg.isDisplayed()) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+			}
+		} catch (NoSuchElementException e) {
+		}
 	}
 }

@@ -16,8 +16,6 @@ import com.rsystems.pages.EpgScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
-import repackage.Repackage;
-
 public class EPGTestCases extends TestInitization {
 
 	/**

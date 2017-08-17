@@ -1,0 +1,38 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+	<test name="EPG Setting Test case ">
+		<classes>
+			<class name="com.rsystems.test.EPGTestCases">
+				<methods>
+					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
+					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+					<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
+					<include name="tc_BCEPGHPG01_epg_cancel_setting" />
+					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
+					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" />
+					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
+					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
+					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
+					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
+					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
+					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
+					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
+					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
+					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
+					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
+					<include name="tc_EPG_Past_Program_Options" />
+					<include name="tc_EPG_Up_Down_Navigation" />
+					<include name="tc_EPG_Gradient_of_Focused_Cell" />
+					<include name="tc_SF008_EPG" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+

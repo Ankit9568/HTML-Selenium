@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubscriberAPI>
 <version>4.2.0</version>
-<SubscriberSTBUnassignResult>
+<SubscriberPackageAssignResult>
 <result>
-  <Code>211</Code>
-  <Message>The STB with ID 1854816 is no longer assigned to this subscriber.</Message>
+  <Code>0</Code>
+  <Message>SUCCESS</Message>
   <subscriber>1344908</subscriber>
 </result>
-</SubscriberSTBUnassignResult>
+</SubscriberPackageAssignResult>
 </SubscriberAPI>
