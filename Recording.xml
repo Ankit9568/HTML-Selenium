@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+	<test name="Recording Test cases ">
+		<classes>
+			<class name="com.rsystems.test.RecordingTestCase">
+				<methods>
+					<include name="tc_BCDTVCP1406_Perform_Instant_nPVR_Recording" />
+					<include name="tc_BCDTVCP1448_Recorded_nPVR_Delete" />
+					<include
+						name="tc_BCDTVCP1409_No_Conflict_Between_nPVR_Planned_Recordings" />
+					<include name="tc_BCDTVCP1414_Stop_nPVR_Recording_Action_Menu" />
+					<include name="tc_BCDTVCP1407_nPVR_Planned_To_Record" />
+					<include name="tc_BCDTVCP1423_nPVR_Schedule_EPG" />
+					<include name="tc_BCDTVCP1419_navigation_with_recordings" />
+					<include name="tc_BCDTVCP1451_Planned_nPVR_Delete" />
+					<include name="tc_BCDTVCP1430_nPVR_Planner_Navigation" />
+					<include name="tc_BCDTVCP1429_nPVR_Library_Navigation" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+</suite>
+

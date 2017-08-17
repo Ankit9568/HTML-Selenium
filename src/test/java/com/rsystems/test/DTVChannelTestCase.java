@@ -654,10 +654,12 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
 
+		String popularMovieName =dtvChannelScreen.getMovieNameForSpecificCategory(
+				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"));
+				
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
-				dtvChannelScreen.getMovieNameForSpecificCategory(
-						TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName")));
+				popularMovieName);
 
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "SortingOptionName"),
