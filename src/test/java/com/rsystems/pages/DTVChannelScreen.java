@@ -375,8 +375,11 @@ public class DTVChannelScreen extends TestInitization {
 		sendKeySequence("ENTER", 5000, "televisie");
 
 		reports.log(LogStatus.PASS, "Navigate to watch movie");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new EpgScreen(driver).herstarten, "Restart button ");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
 
 	}
 

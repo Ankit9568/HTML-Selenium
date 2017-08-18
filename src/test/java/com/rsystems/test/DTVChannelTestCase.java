@@ -516,7 +516,8 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
-
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		
 		dtvChannelScreen.openLiveTV();
 		dtvChannelScreen.tuneToChannel(Integer.parseInt(
 				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));

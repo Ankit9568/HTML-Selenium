@@ -49,6 +49,8 @@ public class ObjectRepository {
 		public static final String epgNonFocussedCell = "//li[@class='program']/div";
 		public static final String focousElementChannelNumber = "//li[@id='colCh0']/span/span[1]";
 		public static final String actionList = "//div[@id='containerDiv']/div[contains(@class,'cItem')]";
+		public static final String herstarten = "//div[(text()='herstarten')]";
+	
 	}
 
 	public static class LibraryElements {

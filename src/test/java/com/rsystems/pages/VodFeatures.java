@@ -300,7 +300,7 @@ public class VodFeatures extends TestInitization {
 				reports.log(LogStatus.PASS, "Validating movie is open or not.");
 				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 				driver.switchTo().frame(getCurrentFrameIndex());
-				isDisplayed(dtvChannelScreen.infoBanner, "Info banner ");
+				//isDisplayed(dtvChannelScreen.infoBanner, "Info banner ");
 
 				sendKeyMultipleTimes("ENTER", 1, 6000);
 				Thread.sleep(4000);
