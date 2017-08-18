@@ -5,6 +5,53 @@
 		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
 	</listeners>
 
+<test name="UnAssingedSTBTestCases">
+		<classes>
+			<class name="com.rsystems.test.UnAssingedSTBTestCases">
+				<methods>
+					<include name="tc_BCCOMML0210_LANG007_Assignment" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="VOD test cases">
+		<classes>
+			<class name="com.rsystems.test.VodFeaturesTestCase">
+				<methods>
+					<include name="tc_BCVODBG0312_VOD_Rent" />
+					<include name="tc_StoreEvolutionPosternonleafCategory" />
+					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
+
+					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
+					<include name="tc_StoreEvolutionPosterleafCategory" />
+					<include name="tc_storeEvolutionDefaultposternonleafCategory" />
+					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
+					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
+					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Library Screen TestCase">
+		<classes>
+			<class name="com.rsystems.test.LibraryTestCase">
+				<methods>
+					<include name="verifyLibraryMenuItemsText" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Tv Filter Layer TestCase">
+		<classes>
+			<class name="com.rsystems.test.TvFilterLayerTestCase">
+				<methods>
+					<include name="verifyTvFilterLayerScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 	<test name="DTV Test case ">
 		<classes>
 			<class name="com.rsystems.test.DTVChannelTestCase">
@@ -37,15 +84,15 @@
 			</class>
 		</classes>
 	</test>
-	<test name="Time taking test cases">
-		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
-				<methods>
-					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+<!-- 	<test name="Time taking test cases"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.DTVChannelTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 <test name="Infobanner Test case">
 		<classes>
 			<class name="com.rsystems.test.ActivateInfoBannerTestCase">
