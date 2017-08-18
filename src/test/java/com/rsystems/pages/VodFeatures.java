@@ -169,6 +169,9 @@ public class VodFeatures extends TestInitization {
 		isDisplayed(pinContainer, "Pin Container");
 
 		sendNumaricKeys(Integer.parseInt(pinNumber));
+		Thread.sleep(5000);
+		
+		
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
