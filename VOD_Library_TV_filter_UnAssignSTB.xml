@@ -19,9 +19,10 @@
 		<classes>
 			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
+					<include name="tc_BCVODBG0312_VOD_Rent" />
 					<include name="tc_StoreEvolutionPosternonleafCategory" />
 					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
-					<include name="tc_BCVODBG0312_VOD_Rent" />
+
 					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
 					<include name="tc_StoreEvolutionPosterleafCategory" />
 					<include name="tc_storeEvolutionDefaultposternonleafCategory" />
