@@ -576,7 +576,7 @@ public class DTVChannelScreen extends TestInitization {
 		String cutvDisabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
 		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
 		openLiveTV();
-		sendNumaricKeys(Integer.parseInt(cutvDisabledNumber));
+		tuneToChannel(Integer.parseInt(cutvDisabledNumber));
 		reports.log(LogStatus.PASS, "Navigate to TV Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		// isDisplayed(epgGuide, "TV Guide");
@@ -662,7 +662,7 @@ public class DTVChannelScreen extends TestInitization {
 	public void verifyActionItemList() throws NumberFormatException, InterruptedException {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
-		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		tuneToChannel(Integer.parseInt(cutvChannelNumber));
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
@@ -766,9 +766,11 @@ public class DTVChannelScreen extends TestInitization {
 		boolean backToLiveFound = false;
 		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
-		sendNumaricKeys(Integer.parseInt(cutvEnabledNumber));
+		tuneToChannel(Integer.parseInt(cutvEnabledNumber));
+		Thread.sleep(2000);
 		reports.log(LogStatus.PASS, "Go to TV - Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
 		String liveEpisodeName = new EpgScreen(driver).focusElemntInEpg.getText();
@@ -812,7 +814,7 @@ public class DTVChannelScreen extends TestInitization {
 	public void verifyStartOverWatchStartedProgram() throws NumberFormatException, InterruptedException {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
-		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		tuneToChannel(Integer.parseInt(cutvChannelNumber));
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
