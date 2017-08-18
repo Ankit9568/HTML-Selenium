@@ -172,7 +172,7 @@ public class VodFeatures extends TestInitization {
 		Thread.sleep(5000);
 		
 		
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 5000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
