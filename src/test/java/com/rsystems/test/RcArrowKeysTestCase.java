@@ -54,4 +54,15 @@ public class RcArrowKeysTestCase extends TestInitization {
 		RcArrowKeys rc = new RcArrowKeys(driver);
 		rc.verifyRCUEPGNavigation();
 	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validate Arrows Keys on DTV Full Screen
+	 */
+	@Test
+	public void tc_RCU_Arrow_Keys_on_DTV_fullscreen() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCArrowKeysOnDTV();
+	}
+	
 }

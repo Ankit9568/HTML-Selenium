@@ -169,10 +169,7 @@ public class VodFeatures extends TestInitization {
 		isDisplayed(pinContainer, "Pin Container");
 
 		sendNumaricKeys(Integer.parseInt(pinNumber));
-		Thread.sleep(5000);
-		
-		
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 5000);
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
@@ -521,5 +518,16 @@ public class VodFeatures extends TestInitization {
 		dtvChannelScreen.pressPlayButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 
+	}
+	
+	public void verifyLinesInStore() throws InterruptedException {
+
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate the Store Filter screen");
+		sendKeySequence("RIGHT,ENTER,ENTER", 1000, "shop");
+		reports.log(LogStatus.PASS, "Verify Two Lines getting displayed on Store Filter Screen");
+		libraryScreen.verifyTwoLinesInLibraryScreen("Level2");
+		reports.log(LogStatus.PASS, "Verify Opacity of Two Lines getting displayed on Store Filter Screen");
+		libraryScreen.verifyOpactiyOfLines();
 	}
 }

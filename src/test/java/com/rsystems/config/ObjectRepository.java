@@ -43,13 +43,17 @@ public class ObjectRepository {
 		public static final String cutvIcon = "//span[@class='channel-cutv']";
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[contains(@class,'programLogo')]/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
-		public static final String focusElementProgramTiminig = "//li[@class = 'program focusProgram']/div/p[contains(@class,'programTiming')]";
-		public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
-		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div";
+		public static final String focusElementProgramTiminig = "//*[@id='channel-6']/section/div/div[2]/div[@class='prog-time']";
+		//public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
+		public static final String focusElementCUTVIcon = "//*[@id='groupIcon']/img[@class='cutvicon']";
+		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div[@class='focusProgram']";
 		public static final String epgNonFocussedCell = "//li[@class='program']/div";
 		public static final String focousElementChannelNumber = "//li[@id='colCh0']/span/span[1]";
 		public static final String actionList = "//div[@id='containerDiv']/div[contains(@class,'cItem')]";
 		public static final String herstarten = "//div[(text()='herstarten')]";
+		public static final String focusedProgramTvguide="//li[@class='program focusProgram']";
+		public static final String focusedCurrentLineTvguide="currentTimeLine";
+		public static final String actionMenuItems="cVodInfoMenu";
 	
 	}
 

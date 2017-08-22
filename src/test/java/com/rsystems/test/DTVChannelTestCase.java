@@ -725,5 +725,31 @@ public class DTVChannelTestCase extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.verifyStartOverWatchStartedProgram();
 	}
+	
+
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to Press PAUSE while in LiveTV (test it with all possible background load, like: record on-going on another channel, load of a broker document, etc&.)
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_Pause_LiveTV_PLTV_pause() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.pause_LiveTV_PLTV_pause();
+	}
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to Check Timeshifting on hdd less STB.
+       Keep STB in timeshift mode for few hours and check how it performs.
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_HDD_Less_Timeshifting() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.hdd_Less_Timeshifting();
+	}
 
 }

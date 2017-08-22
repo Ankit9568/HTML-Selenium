@@ -88,6 +88,15 @@ public class VodFeaturesTestCase extends TestInitization
 	   VodFeatures vod = new VodFeatures(driver);
 	   vod.TP009_VOD_Trick_play_menufrom_VODplayback();
    }
-   
+   /**
+    * @author Rahul.Dhoundiyal
+    * @throws InterruptedException
+    * Test cases is used to validate two lines under Shop Screen
+    */
+   @Test
+   public void tc_SF005_Store() throws InterruptedException{
+	   VodFeatures vod = new VodFeatures(driver);
+	   vod.verifyLinesInStore();
+   }
 }
 

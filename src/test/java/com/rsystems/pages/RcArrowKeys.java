@@ -254,4 +254,60 @@ public class RcArrowKeys extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+	public void verifyRCArrowKeysOnDTV() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		reports.log(LogStatus.PASS, "Press UP Arrow Key");
+		sendKeyMultipleTimes("UP", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))){
+			reports.log(LogStatus.PASS, "ZapList getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Zaplist should getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Press DOWN Arrow Key");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))){
+			reports.log(LogStatus.PASS, "ZapList getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Zaplist should getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Press RIGHT Arrow Key");
+		sendKeyMultipleTimes("RIGHT", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))){
+			reports.log(LogStatus.PASS, "Mini EPG Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Mini EPG Screen  should getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Press LEFT Arrow Key");
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))){
+			reports.log(LogStatus.PASS, "Mini EPG Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Mini EPG Screen should getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+	}
 }

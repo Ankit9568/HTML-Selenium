@@ -1,5 +1,6 @@
 package com.rsystems.pages;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,6 +99,24 @@ public class EpgScreen extends TestInitization {
 	
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.herstarten)
 	public WebElement herstarten;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.ZapListPage.screenTitle)
+	public WebElement screenTitle;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusedProgramTvguide)
+	public WebElement focusedProgramTvguide;
+	
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.focusedCurrentLineTvguide)
+	public WebElement focusedCurrentLineTvguide;
+	
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.actionMenuItems)
+	public WebElement actionMenuItems;
+	
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.DtvChannel.programDurationIn_Infobar)
+	public WebElement programDurationIn_Infobar;
+	
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.DtvChannel.programTitle)
+	public WebElement programTitle;
 	
 
 	public void goToEpgSettingScreen() throws InterruptedException {
@@ -316,8 +335,8 @@ public class EpgScreen extends TestInitization {
 					"No_of_Channel");
 			expectedBackgroundColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_geel",
 					"BackgroundColor");
-		} else if (epgType.equalsIgnoreCase("dÃ©faut") && epgBackground.equalsIgnoreCase("dÃ©faut")
-				&& epgFont.equalsIgnoreCase("dÃ©faut")) {
+		} else if (epgType.equalsIgnoreCase("défaut") && epgBackground.equalsIgnoreCase("défaut")
+				&& epgFont.equalsIgnoreCase("défaut")) {
 
 			expectedFontSize = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_size");
 			expectedFontFamily = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_family");
@@ -774,7 +793,7 @@ public class EpgScreen extends TestInitization {
 		if (ProximusContext.getCurrentLanguage() == "NL") {
 			defaultEPGType = "STANDAARD";
 		} else {
-			defaultEPGType = "dÃ©faut";
+			defaultEPGType = "défaut";
 		}
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		if (epgType.getText().equalsIgnoreCase(defaultEPGType)) {
@@ -964,4 +983,208 @@ public class EpgScreen extends TestInitization {
 					+ focousElementChannelNumber.getText());
 		}
 	}
+	public void verifyRoundedCornerOnFocuCell() throws InterruptedException {
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		String episodeName = dtvChannelScreen.programTitle.getText();
+		goToEpgChannelScreen(true);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(focusElemntInEpg.getText().equalsIgnoreCase(episodeName)){
+			reports.log(LogStatus.PASS, "Guide getting displayed with focus on current channel");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Focus is not on current episode");
+		}
+		if(epgFocussedCell.getCssValue("border-bottom-right-radius").equalsIgnoreCase("12px")){
+			reports.log(LogStatus.PASS, "Border right bottom is rounded for focussed Cell");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Border should be rounded for focussed cell in EPG");
+		}
+		if( epgNonFocussedCell.getCssValue("border-bottom-right-radius").equalsIgnoreCase("0px"))
+		{
+			reports.log(LogStatus.PASS, "Borders is flat for non focussed Cell");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Border should be flat for non-focussed cell in EPG");
+		}
+	}
+	
+	public void verifyFFAndREWKeyOnEPGScreen() throws InterruptedException {
+		setApplicationHubPage(1);
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (new Hub(driver).focusHubElement.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Expected Output - Focus should be on " +getExcelKeyValue("screenTitles", "LiveTV", "name_nl") + ". Actual Output - Focus is on " + new Hub(driver).focusHubElement.getText());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Test cases is failed as Initial Focus is not on " +getExcelKeyValue("screenTitles", "LiveTV", "name_nl") + " Actual Focus is on " +new Hub(driver).focusHubElement.getText());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(activeElement.getText().equalsIgnoreCase(getExcelKeyValue("TvFilterLayer", "TvGrid", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Expected Output - Focus should be on tv-gids. Actual Output - Focus is on " + activeElement.getText());
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Test cases is failed as Initial Focus is not on tv-gids.  Actual Focus is on " +activeElement.getText());
+		}
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+		Calendar calendar = Calendar.getInstance();
+	    calendar.add(Calendar.DAY_OF_YEAR, 1);
+	    int date = calendar.get(Calendar.DATE);
+	    if(driver.findElement(By.className("dayHeading")).getText().contains(String.valueOf(date))){
+	    	reports.log(LogStatus.PASS, "Press FW Key - Day Changes in the grid");
+	    	reports.attachScreenshot(captureCurrentScreenshot());
+	    }
+	    else
+	    {
+	    	FailTestCase("Press FW Key - Day not changed");
+	    }
+	    sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 2, 2000);
+	    calendar = Calendar.getInstance();
+	    calendar.add(Calendar.DAY_OF_YEAR, -1);
+	    date = calendar.get(Calendar.DATE);
+	    System.out.println(driver.findElement(By.className("dayHeading")).getText());
+	    System.out.println(String.valueOf(date));
+	    if(driver.findElement(By.className("dayHeading")).getText().contains(String.valueOf(date))){
+	    	reports.log(LogStatus.PASS, "Press REW Key - Day Changes in the grid");
+	    	reports.attachScreenshot(captureCurrentScreenshot());
+	    }
+	    else
+	    {
+	    	FailTestCase("Press REW Key - Day not changed");
+	    }
+	}
+	
+	//Pritam
+			public void EPG_Focus_On_Current_Program() throws InterruptedException
+			{
+				DTVChannelScreen dtv = new DTVChannelScreen(driver);
+				dtv.openLiveTV();
+				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+				sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+				driver.switchTo().frame(getCurrentFrameIndex());
+				String programTime=programDurationIn_Infobar.getText();
+				System.out.println(programTime);
+				String programTitleofScreen=programTitle.getText();
+				System.out.println(programTitleofScreen);
+				
+				sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				String programTitleofguide=focusElemntInEpg.getText();
+				System.out.println(programTitleofguide);
+				String programTimeSchedule=focusElementProgramTime.getText();
+				System.out.println(programTimeSchedule);
+				
+				if(programTime.equalsIgnoreCase(programTimeSchedule)&&programTitleofScreen.equalsIgnoreCase(programTitleofguide))
+				{
+					reports.log(LogStatus.PASS, "Current Program "+programTitleofScreen+" is getting hilighted");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+				else
+				{
+					FailTestCase("Current Program "+programTitleofScreen+" is not getting hilighted");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+			}
+		
+			
+		//EPG via hotkey
+			
+			public void EPG_via_Hotkey() throws InterruptedException
+			{
+				String EpgGuideScreen=getExcelKeyValue("screenTitles","LiveTV","name_nl");
+				System.out.println(EpgGuideScreen);
+				String actionMenuTitle=getExcelKeyValue("screenTitles","LiveTV","name_nl");
+				System.out.println(actionMenuTitle);
+				sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+				driver.switchTo().defaultContent();
+				String currentEPGuideScreenTitle=screenTitle.getText();
+				System.out.println(currentEPGuideScreenTitle);
+				if(EpgGuideScreen.equalsIgnoreCase(currentEPGuideScreenTitle))
+				{
+					reports.log(LogStatus.PASS, "EPG screen is reached");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+				else
+				{
+					FailTestCase("EPG has not been reached");
+				}
+				
+				//Navigate to EPG guide
+				driver.switchTo().frame(getCurrentFrameIndex());
+				verifyNavigationinEPG();
+				
+				//Choose Program
+				sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				//Action menu should be shown
+				driver.switchTo().frame(getCurrentFrameIndex());
+				if(actionMenuItems.isDisplayed())
+				{
+					reports.log(LogStatus.PASS, "Action menu screen has been reached");
+					reports.attachScreenshot(captureCurrentScreenshot());
+					
+				}
+				else
+				{
+					FailTestCase("Not reached to the Action menu Screen");
+				}
+				
+				//Press Back
+				
+				sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+				if(EpgGuideScreen.equalsIgnoreCase(currentEPGuideScreenTitle))
+				{
+					reports.log(LogStatus.PASS, "EPG screen is reached");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+				else
+				{
+					FailTestCase("EPG has not been reached");
+				}
+	}
+			
+			
+			
+			public void EPG_Focus_On_Current_Time() throws InterruptedException
+			{
+				sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+				driver.switchTo().frame(getCurrentFrameIndex());
+				String tvGuideValue=focusedProgramTvguide.getCssValue("width");
+				String tvGuideLine=focusedCurrentLineTvguide.getCssValue("margin-left");
+				System.out.println(tvGuideLine);
+				System.out.println(tvGuideValue);
+				int tvGuideValueOne=Integer.parseInt(tvGuideValue.replaceAll("[\\D]", ""));
+				int tvGuideLineOne=Integer.parseInt(tvGuideLine.replaceAll("[\\D]", ""));
+				System.out.println(tvGuideValueOne);
+				System.out.println(tvGuideLineOne);
+				if(tvGuideLineOne<=tvGuideValueOne)
+				{
+					reports.log(LogStatus.PASS, "Verify that the start time of the time line is the current time");
+					reports.attachScreenshot(captureCurrentScreenshot());
+				}
+				else
+				{
+					FailTestCase("Verification of the start time of the time line in the current time has failed");
+				}
+			}
 }

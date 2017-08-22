@@ -20,6 +20,7 @@ import com.rsystems.utils.Unicode;
 
 public class DTVChannelScreen extends TestInitization {
 
+	EpisodeInfo episodeDetails = null;
 	WebDriver driver;
 
 	public DTVChannelScreen(WebDriver driver) {
@@ -574,17 +575,50 @@ public class DTVChannelScreen extends TestInitization {
 
 	public void verifyBackToLiveOption() throws InterruptedException {
 		String cutvDisabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
-		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
+		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
 		tuneToChannel(Integer.parseInt(cutvDisabledNumber));
 		reports.log(LogStatus.PASS, "Navigate to TV Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		// isDisplayed(epgGuide, "TV Guide");
 		sendNumaricKeys(Integer.parseInt(cutvEnabledNumber));
-		reports.log(LogStatus.PASS, "Navigate to Past program");
-		sendKeyMultipleTimes("LEFT", 3, 1000);
+		Thread.sleep(3000);
+		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
 		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String presentTmeStartTime = new EpgScreen(driver).focusElementProgramTime.getText();
+		System.out.println("Current Program Duration " + presentTmeStartTime);
+		reports.log(LogStatus.PASS, "Navigate and Start Over Past Replayable Program");
+		int noOfTry = 10;
+		while (noOfTry > 0) {
+			try {
+				driver.switchTo().frame(getCurrentFrameIndex());
+				System.out.println(
+						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
+				System.out.println(focusElementcutvIcon.getAttribute("src"));
+				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
+						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+				}
+			} catch (NoSuchElementException ex) {
+
+			}
+			noOfTry -= 1;
+			sendKeyMultipleTimes("LEFT", 1, 1000);
+		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		
+		pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
 		List<String> menuItemList = new ArrayList<String>();
 		for (WebElement we : actionItemList) {
 			menuItemList.add(we.getText());
@@ -620,6 +654,7 @@ public class DTVChannelScreen extends TestInitization {
 		isDisplayed(programDetailsScreen, "Program Details Screen");
 		reports.log(LogStatus.PASS, "Start Watching Program");
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		Thread.sleep(4000);
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
@@ -767,7 +802,7 @@ public class DTVChannelScreen extends TestInitization {
 		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
 		tuneToChannel(Integer.parseInt(cutvEnabledNumber));
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		reports.log(LogStatus.PASS, "Go to TV - Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		handlePopupIfExist();
@@ -778,6 +813,14 @@ public class DTVChannelScreen extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		navigateToPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Start Watching Video");
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		handlePopupIfExist();
+		pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(programDetailsScreen, "Program Details Screen");
 		reports.log(LogStatus.PASS, "Click on Back To Live Option");
@@ -815,29 +858,16 @@ public class DTVChannelScreen extends TestInitization {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
 		tuneToChannel(Integer.parseInt(cutvChannelNumber));
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
-			reports.log(LogStatus.PASS, "Tune To CUTV Channel " + cutvChannelNumber);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not Tuned to CUTV Channel");
-		}
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		reports.log(LogStatus.PASS, "Start any past prgram to test already started past prgram case");
-		sendKeyMultipleTimes("LEFT", 4, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
+		navigateToPastReplaybleProgramFromTVGuide();
 		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		Thread.sleep(2000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
 		navigateToAlreadyStartedPastProgram(episodeDuration);
 		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(programDetailsScreen, "Program Details Screen");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (!driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
 			FailTestCase("Resume option should be dispalyed for already watched past program");
@@ -974,4 +1004,106 @@ public class DTVChannelScreen extends TestInitization {
 		}
 	}
 
+	public void pause_LiveTV_PLTV_pause() throws InterruptedException
+	{
+		//Recording on Channel
+	    openLiveTV();
+		episodeDetails = startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording","RecordingChannelNumber", "name_nl")));
+		recordingOnLiveTv(episodeDetails);
+		
+		
+		//After recording Pause Live TV
+		openLiveTV();
+		reports.log(LogStatus.PASS, "Tuned to another channel to check the Pause Functionality");
+		tuneToChannel(3);
+		pressPauseButtonAndValidation();
+			
+	}
+
+	public void recordingOnLiveTv(EpisodeInfo episodeDetails) throws InterruptedException
+	{
+		RecordingScreen record = new RecordingScreen(driver);
+		String recordingType = "SINGLE";
+		
+		
+		reports.log(LogStatus.PASS, "Navigate to Library Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
+		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim().equalsIgnoreCase("mijn bibliotheek"))
+		{
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Library Screen not getting displayed");
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames"))
+		{
+			reports.log(LogStatus.PASS, "Recording List getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Recording List not getting displayed");
+		}
+		
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
+		for(int i = 0 ; i< recordingSize;i++)
+		{
+			
+			if((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+			{
+				if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+				&&
+				record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
+				&&
+				record.focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0).getAttribute("src").contains("ico_Ongoing_recording.png")
+						)
+				{
+					break;
+				}
+				else
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+				}
+			}
+			else
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+		}
+	}
+
+	//Pritam, Check Timeshifting on hdd less STB, Keep STB in timeshift mode for few hours and check how it performs.	
+	
+	public void hdd_Less_Timeshifting() throws InterruptedException
+	{
+		openLiveTV();
+
+		pressPauseButtonAndValidation();
+		Thread.sleep(3660000);  
+		driver.switchTo().frame(getCurrentFrameIndex());
+		// validate play video automatically
+		String currentImgSource = pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Play successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Pause button is not highlight on webpage");
+		}
+		
+		pressRewindButtonAndValidation();	
+		pressForwardButtonAndValidation();
+	}
+
 }
+	
