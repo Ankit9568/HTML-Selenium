@@ -30,6 +30,13 @@
 					<include name="tc_EPG_Up_Down_Navigation" />
 					<include name="tc_EPG_Gradient_of_Focused_Cell" />
 					<include name="tc_SF008_EPG" />
+					<include name="tc_EPG_Rounded_Corner_on_Focus_Cell" />
+					<include name="tc_EPG_Jump_By_Day_Using_FF_REW_Keys" />
+					<include name="tc_EPG_Focus_On_Current_Program" />
+					<include name="tc_EPG_via_Hotkey" />
+					<include name="tc_EPG_Focus_On_Current_Time" />
+					<include name="tc_EPG_Numeric_Navigation" />
+					<include name="tc_EPG_Ongoing_Program_Options" />
 				</methods>
 			</class>
 		</classes>

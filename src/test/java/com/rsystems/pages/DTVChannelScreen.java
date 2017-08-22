@@ -139,10 +139,7 @@ public class DTVChannelScreen extends TestInitization {
 		}
 
 		else {
-
-			reports.log(LogStatus.FAIL, msg + " is not visible on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-
+			FailTestCase(msg + " is not visible on webpage");
 		}
 	}
 
@@ -380,7 +377,6 @@ public class DTVChannelScreen extends TestInitization {
 		isDisplayed(new EpgScreen(driver).herstarten, "Restart button ");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-		
 
 	}
 
@@ -611,9 +607,9 @@ public class DTVChannelScreen extends TestInitization {
 			sendKeyMultipleTimes("LEFT", 1, 1000);
 		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-		
+
 		sendKeyMultipleTimes("ENTER", 1, 3000);
-		
+
 		pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
@@ -1004,95 +1000,85 @@ public class DTVChannelScreen extends TestInitization {
 		}
 	}
 
-	public void pause_LiveTV_PLTV_pause() throws InterruptedException
-	{
-		//Recording on Channel
-	    openLiveTV();
-		episodeDetails = startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording","RecordingChannelNumber", "name_nl")));
+	public void pause_LiveTV_PLTV_pause() throws InterruptedException {
+		// Recording on Channel
+		openLiveTV();
+		episodeDetails = startRecording(
+				Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 		recordingOnLiveTv(episodeDetails);
-		
-		
-		//After recording Pause Live TV
+
+		// After recording Pause Live TV
 		openLiveTV();
 		reports.log(LogStatus.PASS, "Tuned to another channel to check the Pause Functionality");
 		tuneToChannel(3);
 		pressPauseButtonAndValidation();
-			
+
 	}
 
-	public void recordingOnLiveTv(EpisodeInfo episodeDetails) throws InterruptedException
-	{
+	public void recordingOnLiveTv(EpisodeInfo episodeDetails) throws InterruptedException {
 		RecordingScreen record = new RecordingScreen(driver);
 		String recordingType = "SINGLE";
-		
-		
+
 		reports.log(LogStatus.PASS, "Navigate to Library Screen");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
 		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
-		if(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim().equalsIgnoreCase("mijn bibliotheek"))
-		{
+		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+				.equalsIgnoreCase("mijn bibliotheek")) {
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Library Screen not getting displayed");
 		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if(driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames"))
-		{
+		if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
 			reports.log(LogStatus.PASS, "Recording List getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Recording List not getting displayed");
 		}
-		
+
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
-		for(int i = 0 ; i< recordingSize;i++)
-		{
-			
-			if((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
-			{
-				if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
-				&&
-				record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
-				&&
-				record.focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0).getAttribute("src").contains("ico_Ongoing_recording.png")
-						)
-				{
+		for (int i = 0; i < recordingSize; i++) {
+
+			if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType))) {
+				if (record.focusRecordingElement
+						.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording))
+						.getText().equalsIgnoreCase(episodeDetails.channelNo)
+						&& record.focusRecordingElement
+								.findElement(By
+										.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording))
+								.getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
+						&& record.focusRecordingElement
+								.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0)
+								.getAttribute("src").contains("ico_Ongoing_recording.png")) {
 					break;
-				}
-				else
-				{
+				} else {
 					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 				}
-			}
-			else
-			{
+			} else {
 				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
 		}
 	}
 
-	//Pritam, Check Timeshifting on hdd less STB, Keep STB in timeshift mode for few hours and check how it performs.	
-	
-	public void hdd_Less_Timeshifting() throws InterruptedException
-	{
+	// Pritam, Check Timeshifting on hdd less STB, Keep STB in timeshift mode
+	// for few hours and check how it performs.
+
+	public void hdd_Less_Timeshifting() throws InterruptedException {
 		openLiveTV();
 
 		pressPauseButtonAndValidation();
-		Thread.sleep(3660000);  
+		Thread.sleep(3660000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		// validate play video automatically
 		String currentImgSource = pauseAndPlayImg.getAttribute("src");
 		String[] currentImgToArr = currentImgSource.split("/");
 		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))) {
 			reports.log(LogStatus.PASS, "Play successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -1100,10 +1086,9 @@ public class DTVChannelScreen extends TestInitization {
 		else {
 			FailTestCase("Pause button is not highlight on webpage");
 		}
-		
-		pressRewindButtonAndValidation();	
+
+		pressRewindButtonAndValidation();
 		pressForwardButtonAndValidation();
 	}
 
 }
-	

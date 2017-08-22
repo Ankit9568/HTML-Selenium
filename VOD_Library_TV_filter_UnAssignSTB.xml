@@ -29,6 +29,7 @@
 					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
 					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
 					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+					<include name="tc_SF005_Store" />
 				</methods>
 			</class>
 		</classes>
@@ -48,6 +49,7 @@
 			<class name="com.rsystems.test.TvFilterLayerTestCase">
 				<methods>
 					<include name="verifyTvFilterLayerScreen" />
+					  <include name="tc_SF003_TV" />
 				</methods>
 			</class>
 		</classes>

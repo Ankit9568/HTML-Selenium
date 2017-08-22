@@ -94,15 +94,15 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<!-- <test name="Language Change Test case"> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.LanguageChangeTestCase"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_PREF_language_NL" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+	<test name="Language Change Test case">
+	<classes>
+		<class name="com.rsystems.test.LanguageChangeTestCase">
+			<methods>
+				<include name="tc_PREF_language_FR" />
+			</methods>
+		</class>
+	</classes>
+</test>
 
 	<!-- <test name="RcArrow Keys TestCase"> -->
 	<!-- <classes> -->
@@ -195,11 +195,12 @@
 					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
 					<!-- <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
 						/> -->
+						<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
 					<!-- <include name="pause_LiveTV_play" /> -->
 					<!-- <include name="pause_LiveTV_PLTV_BackToLive" /> -->
 					<!-- <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
 					<!-- <include name="Pause_LiveTV_trickplay" /> -->
-					<!-- <include name="tc_BCVODVD0130_VOD_FOD" /> -->
+<!-- 					<include name="tc_BCVODVD0130_VOD_FOD" /> -->
 					<!-- <include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
 					<!-- <include name="tc_CUBTL0602_back_to_live_other_channel" /> -->
 					<!-- <include name="tc_CUSO0504_start_over_watch_past_program" /> -->
@@ -209,7 +210,7 @@
 					<!-- <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
 <!-- 					<include name="tc_CUSUB0201_basic" /> -->
 <!-- 					<include name="tc_CUSUB0202_premium" /> -->
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+<!-- 					<include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
 					<!-- <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" 
 						/> -->
 <!-- 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->

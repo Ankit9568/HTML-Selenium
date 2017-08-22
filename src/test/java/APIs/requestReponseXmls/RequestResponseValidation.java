@@ -25,6 +25,7 @@ public class RequestResponseValidation {
 	private boolean responseValidation() throws Exception {
 
 		File fXmlFile = new File(responseXml);
+		fXmlFile.setWritable(true);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(fXmlFile);
@@ -46,6 +47,7 @@ public class RequestResponseValidation {
 	public boolean postRequest() throws Exception {
 
 		File postXmlfile = new File(requestXml);
+		postXmlfile.setWritable(true);
 		String strURL = "http://10.67.181.30:8082/totalmanage/subscriberapi";
 		PostMethod post = new PostMethod(strURL);
 		try {

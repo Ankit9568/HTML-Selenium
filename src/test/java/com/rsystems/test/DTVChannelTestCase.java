@@ -423,7 +423,8 @@ public class DTVChannelTestCase extends TestInitization {
 			dtvScreen.errorMsgValidation(Unicode.VK_BACKWARD.toString(),
 					TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
 		} finally {
-
+			
+			System.out.println("Running finally code");
 			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV"));
 			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV Free"));
 

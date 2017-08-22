@@ -5,7 +5,7 @@
 		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
 	</listeners>
 
-<test name="UnAssingedSTBTestCases">
+	<test name="UnAssingedSTBTestCases">
 		<classes>
 			<class name="com.rsystems.test.UnAssingedSTBTestCases">
 				<methods>
@@ -80,20 +80,22 @@
 					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
 					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
+					<include name="tc_Pause_LiveTV_PLTV_pause" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-<!-- 	<test name="Time taking test cases"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.DTVChannelTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
-<test name="Infobanner Test case">
+	<test name="Time taking test cases">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+					<include name="tc_HDD_Less_Timeshifting" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Infobanner Test case">
 		<classes>
 			<class name="com.rsystems.test.ActivateInfoBannerTestCase">
 				<methods>

@@ -7,15 +7,15 @@
 
 	<!-- First Sprint(15_6_2017) Test case -->
 
-<!-- 	<test name="UnAssingedSTBTestCases"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.UnAssingedSTBTestCases"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCCOMML0210_LANG007_Assignment" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<!-- <test name="UnAssingedSTBTestCases"> -->
+	<!-- <classes> -->
+	<!-- <class name="com.rsystems.test.UnAssingedSTBTestCases"> -->
+	<!-- <methods> -->
+	<!-- <include name="tc_BCCOMML0210_LANG007_Assignment" /> -->
+	<!-- </methods> -->
+	<!-- </class> -->
+	<!-- </classes> -->
+	<!-- </test> -->
 
 	<test name="Recording Test cases ">
 		<classes>
@@ -62,6 +62,13 @@
 					<include name="tc_EPG_Up_Down_Navigation" />
 					<include name="tc_EPG_Gradient_of_Focused_Cell" />
 					<include name="tc_SF008_EPG" />
+					<include name="tc_EPG_Rounded_Corner_on_Focus_Cell" />
+					<include name="tc_EPG_Jump_By_Day_Using_FF_REW_Keys" />
+					<include name="tc_EPG_Focus_On_Current_Program" />
+					<include name="tc_EPG_via_Hotkey" />
+					<include name="tc_EPG_Focus_On_Current_Time" />
+					<include name="tc_EPG_Numeric_Navigation" />
+					<include name="tc_EPG_Ongoing_Program_Options" />
 				</methods>
 			</class>
 		</classes>
@@ -93,6 +100,8 @@
 					<include name="tc_hub_asset_line_in_hub" />
 					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
 					<include name="tc_hub_Text_line" />
+					<include name="tc_Hub_Selecting_elements_in_asset_line" />
+					<include name="tc_Hub_Selecting_elements_in_text_line" />
 				</methods>
 			</class>
 		</classes>
@@ -128,6 +137,8 @@
 					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
 					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
+					<include name="tc_Pause_LiveTV_PLTV_pause" />
+
 				</methods>
 			</class>
 		</classes>
@@ -163,6 +174,7 @@
 					<include name="tc_RCU_Digital_TV_NTE11" />
 					<include name="tc_RCU_Numeric_keys" />
 					<include name="tc_RCU_EPG_Navigation" />
+					<include name="tc_RCU_Arrow_Keys_on_DTV_fullscreen" />
 				</methods>
 			</class>
 		</classes>
@@ -183,6 +195,7 @@
 			<class name="com.rsystems.test.TvFilterLayerTestCase">
 				<methods>
 					<include name="verifyTvFilterLayerScreen" />
+					<include name="tc_SF003_TV" />
 				</methods>
 			</class>
 		</classes>
@@ -201,6 +214,7 @@
 					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
 					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
 					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+					<include name="tc_SF005_Store" />
 				</methods>
 			</class>
 		</classes>
@@ -306,6 +320,7 @@
 			<class name="com.rsystems.test.LanguageChangeTestCase">
 				<methods>
 					<include name="tc_PREF_language_NL" />
+					<include name="tc_PREF_language_FR" />
 				</methods>
 			</class>
 		</classes>
@@ -315,12 +330,14 @@
 		<classes>
 			<class name="com.rsystems.test.DTVChannelTestCase">
 				<methods>
+					<!-- Live TV Test case -->
 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+					<include name="tc_HDD_Less_Timeshifting" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-	
+
 
 </suite>
 
