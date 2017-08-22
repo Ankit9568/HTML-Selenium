@@ -94,15 +94,15 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<test name="Language Change Test case">
-	<classes>
-		<class name="com.rsystems.test.LanguageChangeTestCase">
-			<methods>
-				<include name="tc_PREF_language_FR" />
-			</methods>
-		</class>
-	</classes>
-</test>
+<!-- 	<test name="Language Change Test case"> -->
+<!-- 	<classes> -->
+<!-- 		<class name="com.rsystems.test.LanguageChangeTestCase"> -->
+<!-- 			<methods> -->
+<!-- 				<include name="tc_PREF_language_FR" /> -->
+<!-- 			</methods> -->
+<!-- 		</class> -->
+<!-- 	</classes> -->
+<!-- </test> -->
 
 	<!-- <test name="RcArrow Keys TestCase"> -->
 	<!-- <classes> -->
