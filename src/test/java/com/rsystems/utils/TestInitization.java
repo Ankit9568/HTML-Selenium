@@ -34,7 +34,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ISuiteResult;
+import org.testng.ITestContext;
 import org.testng.SkipException;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -57,14 +60,15 @@ public class TestInitization {
 	public static Xls_Reader excel = new Xls_Reader(ObjectRepository.excelFilePath);
 	public static WebDriverWait wait = null;
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-
 	public static String currentExecutionFoldername;
 	public static String currentExecutionReportPath;
+	public static ArrayList<ReportsData> testResult = new ArrayList<ReportsData>();
 
 	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
 			+ "config" + File.separator + "config.properties";
-
+	
+	
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
@@ -170,6 +174,13 @@ public class TestInitization {
 
 	}
 
+	@AfterClass
+	public void afterClass(ITestContext result) throws IOException {
+		/** Add test result for each module */
+		ReportsData tcResult = new ReportsData(result);
+		testResult.add(tcResult);
+	}
+
 	@AfterMethod()
 	public void afterMethodCalled() throws InterruptedException {
 
@@ -190,6 +201,8 @@ public class TestInitization {
 		log.info("Logger Info:: Inside suiteEndReached Method");
 		System.out.println("Trying to quit webdriver");
 		new ReportGeneration().dashBoardGenerator();
+		//new ReportGeneration2().createRunWiseReport(testResult);
+		
 		driver.quit();
 	}
 

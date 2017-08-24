@@ -3,6 +3,7 @@ package com.rsystems.test;
 import java.text.ParseException;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -753,4 +754,18 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.hdd_Less_Timeshifting();
 	}
 
+	
+	@Test
+	public void Demo1(){
+		System.out.println("first test case pass");
+	}
+	
+	@Test
+	public void Demo2(){
+		Assert.fail("Second tc fail");
+	}
+	@Test
+	public void Demo3(){
+		System.out.println("Third test case pass");
+	}
 }
