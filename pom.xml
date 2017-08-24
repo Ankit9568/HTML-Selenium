@@ -11,7 +11,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>CP1252</project.build.sourceEncoding>
 		<jre.level>1.8</jre.level>
 		<jdk.level>1.8</jdk.level>
 	</properties>
