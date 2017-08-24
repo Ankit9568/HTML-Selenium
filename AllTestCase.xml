@@ -37,7 +37,7 @@
 		</classes>
 	</test>
 
-	<test name="EPG Setting Test case ">
+<!-- 	<test name="EPG Setting Test case ">
 		<classes>
 			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
@@ -85,7 +85,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 
 	<!-- Second sprint(30_6_2017) Test case -->
 
