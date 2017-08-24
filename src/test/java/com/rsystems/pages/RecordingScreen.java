@@ -183,18 +183,17 @@ public class RecordingScreen extends TestInitization{
 	 * Created By Rahul Dhoundiyal
 	 */
 	public List<EpisodeInfo> scheduleRecordingForFutureChannel(String recordingType,int numberOfRecording) throws InterruptedException{
-		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		boolean stopRecording = false;
 		String epgepisodeName = null;
 		int noOfRecordedChannel = 0;
 		List<EpisodeInfo> programDetails = new ArrayList<EpisodeInfo>();
 		//Move to Future Epsiode
-		new DTVChannelScreen(driver).openLiveTV();
-
+		dtvChannelScreen.openLiveTV();
 		Thread.sleep(1000);
 		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		sendKeyMultipleTimes("RIGHT", 2, 2000);
+		Thread.sleep(3000);
+		sendKeyMultipleTimes("RIGHT", 2, 1000);
 		reports.log(LogStatus.PASS, " Mini EPG Screen Displayed ");
 		reports.attachScreenshot(captureCurrentScreenshot());
 		while(!stopRecording){
@@ -202,13 +201,11 @@ public class RecordingScreen extends TestInitization{
 			{		driver.switchTo().defaultContent();
 					if (!driver.findElement(By.xpath("//p[@id='headerTitle']")).getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl")))
 					{
-						sendKeyMultipleTimes("UP", 1, 1000);
-						sendKeyMultipleTimes("ENTER", 1, 1000);
+						dtvChannelScreen.openLiveTV();
 					}
-					sendKeyMultipleTimes("RIGHT", 1, 3000);
+					sendKeyMultipleTimes("RIGHT", 1, 1000);
 					reports.log(LogStatus.PASS, "SEND RIGHT KEY - Navigate to Next Episode");
 					reports.attachScreenshot(captureCurrentScreenshot());
-					Thread.sleep(1000);
 					driver.switchTo().frame(getCurrentFrameIndex());
 					epgepisodeName = driver.findElement(By.className("current")).findElement(By.tagName("h2")).getAttribute("innerText");
 					System.out.println(epgepisodeName);
