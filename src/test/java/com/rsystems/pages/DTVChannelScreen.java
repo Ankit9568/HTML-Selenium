@@ -573,6 +573,9 @@ public class DTVChannelScreen extends TestInitization {
 		String cutvDisabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
 		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		handlePopupIfExist();
 		tuneToChannel(Integer.parseInt(cutvDisabledNumber));
 		reports.log(LogStatus.PASS, "Navigate to TV Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
@@ -631,6 +634,9 @@ public class DTVChannelScreen extends TestInitization {
 	public void verifyStartOverPastProgram() throws NumberFormatException, InterruptedException {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		handlePopupIfExist();
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
 		Thread.sleep(3000);
 		handlePopupIfExist();
@@ -693,6 +699,9 @@ public class DTVChannelScreen extends TestInitization {
 	public void verifyActionItemList() throws NumberFormatException, InterruptedException {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		handlePopupIfExist();
 		tuneToChannel(Integer.parseInt(cutvChannelNumber));
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -797,6 +806,9 @@ public class DTVChannelScreen extends TestInitization {
 		boolean backToLiveFound = false;
 		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		handlePopupIfExist();
 		tuneToChannel(Integer.parseInt(cutvEnabledNumber));
 		Thread.sleep(3000);
 		reports.log(LogStatus.PASS, "Go to TV - Guide");
@@ -853,6 +865,9 @@ public class DTVChannelScreen extends TestInitization {
 	public void verifyStartOverWatchStartedProgram() throws NumberFormatException, InterruptedException {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		openLiveTV();
+		sendNumaricKeys(1);
+		Thread.sleep(1000);
+		handlePopupIfExist();
 		tuneToChannel(Integer.parseInt(cutvChannelNumber));
 		navigateToPastReplaybleProgramFromTVGuide();
 		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
