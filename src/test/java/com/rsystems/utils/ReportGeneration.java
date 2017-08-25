@@ -15,13 +15,19 @@ public class ReportGeneration {
 		createDashboardHtml(optionValues);
 	}
 
-	private String generateOptionsValue(final File folder) throws IOException {
+	private String generateOptionsValue(final File executionReportFolder) throws IOException {
 		String optionValues = "";
-		for (File folder1 : folder.listFiles()) {
+		for (File folder : executionReportFolder.listFiles()) {
 
-			if (folder1.isDirectory()) {
-				optionValues = optionValues.concat("<option value = './" + folder1.getName() + "/index.html'>"
-						+ folder1.getName() + "</option>\n");
+			if (folder.isDirectory() && folder.getName().startsWith("BuildVer")) {
+
+				if (folder.getName().contentEquals(TestInitization.currentExecutionFoldername)) {
+					optionValues = optionValues.concat("<option selected='selected' value = './" + folder.getName()
+							+ "/RunWiseReport.html' >" + folder.getName() + "</option>\n");
+				} else {
+					optionValues = optionValues.concat("<option value = './" + folder.getName()
+							+ "/RunWiseReport.html'>" + folder.getName() + "</option>\n");
+				}
 			}
 		}
 		return optionValues;
@@ -34,7 +40,7 @@ public class ReportGeneration {
 		FileWriter fw = null;
 		BufferedWriter bw = null;
 		String dashboardHtml = "<!DOCTYPE html>" + "<html lang='en'><head><style type'text/css'>"
-				+ "#main_iframe {position:fixed;height:100%;width:100%;top:90px;left:10px;right:10px;bottom:10px; z-index:1}nav "
+				+ "#main_iframe {position:fixed;height:90%;width:100%;top:90px;left:10px;right:10px;bottom:10px; z-index:1}nav "
 				+ "{position:fixed; left:0px; top:0px; bottom:0px; width:160px; background:#333; color:#fff; z-index:2}</style><meta charset='utf-8'>"
 				+ " <meta http-equiv='X-UA-Compatible' content='IE=edge'>"
 				+ "<meta name='viewport' content='width=device-width, initial-scale=1'>"
@@ -48,8 +54,8 @@ public class ReportGeneration {
 
 				+ "<base target='_blan'>" +
 
-				"<iframe id='main_iframe'" + "src='./" + TestInitization.currentExecutionFoldername + "/index.html'>"
-				+ "</iframe>"
+				"<iframe id='main_iframe'" + "src='./" + TestInitization.currentExecutionFoldername
+				+ "/RunWiseReport.html'>" + "</iframe>"
 
 				+ "<body>"
 

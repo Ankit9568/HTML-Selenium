@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
@@ -63,12 +64,12 @@ public class TestInitization {
 	public static String currentExecutionFoldername;
 	public static String currentExecutionReportPath;
 	public static ArrayList<ReportsData> testResult = new ArrayList<ReportsData>();
+	public static Date executionStartTime = cald.getTime();
 
 	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
 			+ "config" + File.separator + "config.properties";
-	
-	
+
 	@BeforeSuite
 	public void Setup() throws InterruptedException, IOException {
 
@@ -76,7 +77,7 @@ public class TestInitization {
 		System.setErr(createLoggingProxy(System.err));
 
 		currentExecutionFoldername = "BuildVer_" + getBuildVersion() + "_ExecutionReport_"
-				+ formatter.format(cald.getTime()).toString();
+				+ formatter.format(executionStartTime).toString();
 
 		currentExecutionReportPath = System.getProperty("user.dir") + File.separator + "ExecutionReports"
 				+ File.separator + currentExecutionFoldername;
@@ -200,9 +201,8 @@ public class TestInitization {
 
 		log.info("Logger Info:: Inside suiteEndReached Method");
 		System.out.println("Trying to quit webdriver");
+		new ReportGenerationForGraph().createRunWiseReport(testResult);
 		new ReportGeneration().dashBoardGenerator();
-		//new ReportGeneration2().createRunWiseReport(testResult);
-		
 		driver.quit();
 	}
 

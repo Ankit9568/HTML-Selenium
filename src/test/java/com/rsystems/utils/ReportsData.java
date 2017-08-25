@@ -13,6 +13,8 @@ public class ReportsData {
 		this.moduleName = result.getCurrentXmlTest().getName();
 		this.passCount = result.getPassedTests().size();
 		this.failCount = result.getFailedTests().size();
+		// count skip test case as fail
+		this.failCount = this.failCount + result.getSkippedTests().size();
 		this.totalTestCaseCount = result.getAllTestMethods().length;
 	}
 
