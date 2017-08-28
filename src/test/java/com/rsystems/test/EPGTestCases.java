@@ -762,17 +762,17 @@ public class EPGTestCases extends TestInitization {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.goToEpgSettingScreen();
 		// Validation for epg type
-		String optionarrForEpgType[] = { "défaut", "supérieur", "simplifié" };
+		String optionarrForEpgType[] = { "dï¿½faut", "supï¿½rieur", "simplifiï¿½" };
 		epgScreen.verifyOptionInEpg(optionarrForEpgType, epgScreen.epgType);
 
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		// Validation for background
-		String optionarrForbackground[] = { "défaut", "vert" };
+		String optionarrForbackground[] = { "dï¿½faut", "vert" };
 		epgScreen.verifyOptionInEpg(optionarrForbackground, epgScreen.epgBackground);
 
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		// validation for font color
-		String optionarrForFont[] = { "défaut", "gris", "jaune" };
+		String optionarrForFont[] = { "dï¿½faut", "gris", "jaune" };
 		epgScreen.verifyOptionInEpg(optionarrForFont, epgScreen.epgFont);
 
 		// Verification for cancel button
@@ -841,7 +841,7 @@ public class EPGTestCases extends TestInitization {
 			reports.log(LogStatus.FAIL, "Setting of Language to French has Failed");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 		}
-		HashMap<String, String> epgSetting = epgScreen.changeEpgSetting("défaut", "défaut", "défaut");
+		HashMap<String, String> epgSetting = epgScreen.changeEpgSetting("dï¿½faut", "dï¿½faut", "dï¿½faut");
 		epgScreen.verifyDefaultType();
 		// Navigate to EPG Guide and Verify epg Setting;
 		reports.log(LogStatus.PASS, "Navigate to EPG and verify settings");
@@ -1025,5 +1025,12 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG_Focus_On_Current_Time() throws InterruptedException{
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EPG_Focus_On_Current_Time();
+	}
+
+	
+	
+	public void tc_EPG002_EPG_Focused_Program_Cell_Details(){
+		
+		
 	}
 }
