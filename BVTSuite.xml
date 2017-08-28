@@ -7,6 +7,16 @@
 
 	<!-- First Sprint(15_6_2017) Test case -->
 
+	<test name="UnAssingedSTBTestCases">
+	<classes>
+	<class name="com.rsystems.test.UnAssingedSTBTestCases">
+	<methods>
+	<include name="tc_BCCOMML0210_LANG007_Assignment" />
+	</methods>
+	</class>
+	</classes>
+	</test>
+	
 	<test name="Recording Test cases ">
 		<classes>
 			<class name="com.rsystems.test.RecordingTestCase">
@@ -27,7 +37,9 @@
 		</classes>
 	</test>
 
-	<test name="EPG Setting Test case ">
+<!-- 	
+ this features is remove from build 
+<test name="EPG Setting Test case ">
 		<classes>
 			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
@@ -64,7 +76,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 
 	<!-- Second sprint(30_6_2017) Test case -->
 
@@ -85,123 +97,115 @@
 	</test>
 
 
-<!-- 	<test name="Mini EPG Test cases "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.MiniEPGTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" /> -->
-<!-- 					<include name="tc_mini_epg_on_tstv" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Mini EPG Test cases ">
+		<classes>
+			<class name="com.rsystems.test.MiniEPGTestCase">
+				<methods>
+					<include name="tc_Mini_EPG_Full_Scree_TV_ZapBanner" />
+					<include name="tc_mini_epg_on_tstv" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 	<!-- Divide Test case in two part -->
 
-<!-- 	<test name="DTV Test case "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.DTVChannelTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" /> -->
-<!-- 					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" /> -->
-<!-- 					<include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
-<!-- 					<include name="DTV_Channel_Zap_Via_Up_Down" /> -->
-<!-- 					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" /> -->
-<!-- 					<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" /> -->
-<!-- 					<include name="pause_LiveTV_play" /> -->
-<!-- 					<include name="pause_LiveTV_PLTV_BackToLive" /> -->
-<!-- 					<include name="pause_LiveTV_PLTV_cancelPopupMessage" /> -->
-<!-- 					<include name="Pause_LiveTV_trickplay" /> -->
-<!-- 					<include name="tc_BCVODVD0130_VOD_FOD" /> -->
-<!-- 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="DTV Test case ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" />
+					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" />
+					<include name="DTV_ChannelZapViaChannelNumberNotExisting" />
+					<include name="DTV_Channel_Zap_Via_Up_Down" />
+					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" />
+					<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" />
+					<include name="pause_LiveTV_play" />
+					<include name="pause_LiveTV_PLTV_BackToLive" />
+					<include name="pause_LiveTV_PLTV_cancelPopupMessage" />
+					<include name="Pause_LiveTV_trickplay" />
+					<include name="tc_BCVODVD0130_VOD_FOD" />
+					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="Infobanner Test case"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.ActivateInfoBannerTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCDTVIB0603_verifyInfoBannerScreen" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Infobanner Test case">
+		<classes>
+			<class name="com.rsystems.test.ActivateInfoBannerTestCase">
+				<methods>
+					<include name="tc_BCDTVIB0603_verifyInfoBannerScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="Hotkey Test case"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.HotKeysTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCDTVDT0101_navigateMultipleScreensToDTV" /> -->
-<!-- 					<include name="tc_BCDTVRAD0501_navigateToRadioScreen" /> -->
-<!-- 					<include name="tc_BCDTVRAD0503_navigateRadioToDtvScreen" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Hotkey Test case">
+		<classes>
+			<class name="com.rsystems.test.HotKeysTestCase">
+				<methods>
+					<include name="tc_BCDTVDT0101_navigateMultipleScreensToDTV" />
+					<include name="tc_BCDTVRAD0501_navigateToRadioScreen" />
+					<include name="tc_BCDTVRAD0503_navigateRadioToDtvScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 
-<!-- 	<test name="VOD Features Test case"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.VodFeaturesTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCVODVD0118_naviagteToVODTrailer" /> -->
-<!-- 					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="VOD Features Test case">
+		<classes>
+			<class name="com.rsystems.test.VodFeaturesTestCase">
+				<methods>
+					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
+					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="RcArrow Keys TestCase"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.RcArrowKeysTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_BCREMC0107_verifyNavigationEpgScreen" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="RcArrow Keys TestCase">
+		<classes>
+			<class name="com.rsystems.test.RcArrowKeysTestCase">
+				<methods>
+					<include name="tc_BCREMC0107_verifyNavigationEpgScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="Library Screen TestCase"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.LibraryTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="verifyLibraryMenuItemsText" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Library Screen TestCase">
+		<classes>
+			<class name="com.rsystems.test.LibraryTestCase">
+				<methods>
+					<include name="verifyLibraryMenuItemsText" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-<!-- 	<test name="Tv Filter Layer TestCase"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.TvFilterLayerTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="verifyTvFilterLayerScreen" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Tv Filter Layer TestCase">
+		<classes>
+			<class name="com.rsystems.test.TvFilterLayerTestCase">
+				<methods>
+					<include name="verifyTvFilterLayerScreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
-	<!-- Sprint 3 -->
+<!-- 	Sprint 3 -->
 
-	<!-- <test name="UnAssingedSTBTestCases"> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.UnAssingedSTBTestCases"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCCOMML0210_LANG007_Assignment" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+
 
 
 	<test name="VOD test cases">
 		<classes>
 			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
-<!-- 					<include name="tc_StoreEvolutionPosternonleafCategory" /> -->
-<!-- 					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" /> -->
+					<include name="tc_StoreEvolutionPosternonleafCategory" />
+					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
 					<include name="tc_BCVODBG0312_VOD_Rent" />
 					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
 					<include name="tc_StoreEvolutionPosterleafCategory" />
@@ -257,16 +261,16 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
-	<!-- When PLTV package Not assign -->
-	<!-- <test name="Hub Test cases "> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.DTVChannelTestCase"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_Pause_LiveTV_PLTV_package_not_assigned" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+<!-- 	When PLTV package Not assign -->
+	<test name="Hub Test cases ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 </suite>
 
