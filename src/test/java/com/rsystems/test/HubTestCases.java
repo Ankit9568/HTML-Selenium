@@ -27,6 +27,7 @@ public class HubTestCases extends TestInitization {
 	/**
 	 * This test case is used to verify Navigation in text line in Hub Screen
 	 * Created by Rahul Dhoundiyal
+	 * Reviewed
 	 */
 	@Test
 	public void tc_HUB_Navigation_Text_Line() throws InterruptedException {
