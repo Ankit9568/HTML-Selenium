@@ -588,6 +588,7 @@ public class DTVChannelTestCase extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
 	}
