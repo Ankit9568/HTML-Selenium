@@ -383,14 +383,15 @@ public class DTVChannelScreen extends TestInitization {
 	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Open TV Guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
 		System.out.println("Current Program Duration " + presentTmeStartTime);
-		int noOfTry = 10;
+		int noOfTry = 20;
 		while (noOfTry > 0) {
 			try {
 				driver.switchTo().frame(getCurrentFrameIndex());
@@ -410,6 +411,9 @@ public class DTVChannelScreen extends TestInitization {
 			}
 			noOfTry -= 1;
 			sendKeyMultipleTimes("LEFT", 1, 1000);
+			reports.log(LogStatus.PASS, "Navigate to Past Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
 		}
 
 		return epgScreen.focusElemntInEpg.getText();
@@ -640,14 +644,6 @@ public class DTVChannelScreen extends TestInitization {
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
 		Thread.sleep(3000);
 		handlePopupIfExist();
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
-			reports.log(LogStatus.PASS, "Tune To CUTV Channel " + cutvChannelNumber);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not Tuned to CUTV Channel");
-		}
 		navigateToPastReplaybleProgramFromTVGuide();
 		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
 		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
@@ -787,7 +783,9 @@ public class DTVChannelScreen extends TestInitization {
 	public void navigateToAlreadyStartedPastProgram(String episodeDuration) throws InterruptedException {
 		reports.log(LogStatus.PASS, "Navigate to TV Guide");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		handlePopupIfExist();
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
 		int noOfTry = 20;
@@ -868,7 +866,17 @@ public class DTVChannelScreen extends TestInitization {
 		sendNumaricKeys(1);
 		Thread.sleep(1000);
 		handlePopupIfExist();
-		tuneToChannel(Integer.parseInt(cutvChannelNumber));
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		Thread.sleep(2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (new MiniEPGScreen(driver).notificationMsg.isDisplayed()) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+				Thread.sleep(3000);
+			}
+		} catch (NoSuchElementException e) {
+		}
 		navigateToPastReplaybleProgramFromTVGuide();
 		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
 		sendKeyMultipleTimes("ENTER", 1, 2000);
