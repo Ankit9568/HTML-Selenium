@@ -1,8 +1,5 @@
 package com.rsystems.test;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.testng.annotations.Test;
 
 import com.rsystems.pages.VodFeatures;

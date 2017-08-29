@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -1027,9 +1028,28 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.EPG_Focus_On_Current_Time();
 	}
 
-	
-	
-	public void tc_EPG002_EPG_Focused_Program_Cell_Details(){
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException 
+	 */
+	@Test
+	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException{
+		
+		reports.log(LogStatus.PASS, "Navigate to TV guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		EpgScreen epgScreen = new EpgScreen(driver);
+		
+		// validation of proximus font
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String fontFamily = epgScreen.focusElemntInEpg.getCssValue("font-family");
+		Point StartX = epgScreen.focusElemntInEpg.getLocation();
+			
+		if(fontFamily.contentEquals("ProximusExtraBold")){
+			
+			
+		}
 		
 		
 	}

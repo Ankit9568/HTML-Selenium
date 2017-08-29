@@ -54,6 +54,12 @@ public class ObjectRepository {
 		public static final String focusedProgramTvguide="//li[@class='program focusProgram']";
 		public static final String focusedCurrentLineTvguide="currentTimeLine";
 		public static final String actionMenuItems="cVodInfoMenu";
+		
+		public static final String timeInFocousCell  = "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
+		public static final String dateInFocousCell = "";
+		public static final String durationInFocousCell = "";
+		public static final String summryInFocousCell = "";
+		
 	
 	}
 

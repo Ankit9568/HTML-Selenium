@@ -77,6 +77,8 @@ public class ReportGeneration {
 				+ "</script>" + "</body>" + "</html>";
 
 		try {
+			// set dashboard file to writable
+			new File(FILENAME).setWritable(true);
 			fw = new FileWriter(FILENAME);
 			bw = new BufferedWriter(fw);
 			bw.write(dashboardHtml);

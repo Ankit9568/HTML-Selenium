@@ -66,6 +66,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 		reports.log(LogStatus.PASS, "Press a channel number which is available");
 		sendKeyMultipleTimes("NUMPAD5", 1, 4000);
+		handlePopupIfExist();
 		reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
 
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);

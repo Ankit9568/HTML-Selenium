@@ -300,8 +300,8 @@ public class Pvr extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		handlePopupIfExist();
 		
 		dtvChannelScreen.pressPauseButtonAndValidation();
@@ -325,7 +325,7 @@ public class Pvr extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
@@ -368,7 +368,7 @@ public class Pvr extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 
 		sendKeyMultipleTimes("ENTER", 1, 3000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressPauseButtonAndValidation();
