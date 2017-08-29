@@ -378,7 +378,10 @@ public class DTVChannelTestCase extends TestInitization {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
-
+		 // change to CUTV channel 
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(
+				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		
 		dtvChannelScreen.pressPauseButtonAndValidation();
 
 		Thread.sleep(3660000);
@@ -578,7 +581,8 @@ public class DTVChannelTestCase extends TestInitization {
 
 		// highlight the VOD3
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
 		// validate the PIN container is displayed
 		isDisplayed(vodFeatures.pinContainer, "Pin Container");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
