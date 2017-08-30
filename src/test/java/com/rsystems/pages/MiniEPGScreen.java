@@ -28,6 +28,8 @@ import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
+import gherkin.lexer.Fa;
+
 public class MiniEPGScreen extends TestInitization {
 
 	WebDriver driver;
@@ -1503,9 +1505,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "TV-Gids not found at far east side");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("TV-Gids not found at far east side");
+			
 		}
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -1559,9 +1560,8 @@ public class MiniEPGScreen extends TestInitization {
 		
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "No CUTV Enabled Channel Found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No CUTV Enabled Channel Found");
+			
 		}
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		validateScreenTitles(miniEPGScreenTitle);
@@ -1586,9 +1586,8 @@ public class MiniEPGScreen extends TestInitization {
 			noOfTry -=1;
 		}
 		if(!found){
-			reports.log(LogStatus.FAIL, "No black list program found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No black list program found");
+			
 		}
 		Thread.sleep(2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -1640,9 +1639,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "No CUTV Enabled Channel Found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No CUTV Enabled Channel Found");
+			
 		}
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		validateScreenTitles(miniEPGScreenTitle);
@@ -1667,9 +1665,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "No Replaybaled Past Program found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No Replaybaled Past Program found");
+			
 		}
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (programDetailsScreen.getText().equalsIgnoreCase(presentTitle) || programDetailsScreen.isDisplayed()) {
@@ -1760,9 +1757,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "No CUTV Enabled Channel FOund");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No CUTV Enabled Channel FOund");
+			
 		}
 		sendKeyMultipleTimes("RIGHT", 1, 1500);
 		validateScreenTitles(miniEPGScreenTitle);
@@ -1823,7 +1819,7 @@ public class MiniEPGScreen extends TestInitization {
 		} catch (NoSuchElementException ex) {
 			FailTestCase("TV Guide not displayed");
 		}
-		driver.switchTo().defaultContent();
+		/*driver.switchTo().defaultContent();
 		DateFormat sdf = new SimpleDateFormat("hh:mm");
 		System.out.println(Calendar.DATE);
 		Calendar c = Calendar.getInstance();
@@ -1861,11 +1857,10 @@ public class MiniEPGScreen extends TestInitization {
 			noOfTry -=1;
 		}
 		if(!found)
-		{
-			reports.log(LogStatus.FAIL, "No CUTV Program started 32hr ago found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
-		}
+		{	
+			FailTestCase("No CUTV Program started 32hr ago found");
+		}*/
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 2, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		Thread.sleep(2000);
 		sendKeyMultipleTimes("LEFT", 1, 1000);
@@ -1888,8 +1883,8 @@ public class MiniEPGScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Validate Left-far Tile is tv-gids");
 		validateFirstOrRightTile("LEFT", "tv-gids", 15);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		noOfTry = 30;
-		found = false;
+		int noOfTry = 30;
+		boolean found = false;
 		while (noOfTry!=1) {
 			sendKeyMultipleTimes("RIGHT", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
@@ -1903,9 +1898,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL , "Not navigated to Active Episode Tile");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("Not navigated to Active Episode Tile");
+			
 		}
 		reports.log(LogStatus.PASS, "Validate Right-far Tile is tv-gids");
 		validateFirstOrRightTile("RIGHT", "tv-gids", 25);
@@ -1924,9 +1918,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL , "Not navigated to Active Episode Tile");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase( "Not navigated to Active Episode Tile");
+			
 		}
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
@@ -1958,6 +1951,7 @@ public class MiniEPGScreen extends TestInitization {
 		}
 
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 500);
+		handlePopupIfExist();
 		sendKeyMultipleTimes("LEFT", 1, 1000);
 		reports.log(LogStatus.PASS, "Checking the Previous Program Title of the screen");
 		TestInitization.sendKeyMultipleTimes("LEFT", 1, 500);
@@ -1973,7 +1967,7 @@ public class MiniEPGScreen extends TestInitization {
 		}
 
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 500);
-		
+		handlePopupIfExist();
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		reports.log(LogStatus.PASS, "Checking the Next Program Title of the screen");
 		TestInitization.sendKeyMultipleTimes("RIGHT", 1, 500);
@@ -2014,9 +2008,8 @@ public class MiniEPGScreen extends TestInitization {
 		}
 		if(!found)
 		{
-			reports.log(LogStatus.FAIL, "No CUTV Enabled Channel Found");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			return;
+			FailTestCase("No CUTV Enabled Channel Found");
+			
 		}
 		reports.log(LogStatus.PASS, "Pressing on RIGHT key will reach to the MiniEPG screen");
 		sendKeyMultipleTimes("RIGHT", 1, 500);

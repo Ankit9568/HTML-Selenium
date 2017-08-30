@@ -124,6 +124,14 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.summryInFocousCell)
 	public WebElement summryInFocousCell;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focousElementCell)
+	public WebElement focousElementCell;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.dayNavigator)
+	public WebElement dayNavigator;
+
+	
+	
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -877,7 +885,7 @@ public class EpgScreen extends TestInitization {
 
 	private void verifyNavigationHorizontally() throws InterruptedException {
 		String prevTitle = focusElementProgramTime.getText();
-		TestInitization.sendKeyMultipleTimes("RIGHT", 4, 1000);
+		TestInitization.sendKeyMultipleTimes("RIGHT", 10, 1000);
 		if (!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle)) {
 			reports.log(LogStatus.PASS, "Navigation is properly on Right Side");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -885,7 +893,7 @@ public class EpgScreen extends TestInitization {
 		} else {
 			FailTestCase("Navigation is not properly on Right Side");
 		}
-		TestInitization.sendKeyMultipleTimes("LEFT", 4, 1000);
+		TestInitization.sendKeyMultipleTimes("LEFT", 10, 1000);
 		if (!focusElementProgramTime.getText().equalsIgnoreCase(prevTitle)) {
 			reports.log(LogStatus.PASS, "Navigation is properly on Left Side");
 			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -1050,7 +1058,7 @@ public class EpgScreen extends TestInitization {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		int date = calendar.get(Calendar.DATE);
-		if (driver.findElement(By.className("dayHeading")).getText().contains(String.valueOf(date))) {
+		if (driver.findElement(By.className("dayHeading")).getText().contains("morgen")) {
 			reports.log(LogStatus.PASS, "Press FW Key - Day Changes in the grid");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
@@ -1062,7 +1070,7 @@ public class EpgScreen extends TestInitization {
 		date = calendar.get(Calendar.DATE);
 		System.out.println(driver.findElement(By.className("dayHeading")).getText());
 		System.out.println(String.valueOf(date));
-		if (driver.findElement(By.className("dayHeading")).getText().contains(String.valueOf(date))) {
+		if (driver.findElement(By.className("dayHeading")).getText().contains("gisteren")) {
 			reports.log(LogStatus.PASS, "Press REW Key - Day Changes in the grid");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
@@ -1162,5 +1170,80 @@ public class EpgScreen extends TestInitization {
 		} else {
 			FailTestCase("Verification of the start time of the time line in the current time has failed");
 		}
+	}
+
+	public void EpgFocousCellValidation() throws InterruptedException {
+
+		boolean fontFamilyMatch = false;
+		boolean fontSizeMatch = false;
+		boolean titlePositionMatch = false;
+		boolean hd_IconSizeMatch = false;
+		boolean blackListIconSizeMatch = false;
+		boolean cutvIconSizeMatch = false;
+		boolean recordingIconMatch = false;
+
+		// validation of proximus font
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentFontFamily = focusElemntInEpg.getCssValue("font-family");
+		String StartX = focusElemntInEpg.getLocation().getX() + "";
+		String paddingFrmTop = focousElementCell.getCssValue("padding-top");
+
+		reports.log(LogStatus.PASS, "Validate focous cell font family");
+		if (!currentFontFamily.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "font_family"))) {
+			FailTestCase("Program title font is not matched Actual :" + currentFontFamily + " and expected Font family "
+					+ getExcelKeyValue("EpgScreen", "FocousCell", "font_family"));
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+			
+		reports.log(LogStatus.PASS, "Validate focous cell starting position");
+		if (!StartX.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "StartX"))) {
+			FailTestCase("Program title StartX is not matched Actual :" + StartX + " and expected StartX "
+					+ getExcelKeyValue("EpgScreen", "FocousCell", "StartX"));
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		if (!paddingFrmTop.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "PaddingTop"))) {
+
+			FailTestCase("Program title Padding is not matched Actual :" + paddingFrmTop + " and expected padding "
+					+ getExcelKeyValue("EpgScreen", "FocousCell", "PaddingTop"));
+		}
+
+		isNotDisplayed(timeInFocousCell, "Time in highlight cell");
+		isNotDisplayed(summryInFocousCell, "Summary in highlight cell");
+
+		List<WebElement> iconList = driver
+				.findElements(By.xpath(ObjectRepository.EpgScreen.iconElementListInFocousCell));
+
+		for (WebElement icon : iconList) {
+
+			String iconSrc = icon.getAttribute("src");
+			String iconSize = icon.getSize().toString();
+			String iconPaddingTop = icon.getCssValue("margin-top");
+
+			if (iconSrc.contains("cutv_small_icon.png")
+					&& iconSize.contentEquals(getExcelKeyValue("EpgScreen", "CUTV_Icon", "Image_Size"))
+					&& iconPaddingTop.contentEquals(getExcelKeyValue("EpgScreen", "CUTV_Icon", "PaddingTop"))) {
+				cutvIconSizeMatch = true;
+			}
+
+			else if (iconSrc.contains("recording_small.png")
+					&& iconSize.contentEquals(getExcelKeyValue("EpgScreen", "Recording_Icon", "Image_Size"))
+					&& iconPaddingTop.contentEquals(getExcelKeyValue("EpgScreen", "Recording_Icon", "PaddingTop"))) {
+				recordingIconMatch = true;
+			}
+
+			else if (iconSrc.contains("hd-icon.png")
+					&& iconSize.contentEquals(getExcelKeyValue("EpgScreen", "HD_Icon", "Image_Size"))
+					&& iconPaddingTop.contentEquals(getExcelKeyValue("EpgScreen", "HD_Icon", "PaddingTop"))) {
+				hd_IconSizeMatch = true;
+			}
+
+			else if (iconSrc.contains("blacklist_small.png")
+					&& iconSize.contentEquals(getExcelKeyValue("EpgScreen", "Black_List_Icon", "Image_Size"))
+					&& iconPaddingTop.contentEquals(getExcelKeyValue("EpgScreen", "Black_List_Icon", "PaddingTop"))) {
+				blackListIconSizeMatch = true;
+			}
+		}
+
 	}
 }

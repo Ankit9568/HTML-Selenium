@@ -282,8 +282,8 @@ public class DTVChannelScreen extends TestInitization {
 	public void tuneToChannel(int channelNumber) throws InterruptedException {
 
 		sendNumaricKeys(channelNumber);
-		handlePopupIfExist();
 		Thread.sleep(2000);
+		handlePopupIfExist();
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);

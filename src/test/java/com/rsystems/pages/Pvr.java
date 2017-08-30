@@ -530,6 +530,7 @@ public class Pvr extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtv.openLiveTV();
+		handlePopupIfExist();
 		dtv.pressPauseButtonAndValidation();
 		reports.log(LogStatus.PASS, "Pressing Back Key");
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);

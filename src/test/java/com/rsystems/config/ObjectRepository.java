@@ -55,12 +55,12 @@ public class ObjectRepository {
 		public static final String focusedCurrentLineTvguide="currentTimeLine";
 		public static final String actionMenuItems="cVodInfoMenu";
 		
-		public static final String timeInFocousCell  = "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
+		public static final String timeInFocousCell  = "//li[@class = 'program focusProgram']/div/p[@class='programTiming ']";
 		public static final String summryInFocousCell = "//li[@class = 'program focusProgram']/div/div[@class='programDescription']/div[1]";
 		
 		public static final String iconElementListInFocousCell = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
-		
-	
+		public static final String focousElementCell = "//li[@class = 'program focusProgram']/div[2]";
+		public static final String dayNavigator  = "dayHeading";
 	}
 
 	public static class LibraryElements {

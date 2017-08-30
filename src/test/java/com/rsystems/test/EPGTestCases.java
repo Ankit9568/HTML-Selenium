@@ -1041,32 +1041,23 @@ public class EPGTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-
+		
 		EpgScreen epgScreen = new EpgScreen(driver);
-
-		// validation of proximus font
+		epgScreen.EpgFocousCellValidation();
+		
+	}
+	
+	@Test
+	public void tc_EPG_Day_Navigator_Details() throws InterruptedException{
+			
+		EpgScreen epgScreen = new EpgScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to TV guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
 		driver.switchTo().frame(getCurrentFrameIndex());
-		String fontFamily = epgScreen.focusElemntInEpg.getCssValue("font-family");
-		Point StartX = epgScreen.focusElemntInEpg.getLocation();
-
-		if (fontFamily.contentEquals("ProximusExtraBold")) {
-
-		}
-
-		isNotDisplayed(epgScreen.timeInFocousCell, "Time in highlight cell");
-		isNotDisplayed(epgScreen.summryInFocousCell, "Summary in highlight cell");
-
-		List<WebElement> iconList = driver
-				.findElements(By.xpath(ObjectRepository.EpgScreen.iconElementListInFocousCell));
-
-		for (WebElement icon : iconList) {
-						
-			if(icon.isDisplayed()){
-				
-			}
-			
-			
-		}
-
+		isDisplayed(epgScreen.dayNavigator, "Day navigator ");
+		
+		
 	}
 }

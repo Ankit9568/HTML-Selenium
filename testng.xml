@@ -5,10 +5,10 @@
 		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
 	</listeners>
 
-	<!-- <test name="EPG Setting Test case ">
+	<test name="EPG Setting Test case ">
 		<classes>
 			<class name="com.rsystems.test.EPGTestCases">
-				<methods> -->
+				<methods>
 <!-- 					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> -->
 <!-- 					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> -->
 <!-- 					<include name="tc_BCEPGHPG02_epg_confirmation_setting" /> -->
@@ -37,16 +37,16 @@
 <!-- 					<include name="tc_EPG_Focus_On_Current_Time" /> -->
 <!-- 					<include name="tc_EPG_Numeric_Navigation" /> -->
 <!-- 					<include name="tc_EPG_Ongoing_Program_Options" /> -->
-					<!-- <include name="tc_EPG002_EPG_Focused_Program_Cell_Details" />
+					<include name="tc_EPG002_EPG_Focused_Program_Cell_Details" />
 				</methods>
 			</class>
 		</classes>
-	</test> -->
+	</test>
 	
-	<test name="DTV Test case ">
+	<!-- <test name="DTV Test case ">
 		<classes>
 			<class name="com.rsystems.test.DTVChannelTestCase">
-				<methods>
+				<methods> -->
 <!-- 					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" /> -->
 <!-- 					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" /> -->
 <!-- 					<include name="DTV_ChannelZapViaChannelNumberNotExisting" /> -->
@@ -67,12 +67,12 @@
 <!-- 					<include name="tc_CUSO0501_start_over_list_actions" /> -->
 <!-- 					<include name="tc_CUSUB0201_basic" /> -->
 <!-- 					<include name="tc_CUSUB0202_premium" /> -->
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+<!-- 					<include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
 <!-- 					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" /> -->
 <!-- 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
-				</methods>
+				<!-- </methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 </suite>
 
