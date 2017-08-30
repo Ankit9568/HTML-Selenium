@@ -37,23 +37,43 @@
 		</classes>
 	</test>
 
-	<!-- this features is remove from build -->
-	<!-- <test name="EPG Setting Test case "> <classes> <class name="com.rsystems.test.EPGTestCases"> 
-		<methods> <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> <include name="tc_BCEPGHPG04_epg_setting_UI_FR" 
-		/> <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> <include name="tc_BCEPGHPG01_epg_cancel_setting" 
-		/> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> <include 
-		name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> <include name="tc_BCEPGHPG09_epg_scenior_font_geel" 
-		/> <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> <include 
-		name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" 
-		/> <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> <include name="tc_BCEPGHPG015_epg_strak_font_geel" 
-		/> <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" 
-		/> <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> <include name="tc_BCEPGHPG07_epg_customize_color_patterns" 
-		/> <include name="tc_BCDTVHP0801_epg_hot_key" /> </methods> </class> </classes> 
-		</test> <test name="PIP Test cases "> <classes> <class name="com.rsystems.test.PIPTestCases"> 
-		<methods> <include name="tc_BCPIPHPG01_pip_confirmation_setting_links" /> 
-		<include name="tc_BCPIPHPG04_pip_position_links_all_screen" /> <include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" 
-		/> <include name="tc_pip_001_pip_setting_ui" /> </methods> </class> </classes> 
-		</test> -->
+	<!-- this features is remove from build
+	<test name="EPG Setting Test case ">
+		<classes>
+			<class name="com.rsystems.test.EPGTestCases">
+				<methods>
+					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
+					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+					<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
+					<include name="tc_BCEPGHPG01_epg_cancel_setting" />
+					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
+					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" />
+					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
+					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
+					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
+					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
+					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
+					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
+					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
+					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
+					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
+					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="PIP Test cases ">
+		<classes>
+			<class name="com.rsystems.test.PIPTestCases">
+				<methods>
+					<include name="tc_BCPIPHPG01_pip_confirmation_setting_links" />
+					<include name="tc_BCPIPHPG04_pip_position_links_all_screen" />
+					<include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" />
+					<include name="tc_pip_001_pip_setting_ui" />
+				</methods>
+			</class>
+		</classes>
+	</test> -->
 
 	<!-- Second sprint(30_6_2017) Test case -->
 
