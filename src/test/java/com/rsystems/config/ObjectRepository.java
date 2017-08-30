@@ -56,9 +56,9 @@ public class ObjectRepository {
 		public static final String actionMenuItems="cVodInfoMenu";
 		
 		public static final String timeInFocousCell  = "//li[@class = 'program focusProgram']/div/p[@class='programTiming']";
-		public static final String dateInFocousCell = "";
-		public static final String durationInFocousCell = "";
-		public static final String summryInFocousCell = "";
+		public static final String summryInFocousCell = "//li[@class = 'program focusProgram']/div/div[@class='programDescription']/div[1]";
+		
+		public static final String iconElementListInFocousCell = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
 		
 	
 	}

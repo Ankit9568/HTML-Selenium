@@ -933,7 +933,8 @@ public class EPGTestCases extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 		epgScreen.channelChangeAndValidation();
 	}
-@Test
+
+	@Test
 	public void tc_EPG_Ongoing_Program_Options() throws InterruptedException {
 
 		Boolean pauseBtnFound = false;
@@ -973,84 +974,99 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to validate the focused Cell in EPG Screen has Rounded Corners
+	 *             Test cases is used to validate the focused Cell in EPG Screen
+	 *             has Rounded Corners
 	 */
-	
+
 	@Test
-	public void tc_EPG_Rounded_Corner_on_Focus_Cell() throws InterruptedException{
+	public void tc_EPG_Rounded_Corner_on_Focus_Cell() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyRoundedCornerOnFocuCell();
 	}
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to validate EPG jump by day using FF and REW keys.
+	 *             Test cases is used to validate EPG jump by day using FF and
+	 *             REW keys.
 	 */
 	@Test
-	public void tc_EPG_Jump_By_Day_Using_FF_REW_Keys() throws InterruptedException{
+	public void tc_EPG_Jump_By_Day_Using_FF_REW_Keys() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyFFAndREWKeyOnEPGScreen();
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used to focus on the highlighted program
+	 *             Test cases is used to focus on the highlighted program
 	 */
 	@Test
-	public void tc_EPG_Focus_On_Current_Program() throws InterruptedException{
+	public void tc_EPG_Focus_On_Current_Program() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EPG_Focus_On_Current_Program();
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used to navigate to EPG and verify the EPG guide
+	 *             Test cases is used to navigate to EPG and verify the EPG
+	 *             guide
 	 */
 	@Test
-	public void tc_EPG_via_Hotkey() throws InterruptedException{
+	public void tc_EPG_via_Hotkey() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EPG_via_Hotkey();
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used to when pressing on TV Guide button, the start time of the time line is the current time
+	 *             Test cases is used to when pressing on TV Guide button, the
+	 *             start time of the time line is the current time
 	 */
 	@Test
-	public void tc_EPG_Focus_On_Current_Time() throws InterruptedException{
+	public void tc_EPG_Focus_On_Current_Time() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EPG_Focus_On_Current_Time();
 	}
 
 	/**
 	 * @author Ankit.Agarwal1
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	@Test
-	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException{
-		
+	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException {
+
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		EpgScreen epgScreen = new EpgScreen(driver);
-		
+
 		// validation of proximus font
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String fontFamily = epgScreen.focusElemntInEpg.getCssValue("font-family");
 		Point StartX = epgScreen.focusElemntInEpg.getLocation();
-			
-		if(fontFamily.contentEquals("ProximusExtraBold")){
+
+		if (fontFamily.contentEquals("ProximusExtraBold")) {
+
+		}
+
+		isNotDisplayed(epgScreen.timeInFocousCell, "Time in highlight cell");
+		isNotDisplayed(epgScreen.summryInFocousCell, "Summary in highlight cell");
+
+		List<WebElement> iconList = driver
+				.findElements(By.xpath(ObjectRepository.EpgScreen.iconElementListInFocousCell));
+
+		for (WebElement icon : iconList) {
+						
+			if(icon.isDisplayed()){
+				
+			}
 			
 			
 		}
-		
-		
+
 	}
 }

@@ -118,6 +118,12 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.DtvChannel.programTitle)
 	public WebElement programTitle;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.timeInFocousCell)
+	public WebElement timeInFocousCell;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.summryInFocousCell)
+	public WebElement summryInFocousCell;
+
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -334,8 +340,8 @@ public class EpgScreen extends TestInitization {
 					"No_of_Channel");
 			expectedBackgroundColor = TestInitization.getExcelKeyValue("EpgScreen", "Strak_Standard_geel",
 					"BackgroundColor");
-		} else if (epgType.equalsIgnoreCase("défaut") && epgBackground.equalsIgnoreCase("défaut")
-				&& epgFont.equalsIgnoreCase("défaut")) {
+		} else if (epgType.equalsIgnoreCase("dï¿½faut") && epgBackground.equalsIgnoreCase("dï¿½faut")
+				&& epgFont.equalsIgnoreCase("dï¿½faut")) {
 
 			expectedFontSize = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_size");
 			expectedFontFamily = TestInitization.getExcelKeyValue("EpgScreen", "Standard", "font_family");
@@ -792,7 +798,7 @@ public class EpgScreen extends TestInitization {
 		if (ProximusContext.getCurrentLanguage() == "NL") {
 			defaultEPGType = "STANDAARD";
 		} else {
-			defaultEPGType = "défaut";
+			defaultEPGType = "dï¿½faut";
 		}
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		if (epgType.getText().equalsIgnoreCase(defaultEPGType)) {

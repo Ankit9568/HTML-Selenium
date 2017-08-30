@@ -350,7 +350,6 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 
 		else {
-
 			reports.log(LogStatus.PASS, "pop up is visible on webpage");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
