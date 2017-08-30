@@ -1,0 +1,188 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+
+
+	<test name="Hub Test cases ">
+		<classes>
+			<class name="com.rsystems.test.HubTestCases">
+				<methods>
+					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
+					<include name="tc_hub_Text_line" />
+					<include name="tc_Hub_Selecting_elements_in_asset_line" />
+					<include name="tc_Hub_Selecting_elements_in_text_line" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<!-- Divide Test case in two part -->
+
+
+
+	<test name="RcArrow Keys TestCase">
+		<classes>
+			<class name="com.rsystems.test.RcArrowKeysTestCase">
+				<methods>
+
+					<include name="tc_RCU_Digital_TV_NTE11" />
+					<include name="tc_RCU_Numeric_keys" />
+					<include name="tc_RCU_EPG_Navigation" />
+					<include name="tc_RCU_Arrow_Keys_on_DTV_fullscreen" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="EPG Setting Test case ">
+		<classes>
+			<class name="com.rsystems.test.EPGTestCases">
+				<methods>
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
+					<include name="tc_EPG_Past_Program_Options" />
+					<include name="tc_EPG_Up_Down_Navigation" />
+					<include name="tc_EPG_Gradient_of_Focused_Cell" />
+					<include name="tc_SF008_EPG" />
+					<include name="tc_EPG_Rounded_Corner_on_Focus_Cell" />
+					<include name="tc_EPG_Jump_By_Day_Using_FF_REW_Keys" />
+					<include name="tc_EPG_Focus_On_Current_Program" />
+					<include name="tc_EPG_via_Hotkey" />
+					<include name="tc_EPG_Focus_On_Current_Time" />
+					<include name="tc_EPG_Numeric_Navigation" />
+					<include name="tc_EPG_Ongoing_Program_Options" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Tv Filter Layer TestCase">
+		<classes>
+			<class name="com.rsystems.test.TvFilterLayerTestCase">
+				<methods>
+					<include name="tc_SF003_TV" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="VOD test cases">
+		<classes>
+			<class name="com.rsystems.test.VodFeaturesTestCase">
+				<methods>
+					<include name="tc_SF005_Store" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="PVR test cases">
+		<classes>
+			<class name="com.rsystems.test.PvrTestCase">
+				<methods>
+					<include name="TP003_TSTV_Trick_play_menufromFullScreen_TV" />
+					<include name="TP006_DTV_RC_Keys_during_Trickplay" />
+					<include name="TP005_DTV_Trick_playmenufromFullScreen_TV" />
+					<include name="TP004_TSTV_RC_Keys_during_Trickplay" />
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<!--- Mini EPG Test Cases -->
+
+	<test name="Mini EPG Test cases ">
+		<classes>
+			<class name="com.rsystems.test.MiniEPGTestCase">
+				<methods>
+
+					<include
+						name="tc_77655Mini_EPGBehaviourFromFull_screenLiveTV_onCUTVChannel" />
+					<include
+						name="tc_77655_A_MiniEPGBehaviourFromFullScreenLiveTVOnCUTVChannel" />
+					<include
+						name="tc_77655_B_MiniEPGBehaviourFrmFullScreenLiveTVOnCUTVChannel" />
+					<include name="tc_77662_MiniEPG_FullScreenLiveTV_withZapbanner" />
+					<include name="tc_77678_MiniEPGInstantRecordingOnWatchedChannel" />
+					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
+					<include name="tc_77657_MiniEPGCurrentProgramPosterTileAppearance" />
+					<include name="tc_77658_MiniEPGFutureProgramPosterTileAppearance" />
+
+					<include name="tc_77664_mini_epg_On_Zaplist_CUTVEnabledChannel" />
+					<include name="tc_77665_mini_epg_On_Zaplist_CUTVDisabledChannel" />
+					<include name="tc_77680_A_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77676_mini_epg_right_side_tv_guide_tile" />
+					<include name="tc_77680_B_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_D_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_E_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77680_C_Min_EPG_Access_Details_Screen" />
+					<include name="tc_77674_Mini_EPG_On_CUTV_long_finished_airing" />
+					<include name="tc_77656_Mini_EPG_Video_tile_appearance" />
+					<include name="tc_77659_Mini_EPG_Past_tile_appearance" />
+
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartIII" />
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartII" />
+					<include name="tc_Mini_EPG_Mini_CUTV_enabled_channel_PartI" />
+
+					<include
+						name="tc_77661_Mini_EPG_Behaviour_Live_TV_On_CUTVDisabledChannel" />
+					<include name="tc_77673_Mini_EPG_Lifespan_scheduled_recording" />
+					<include name="tc_77677_B_Mini_EPG_Long_stays_in_Program_Details_screen" />
+					<include name="tc_77677_A_Mini_EPG_Long_stays_in_Program_Details_screen" />
+					<include
+						name="tc_77663_MiniEPGEvolutionLiveProgramEndsWhileNavigatingMiniEPG" />
+					<include name="tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTVdisabled" />
+					<include name="tc_77667_mini_EPGMini_EPGonzaplist_NottunedCUTV_PartII" />
+					<include name="tc_77669_MiniEPG_finishedairingCUTV" />
+					<include name="tc_77669_MiniEPG_finishedairingCUTV_PartII" />
+					<include name="tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel" />
+					<include
+						name="tc_77668_Mini_EPG_TSTV_ongoingAiring_CUTVenabledchannel_PartII" />
+					<include name="tc_77671_Mini_EPG_CUTV_ongoingAiring" />
+					<include name="tc_77671_Mini_EPG_CUTV_ongoingAiring_PartII" />
+					<include
+						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartI" />
+					<include
+						name="tc_77670_MiniEPG_longfinishedairing_disabledchannel_PartII" />
+
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<!-- Sprint 3 -->
+
+
+
+
+	<test name="Language Change Test case">
+		<classes>
+			<class name="com.rsystems.test.LanguageChangeTestCase">
+				<methods>
+					<include name="tc_PREF_language_NL" />
+					<include name="tc_PREF_language_FR" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="DTV Test case ">
+		<classes>
+			<class name="com.rsystems.test.DTVChannelTestCase">
+				<methods>
+					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
+					<include name="tc_Pause_LiveTV_PLTV_pause" />
+					<include name="tc_HDD_Less_Timeshifting" />
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+</suite>
+
