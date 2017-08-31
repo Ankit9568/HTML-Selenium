@@ -61,6 +61,8 @@ public class ObjectRepository {
 		public static final String iconElementListInFocousCell = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
 		public static final String focousElementCell = "//li[@class = 'program focusProgram']/div[2]";
 		public static final String dayNavigator  = "dayHeading";
+		
+		public static final String channelGenere = "category-detail";
 	}
 
 	public static class LibraryElements {

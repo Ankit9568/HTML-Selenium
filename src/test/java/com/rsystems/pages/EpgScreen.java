@@ -130,8 +130,9 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.dayNavigator)
 	public WebElement dayNavigator;
 
-	
-	
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.channelGenere)
+	public WebElement channelGenere;
+
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -1187,30 +1188,33 @@ public class EpgScreen extends TestInitization {
 		String currentFontFamily = focusElemntInEpg.getCssValue("font-family");
 		String StartX = focusElemntInEpg.getLocation().getX() + "";
 		String paddingFrmTop = focousElementCell.getCssValue("padding-top");
-		String currentFontSize = focousElementCell.getCssValue("font-size");
-		
-		
+		String currentFontSize = focusElemntInEpg.getCssValue("font-size");
+
 		reports.log(LogStatus.PASS, "Validate focous cell font Size");
 		if (!currentFontSize.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "font_size"))) {
-			FailTestCase("Program title font size is not matched Actual :" + currentFontFamily + " and expected Font size "
-					+ getExcelKeyValue("EpgScreen", "FocousCell", "font_size"));
+			FailTestCase("Program title font size is not matched Actual :" + currentFontSize
+					+ " and expected Font size " + getExcelKeyValue("EpgScreen", "FocousCell", "font_size"));
 		}
+		reports.log(LogStatus.PASS, "Program title font size is matched Actual :" + currentFontSize
+				+ " and expected Font size " + getExcelKeyValue("EpgScreen", "FocousCell", "font_size"));
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		reports.log(LogStatus.PASS, "Validate focous cell font family");
 		if (!currentFontFamily.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "font_family"))) {
 			FailTestCase("Program title font is not matched Actual :" + currentFontFamily + " and expected Font family "
 					+ getExcelKeyValue("EpgScreen", "FocousCell", "font_family"));
 		}
+		reports.log(LogStatus.PASS, "Program title font is not matched Actual :" + currentFontFamily
+				+ " and expected Font family " + getExcelKeyValue("EpgScreen", "FocousCell", "font_family"));
 		reports.attachScreenshot(captureCurrentScreenshot());
-			
+
 		reports.log(LogStatus.PASS, "Validate focous cell starting position");
 		if (!StartX.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "StartX"))) {
-			FailTestCase("Program title StartX is not matched Actual :" + StartX + " and expected StartX "
+			FailTestCase("Program title StartX is not matched Actual StartX :" + StartX + " and expected StartX "
 					+ getExcelKeyValue("EpgScreen", "FocousCell", "StartX"));
 		}
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		if (!paddingFrmTop.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "PaddingTop"))) {
 
 			FailTestCase("Program title Padding is not matched Actual :" + paddingFrmTop + " and expected padding "
@@ -1254,10 +1258,9 @@ public class EpgScreen extends TestInitization {
 			}
 		}
 
-		
 	}
-	
-	public void dayNavigatorCssValidation() throws InterruptedException{
+
+	public void dayNavigatorCssValidation() throws InterruptedException {
 		String actualStartY = dayNavigator.getLocation().getY() + "";
 		String actualEndX = (dayNavigator.getLocation().getX() + dayNavigator.getSize().width) + "";
 		String actualFontFamily = dayNavigator.getCssValue("font-family");
@@ -1278,20 +1281,20 @@ public class EpgScreen extends TestInitization {
 					+ " Expected End X " + getExcelKeyValue("EpgScreen", "Day_Navigator", "EndX") + " Actual Opacity "
 					+ actualOpacity + " Expected opacity " + getExcelKeyValue("EpgScreen", "Day_Navigator", "Opacity")
 					+ " Actual Font size " + fontSize + " Expected Font Size "
-					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " actual font family "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " Actual font family "
 					+ actualFontFamily + " Expected font family "
-					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " actual font color "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " Actual font color "
 					+ actualfontColor + " Expected font color "
 					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "color"));
 		} else {
-			FailTestCase("CSS not  matched : Actual Start Y " + actualStartY + " expected start y "
+			FailTestCase("CSS not  matched : Actual Start y " + actualStartY + " expected start y "
 					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "StartY") + " Actual end X " + actualEndX
 					+ " Expected End X " + getExcelKeyValue("EpgScreen", "Day_Navigator", "EndX") + " Actual Opacity "
 					+ actualOpacity + " Expected opacity " + getExcelKeyValue("EpgScreen", "Day_Navigator", "Opacity")
 					+ " Actual Font size " + fontSize + " Expected Font Size "
-					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " actual font family "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " Actual font family "
 					+ actualFontFamily + " Expected font family "
-					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " actual font color "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " Actual font color "
 					+ actualfontColor + " Expected font color "
 					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "color"));
 		}

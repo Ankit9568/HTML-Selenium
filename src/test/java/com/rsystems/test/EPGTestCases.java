@@ -13,6 +13,7 @@ import com.rsystems.config.ObjectRepository;
 import com.rsystems.pages.ChangePreference;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.EpgScreen;
+import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
@@ -1040,13 +1041,14 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 3000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EpgFocousCellValidation();
 
 	}
+
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
@@ -1064,4 +1066,71 @@ public class EPGTestCases extends TestInitization {
 
 		epgScreen.dayNavigatorCssValidation();
 	}
+
+	@Test
+	public void tc_EPG_Program_description() throws InterruptedException {
+
+		EpgScreen epgScreen = new EpgScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to TV guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentPrgDesc = epgScreen.displayChannelDescription.getText();
+		reports.log(LogStatus.PASS, "Navigate to another channel");
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		if (epgScreen.displayChannelDescription.getText().contentEquals(currentPrgDesc)) {
+			FailTestCase("Program description is not updated");
+		} else {
+			reports.log(LogStatus.PASS, "Program description has been updated");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	
+	@Test
+	public void tc_EPG_Mini_EPG() throws InterruptedException{
+			
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+		EpgScreen epgScreen = new EpgScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		
+		reports.log(LogStatus.PASS, "Navigate to Mini EPG");
+		sendKeySequence("RIGHT", 1000, "televisie");
+		
+		reports.log(LogStatus.PASS, "Navigate to tv-gids");
+		miniEPGScreen.validateFirstOrRightTile("LEFT", "tv-gids", 30);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		reports.log(LogStatus.PASS, "Navigate to EPG");
+		sendKeySequence("ENTER", 3000, "televisie");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgScreen.displayChannelDescription, "Current program description ");
+		
+	}
+	
+	@Test
+	public void tc_EPG_Genre() throws InterruptedException{
+		
+		
+		EpgScreen epgScreen = new EpgScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to TV guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentPrgDesc = epgScreen.channelGenere.getText();
+		reports.log(LogStatus.PASS, "Navigate to another channel");
+		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		if (epgScreen.channelGenere.getText().contentEquals(currentPrgDesc)) {
+			FailTestCase("Program genre is not updated");
+		} else {
+			reports.log(LogStatus.PASS, "Program genre has been updated");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	
 }
