@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -16,6 +15,8 @@ import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.EpgScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
+
+import gherkin.lexer.Fa;
 
 public class EPGTestCases extends TestInitization {
 
@@ -1041,23 +1042,26 @@ public class EPGTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EpgFocousCellValidation();
-		
+
 	}
-	
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
-	public void tc_EPG_Day_Navigator_Details() throws InterruptedException{
-			
+	public void tc_EPG_Day_Navigator_Details() throws InterruptedException {
+
 		EpgScreen epgScreen = new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgScreen.dayNavigator, "Day navigator ");
-		
-		
+
+		epgScreen.dayNavigatorCssValidation();
 	}
 }

@@ -1187,7 +1187,16 @@ public class EpgScreen extends TestInitization {
 		String currentFontFamily = focusElemntInEpg.getCssValue("font-family");
 		String StartX = focusElemntInEpg.getLocation().getX() + "";
 		String paddingFrmTop = focousElementCell.getCssValue("padding-top");
-
+		String currentFontSize = focousElementCell.getCssValue("font-size");
+		
+		
+		reports.log(LogStatus.PASS, "Validate focous cell font Size");
+		if (!currentFontSize.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "font_size"))) {
+			FailTestCase("Program title font size is not matched Actual :" + currentFontFamily + " and expected Font size "
+					+ getExcelKeyValue("EpgScreen", "FocousCell", "font_size"));
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
 		reports.log(LogStatus.PASS, "Validate focous cell font family");
 		if (!currentFontFamily.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "font_family"))) {
 			FailTestCase("Program title font is not matched Actual :" + currentFontFamily + " and expected Font family "
@@ -1243,6 +1252,48 @@ public class EpgScreen extends TestInitization {
 					&& iconPaddingTop.contentEquals(getExcelKeyValue("EpgScreen", "Black_List_Icon", "PaddingTop"))) {
 				blackListIconSizeMatch = true;
 			}
+		}
+
+		
+	}
+	
+	public void dayNavigatorCssValidation() throws InterruptedException{
+		String actualStartY = dayNavigator.getLocation().getY() + "";
+		String actualEndX = (dayNavigator.getLocation().getX() + dayNavigator.getSize().width) + "";
+		String actualFontFamily = dayNavigator.getCssValue("font-family");
+		String fontSize = dayNavigator.getCssValue("font-size");
+		String actualOpacity = dayNavigator.getCssValue("opacity");
+		String actualfontColor = dayNavigator.getCssValue("color");
+
+		reports.log(LogStatus.PASS, "Validation of date navigator css");
+		if (actualStartY.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "StartY"))
+				&& actualEndX.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "EndX"))
+				&& actualOpacity.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "Opacity"))
+				&& fontSize.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size"))
+				&& actualFontFamily.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family"))
+				&& actualfontColor.contentEquals(getExcelKeyValue("EpgScreen", "Day_Navigator", "color"))) {
+
+			reports.log(LogStatus.PASS, "CSS matched : Actual Start Y " + actualStartY + " expected start y "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "StartY") + " Actual end X " + actualEndX
+					+ " Expected End X " + getExcelKeyValue("EpgScreen", "Day_Navigator", "EndX") + " Actual Opacity "
+					+ actualOpacity + " Expected opacity " + getExcelKeyValue("EpgScreen", "Day_Navigator", "Opacity")
+					+ " Actual Font size " + fontSize + " Expected Font Size "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " actual font family "
+					+ actualFontFamily + " Expected font family "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " actual font color "
+					+ actualfontColor + " Expected font color "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "color"));
+		} else {
+			FailTestCase("CSS not  matched : Actual Start Y " + actualStartY + " expected start y "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "StartY") + " Actual end X " + actualEndX
+					+ " Expected End X " + getExcelKeyValue("EpgScreen", "Day_Navigator", "EndX") + " Actual Opacity "
+					+ actualOpacity + " Expected opacity " + getExcelKeyValue("EpgScreen", "Day_Navigator", "Opacity")
+					+ " Actual Font size " + fontSize + " Expected Font Size "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_size") + " actual font family "
+					+ actualFontFamily + " Expected font family "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "font_family") + " actual font color "
+					+ actualfontColor + " Expected font color "
+					+ getExcelKeyValue("EpgScreen", "Day_Navigator", "color"));
 		}
 
 	}
