@@ -1155,7 +1155,7 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to verify non focussed program cell details
+	 * Test cases is used to verify non focused program cell details
 	 */
 	@Test
 	public void tc_EPG003_EPG_Non_Focused_Program_Cell_Details() throws InterruptedException{
@@ -1204,5 +1204,74 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG030_EPG_TV_filter_layer() throws InterruptedException{
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validateEPGFromTVLayer();
+	}
+
+
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used to when pressing on TV Guide button, the start time of the time line is the current time
+	 */
+	@Test
+	public void tc_EPG001_EPG_Currently_Tuned_Focused_Program() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg001_EPG_Currently_Tuned_Focused_Program();
+	}
+	
+
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used to Check the focused program info availablity over the area above EPG cells
+	 */
+	@Test
+	public void tc_EPG004_Focused_Program_Info_Details() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_Focused_Program_Info_Details();
+	}
+	
+	
+
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used toEPG should display. Program title should display above the time duration in Bold letter                                                           s
+      Program title get change according to the program.
+	 */
+	@Test
+	
+	public void tc_EPG022_EPG_Program_title() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_Program_title();
+		
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used 1. change STB language  to FR . 2. Open EPG through RC and  Check the language of day.
+	 */
+	@Test
+	
+	public void tc_EPG019_EPG_FR_Language_Day() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_FR_Language_Day();
+		
+	}
+
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used 1. change STB language  to NL . 2. Open EPG through RC and  Check the language of day.
+	 */
+	@Test
+	
+	public void tc_EPG020_EPG_NL_Language_Day() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_NL_Language_Day();
+		
 	}
 }

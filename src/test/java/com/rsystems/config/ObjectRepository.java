@@ -81,6 +81,18 @@ public class ObjectRepository {
 	
 		public static final String largeRecordingIcon = "//*[@id='groupIcon']/img[@id='recording']";
 		public static final String smallRecordingIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img[@class='recording']";
+	
+		public static final String timeLineGradient="currentTimeLine";
+		public static final String epgPoster="poster";
+		public static final String epgTitleHighlightedProgram="title";
+		public static final String remainingTime="//*[@id='channel-6']/section/div/div[2]/div[1]/span[@class='remaining-time']";
+		public static final String titleGroup="//*[@id='channel-6']/section/div/div[2]/div[@class='title-group']";
+		public static final String programSummary="//*[@id='description']/div";
+		public static final String groupIconImage="//*[@id='groupIcon']/img";
+		public static final String groupIcon="groupIcon";
+		public static final String barIcon="//*[@id='channel-6']/section/div/div[2]/div[1]/span[3]/b";
+		public static final String lastIcon="//span[@id='groupIcon']/img[last()]";
+		public static final String focusedChannlDetails="//div[@class='channelsDetails']";
 	}
 
 	public static class LibraryElements {

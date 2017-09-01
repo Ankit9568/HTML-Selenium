@@ -135,31 +135,29 @@ public class EpgScreen extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.channelLogo)
 	public WebElement channelLogo;
-	
-	@FindBy(how= How.XPATH,using = ObjectRepository.EpgScreen.cutvChannelIcon)
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.cutvChannelIcon)
 	public WebElement cutvChannelIcon;
-	
+
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focussedCell)
 	public WebElement focussedCell;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.nonFocussedCell)
 	public WebElement nonFocussedCell;
-	
-	@FindBy(how = How.ID,using = ObjectRepository.EpgScreen.ChannelCells)
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.ChannelCells)
 	public WebElement channelCells;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.nonFocussedProgramTitle)
 	public WebElement nonFocussedProgramTitle;
 
-
-	
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.largeRecordingIcon)
 	public WebElement largeRecordingIcon;
-	
-	@FindBy(how= How.XPATH,using=ObjectRepository.PIPElements.currentPIPClassElement)
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.PIPElements.currentPIPClassElement)
 	public WebElement breadcumbPosition;
-	
-	@FindBy(how = How.CLASS_NAME,using = ObjectRepository.RecordingElements.activeMenuItemElement)
+
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.RecordingElements.activeMenuItemElement)
 	public WebElement activeInfoMenuItem;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.smallRecordingIcon)
@@ -170,6 +168,40 @@ public class EpgScreen extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.summryInNonFocousCell)
 	public WebElement summryInNonFocousCell;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.timeLineGradient)
+	public WebElement timeLineGradient;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.epgPoster)
+	public WebElement epgPoster;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.epgTitleHighlightedProgram)
+	public WebElement epgTitleHighlightedProgram;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.remainingTime)
+	public WebElement remainingTime;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.titleGroup)
+	public WebElement titleGroup;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.programSummary)
+	public WebElement programSummary;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.groupIconImage)
+	public WebElement groupIconImage;
+
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.groupIcon)
+	public WebElement groupIcon;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.barIcon)
+	public WebElement barIcon;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.lastIcon)
+	public WebElement lastIcon;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusedChannlDetails)
+	public WebElement focusedChannlDetails;
+	
 	public void goToEpgSettingScreen() throws InterruptedException {
 
 		TestInitization.setApplicationHubPage(2);
@@ -1337,6 +1369,7 @@ public class EpgScreen extends TestInitization {
 		}
 
 	}
+
 	public void validateEPGFromTVLayer() throws InterruptedException {
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -1367,7 +1400,7 @@ public class EpgScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
 	}
-	
+
 	public void validateBreadCumbOnEPG() throws InterruptedException {
 		goToEpgChannelScreen(false);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -1375,50 +1408,47 @@ public class EpgScreen extends TestInitization {
 		driver.switchTo().defaultContent();
 		String width = driver.findElement(By.className("defaultMainBg")).getCssValue("width");
 		System.out.println(Integer.parseInt(width.replaceAll("[\\D]", "")));
-		int midOFScreen = Integer.parseInt(width.replaceAll("[\\D]", ""))/2;
+		int midOFScreen = Integer.parseInt(width.replaceAll("[\\D]", "")) / 2;
 		int breadcumbposition = Integer.parseInt(breadcumbPosition.getCssValue("margin-left").replaceAll("[\\D]", ""));
-		if(breadcumbposition<midOFScreen)
-		{
+		if (breadcumbposition < midOFScreen) {
 			reports.log(LogStatus.PASS, "Breadcumb psotion is left on screen");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Breadcumb psotion is not left on screen");
 		}
 	}
+
 	public void validateRecordingOnEPG() throws InterruptedException {
 		goToEpgChannelScreen(true);
 		int noOfTry = 10;
 		boolean pogramFound = false;
-		while(noOfTry != 0){
+		while (noOfTry != 0) {
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-			System.out.println(driver.findElements(By.xpath("//li[@class='program focusProgram']/div/span[@class='epggroupicon']/img[contains(@src,'recording_small.png')]")).isEmpty());
-			if (driver.findElements(By.xpath("//li[@class='program focusProgram']/div/span[@class='epggroupicon']/img[contains(@src,'recording_small.png')]")).isEmpty())
-			{
+			System.out.println(driver
+					.findElements(By
+							.xpath("//li[@class='program focusProgram']/div/span[@class='epggroupicon']/img[contains(@src,'recording_small.png')]"))
+					.isEmpty());
+			if (driver
+					.findElements(By
+							.xpath("//li[@class='program focusProgram']/div/span[@class='epggroupicon']/img[contains(@src,'recording_small.png')]"))
+					.isEmpty()) {
 				sendKeyMultipleTimes("ENTER", 1, 1000);
 				driver.switchTo().frame(getCurrentFrameIndex());
 				List<WebElement> meuList = driver.findElements(By.className("cItem"));
-				for(int i = 0;i<meuList.size();i++)
-				{
+				for (int i = 0; i < meuList.size(); i++) {
 					System.out.println(meuList.get(i).getText());
-					if(meuList.get(i).getText().equalsIgnoreCase("opnemen")){
+					if (meuList.get(i).getText().equalsIgnoreCase("opnemen")) {
 						pogramFound = true;
 						break;
 					}
 				}
-				if(pogramFound)
-				{
+				if (pogramFound) {
 					break;
-				}
-				else
-				{
+				} else {
 					sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 					sendKeyMultipleTimes("DOWN", 1, 2000);
 				}
-			}
-			else
-			{
+			} else {
 				sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
 			noOfTry -= 1;
@@ -1426,47 +1456,39 @@ public class EpgScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).programDetailsScreen, "Program Details Screen");
 		List<WebElement> meuList = driver.findElements(By.className("cItem"));
-		for (int i = 0;i<meuList.size();i++ )
-		{
+		for (int i = 0; i < meuList.size(); i++) {
 			System.out.println(meuList.get(i).getText());
-			if (meuList.get(i).getText().equalsIgnoreCase("opnemen"))
-			{
+			if (meuList.get(i).getText().equalsIgnoreCase("opnemen")) {
 				reports.log(LogStatus.PASS, "Click on Openemen to Start Recording");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				sendKeyMultipleTimes("ENTER", 1, 3000);
 				break;
-			}
-			else
-			{
+			} else {
 				sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
 		}
 		Thread.sleep(6000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		try{
-			if(largeRecordingIcon.isDisplayed() && largeRecordingIcon.getAttribute("src").contains("ico_Ongoing_recording.png"))
-			{
+		try {
+			if (largeRecordingIcon.isDisplayed()
+					&& largeRecordingIcon.getAttribute("src").contains("ico_Ongoing_recording.png")) {
 				reports.log(LogStatus.PASS, "Large Red Icon is getting displayed on Top of EPG Screen");
 				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-			else
-			{
+			} else {
 				FailTestCase("Large Red Icon is not getting displayed on Top of EPG Screen");
 			}
-			if(smallRecordingIcon.isDisplayed() && smallRecordingIcon.getAttribute("src").contains("recording_small.png"))
-			{
+			if (smallRecordingIcon.isDisplayed()
+					&& smallRecordingIcon.getAttribute("src").contains("recording_small.png")) {
 				reports.log(LogStatus.PASS, "Small Red Icon is getting displayed on Program Cell");
 				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-			else
-			{
+			} else {
 				FailTestCase("Small Red Icon is not getting displayed on Program Cell");
 			}
-		}
-		catch(NoSuchElementException ex){
+		} catch (NoSuchElementException ex) {
 			FailTestCase("Red Recording Icon not getting displayed on EPG Screen");
 		}
 	}
+
 	public void validateNonFocussedProgramCellDetails() throws InterruptedException {
 
 		boolean fontFamilyMatch = false;
@@ -1482,30 +1504,33 @@ public class EpgScreen extends TestInitization {
 		String StartX = focusElemntInEpg.getLocation().getX() + "";
 		String paddingFrmTop = nonFocussedCell.getCssValue("padding-top");
 		reports.log(LogStatus.PASS, "Verify Non Focussed Program Cell Details");
-		if(nonFocussedProgramTitle.getCssValue("font-family").equalsIgnoreCase("Proximus, ProximusRegular")){
-			reports.log(LogStatus.PASS, "Expected Font Family of Non Focussed Cell Program Title - Proximus, Proximus Regular. Actual Font Family - "+nonFocussedProgramTitle.getCssValue("font-family"));
+		if (nonFocussedProgramTitle.getCssValue("font-family").equalsIgnoreCase("Proximus, ProximusRegular")) {
+			reports.log(LogStatus.PASS,
+					"Expected Font Family of Non Focussed Cell Program Title - Proximus, Proximus Regular. Actual Font Family - "
+							+ nonFocussedProgramTitle.getCssValue("font-family"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase(
+					"Expected Font Family of Non Focussed Cell Program Title - Proximus, Proximus Regular. Actual Font Family - "
+							+ nonFocussedProgramTitle.getCssValue("font-family"));
 		}
-		else
-		{
-			FailTestCase("Expected Font Family of Non Focussed Cell Program Title - Proximus, Proximus Regular. Actual Font Family - "+nonFocussedProgramTitle.getCssValue("font-family"));
-		}
-		if(nonFocussedProgramTitle.getCssValue("font-size").equalsIgnoreCase("24px")){
-			reports.log(LogStatus.PASS, "Expected Font Size of Non Focussed Cell Program Title - 24px. Actual Font Family - "+nonFocussedProgramTitle.getCssValue("font-size"));
+		if (nonFocussedProgramTitle.getCssValue("font-size").equalsIgnoreCase("24px")) {
+			reports.log(LogStatus.PASS,
+					"Expected Font Size of Non Focussed Cell Program Title - 24px. Actual Font Family - "
+							+ nonFocussedProgramTitle.getCssValue("font-size"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Font Family of Non Focussed Cell Program Title - 24px. Actual Font Family - "
+					+ nonFocussedProgramTitle.getCssValue("font-size"));
 		}
-		else
-		{
-			FailTestCase("Expected Font Family of Non Focussed Cell Program Title - 24px. Actual Font Family - "+nonFocussedProgramTitle.getCssValue("font-size"));
-		}
-		
+
 		reports.log(LogStatus.PASS, "Validate Cells starting position");
 		if (!StartX.contentEquals(getExcelKeyValue("EpgScreen", "FocousCell", "StartX"))) {
 			FailTestCase("Program title StartX is not matched Actual :" + StartX + " and expected StartX "
 					+ getExcelKeyValue("EpgScreen", "FocousCell", "StartX"));
 		}
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		if (!paddingFrmTop.contentEquals(getExcelKeyValue("EpgScreen", "NonFocusCell", "PaddingTop"))) {
 
 			FailTestCase("Program title Padding is not matched Actual :" + paddingFrmTop + " and expected padding "
@@ -1548,7 +1573,7 @@ public class EpgScreen extends TestInitization {
 				blackListIconSizeMatch = true;
 			}
 		}
-	
+
 	}
 
 	public void validaeEPGChannelCellDetails() throws InterruptedException {
@@ -1556,82 +1581,515 @@ public class EpgScreen extends TestInitization {
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
 		reports.log(LogStatus.PASS, "Verify EPG Channel Cell Details");
 		System.out.println(focousElementChannelNumber.getCssValue("font-size"));
-		if(focousElementChannelNumber.getCssValue("font-size").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size")) && String.valueOf(driver.findElement(By.className("ch_logo")).getLocation().x).trim().equalsIgnoreCase("124"))
-		{
-			reports.log(LogStatus.PASS, "Expected Font Size of Channel Number - " + getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size") + " Actual Font Size -"+focousElementChannelNumber.getCssValue("font-size"));
+		if (focousElementChannelNumber.getCssValue("font-size").toString()
+				.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size"))
+				&& String.valueOf(driver.findElement(By.className("ch_logo")).getLocation().x).trim()
+						.equalsIgnoreCase("124")) {
+			reports.log(LogStatus.PASS,
+					"Expected Font Size of Channel Number - "
+							+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size") + " Actual Font Size -"
+							+ focousElementChannelNumber.getCssValue("font-size"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Font Size of Channel Number - "
+					+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size") + " Actual Font Size -"
+					+ focousElementChannelNumber.getCssValue("font-size"));
 		}
-		else
-		{
-			FailTestCase("Expected Font Size of Channel Number - " + getExcelKeyValue("EpgScreen", "epg_channel_number", "font_size") + " Actual Font Size -"+focousElementChannelNumber.getCssValue("font-size"));
-		}
-		if(focousElementChannelNumber.getCssValue("font-family").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family")))
-		{
-			reports.log(LogStatus.PASS, "Expected Font Name of Channel Number - "+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family") + " Actual Font Size -"+focousElementChannelNumber.getCssValue("font-family"));
+		if (focousElementChannelNumber.getCssValue("font-family").toString()
+				.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family"))) {
+			reports.log(LogStatus.PASS,
+					"Expected Font Name of Channel Number - "
+							+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family") + " Actual Font Size -"
+							+ focousElementChannelNumber.getCssValue("font-family"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Font Name of Channel Number - "
+					+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family") + " Actual Font Size -"
+					+ focousElementChannelNumber.getCssValue("font-family"));
 		}
-		else
-		{
-			FailTestCase("Expected Font Name of Channel Number - "+ getExcelKeyValue("EpgScreen", "epg_channel_number", "font_family") + " Actual Font Size -"+focousElementChannelNumber.getCssValue("font-family"));
-		}
-		if(channelLogo.getCssValue("width").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "width")) && channelLogo.getCssValue("height").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "height")))
-		{
-			reports.log(LogStatus.PASS, "Expected Size of Channel Logo - " +getExcelKeyValue("EpgScreen", "channelLogo", "width")+"*"+getExcelKeyValue("EpgScreen", "channelLogo", "height") + " Actual Font Size -"+channelLogo.getCssValue("width")+"*"+channelLogo.getCssValue("height"));
+		if (channelLogo.getCssValue("width").toString()
+				.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "width"))
+				&& channelLogo.getCssValue("height").toString()
+						.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "height"))) {
+			reports.log(LogStatus.PASS,
+					"Expected Size of Channel Logo - " + getExcelKeyValue("EpgScreen", "channelLogo", "width") + "*"
+							+ getExcelKeyValue("EpgScreen", "channelLogo", "height") + " Actual Font Size -"
+							+ channelLogo.getCssValue("width") + "*" + channelLogo.getCssValue("height"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Size of Channel Logo - " + getExcelKeyValue("EpgScreen", "channelLogo", "width")
+					+ "*" + getExcelKeyValue("EpgScreen", "channelLogo", "height") + " Actual Font Size -"
+					+ channelLogo.getCssValue("width") + "*" + channelLogo.getCssValue("height"));
 		}
-		else
-		{
-			FailTestCase("Expected Size of Channel Logo - " +getExcelKeyValue("EpgScreen", "channelLogo", "width")+"*"+getExcelKeyValue("EpgScreen", "channelLogo", "height") + " Actual Font Size -"+channelLogo.getCssValue("width")+"*"+channelLogo.getCssValue("height"));
-		}
-		try{
-			if (cutvChannelIcon.isDisplayed())
-			{
-				if(cutvChannelIcon.getCssValue("width").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width")) && focousElementChannelNumber.getCssValue("margin-right").toString().equalsIgnoreCase(getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right")))
-				{
-					reports.log(LogStatus.PASS, "Expected Size of CUTV Channel Icon - "+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width") +" and Gap Between Channel Number and Icon - " + getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right") + " Actual Size of CUTV Icon - "+cutvChannelIcon.getCssValue("width").toString() +" Actual Gap Between Icon and Channel Number - "+focousElementChannelNumber.getCssValue("margin-right").toString());
+		try {
+			if (cutvChannelIcon.isDisplayed()) {
+				if (cutvChannelIcon.getCssValue("width").toString()
+						.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width"))
+						&& focousElementChannelNumber.getCssValue("margin-right").toString()
+								.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right"))) {
+					reports.log(LogStatus.PASS,
+							"Expected Size of CUTV Channel Icon - "
+									+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width")
+									+ " and Gap Between Channel Number and Icon - "
+									+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right")
+									+ " Actual Size of CUTV Icon - " + cutvChannelIcon.getCssValue("width").toString()
+									+ " Actual Gap Between Icon and Channel Number - "
+									+ focousElementChannelNumber.getCssValue("margin-right").toString());
 					reports.attachScreenshot(captureCurrentScreenshot());
+				} else {
+					FailTestCase("Expected Size of CUTV Channel Icon - "
+							+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width")
+							+ " and Gap Between Channel Number and Icon - "
+							+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right")
+							+ " Actual Size of CUTV Icon - " + cutvChannelIcon.getCssValue("width").toString()
+							+ " Actual Gap Between Icon and Channel Number - "
+							+ focousElementChannelNumber.getCssValue("margin-right").toString());
 				}
-				else
-				{
-					FailTestCase("Expected Size of CUTV Channel Icon - "+ getExcelKeyValue("EpgScreen", "cutvChannelIcon", "width") +" and Gap Between Channel Number and Icon - " + getExcelKeyValue("EpgScreen", "cutvChannelIcon", "margin-right") + " Actual Size of CUTV Icon - "+cutvChannelIcon.getCssValue("width").toString() +" Actual Gap Between Icon and Channel Number - "+focousElementChannelNumber.getCssValue("margin-right").toString());
-				}
-				
+
 			}
-		}
-		catch(NoSuchElementException ex)
-		{
+		} catch (NoSuchElementException ex) {
 			System.out.println("Exception Occurred");
 		}
-		
-		if(channelLogo.getCssValue("top").equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "top")))
-		{
-			reports.log(LogStatus.PASS, "Expected Output - Top Margin Of channel Logo wrt to Channel Cell - "+getExcelKeyValue("EpgScreen", "channelLogo", "width") + ". Actual Output - Top Marign of Channel Logo is - "+channelLogo.getCssValue("top"));
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
-			FailTestCase("Expected Output - Top Margin Of channel Logo wrt to Channel Cell - "+getExcelKeyValue("EpgScreen", "channelLogo", "width") + ". Actual Output - Top Marign of Channel Logo is - "+channelLogo.getCssValue("top"));
-		}
-		if(focussedCell.getCssValue("opacity").equalsIgnoreCase(getExcelKeyValue("EpgScreen", "focussedCell", "Opacity")) && nonFocussedCell.getCssValue("opacity").equalsIgnoreCase(getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity")))
-		{
-			reports.log(LogStatus.PASS, "Expected Opacity of Focussed Cell is - " +getExcelKeyValue("EpgScreen", "focussedCell", "Opacity")+ " and Non Foccussed Cell is "+ getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity")+". Actual Opactiy of Focussed Cell -"+focussedCell.getCssValue("opacity")+" and Non Focussed Cell - "+nonFocussedCell.getCssValue("opacity"));
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
-			FailTestCase("Expected Opacity of Focussed Cell is - " +getExcelKeyValue("EpgScreen", "focussedCell", "Opacity")+ " and Non Foccussed Cell is "+ getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity")+". Actual Opactiy of Focussed Cell -"+focussedCell.getCssValue("opacity")+" and Non Focussed Cell - "+nonFocussedCell.getCssValue("opacity"));
-		}
-		
 
-		if(String.valueOf(channelCells.getLocation().x).equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelCell", "StartX")))
-		{
-			reports.log(LogStatus.PASS, "Channel Cells Should start from x = "+getExcelKeyValue("EpgScreen", "channelCell", "x")+". Actual Program Starts From x = "+channelCells.getLocation().x);
+		if (channelLogo.getCssValue("top").equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelLogo", "top"))) {
+			reports.log(LogStatus.PASS,
+					"Expected Output - Top Margin Of channel Logo wrt to Channel Cell - "
+							+ getExcelKeyValue("EpgScreen", "channelLogo", "width")
+							+ ". Actual Output - Top Marign of Channel Logo is - " + channelLogo.getCssValue("top"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Output - Top Margin Of channel Logo wrt to Channel Cell - "
+					+ getExcelKeyValue("EpgScreen", "channelLogo", "width")
+					+ ". Actual Output - Top Marign of Channel Logo is - " + channelLogo.getCssValue("top"));
+		}
+		if (focussedCell.getCssValue("opacity")
+				.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "focussedCell", "Opacity"))
+				&& nonFocussedCell.getCssValue("opacity")
+						.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity"))) {
+			reports.log(LogStatus.PASS,
+					"Expected Opacity of Focussed Cell is - " + getExcelKeyValue("EpgScreen", "focussedCell", "Opacity")
+							+ " and Non Foccussed Cell is "
+							+ getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity")
+							+ ". Actual Opactiy of Focussed Cell -" + focussedCell.getCssValue("opacity")
+							+ " and Non Focussed Cell - " + nonFocussedCell.getCssValue("opacity"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Expected Opacity of Focussed Cell is - "
+					+ getExcelKeyValue("EpgScreen", "focussedCell", "Opacity") + " and Non Foccussed Cell is "
+					+ getExcelKeyValue("EpgScreen", "nonFocussedCell", "Opacity")
+					+ ". Actual Opactiy of Focussed Cell -" + focussedCell.getCssValue("opacity")
+					+ " and Non Focussed Cell - " + nonFocussedCell.getCssValue("opacity"));
+		}
+
+		if (String.valueOf(channelCells.getLocation().x)
+				.equalsIgnoreCase(getExcelKeyValue("EpgScreen", "channelCell", "StartX"))) {
+			reports.log(LogStatus.PASS,
+					"Channel Cells Should start from x = " + getExcelKeyValue("EpgScreen", "channelCell", "x")
+							+ ". Actual Program Starts From x = " + channelCells.getLocation().x);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Channel Cells Should start from x = " + getExcelKeyValue("EpgScreen", "channelCell", "x")
+					+ ". Actual Program Starts From x = " + channelCells.getLocation().x);
+		}
+
+	}
+
+	public void epg001_EPG_Currently_Tuned_Focused_Program() throws InterruptedException {
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+		dtv.openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String programTime = programDurationIn_Infobar.getText();
+
+		String programTitleofScreen = programTitle.getText();
+
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		String programTitleofguide = focusElemntInEpg.getText();
+
+		String programTimeSchedule = focusElementProgramTime.getText();
+
+		if (programTime.equalsIgnoreCase(programTimeSchedule)
+				&& programTitleofScreen.equalsIgnoreCase(programTitleofguide)) {
+			reports.log(LogStatus.PASS, "Current Program " + programTitleofScreen + " is getting highlighted");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Current Program " + programTitleofScreen + " is not getting highlighted");
+
+		}
+
+		// Focused program info should be available over the area above EPG
+		// cells
+
+		int ChannelDetailsTop = focusedChannlDetails.getLocation().getY();
+		System.out.println(ChannelDetailsTop);
+
+		int programDetailsTop = dtv.programTitle.getLocation().getY();
+		System.out.println(programDetailsTop);
+
+		if (ChannelDetailsTop < programDetailsTop) {
+			reports.log(LogStatus.PASS, "Focused program info is available over the area above EPG cells.");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Focused program info in not available over the area above the EPG cells");
+
+		}
+
+	}
+
+	public void epg_Focused_Program_Info_Details() throws InterruptedException {
+		DTVChannelScreen dtv = new DTVChannelScreen(driver);
+
+		// Verify that EPG should open and currently tuned program should be
+		// focused.
+		dtv.openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String programTime = programDurationIn_Infobar.getText();
+
+		String programTitleofScreen = programTitle.getText();
+
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String programTitleofguide = focusElemntInEpg.getText();
+
+		String programTimeSchedule = focusElementProgramTime.getText();
+
+		if (programTime.equalsIgnoreCase(programTimeSchedule)
+				&& programTitleofScreen.equalsIgnoreCase(programTitleofguide)) {
+			reports.log(LogStatus.PASS, "Current Program " + programTitleofScreen + " is getting highlighted");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Current Program " + programTitleofScreen + " is not getting highlighted");
+
+		}
+
+		// Check the focused program info availablity over the area above EPG
+		// cells.
+
+		int ChannelDetailsTop = focusedChannlDetails.getLocation().getY();
+		System.out.println(ChannelDetailsTop);
+
+		int programDetailsTop = dtv.programTitle.getLocation().getY();
+		System.out.println(programDetailsTop);
+
+		if (ChannelDetailsTop != programDetailsTop) {
+			reports.log(LogStatus.PASS, "Focused program info is available over the area above EPG cells.");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Focused program info in not available over the area above the EPG cells");
+
+		}
+
+		// a) Poster of the focused program (if available) should be available
+		// at x=40px,y=227px, w=185px, h=105px
+
+		int xCordinateEpgPoster = epgPoster.getLocation().getX();
+
+		int yCordinateEpgPoster = epgPoster.getLocation().getY();
+
+		String widthOfEpgPoster = epgPoster.getCssValue("width");
+
+		String heightOfEpgPoster = epgPoster.getCssValue("height");
+
+		String ExpectedPosterWidth = getExcelKeyValue("EpgScreen", "PosterWidthEPG", "Width");
+
+		String ExpectedPosterHeight = getExcelKeyValue("EpgScreen", "HeightOfPoster", "Height");
+
+		int ExpectedXcordinate = Integer.parseInt(getExcelKeyValue("EpgScreen", "ExpectedXCoordinate", "name_nl"));
+
+		int ExpectedYCordinate = Integer.parseInt(getExcelKeyValue("EpgScreen", "ExpectedYCordinate", "name_nl"));
+
+		String expectedFontHighlightedTitle = getExcelKeyValue("EpgScreen", "ExpectedFontFamily", "name_nl");
+
+		String expectedFontSize = getExcelKeyValue("EpgScreen", "FontSize", "font_size");
+
+		int expectedXcoordinateHilightedTitle = Integer
+				.parseInt(getExcelKeyValue("EpgScreen", "XcoordinateOfHighlightedTitle", "name_nl"));
+
+		int positionOfXaxis = epgTitleHighlightedProgram.getLocation().getX();
+
+		int epgHighlightedYaxis = epgTitleHighlightedProgram.getLocation().getY();
+
+		int programTimeYaxis = focusElementProgramTime.getLocation().getY();
+
+		String fontProgramTitle = epgTitleHighlightedProgram.getCssValue("font-family");
+
+		String expectedFontProgramTitle = getExcelKeyValue("EpgScreen", "ExpectedFontProgramTitle", "font_family");
+
+		String fontSizeProgram = epgTitleHighlightedProgram.getCssValue("font-size");
+
+		String expectedFontSizeProgram = getExcelKeyValue("EpgScreen", "FontSizeProgramTitle", "font_size");
+
+		int xaxisOfRemainingTime = titleGroup.getLocation().getX();
+
+		int focusedElementXAxis = epgTitleHighlightedProgram.getLocation().getX();
+
+		String fontFamilyRemainingtime = remainingTime.getCssValue("font-family");
+
+		String expectedFontFamilyRemainingTime = getExcelKeyValue("EpgScreen", "ExpectedFontProgramTitle",
+				"font_family");
+
+		String fontsizeRemainingTime = remainingTime.getCssValue("font-size");
+
+		String expectedFontSizeRemainingTime = getExcelKeyValue("EpgScreen", "FontSizeProgramTitle", "font_size");
+
+		int programSummaryYaxis = programSummary.getLocation().getY();
+
+		int yaxisofProgramTimeAbove = focusElementProgramTime.getLocation().getY();
+
+		String fontFamilyProgramSummary = programSummary.getCssValue("font-family");
+
+		String fontSizeProgramSummary = programSummary.getCssValue("font-size");
+
+		String maxWidthSummaryText = programSummary.getCssValue("width");
+
+		String expectedSummaryTextWidth = getExcelKeyValue("EpgScreen", "SummaryTextMaxWidth", "Width");
+
+		String widthOfIcon = groupIconImage.getCssValue("width");
+
+		String expectedGroupIconSize = getExcelKeyValue("EpgScreen", "GroupiconSize", "Width");
+
+		int widthBarIcon = barIcon.getSize().getWidth();
+
+		int rightOftheBaricon = Integer.parseInt(barIcon.getCssValue("margin-right").replaceAll("[^0-9]", ""));
+
+		int leftReminingTime = Integer.parseInt(remainingTime.getCssValue("margin-left").replaceAll("[^0-9]", ""));
+
+		int totalSpaceRemaining = widthBarIcon + rightOftheBaricon + leftReminingTime;
+
+		int expectedSpaceBetweenIcons = Integer
+				.parseInt(getExcelKeyValue("EpgScreen", "SpaceBetweenIcons", "name_nl").replaceAll("[^0-9]", ""));
+
+		String spaceGroupIcon = groupIcon.getCssValue("padding-left");
+
+		// a) Poster of the focused program (if available) should be available
+		// at x=40px,y=227px, w=185px, h=105px
+
+		if (widthOfEpgPoster.equalsIgnoreCase(ExpectedPosterWidth)
+				&& heightOfEpgPoster.equalsIgnoreCase(ExpectedPosterHeight) && xCordinateEpgPoster == ExpectedXcordinate
+				&& yCordinateEpgPoster == ExpectedYCordinate) {
+			reports.log(LogStatus.PASS,
+					"Expected width of the highlighted program Poster - > " + ExpectedPosterWidth
+							+ " Actual width of the highlighted poster is -> " + widthOfEpgPoster
+							+ "Expected height of the highlighted title - > " + ExpectedPosterHeight
+							+ " Actual height of the highlighted title -> " + heightOfEpgPoster);
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		else
-		{
-			FailTestCase("Channel Cells Should start from x = "+getExcelKeyValue("EpgScreen", "channelCell", "x")+". Actual Program Starts From x = "+channelCells.getLocation().x);
+
+		else {
+			FailTestCase("Test cases is failed as Expected width of the highlighted program Poster - > "
+					+ ExpectedPosterWidth + " Actual width of the highlighted poster is -> " + widthOfEpgPoster
+					+ " Test cases is failed as Expected height of the highlighted title - > " + ExpectedPosterHeight
+					+ " Actual height of the highlighted poster is -> " + heightOfEpgPoster
+					+ "Test cases is failed as Expected x coordinate of the Poster is - > " + ExpectedXcordinate
+					+ " & y cordinate of the Poster is " + ExpectedYCordinate
+					+ ". Actual x coordinate of the Poster is " + xCordinateEpgPoster
+					+ "and the Y cordinate of the poster is -> " + yCordinateEpgPoster);
 		}
-		
+
+		// b)Title of the program should be shown in Proximux Extra Bold fonts
+		// of size 32 starting from the position x=246 px
+
+		if (epgTitleHighlightedProgram.getCssValue("font-family").equals(expectedFontHighlightedTitle)
+				&& epgTitleHighlightedProgram.getCssValue("font-size").equalsIgnoreCase(expectedFontSize)
+				&& positionOfXaxis == expectedXcoordinateHilightedTitle) {
+			reports.log(LogStatus.PASS,
+					" Expected font-family of focused program title of the EPG screen is - > "
+							+ expectedFontHighlightedTitle
+							+ " Actual font-family of focused program title of the EPG screen is -> "
+							+ epgTitleHighlightedProgram.getCssValue("font-family")
+							+ "Expected font-size of focused program title of the EPG screen is - > " + expectedFontSize
+							+ "Actual font-size of focused program title of the EPG screen is -> "
+							+ epgTitleHighlightedProgram.getCssValue("font-size")
+							+ "Expected x coordinate of the highlighted title - > " + expectedXcoordinateHilightedTitle
+							+ "Actual co-ordinate of the highlighted title -> " + positionOfXaxis);
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		} else {
+			FailTestCase(
+					"Test cases is failed as Expected font-family of focused program title of the EPG screen is - > "
+							+ expectedFontHighlightedTitle
+							+ ". Actual font-family of focused program title of the EPG screen is -> "
+							+ epgTitleHighlightedProgram.getCssValue("font-family")
+							+ "Test cases is failed as Expected font-size of focused program title of the EPG screen is - > "
+							+ expectedFontSize
+							+ ". Actual font-family of focused program title of the EPG screen is -> "
+							+ epgTitleHighlightedProgram.getCssValue("font-size"));
+		}
+
+		// c) Start & end time of the program should be shown below program
+		// title in Proximux Regular fonts of size 20.
+
+		if (epgHighlightedYaxis < programTimeYaxis && fontProgramTitle.equalsIgnoreCase(expectedFontProgramTitle)
+				&& fontSizeProgram.equalsIgnoreCase(expectedFontSizeProgram)) {
+			reports.log(LogStatus.PASS,
+					"ProgramTime is below the program title" + "Expected font title" + expectedFontProgramTitle
+							+ "Actual font title" + fontProgramTitle + "Expected font size " + expectedFontSizeProgram
+							+ "Actual Font size" + fontSizeProgram);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("ProgramTime is not shown below the programTitle" + "Test Case failed as Expected title "
+					+ expectedFontProgramTitle + "Actual font title " + fontProgramTitle
+					+ "Test case failed as Expected font size" + expectedFontSizeProgram + "Actual font size"
+					+ fontSizeProgram);
+		}
+
+		// d) Program remaining time should be shown next to program title in
+		// Proximux Regular fonts of size 20.
+
+		if (xaxisOfRemainingTime == focusedElementXAxis
+				&& fontFamilyRemainingtime.equalsIgnoreCase(expectedFontFamilyRemainingTime)
+				&& fontsizeRemainingTime.equalsIgnoreCase(expectedFontSizeRemainingTime)) {
+			reports.log(LogStatus.PASS,
+					" Program remaining time should be shown next to program title" + "Actual font-family "
+							+ fontFamilyRemainingtime + "Expected font family remaining time "
+							+ expectedFontFamilyRemainingTime + "Actual Font size" + fontsizeRemainingTime
+							+ "Expected font size" + expectedFontSizeRemainingTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Test case failed as Program remaining time is not shown next to program title"
+					+ "Expected font family " + expectedFontFamilyRemainingTime + "Actual font family "
+					+ fontFamilyRemainingtime + "Actual font size remaining time " + fontsizeRemainingTime
+					+ "Expected font size of the remaing time" + expectedFontSizeRemainingTime);
+		}
+
+		// e)Program summary should be shown below program time info in Proximux
+		// Regular fonts of size 22.
+
+		if (programSummaryYaxis > yaxisofProgramTimeAbove
+				&& fontFamilyProgramSummary.equalsIgnoreCase(expectedFontFamilyRemainingTime)
+				&& fontSizeProgramSummary.equalsIgnoreCase(expectedFontSizeRemainingTime)) {
+			reports.log(LogStatus.PASS,
+					" Program sumamry of Y axis should be greater than y axis of the program time showing above"
+							+ "Actual font-family " + fontFamilyProgramSummary + "Expected font family "
+							+ expectedFontFamilyRemainingTime + "Actual Font size" + fontSizeProgramSummary
+							+ "Expected font size" + expectedFontSizeRemainingTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		} else {
+			FailTestCase(
+					"Test case failed as Program sumamry of Y axis is not greater than y axis of the program time showing above"
+							+ "Expected font family " + expectedFontFamilyRemainingTime + "Actual font family "
+							+ fontSizeProgramSummary + "Actual font size remaining time " + fontSizeProgramSummary
+							+ "Expected font size of the remaing time" + expectedFontSizeRemainingTime);
+		}
+
+		// f) Summary's text max width should be 672 px.
+
+		if (maxWidthSummaryText.equalsIgnoreCase(expectedSummaryTextWidth)) {
+			reports.log(LogStatus.PASS, "Actual Summary text width is equals to " + maxWidthSummaryText
+					+ "Expected Summary text width " + expectedSummaryTextWidth);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Test case fails as the actual Summary text width is not equals to " + maxWidthSummaryText
+					+ "Expected Summary text width " + expectedSummaryTextWidth);
+		}
+
+		// g) Icons next to Title should be of size 20 px with space between
+		// icons should be 5px.
+
+		if (widthOfIcon.equalsIgnoreCase(expectedGroupIconSize)) {
+			reports.log(LogStatus.PASS,
+					"Actual Size of icon is " + widthOfIcon + "Expected size of the icon is " + expectedGroupIconSize);
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+
+		else {
+			FailTestCase("Test case failed as Actual Size of icon is " + widthOfIcon + "Expected size of the icon is "
+					+ expectedGroupIconSize);
+		}
+
+		// h)Space between last icon and remaining duration should be 30 px
+
+		if (totalSpaceRemaining == expectedSpaceBetweenIcons) {
+			reports.log(LogStatus.PASS, "Actual Space between two Icons is" + totalSpaceRemaining
+					+ "Expected Space remaiming two icons is " + expectedSpaceBetweenIcons);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Test Case fail as Actual Space between two Icons is" + totalSpaceRemaining
+					+ "Expected Space remaiming two icons is " + expectedSpaceBetweenIcons);
+		}
 	}
+
+	public void epg_Program_title() throws InterruptedException {
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+		driver.switchTo().defaultContent();
+		String epgScreenTitle = screenTitle.getText();
+		System.out.println(epgScreenTitle);
+		String expectedScreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
+		System.out.println(expectedScreenTitle);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		int YaxisOfTitle = epgTitleHighlightedProgram.getLocation().getY();
+		System.out.println(YaxisOfTitle);
+		int YaxisofprogramTime = focusElementProgramTime.getLocation().getY();
+		System.out.println(YaxisofprogramTime);
+		if (epgScreenTitle.equalsIgnoreCase(expectedScreenTitle)) {
+			reports.log(LogStatus.PASS, "EPG screen has been reached");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Not reached at the EPG screen");
+		}
+
+		if (YaxisOfTitle < YaxisofprogramTime) {
+			reports.log(LogStatus.PASS,
+					"Program title is located above the program time and its location is " + YaxisOfTitle
+							+ " and Location of the program time is below the Program Title " + YaxisofprogramTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Test case failed as the Program title is not above the program time " + YaxisOfTitle
+					+ " Should not appear after programtime " + YaxisofprogramTime);
+		}
+
+		verifyNavigationinEPG();
+
+	}
+
+	public void epg_FR_Language_Day() throws InterruptedException {
+		String expectedDayInFrench = getExcelKeyValue("parameters", "DayInFrench", "name_nl");
+		System.out.println(expectedDayInFrench);
+		ChangePreference chPreference = new ChangePreference(driver);
+		chPreference.navigateToMyPreference();
+		chPreference.languageChange("FR");
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String dayName = dayNavigator.getText();
+		System.out.println(dayName);
+		if (dayName.equalsIgnoreCase(expectedDayInFrench)) {
+			reports.log(LogStatus.PASS, "After Language has been set to French Day has been changed to " + dayName);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Language changed has not done");
+		}
+
+		// Set to default language
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		chPreference.navigateToMyPreference();
+		chPreference.languageChange("NL");
+	}
+
+	public void epg_NL_Language_Day() throws InterruptedException {
+		String expectedDayInDutch = getExcelKeyValue("parameters", "DayInDutch", "name_nl");
+		System.out.println(expectedDayInDutch);
+		ChangePreference chPreference = new ChangePreference(driver);
+		chPreference.navigateToMyPreference();
+		chPreference.languageChange("NL");
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String dayName = dayNavigator.getText();
+		System.out.println(dayName);
+		if (dayName.equalsIgnoreCase(expectedDayInDutch)) {
+			reports.log(LogStatus.PASS, "After Language has been set to Dutch Day has been changed to " + dayName);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Language changed has not done");
+		}
+
+	}
+
 }
