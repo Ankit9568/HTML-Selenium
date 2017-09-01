@@ -1114,7 +1114,7 @@ public class EPGTestCases extends TestInitization {
 		sendKeySequence("RIGHT", 1000, "televisie");
 		
 		reports.log(LogStatus.PASS, "Navigate to tv-gids");
-		miniEPGScreen.validateFirstOrRightTile("LEFT", "tv-gids", 30);
+		miniEPGScreen.validateFirstOrRightTile("RIGHT", "tv-gids", 30);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		
 		reports.log(LogStatus.PASS, "Navigate to EPG");
