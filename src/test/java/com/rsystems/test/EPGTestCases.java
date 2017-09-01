@@ -1152,5 +1152,57 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to verify non focussed program cell details
+	 */
+	@Test
+	public void tc_EPG003_EPG_Non_Focused_Program_Cell_Details() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.validateNonFocussedProgramCellDetails();
+	}
 	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to verify channel list cell details
+	 */
+	@Test
+	public void tc_EPG006_EPG_Channel_List_Cell_Details() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.validaeEPGChannelCellDetails();
+	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to start and verify recording icon on EPG Screen
+	 */
+	@Test
+	public void tc_EPG015_EPG_Current_Recording() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.validateRecordingOnEPG();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to verify breadcumb position on EPG Screen
+	 */
+	@Test
+	public void tc_EPG012_EPG_Breadcrumb() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.validateBreadCumbOnEPG();
+	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to open EPG screen from TV Filter Layer
+	 */
+	@Test
+	public void tc_EPG030_EPG_TV_filter_layer() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.validateEPGFromTVLayer();
+	}
 }

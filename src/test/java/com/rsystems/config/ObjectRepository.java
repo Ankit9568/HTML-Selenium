@@ -63,6 +63,24 @@ public class ObjectRepository {
 		public static final String dayNavigator  = "dayHeading";
 		
 		public static final String channelGenere = "category-detail";
+		
+		public static final String channelLogo = "//li[@id='colCh0']/div[@class='ch_logo']";
+		public static final String cutvChannelIcon = "//li[@id='colCh0']/span/span[2]";
+		public static final String nonFocussedCell = "//li[@class='program']/div[1]";	
+		public static final String focussedCell = "//li[@class='program focusProgram']";
+		public static final String ChannelCells = "programChannels";
+		
+		public static final String nonFocussedProgramTitle = "//li[@class='program']/div/p[contains(@class,'programTitle')]";
+		public static final String programTimingInProgramCell = "//li[@class = 'program']/div/p[contains(@class,'programTiming ')]";
+		
+		
+	
+		public static final String timeInNonFocousCell = "//li[@class = 'program']/div/p[contains(@class,'programTiming')]";
+		public static final String summryInNonFocousCell = "//li[@class = 'program']/div/div[@class='programDescription']/div[1]";
+		public static final String iconElementListInNonFocousCell = "//li[@class='program']/div/span[@class='epggroupicon']/img";
+	
+		public static final String largeRecordingIcon = "//*[@id='groupIcon']/img[@id='recording']";
+		public static final String smallRecordingIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img[@class='recording']";
 	}
 
 	public static class LibraryElements {
@@ -73,7 +91,7 @@ public class ObjectRepository {
 
 	public static class PIPElements {
 		public static final String pipPositonIDElement = "pipPosition";
-		public static final String currentPIPClassElement = "//*[@class='logo-wrapper toggle']	";
+		public static final String currentPIPClassElement = "//*[@class='logo-wrapper']	";
 		public static final String pipHeadingElement = "pipHeading";
 		public static final String confirmElement = "//*[@id='item_1']";
 		public static final String cancelElement = "//*[@id='item_2']";

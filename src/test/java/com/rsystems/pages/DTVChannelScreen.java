@@ -619,6 +619,9 @@ public class DTVChannelScreen extends TestInitization {
 
 		pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		
+		
+		
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(programDetailsScreen, "Program Details Screen");
