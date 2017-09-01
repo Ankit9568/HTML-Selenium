@@ -1036,6 +1036,7 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
+	 *  Test case validate EPG _Focused_Program_Cell_Details
 	 */
 	@Test
 	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException {
@@ -1052,6 +1053,7 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
+	 * Test case validate EPG_Day_Navigator_Details
 	 */
 	@Test
 	public void tc_EPG_Day_Navigator_Details() throws InterruptedException {
@@ -1067,6 +1069,12 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.dayNavigatorCssValidation();
 	}
 
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Test case validate the EPG_Program_description
+	 */
+	
 	@Test
 	public void tc_EPG_Program_description() throws InterruptedException {
 
@@ -1087,6 +1095,12 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Test case validate the EPG_Mini_EPG
+	 */
 	
 	@Test
 	public void tc_EPG_Mini_EPG() throws InterruptedException{
@@ -1110,6 +1124,12 @@ public class EPGTestCases extends TestInitization {
 		
 	}
 	
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Test case validate the EPG_Genre
+	 */
 	@Test
 	public void tc_EPG_Genre() throws InterruptedException{
 		
