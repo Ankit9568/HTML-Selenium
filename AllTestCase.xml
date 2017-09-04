@@ -37,43 +37,21 @@
 		</classes>
 	</test>
 
-<!-- 	<test name="EPG Setting Test case ">
-		<classes>
-			<class name="com.rsystems.test.EPGTestCases">
-				<methods>
-					<include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
-					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
-					<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
-					<include name="tc_BCEPGHPG01_epg_cancel_setting" />
-					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
-					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" />
-					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
-					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
-					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
-					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
-					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
-					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
-					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
-					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
-					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
-					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
-	<test name="PIP Test cases ">
-		<classes>
-			<class name="com.rsystems.test.PIPTestCases">
-				<methods>
-					<include name="tc_BCPIPHPG01_pip_confirmation_setting_links" />
-					<include name="tc_BCPIPHPG04_pip_position_links_all_screen" />
-					<include name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" />
-					<include name="tc_pip_001_pip_setting_ui" />
-				</methods>
-			</class>
-		</classes>
-	</test> -->
+	<!-- <test name="EPG Setting Test case "> <classes> <class name="com.rsystems.test.EPGTestCases"> 
+		<methods> <include name="tc_BCEPGHPG05_epg_setting_UI_NL" /> <include name="tc_BCEPGHPG04_epg_setting_UI_FR" 
+		/> <include name="tc_BCEPGHPG02_epg_confirmation_setting" /> <include name="tc_BCEPGHPG01_epg_cancel_setting" 
+		/> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" /> <include 
+		name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> <include name="tc_BCEPGHPG09_epg_scenior_font_geel" 
+		/> <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> <include 
+		name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" 
+		/> <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> <include name="tc_BCEPGHPG015_epg_strak_font_geel" 
+		/> <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" 
+		/> <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> <include name="tc_BCEPGHPG07_epg_customize_color_patterns" 
+		/> </methods> </class> </classes> </test> <test name="PIP Test cases "> <classes> 
+		<class name="com.rsystems.test.PIPTestCases"> <methods> <include name="tc_BCPIPHPG01_pip_confirmation_setting_links" 
+		/> <include name="tc_BCPIPHPG04_pip_position_links_all_screen" /> <include 
+		name="tc_BCPIPHPG05_pip_position_links_Menu_Zap_MiniEPG_Screen" /> <include 
+		name="tc_pip_001_pip_setting_ui" /> </methods> </class> </classes> </test> -->
 
 	<!-- Second sprint(30_6_2017) Test case -->
 
@@ -82,7 +60,7 @@
 		<classes>
 			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
-				<include name="tc_BCDTVHP0801_epg_hot_key" />
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
 					<include name="tc_EPG_Past_Program_Options" />
 					<include name="tc_EPG_Up_Down_Navigation" />
 					<include name="tc_EPG_Gradient_of_Focused_Cell" />
@@ -94,12 +72,27 @@
 					<include name="tc_EPG_Focus_On_Current_Time" />
 					<include name="tc_EPG_Numeric_Navigation" />
 					<include name="tc_EPG_Ongoing_Program_Options" />
+					<include name="tc_EPG003_EPG_Non_Focused_Program_Cell_Details" />
+					<include name="tc_EPG006_EPG_Channel_List_Cell_Details" />
+					<include name="tc_EPG015_EPG_Current_Recording" />
+					<include name="tc_EPG012_EPG_Breadcrumb" />
+					<include name="tc_EPG030_EPG_TV_filter_layer" />
+					<include name="tc_EPG002_EPG_Focused_Program_Cell_Details" />
+					<include name="tc_EPG_Day_Navigator_Details" />
+					<include name="tc_EPG_Program_description" />
+					<include name="tc_EPG_Mini_EPG" />
+					<include name="tc_EPG_Genre" />
+					<include name="tc_EPG001_EPG_Currently_Tuned_Focused_Program" />
+					<include name="tc_EPG022_EPG_Program_title" />
+					<include name="tc_EPG019_EPG_FR_Language_Day" />
+					<include name="tc_EPG020_EPG_NL_Language_Day" />
+					<include name="tc_EPG004_Focused_Program_Info_Details" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-	
-	
+
+
 	<test name="Hub Test cases ">
 		<classes>
 			<class name="com.rsystems.test.HubTestCases">
