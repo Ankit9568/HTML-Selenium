@@ -194,7 +194,7 @@
 					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
 					<include name="tc_Pause_LiveTV_PLTV_pause" />
 					<include name="tc_HDD_Less_Timeshifting" />
-					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+					
 				</methods>
 			</class>
 		</classes>

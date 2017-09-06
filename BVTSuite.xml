@@ -216,6 +216,7 @@
 					<include name="tc_Single_Asset_Variant_Group_Purchase" />
 					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
 					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
+<!-- 					<include name="pause_LiveTV_PLTV_ExceedingBuffer" /> -->
 				</methods>
 			</class>
 		</classes>

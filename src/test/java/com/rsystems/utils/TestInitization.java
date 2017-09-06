@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -35,7 +36,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.ISuiteResult;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
@@ -596,7 +596,7 @@ public class TestInitization {
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
 		}
-
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.navigate().to(url);
 
 	}

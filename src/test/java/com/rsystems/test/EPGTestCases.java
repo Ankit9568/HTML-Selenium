@@ -17,8 +17,6 @@ import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
-import gherkin.lexer.Fa;
-
 public class EPGTestCases extends TestInitization {
 
 	/**
@@ -1036,7 +1034,7 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 *  Test case validate EPG _Focused_Program_Cell_Details
+	 *             Test case validate EPG _Focused_Program_Cell_Details
 	 */
 	@Test
 	public void tc_EPG002_EPG_Focused_Program_Cell_Details() throws InterruptedException {
@@ -1053,7 +1051,7 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 * Test case validate EPG_Day_Navigator_Details
+	 *             Test case validate EPG_Day_Navigator_Details
 	 */
 	@Test
 	public void tc_EPG_Day_Navigator_Details() throws InterruptedException {
@@ -1072,9 +1070,9 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 * Test case validate the EPG_Program_description
+	 *             Test case validate the EPG_Program_description
 	 */
-	
+
 	@Test
 	public void tc_EPG_Program_description() throws InterruptedException {
 
@@ -1095,45 +1093,45 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+
 	/**
 	 * 
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 * Test case validate the EPG_Mini_EPG
+	 *             Test case validate the EPG_Mini_EPG
 	 */
-	
+
 	@Test
-	public void tc_EPG_Mini_EPG() throws InterruptedException{
-			
+	public void tc_EPG_Mini_EPG() throws InterruptedException {
+
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
 		EpgScreen epgScreen = new EpgScreen(driver);
 		dtvChannelScreen.openLiveTV();
-		
+
 		reports.log(LogStatus.PASS, "Navigate to Mini EPG");
 		sendKeySequence("RIGHT", 1000, "televisie");
-		
+
 		reports.log(LogStatus.PASS, "Navigate to tv-gids");
 		miniEPGScreen.validateFirstOrRightTile("RIGHT", "tv-gids", 30);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		reports.log(LogStatus.PASS, "Navigate to EPG");
 		sendKeySequence("ENTER", 3000, "televisie");
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgScreen.displayChannelDescription, "Current program description ");
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @author Ankit.Agarwal1
 	 * @throws InterruptedException
-	 * Test case validate the EPG_Genre
+	 *             Test case validate the EPG_Genre
 	 */
 	@Test
-	public void tc_EPG_Genre() throws InterruptedException{
-		
-		
+	public void tc_EPG_Genre() throws InterruptedException {
+
 		EpgScreen epgScreen = new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
@@ -1144,7 +1142,7 @@ public class EPGTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		if (epgScreen.channelGenere.getText().contentEquals(currentPrgDesc)) {
 			FailTestCase("Program genre is not updated");
 		} else {
@@ -1152,126 +1150,179 @@ public class EPGTestCases extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to verify non focused program cell details
+	 *             Test cases is used to verify non focused program cell details
 	 */
 	@Test
-	public void tc_EPG003_EPG_Non_Focused_Program_Cell_Details() throws InterruptedException{
+	public void tc_EPG003_EPG_Non_Focused_Program_Cell_Details() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validateNonFocussedProgramCellDetails();
 	}
-	
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to verify channel list cell details
+	 *             Test cases is used to verify channel list cell details
 	 */
 	@Test
-	public void tc_EPG006_EPG_Channel_List_Cell_Details() throws InterruptedException{
+	public void tc_EPG006_EPG_Channel_List_Cell_Details() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validaeEPGChannelCellDetails();
 	}
-	
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to start and verify recording icon on EPG Screen
+	 *             Test cases is used to start and verify recording icon on EPG
+	 *             Screen
 	 */
 	@Test
-	public void tc_EPG015_EPG_Current_Recording() throws InterruptedException{
+	public void tc_EPG015_EPG_Current_Recording() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validateRecordingOnEPG();
 	}
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to verify breadcumb position on EPG Screen
+	 *             Test cases is used to verify breadcumb position on EPG Screen
 	 */
 	@Test
-	public void tc_EPG012_EPG_Breadcrumb() throws InterruptedException{
+	public void tc_EPG012_EPG_Breadcrumb() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validateBreadCumbOnEPG();
 	}
-	
+
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test cases is used to open EPG screen from TV Filter Layer
+	 *             Test cases is used to open EPG screen from TV Filter Layer
 	 */
 	@Test
-	public void tc_EPG030_EPG_TV_filter_layer() throws InterruptedException{
+	public void tc_EPG030_EPG_TV_filter_layer() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.validateEPGFromTVLayer();
 	}
 
-
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used to when pressing on TV Guide button, the start time of the time line is the current time
+	 *             Test cases is used to when pressing on TV Guide button, the
+	 *             start time of the time line is the current time
 	 */
 	@Test
-	public void tc_EPG001_EPG_Currently_Tuned_Focused_Program() throws InterruptedException{
+	public void tc_EPG001_EPG_Currently_Tuned_Focused_Program() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg001_EPG_Currently_Tuned_Focused_Program();
 	}
-	
 
-	
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used to Check the focused program info availablity over the area above EPG cells
+	 *             Test cases is used to Check the focused program info
+	 *             availablity over the area above EPG cells
 	 */
 	@Test
-	public void tc_EPG004_Focused_Program_Info_Details() throws InterruptedException{
+	public void tc_EPG004_Focused_Program_Info_Details() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg_Focused_Program_Info_Details();
 	}
-	
-	
 
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used toEPG should display. Program title should display above the time duration in Bold letter                                                           s
-      Program title get change according to the program.
+	 *             Test cases is used toEPG should display. Program title should
+	 *             display above the time duration in Bold letter s Program
+	 *             title get change according to the program.
 	 */
 	@Test
-	
-	public void tc_EPG022_EPG_Program_title() throws InterruptedException{
+
+	public void tc_EPG022_EPG_Program_title() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg_Program_title();
-		
-	}
-	
-	
-	/**
-	 * @author Pritam.Dutta
-	 * @throws InterruptedException
-	 * Test cases is used 1. change STB language  to FR . 2. Open EPG through RC and  Check the language of day.
-	 */
-	@Test
-	
-	public void tc_EPG019_EPG_FR_Language_Day() throws InterruptedException{
-		EpgScreen epgScreen = new EpgScreen(driver);
-		epgScreen.epg_FR_Language_Day();
-		
+
 	}
 
-	
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used 1. change STB language  to NL . 2. Open EPG through RC and  Check the language of day.
+	 *             Test cases is used 1. change STB language to FR . 2. Open EPG
+	 *             through RC and Check the language of day.
 	 */
 	@Test
-	
-	public void tc_EPG020_EPG_NL_Language_Day() throws InterruptedException{
+
+	public void tc_EPG019_EPG_FR_Language_Day() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_FR_Language_Day();
+
+	}
+
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 *             Test cases is used 1. change STB language to NL . 2. Open EPG
+	 *             through RC and Check the language of day.
+	 */
+	@Test
+	public void tc_EPG020_EPG_NL_Language_Day() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg_NL_Language_Day();
+
+	}
+
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
+
+	@Test
+	public void tc_EPG023_EPG_Program_Duration() throws InterruptedException {
+
+		EpgScreen epgScreen = new EpgScreen(driver);
+			
+		
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+
+		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getX();
+		int startTimeDuration = epgScreen.focusElementProgramTime.getLocation().getY();
+		int startYProgramDesc = epgScreen.displayChannelDescription.getLocation().getY();
+		String startProgramTime = epgScreen.displayChannelStartTime.getText();
+		if (startYProgramTitle < startTimeDuration && startTimeDuration < startYProgramDesc) {
+			reports.log(LogStatus.PASS, "Program duration is displayed between program title and program description ");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Program duration is not displayed between and program title and program description");
+		}
+		sendKeyMultipleTimes("RIGHT", 10, 1000);
+		if (startProgramTime.contentEquals(epgScreen.displayChannelStartTime.getText())) {
+			FailTestCase("Program duratio nis not updated after navigation in EPG");
+		} else {
+			reports.log(LogStatus.PASS, "Navigation og EPG is passed ");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	@Test
+	public void tc_EPG_Blacklist_Backprogram_faded() throws InterruptedException{
+		
+		EpgScreen epgScreen = new EpgScreen(driver);		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		
+		
+		
+	
+		dtvChannelScreen.navigateToPastProgramFromTVGuide(5);
+		String currentHighlightOpacity  = epgScreen.focusElemntInEpg.getCssValue("opacity");	
+		System.out.println(currentHighlightOpacity);
+		
+		
+		
+		
+		
 		
 	}
 }

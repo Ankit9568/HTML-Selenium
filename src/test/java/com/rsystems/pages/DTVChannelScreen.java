@@ -380,6 +380,53 @@ public class DTVChannelScreen extends TestInitization {
 
 	}
 
+	public String navigateToPastProgramFromTVGuide(int channelNumber) throws InterruptedException {
+
+		reports.log(LogStatus.PASS, "Open TV Guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		sendNumaricKeys(channelNumber);
+		// Wait for successfully navigate to given channel
+		Thread.sleep(5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		reports.log(LogStatus.PASS, "Navigate to Past Program");
+		EpgScreen epgScreen = new EpgScreen(driver);
+		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		System.out.println("Current Program Duration " + presentTmeStartTime);
+		int noOfTry = 20;
+		while (noOfTry > 0) {
+
+			driver.switchTo().frame(getCurrentFrameIndex());
+			System.out.println("Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
+			
+			if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))) {
+
+				try {
+					if (focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")) {
+						sendKeyMultipleTimes("LEFT", 1, 1000);
+						reports.log(LogStatus.PASS, "Navigate to Past Program");
+						reports.attachScreenshot(captureCurrentScreenshot());
+					}
+				} catch (NoSuchElementException e) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past program found " + new EpgScreen(driver).focusElemntInEpg.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+
+				}
+			} else {
+				sendKeyMultipleTimes("LEFT", 1, 1000);
+				reports.log(LogStatus.PASS, "Navigate to Past Program");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			noOfTry -= 1;
+		}
+
+		return epgScreen.focusElemntInEpg.getText();
+
+	}
+
 	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Open TV Guide");
@@ -413,7 +460,7 @@ public class DTVChannelScreen extends TestInitization {
 			sendKeyMultipleTimes("LEFT", 1, 1000);
 			reports.log(LogStatus.PASS, "Navigate to Past Program");
 			reports.attachScreenshot(captureCurrentScreenshot());
-			
+
 		}
 
 		return epgScreen.focusElemntInEpg.getText();
@@ -619,9 +666,7 @@ public class DTVChannelScreen extends TestInitization {
 
 		pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-		
-		
-		
+
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(programDetailsScreen, "Program Details Screen");

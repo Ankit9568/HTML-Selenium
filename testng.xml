@@ -37,11 +37,11 @@
 					<!-- <include name="tc_EPG_Focus_On_Current_Time" /> -->
 					<!-- <include name="tc_EPG_Numeric_Navigation" /> -->
 					<!-- <include name="tc_EPG_Ongoing_Program_Options" /> -->
-					<include name="tc_EPG002_EPG_Focused_Program_Cell_Details" />
-					<include name="tc_EPG_Day_Navigator_Details" />
-					<include name="tc_EPG_Program_description" />
-					<include name="tc_EPG_Mini_EPG" />
-					<include name="tc_EPG_Genre" />
+					<include name="tc_EPG_Blacklist_Backprogram_faded" />
+<!-- 					<include name="tc_EPG_Day_Navigator_Details" /> -->
+<!-- 					<include name="tc_EPG_Program_description" /> -->
+<!-- 					<include name="tc_EPG_Mini_EPG" /> -->
+<!-- 					<include name="tc_EPG_Genre" /> -->
 				</methods>
 			</class>
 		</classes>
