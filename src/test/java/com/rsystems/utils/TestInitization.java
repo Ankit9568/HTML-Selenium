@@ -459,8 +459,11 @@ public class TestInitization {
 			Actions action = new Actions(driver);
 
 			// Needs to switch home screen
+			System.out.println("Trying to switch to default content");
+			
 			driver.switchTo().defaultContent();
-
+			System.out.println("Default content switcg successfully.");
+			
 			while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
 					&& retryForHubScreen > 0) {
 				System.out.println("Trying to press page down");
@@ -596,7 +599,7 @@ public class TestInitization {
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
 		}
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.navigate().to(url);
 
 	}
