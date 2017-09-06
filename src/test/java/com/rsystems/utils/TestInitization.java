@@ -600,6 +600,7 @@ public class TestInitization {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(30,  TimeUnit.SECONDS);
 		driver.navigate().to(url);
 
 	}
