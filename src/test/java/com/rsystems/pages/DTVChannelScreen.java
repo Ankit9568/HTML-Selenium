@@ -184,6 +184,7 @@ public class DTVChannelScreen extends TestInitization {
 		/** Loop for find and rent movie */
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Select " + movieName);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -208,7 +209,7 @@ public class DTVChannelScreen extends TestInitization {
 		}
 
 		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 4000);
 
 	}
 
@@ -374,17 +375,19 @@ public class DTVChannelScreen extends TestInitization {
 
 		reports.log(LogStatus.PASS, "Navigate to watch movie");
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(new EpgScreen(driver).herstarten, "Restart button ");
-		sendKeyMultipleTimes("DOWN", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		// isDisplayed(new EpgScreen(driver).herstarten, "Restart button ");
+		// sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 4000);
 
 	}
 
 	public String navigateToPastProgramFromTVGuide(int channelNumber) throws InterruptedException {
 
+		openLiveTV();
+		tuneToChannel(channelNumber);
 		reports.log(LogStatus.PASS, "Open TV Guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
-		sendNumaricKeys(channelNumber);
+
 		// Wait for successfully navigate to given channel
 		Thread.sleep(5000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -392,13 +395,14 @@ public class DTVChannelScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		sendKeyMultipleTimes("LEFT", 2, 1000);
 		System.out.println("Current Program Duration " + presentTmeStartTime);
 		int noOfTry = 20;
 		while (noOfTry > 0) {
 
 			driver.switchTo().frame(getCurrentFrameIndex());
 			System.out.println("Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
-			
+
 			if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))) {
 
 				try {
@@ -473,7 +477,9 @@ public class DTVChannelScreen extends TestInitization {
 
 		int maxcount = 20;
 		while (maxcount > 0) {
-			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())
+					|| vodFeatures.topMovieHeading.getAttribute("innerText").trim()
+							.equalsIgnoreCase(foundMovieName.trim())) {
 				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				return;
@@ -485,7 +491,9 @@ public class DTVChannelScreen extends TestInitization {
 
 		maxcount = 20;
 		while (maxcount > 0) {
-			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())) {
+			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())
+					|| vodFeatures.topMovieHeading.getAttribute("innerText").trim()
+							.equalsIgnoreCase(foundMovieName.trim())) {
 				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				return;

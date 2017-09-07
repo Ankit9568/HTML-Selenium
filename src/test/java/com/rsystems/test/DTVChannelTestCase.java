@@ -377,10 +377,10 @@ public class DTVChannelTestCase extends TestInitization {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
-		 // change to CUTV channel 
-		dtvChannelScreen.tuneToChannel(Integer.parseInt(
-				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
-		
+		// change to CUTV channel
+		dtvChannelScreen.tuneToChannel(
+				Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+
 		dtvChannelScreen.pressPauseButtonAndValidation();
 
 		Thread.sleep(3660000);
@@ -426,7 +426,7 @@ public class DTVChannelTestCase extends TestInitization {
 			dtvScreen.errorMsgValidation(Unicode.VK_BACKWARD.toString(),
 					TestInitization.getExcelKeyValue("ErrorMessages", "PLTV_Lock_Error_Message", "Value"));
 		} finally {
-			
+
 			System.out.println("Running finally code");
 			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV"));
 			stbApis.stbPackageAssign(new PackageInformation("Pause Live TV Free"));
@@ -521,7 +521,7 @@ public class DTVChannelTestCase extends TestInitization {
 
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
-		
+
 		dtvChannelScreen.openLiveTV();
 		dtvChannelScreen.tuneToChannel(Integer.parseInt(
 				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
@@ -573,7 +573,13 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
 
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-
+		// Navigate to move Category
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		
 		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"),
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
@@ -581,7 +587,7 @@ public class DTVChannelTestCase extends TestInitization {
 		// highlight the VOD3
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-		
+
 		// validate the PIN container is displayed
 		isDisplayed(vodFeatures.pinContainer, "Pin Container");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
@@ -653,7 +659,7 @@ public class DTVChannelTestCase extends TestInitization {
 		} else {
 			FailTestCase("Sorting criteria does not found in left side on page");
 		}
-		String popularMovieName =dtvChannelScreen.getMovieNameForSpecificCategory(
+		String popularMovieName = dtvChannelScreen.getMovieNameForSpecificCategory(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"));
 
 		dtvChannelScreen.changeSortingOptionAndValidation(
@@ -663,8 +669,6 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
 
-		
-				
 		dtvChannelScreen.changeSortingOptionAndValidation(
 				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
 				popularMovieName);
@@ -731,24 +735,24 @@ public class DTVChannelTestCase extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.verifyStartOverWatchStartedProgram();
 	}
-	
 
 	/**
-	 * @author Pritam.Dutta
-	 * This test cases is used to Press PAUSE while in LiveTV (test it with all possible background load, like: record on-going on another channel, load of a broker document, etc&.)
+	 * @author Pritam.Dutta This test cases is used to Press PAUSE while in
+	 *         LiveTV (test it with all possible background load, like: record
+	 *         on-going on another channel, load of a broker document, etc&.)
 	 * 
 	 * @throws InterruptedException
 	 */
 	@Test
-	public void tc_Pause_LiveTV_PLTV_pause() throws InterruptedException
-	{
+	public void tc_Pause_LiveTV_PLTV_pause() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.pause_LiveTV_PLTV_pause();
 	}
+
 	/**
-	 * @author Pritam.Dutta
-	 * This test cases is used to Check Timeshifting on hdd less STB.
-       Keep STB in timeshift mode for few hours and check how it performs.
+	 * @author Pritam.Dutta This test cases is used to Check Timeshifting on hdd
+	 *         less STB. Keep STB in timeshift mode for few hours and check how
+	 *         it performs.
 	 * 
 	 * @throws InterruptedException
 	 */
@@ -757,5 +761,20 @@ public class DTVChannelTestCase extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.hdd_Less_Timeshifting();
 	}
+	
+	@Test
+	public void tc_Single_Asset_Variant_Non_Grouped_Purchase() throws InterruptedException {
 
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		VodFeatures vodFeatures = new VodFeatures(driver);
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
+
+		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "PinNumber"));
+
+		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
+
+	}
 }

@@ -201,6 +201,9 @@ public class EpgScreen extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.focusedChannlDetails)
 	public WebElement focusedChannlDetails;
+
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.channelBar)
+	public WebElement ChannelbarInEpg;
 	
 	public void goToEpgSettingScreen() throws InterruptedException {
 

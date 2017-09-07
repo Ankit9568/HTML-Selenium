@@ -191,13 +191,15 @@ public class VodFeatures extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to PIN Screen");
 
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-
+		
+		
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(pinContainer, "Pin Container");
-
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
 		sendNumaricKeys(Integer.parseInt(pinNumber));
 		// for auto switch to next page
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		reports.log(LogStatus.PASS, "Navigate to Movie");
 		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -309,11 +311,6 @@ public class VodFeatures extends TestInitization {
 				reports.log(LogStatus.PASS, "Movie " + movieTitle + " found in Renterd Folder and play sucessfully");
 				reports.attachScreenshot(captureCurrentScreenshot());
 
-				// Navigate to move Category
-				dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-						TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
-						TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
-				sendKeyMultipleTimes("ENTER", 1, 1000);
 
 				return;
 			}

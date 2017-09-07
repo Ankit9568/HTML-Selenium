@@ -81,7 +81,8 @@ public class Hub extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.HubScreen.recordingMenu)
 	public WebElement recordingMenu;
-
+	
+	
 	public List<WebElement> hubMenuItems() {
 		/*
 		 * This function will check the different elements present on the screen
@@ -599,4 +600,6 @@ public class Hub extends TestInitization {
 		}
 
 	}
+
+	
 }

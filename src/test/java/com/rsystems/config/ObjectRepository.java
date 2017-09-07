@@ -93,6 +93,9 @@ public class ObjectRepository {
 		public static final String barIcon="//*[@id='channel-6']/section/div/div[2]/div[1]/span[3]/b";
 		public static final String lastIcon="//span[@id='groupIcon']/img[last()]";
 		public static final String focusedChannlDetails="//div[@class='channelsDetails']";
+		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";
+		
+	
 	}
 
 	public static class LibraryElements {
@@ -199,7 +202,8 @@ public class ObjectRepository {
 		public static final String storeFilter = "//section[@id='dMenuList']/ul/li[@id='menuItem_2']";
 		public static final String search = "//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
 		public static final String setting = "//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
-
+		public static final String assetLineList = "//ul[@id='dMinimizedSlider']/li";
+		
 	}
 
 	public static class MiniEPGScreen {

@@ -203,14 +203,14 @@ public class LibraryScreen extends TestInitization {
 				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 70px, 0px)")) {
 			level = "Level1";
 		} else if (upCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, -120px, 0px)")
-				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 288px, 0px)")) {
+				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 305px, 0px)")) {
 			level = "Level3";
 		}
 
 		return level;
 	}
 
-	public void verifyTwoLinesInLibraryScreen(String lineLevel) throws InterruptedException {
+	public void verifyTwoLinesInWithoutOpacityValidation(String lineLevel) throws InterruptedException {
 		driver.switchTo().defaultContent();
 		if (upCanvasLine.isDisplayed()) {
 			reports.log(LogStatus.PASS,
@@ -234,6 +234,12 @@ public class LibraryScreen extends TestInitization {
 		} else {
 			FailTestCase("Two Lines are not displayed at " + lineLevel);
 		}
+
+	}
+
+	public void verifyTwoLinesInLibraryScreen(String lineLevel) throws InterruptedException {
+	
+		verifyTwoLinesInWithoutOpacityValidation(lineLevel);
 		verifyOpactiyOfLines();
 	}
 

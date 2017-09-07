@@ -1,14 +1,21 @@
 package com.rsystems.test;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.rsystems.config.ObjectRepository;
+import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.Hub;
 import com.rsystems.pages.LibraryScreen;
 import com.rsystems.pages.StoreFilterLayer;
 import com.rsystems.pages.TvFilterLayer;
 import com.rsystems.pages.VodFeatures;
 import com.rsystems.utils.TestInitization;
+import com.rsystems.utils.Unicode;
 
 public class HubTestCases extends TestInitization {
 
@@ -26,8 +33,7 @@ public class HubTestCases extends TestInitization {
 
 	/**
 	 * This test case is used to verify Navigation in text line in Hub Screen
-	 * Created by Rahul Dhoundiyal
-	 * Reviewed by Nitin
+	 * Created by Rahul Dhoundiyal Reviewed by Nitin
 	 */
 	@Test
 	public void tc_HUB_Navigation_Text_Line() throws InterruptedException {
@@ -155,7 +161,7 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
-		
+
 		reports.log(LogStatus.PASS, "Navigate to shop screen");
 		sendKeySequence("DOWN,RIGHT,RIGHT,UP,ENTER", 1000,
 				TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
@@ -178,7 +184,7 @@ public class HubTestCases extends TestInitization {
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		VodFeatures vodFeatures = new VodFeatures(driver);
-		
+
 		reports.log(LogStatus.PASS, "Navigate to television screen");
 		sendKeySequence("ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -186,7 +192,7 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "LiveTV", "name_nl"));
-		
+
 		reports.log(LogStatus.PASS, "Navigate to library screen");
 		sendKeySequence("LEFT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -194,7 +200,7 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
-		
+
 		reports.log(LogStatus.PASS, "Navigate to shop screen");
 		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -202,9 +208,60 @@ public class HubTestCases extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
-		
+
 		reports.log(LogStatus.PASS, "Navigate to search screen");
 		sendKeySequence("RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
 		// Search button functionality not implemented
 	}
+
+
+	public void tc_Hub_No_stack_animation_for_Asset_line() throws InterruptedException {
+
+		// pending test case
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+
+		List<WebElement> assetLineItems = driver.findElements(By.xpath(ObjectRepository.HubScreen.assetLineList));
+
+		for (WebElement assetLineItem : assetLineItems) {
+
+			// int startX = assetLineItem.getLocation().x;
+			int startX = assetLineItem.findElement(By.xpath("./ul/li[1]")).getLocation().getX();
+			System.out.println("Staart x " + startX + "start Y " + assetLineItem.getLocation().y + "Width"
+					+ assetLineItem.getSize().getWidth());
+			int endX = startX + assetLineItem.getSize().getWidth();
+
+			System.out.println(assetLineItem.getText() + " StartX  " + startX + " End X" + endX);
+
+		}
+
+	}
+
+	@Test
+	public void tc_SF022_ACTION_MENU() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		LibraryScreen libraryScreen = new LibraryScreen(driver);
+		dtvChannelScreen.openLiveTV();
+
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		libraryScreen.verifyTwoLinesInWithoutOpacityValidation("Level3");
+
+		reports.log(LogStatus.PASS, "Navigate to Recording screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 4000);
+		sendKeySequence("ENTER", 1000, "mijn bibliotheek");
+		libraryScreen.verifyTwoLinesInWithoutOpacityValidation("Level3");
+
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		libraryScreen.verifyTwoLinesInWithoutOpacityValidation("Level3");
+
+		reports.log(LogStatus.PASS, "Navigate to Recording screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 4000);
+		sendKeySequence("LEFT,ENTER", 1000, "mijn bibliotheek");
+		libraryScreen.verifyTwoLinesInWithoutOpacityValidation("Level3");
+
+	}
+	
+	
 }

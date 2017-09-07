@@ -1,5 +1,6 @@
 package com.rsystems.test;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1282,13 +1283,14 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG023_EPG_Program_Duration() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
-			
 		
+		reports.log(LogStatus.PASS, "Navigate to Tv guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
 		driver.switchTo().frame(getCurrentFrameIndex());
 
-		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getX();
+		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getY();
 		int startTimeDuration = epgScreen.focusElementProgramTime.getLocation().getY();
 		int startYProgramDesc = epgScreen.displayChannelDescription.getLocation().getY();
 		String startProgramTime = epgScreen.displayChannelStartTime.getText();
@@ -1298,31 +1300,95 @@ public class EPGTestCases extends TestInitization {
 		} else {
 			FailTestCase("Program duration is not displayed between and program title and program description");
 		}
+		reports.log(LogStatus.PASS, "Navigation to another program");
 		sendKeyMultipleTimes("RIGHT", 10, 1000);
 		if (startProgramTime.contentEquals(epgScreen.displayChannelStartTime.getText())) {
-			FailTestCase("Program duratio nis not updated after navigation in EPG");
+			FailTestCase("Program duration is not updated after navigation in EPG");
 		} else {
-			reports.log(LogStatus.PASS, "Navigation og EPG is passed ");
+			reports.log(LogStatus.PASS, "Program duration has been updated after navigation in EPG.");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+
 	@Test
-	public void tc_EPG_Blacklist_Backprogram_faded() throws InterruptedException{
-		
-		EpgScreen epgScreen = new EpgScreen(driver);		
+	public void tc_EPG_Blacklist_Backprogram_faded() throws InterruptedException {
+
+		EpgScreen epgScreen = new EpgScreen(driver);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		
-		
-		
-	
-		dtvChannelScreen.navigateToPastProgramFromTVGuide(5);
-		String currentHighlightOpacity  = epgScreen.focusElemntInEpg.getCssValue("opacity");	
-		System.out.println(currentHighlightOpacity);
-		
-		
-		
-		
-		
-		
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(1);
+
+		dtvChannelScreen.navigateToPastProgramFromTVGuide(
+				Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_1", "Values")));
+		double currentHighlightOpacity = Double.parseDouble(epgScreen.focusElemntInEpg.getCssValue("opacity"));
+		String currentHighlightOpacityInDecimal = df.format(currentHighlightOpacity) + "";
+
+		if (currentHighlightOpacityInDecimal
+				.contentEquals(getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"))) {
+			reports.log(LogStatus.PASS,
+					"Opacity of program title in past program and non replyable program of CUTV Channel Actual Opacity : "
+							+ currentHighlightOpacityInDecimal + "and expected opacity "
+							+ getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase(
+					"Opacity of program title in past program and non replyable program of CUTV Channel are not matched. Actual Opacity : "
+							+ currentHighlightOpacityInDecimal + "and expected opacity "
+							+ getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"));
+		}
+
+		dtvChannelScreen.navigateToPastProgramFromTVGuide(
+				Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values")));
+		currentHighlightOpacity = Double.parseDouble(epgScreen.focusElemntInEpg.getCssValue("opacity"));
+		currentHighlightOpacityInDecimal = df.format(currentHighlightOpacity) + "";
+
+		if (currentHighlightOpacityInDecimal
+				.contentEquals(getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"))) {
+			reports.log(LogStatus.PASS,
+					"Opacity of program title in past program of non CUTV Channel Actual Opacity : "
+							+ currentHighlightOpacityInDecimal + "and expected opacity "
+							+ getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"));
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Opacity in past program in non CUTV Channel are not matched. Actual Opacity : "
+					+ currentHighlightOpacityInDecimal + "and expected opacity "
+					+ getExcelKeyValue("EpgScreen", "NonReplayChannelProgramInPast", "Opacity"));
+		}
+
 	}
+
+	@Test
+	public void tc_EPG_Channel_Bar_Navigation() throws InterruptedException {
+
+		EpgScreen epgScreen = new EpgScreen(driver);
+		reports.log(LogStatus.PASS, "Open EPG");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 3000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String channelBarPostionBeforeNavigation = epgScreen.ChannelbarInEpg.getCssValue("left");
+
+		reports.log(LogStatus.PASS, "Navigate to another program");
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		String channelBarPostionAfterNavigation = epgScreen.ChannelbarInEpg.getCssValue("left");
+
+		if (channelBarPostionAfterNavigation.contentEquals(channelBarPostionBeforeNavigation)) {
+			reports.log(LogStatus.PASS,
+					"Channel bar position is same after navigation. channel bar margin-left before navigation : "
+							+ channelBarPostionBeforeNavigation + " channel bar margin-left after navigation : "
+							+ channelBarPostionAfterNavigation);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase(
+					"Channel bar position is not same after navigation. channel bar margin-left before navigation : "
+							+ channelBarPostionBeforeNavigation + " channel bar margin-left after navigation : "
+							+ channelBarPostionAfterNavigation);
+		}
+	}
+
 }
