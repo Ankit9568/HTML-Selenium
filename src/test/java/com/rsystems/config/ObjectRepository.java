@@ -94,7 +94,7 @@ public class ObjectRepository {
 		public static final String lastIcon="//span[@id='groupIcon']/img[last()]";
 		public static final String focusedChannlDetails="//div[@class='channelsDetails']";
 		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";
-		
+		public static final String epgGroupIcon="//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
 	
 	}
 

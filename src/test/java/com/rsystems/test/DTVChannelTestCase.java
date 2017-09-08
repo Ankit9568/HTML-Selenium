@@ -777,4 +777,18 @@ public class DTVChannelTestCase extends TestInitization {
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
 
 	}
+
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to 'Go to any possible menu while Time shifting.
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_Pause_LiveTV_PLTV_interworking_with_menu() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.Pause_LiveTV_PLTV_interworking_with_menu();
+		
+	}
 }

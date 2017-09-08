@@ -1,6 +1,7 @@
 package com.rsystems.test;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1220,7 +1221,7 @@ public class EPGTestCases extends TestInitization {
 	@Test
 	public void tc_EPG001_EPG_Currently_Tuned_Focused_Program() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
-		epgScreen.epg001_EPG_Currently_Tuned_Focused_Program();
+		epgScreen.epg_Currently_Tuned_Focused_Program();
 	}
 
 	/**
@@ -1412,5 +1413,62 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG024_EPG_Program_description() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyProgramDescription();
+	}
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used 1) Open EPG. 2) Verify the icons in the grid view
+	 */
+	@Test
+	
+	public void tc_EPG_Grid_view_icons() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_Grid_view_icons();
+		
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used 1. Select a future program and press OK. 2. Press"Record "
+	 */
+	@Test
+	
+	public void tc_EPG016_EPG_Schedule_recording() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.epg_Schedule_recording();
+		
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used Step1-Ensure the EPG will scroll ahead seven days (Or as far ahead as data has been provided) using FFW key.
+	 * Step2-Ensure the EPG will scroll back two days (Or as far ahead as data has been provided) using REW key.
+	 */
+	@Test
+	
+	public void tc_392_EPG_Navigation_Till_Available_Days() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.EPG_Navigation_Till_Available_Days();
+		
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used Check that time in EPG page, parameter page, info banner, menu page, is correct.
+	 * @throws ParseException 
+	 */
+	@Test
+	
+	public void tc_356_TIME0202_UI() throws InterruptedException, ParseException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.TIME0202_UI();
+		
 	}
 }
