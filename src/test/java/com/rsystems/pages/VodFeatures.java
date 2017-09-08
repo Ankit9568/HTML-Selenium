@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -95,6 +96,9 @@ public class VodFeatures extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.StoreFilterLayer.dramaScreen)
 	public WebElement dramaScreen;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.continueWatchVideo)
+	public WebElement continueWatchVideo;
+	
 	public void naviagteToVideoOndemandScreen() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
@@ -167,13 +171,32 @@ public class VodFeatures extends TestInitization {
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(pinContainer, "Pin Container");
-
+		reports.log(LogStatus.PASS, "Enter pin number");
 		sendNumaricKeys(Integer.parseInt(pinNumber));
-		Thread.sleep(5000);
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
 		reports.attachScreenshot(captureCurrentScreenshot());
+		Thread.sleep(5000);
+		
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String vodText=continueWatchVideo.getText();
+		System.out.println(vodText);
+		if(continueWatchVideo.isDisplayed())
+		{
+			reports.log(LogStatus.PASS, "Press Enter to continue watch video");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		    TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+		
+		}
+		else
+		{
+		 driver.switchTo().frame(getCurrentFrameIndex());
+		 wait.until(ExpectedConditions.visibilityOf(continueWatchVideo));
+		 reports.log(LogStatus.PASS, "Press Enter to continue watch video");
+		 reports.attachScreenshot(captureCurrentScreenshot());
+		 TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+		}
 
 		dtvChannelScreen.pressForwardButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
 		reports.log(LogStatus.PASS, "Moving back to the Menu screen");

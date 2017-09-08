@@ -266,6 +266,7 @@ public class ObjectRepository {
 		public static final String topMovieHeading = "flavour-title";
 		public static final String filmsCategoryPoster = "//ul[@id='focusedItemContainer']/li[2]/img";
 		public static final String leafPoster = "//*[@id='dItemImageHalf_00']";
+		public static final String continueWatchVideo="//*[@id='rightContainer']/div[@class='rentSuccess']/div";
 	}
 
 	public static class HotKeys {

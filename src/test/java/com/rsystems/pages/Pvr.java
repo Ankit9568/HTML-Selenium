@@ -436,15 +436,16 @@ public class Pvr extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
 		Thread.sleep(10000);
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 3000);
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 		dtv.pressRewindButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 		dtv.pressForwardButtonAndValidation();
 		dtv.pressPauseButtonAndValidation();
 		dtv.pressPlayButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 1000);
 		try {
 			if (playerBar.isDisplayed()) {
-				FailTestCase("Recording button is highlighted");
+				reports.log(LogStatus.PASS, "Recording button is highlighted");
 			}
 
 			else {
@@ -588,11 +589,10 @@ public class Pvr extends TestInitization {
 	}
 
 	public void TP005_DTV_Trick_playmenufromFullscreen_TV() throws InterruptedException {
-
 		DTVChannelScreen dtv = new DTVChannelScreen(driver);
 		Pvr pvr = new Pvr(driver);
 		dtv.openLiveTV();
-		sendNumaricKeys(4);
+		sendNumaricKeys(16);
 		// Forwarding video should not happen anything
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -611,6 +611,9 @@ public class Pvr extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 
+		Thread.sleep(8000);
+		
+		
 		// rewind & validate
 		dtv.pressRewindButtonAndValidation();
 
