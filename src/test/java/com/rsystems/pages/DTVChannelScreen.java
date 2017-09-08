@@ -76,6 +76,9 @@ public class DTVChannelScreen extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.DtvChannel.enablePausePlayButton)
 	public WebElement enablePausePlayButton;
 
+	@FindBy(how = How.CLASS_NAME,using = ObjectRepository.RecordingElements.activeMenuItemElement)
+	public WebElement activeInfoMenuItem;
+	
 	public void chnlChangeAndValidation(Unicode unicode, String expectedUpChannelNumber, String passmsg)
 			throws InterruptedException {
 
@@ -449,8 +452,10 @@ public class DTVChannelScreen extends TestInitization {
 				System.out.println(
 						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
 				System.out.println(focusElementcutvIcon.getAttribute("src"));
+				 String focustText = new EpgScreen(driver).focusElemntInEpg.getText();
+				 String title = driver.findElement(By.xpath("//*[@id='title']")).getText();
 				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
-						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")) {
+						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png") && focustText.equalsIgnoreCase(title) ) {
 					System.out.println("Episode Found");
 					reports.log(LogStatus.PASS,
 							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
@@ -464,7 +469,7 @@ public class DTVChannelScreen extends TestInitization {
 			sendKeyMultipleTimes("LEFT", 1, 1000);
 			reports.log(LogStatus.PASS, "Navigate to Past Program");
 			reports.attachScreenshot(captureCurrentScreenshot());
-
+			
 		}
 
 		return epgScreen.focusElemntInEpg.getText();
@@ -626,360 +631,6 @@ public class DTVChannelScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		return rentMovie.currentSelectedMovieName.getText();
 
-	}
-
-	public void verifyBackToLiveOption() throws InterruptedException {
-		String cutvDisabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
-		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-		openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
-		tuneToChannel(Integer.parseInt(cutvDisabledNumber));
-		reports.log(LogStatus.PASS, "Navigate to TV Guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		// isDisplayed(epgGuide, "TV Guide");
-		sendNumaricKeys(Integer.parseInt(cutvEnabledNumber));
-		Thread.sleep(3000);
-		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String presentTmeStartTime = new EpgScreen(driver).focusElementProgramTime.getText();
-		System.out.println("Current Program Duration " + presentTmeStartTime);
-		reports.log(LogStatus.PASS, "Navigate and Start Over Past Replayable Program");
-		int noOfTry = 10;
-		while (noOfTry > 0) {
-			try {
-				driver.switchTo().frame(getCurrentFrameIndex());
-				System.out.println(
-						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
-				System.out.println(focusElementcutvIcon.getAttribute("src"));
-				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
-						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")) {
-					System.out.println("Episode Found");
-					reports.log(LogStatus.PASS,
-							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
-					reports.attachScreenshot(captureCurrentScreenshot());
-					break;
-				}
-			} catch (NoSuchElementException ex) {
-
-			}
-			noOfTry -= 1;
-			sendKeyMultipleTimes("LEFT", 1, 1000);
-		}
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-
-		sendKeyMultipleTimes("ENTER", 1, 3000);
-
-		pressPauseButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-
-		sendKeyMultipleTimes("ENTER", 1, 3000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		List<String> menuItemList = new ArrayList<String>();
-		for (WebElement we : actionItemList) {
-			menuItemList.add(we.getText());
-		}
-		if (menuItemList.contains("Terug naar leven")) {
-			reports.log(LogStatus.PASS, "Back To Live Option getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Back to Live Option should be getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-	}
-
-	public void verifyStartOverPastProgram() throws NumberFormatException, InterruptedException {
-		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-		openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
-		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
-		Thread.sleep(3000);
-		handlePopupIfExist();
-		navigateToPastReplaybleProgramFromTVGuide();
-		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
-		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		reports.log(LogStatus.PASS, "Start Watching Program");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		handlePopupIfExist();
-		driver.switchTo().frame(getCurrentFrameIndex());
-		Thread.sleep(4000);
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr = currentImgSource.split("/");
-		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Play button is now highlight on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-
-		else {
-			FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
-		}
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String infoEpisodeDuration = programDurationIn_Infobar.getText();
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String infoProgramTitle = programTitle.getText();
-		if (episodeName.equalsIgnoreCase(infoProgramTitle) && infoEpisodeDuration.equalsIgnoreCase(episodeDuration)) {
-			reports.log(LogStatus.PASS,
-					"Past Program Start playing successfully Expected Episode Name  - " + episodeName
-							+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - "
-							+ infoProgramTitle + " And Episode Duraion - " + infoEpisodeDuration);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Past Program Start not playing successfully Expected Episode Name  - " + episodeName
-					+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - " + infoProgramTitle
-					+ " And Episode Duraion - " + infoEpisodeDuration);
-			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-	}
-
-	public void verifyActionItemList() throws NumberFormatException, InterruptedException {
-		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-		openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
-		tuneToChannel(Integer.parseInt(cutvChannelNumber));
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("programCUTV")).getAttribute("src").contains("cutv-icon.png")) {
-			reports.log(LogStatus.PASS, "Tune To CUTV Channel " + cutvChannelNumber);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not Tuned to CUTV Channel");
-		}
-		reports.log(LogStatus.PASS, "Open TV Guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgGuide, "TV Guide");
-		reports.log(LogStatus.PASS,
-				"Verify Action Items of Current Episode: Expected - herstarten should be displayed");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		if (actionMenuList().contains("herstarten")) {
-			reports.log(LogStatus.PASS, "Restart option getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Restart option should be displayed displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
-		reports.log(LogStatus.PASS,
-				"Verify Action Item List for Future Episode. Expected Output - Neither Watch nor Restart option getting displayed");
-		sendKeyMultipleTimes("RIGHT", 3, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Future Program Details Screeen");
-		if (!(actionMenuList().contains("kijken") || actionMenuList().contains("herstarten"))) {
-			reports.log(LogStatus.PASS, "Neither Restart nor Watch option getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Restart or watch option should not be displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
-		reports.log(LogStatus.PASS,
-				"Verify Past Program Action List. Expected Output - kijken should be present in action item list");
-		sendKeyMultipleTimes("LEFT", 6, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (actionMenuList().contains("kijken")) {
-			reports.log(LogStatus.PASS, "Watch option getting displayed for past program");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			System.out.println("Program Started");
-			sendKeyMultipleTimes("ENTER", 1, 1000);
-		} else {
-			FailTestCase("Watch Option should be displayed as part of action Item List");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
-		navigateToAlreadyStartedPastProgram(episodeDuration);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
-			reports.log(LogStatus.PASS, "Resume option getting displayed for past program");
-			reports.attachScreenshot(captureCurrentScreenshot());
-			sendKeyMultipleTimes("ENTER", 1, 1000);
-		} else {
-			FailTestCase("Resume option should be displayed as part of action Item List");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-	}
-
-	private List<String> actionMenuList() {
-		List<String> actionMenuList = new ArrayList<String>();
-		for (WebElement we : actionItemList) {
-			actionMenuList.add(we.getText());
-		}
-		return actionMenuList;
-	}
-
-	public void navigateToAlreadyStartedPastProgram(String episodeDuration) throws InterruptedException {
-		reports.log(LogStatus.PASS, "Navigate to TV Guide");
-		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
-		handlePopupIfExist();
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		handlePopupIfExist();
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgGuide, "TV Guide");
-		int noOfTry = 20;
-		while (noOfTry > 0) {
-			driver.switchTo().frame(getCurrentFrameIndex());
-			if (new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(episodeDuration)) {
-				break;
-
-			}
-			noOfTry -= 1;
-			sendKeyMultipleTimes("LEFT", 1, 1000);
-		}
-	}
-
-	public void verifyBackToLiveOptionOnSameChannel() throws NumberFormatException, InterruptedException {
-		boolean backToLiveFound = false;
-		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-		openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
-		tuneToChannel(Integer.parseInt(cutvEnabledNumber));
-		Thread.sleep(3000);
-		reports.log(LogStatus.PASS, "Go to TV - Guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		handlePopupIfExist();
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgGuide, "TV Guide");
-		String liveEpisodeName = new EpgScreen(driver).focusElemntInEpg.getText();
-		String liveEpisodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
-		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
-		navigateToPastReplaybleProgramFromTVGuide();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		reports.log(LogStatus.PASS, "Start Watching Video");
-		sendKeyMultipleTimes("ENTER", 1, 5000);
-		handlePopupIfExist();
-		pressPauseButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-		sendKeyMultipleTimes("ENTER", 1, 3000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		reports.log(LogStatus.PASS, "Click on Back To Live Option");
-		for (int i = 0; i < actionMenuList().size() - 1; i++) {
-			if (actionMenuList().get(i).equalsIgnoreCase("Terug naar leven")) {
-				reports.log(LogStatus.PASS, "Back to Live Option found");
-				reports.attachScreenshot(captureCurrentScreenshot());
-				backToLiveFound = true;
-				sendKeyMultipleTimes("ENTER", 1, 1000);
-				break;
-			}
-			sendKeyMultipleTimes("DOWN", 1, 1000);
-		}
-		if (backToLiveFound) {
-			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String episode = programDurationIn_Infobar.getText();
-			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String infoProgramTitle = programTitle.getText();
-			if (liveEpisodeName.equalsIgnoreCase(episode) && infoProgramTitle.equalsIgnoreCase(liveEpisodeDuration)) {
-				reports.log(LogStatus.PASS, "Live Video is playing successfully");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			} else {
-				FailTestCase("Live Video is not playing successfully");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-		} else {
-			FailTestCase("Back To Live Option is not present");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-	}
-
-	public void verifyStartOverWatchStartedProgram() throws NumberFormatException, InterruptedException {
-		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-		openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
-		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
-		Thread.sleep(2000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		try {
-			if (new MiniEPGScreen(driver).notificationMsg.isDisplayed()) {
-				sendKeyMultipleTimes("ENTER", 1, 1000);
-				sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
-				Thread.sleep(3000);
-			}
-		} catch (NoSuchElementException e) {
-		}
-		navigateToPastReplaybleProgramFromTVGuide();
-		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
-		sendKeyMultipleTimes("ENTER", 1, 2000);
-		sendKeyMultipleTimes("ENTER", 1, 2000);
-		navigateToAlreadyStartedPastProgram(episodeDuration);
-		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(programDetailsScreen, "Program Details Screen");
-		sendKeyMultipleTimes("ENTER", 1, 3000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (!driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
-			FailTestCase("Resume option should be dispalyed for already watched past program");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			sendKeyMultipleTimes("ENTER", 1, 1000);
-			Thread.sleep(2000);
-			sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
-			reports.attachScreenshot(captureCurrentScreenshot());
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
-			String[] currentImgToArr = currentImgSource.split("/");
-			String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-			if (imageName.equalsIgnoreCase(
-					TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-				reports.log(LogStatus.PASS, "Play button is now highlight on webpage");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-
-			else {
-				FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
-			}
-			sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
-			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String episode = programDurationIn_Infobar.getText();
-			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			String infoProgramTitle = programTitle.getText();
-			if (episodeName.equalsIgnoreCase(episode) && infoProgramTitle.equalsIgnoreCase(episodeDuration)) {
-				reports.log(LogStatus.PASS, "Past Program Start playing successfully");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			} else {
-				FailTestCase("Past Program not playing successfully");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			}
-		}
 	}
 
 	public void navigateToFilmScreenVerifyPoster(String postername) throws InterruptedException {
@@ -1168,6 +819,378 @@ public class DTVChannelScreen extends TestInitization {
 
 		pressRewindButtonAndValidation();
 		pressForwardButtonAndValidation();
+	}
+
+	
+	
+	/*** Updated Functions ****/
+	public void verifyBackToLiveOption() throws InterruptedException {
+		String cutvDisabledNumber = getExcelKeyValue("DTVChannel", "CUTVDisabledChannel", "Values");
+		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvDisabledNumber));
+		Thread.sleep(2000);
+		reports.log(LogStatus.PASS, "Navigate to TV Guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		// isDisplayed(epgGuide, "TV Guide");
+		sendNumaricKeys(Integer.parseInt(cutvEnabledNumber));
+		Thread.sleep(6000);
+		reports.log(LogStatus.PASS, "Navigate to CUTV Enabled Channel");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		EpgScreen epgScreen = new EpgScreen(driver);
+		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		System.out.println("Current Program Duration " + presentTmeStartTime);
+		int noOfTry = 30;
+		while (noOfTry > 0) {
+			try {
+				driver.switchTo().frame(getCurrentFrameIndex());
+				System.out.println(
+						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
+				System.out.println(focusElementcutvIcon.getAttribute("src"));
+				String focustText = new EpgScreen(driver).focusElemntInEpg.getText();
+				String title = driver.findElement(By.xpath("//*[@id='title']")).getText();
+				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
+						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png") && focustText.equalsIgnoreCase(title)) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+				}
+			} catch (NoSuchElementException ex) {
+
+			}
+			noOfTry -= 1;
+			sendKeyMultipleTimes("LEFT", 1, 1000);
+			reports.log(LogStatus.PASS, "Navigate to Past Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
+		}
+		
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try{
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		}
+		catch(NoSuchElementException ex){}
+		Thread.sleep(2000);
+		pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		List<String> menuItemList = new ArrayList<String>();
+		for (WebElement we : actionItemList) {
+			menuItemList.add(we.getText());
+		}
+		if (menuItemList.contains("terug naar Live")) {
+			reports.log(LogStatus.PASS, "Back To Live Option getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Back to Live Option should be getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+	
+	public void verifyStartOverPastProgram() throws NumberFormatException, InterruptedException {
+		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		Thread.sleep(3000);
+		handlePopupIfExist();
+		navigateToPastReplaybleProgramFromTVGuide();
+		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
+		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Start Watching Program");
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try{
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		}
+		catch(NoSuchElementException ex){}
+		driver.switchTo().frame(getCurrentFrameIndex());
+		Thread.sleep(4000);
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		if (imageName
+				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+			reports.log(LogStatus.PASS, "Play button is now highlight on webpage");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String infoEpisodeDuration = programDurationIn_Infobar.getText();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String infoProgramTitle = programTitle.getText();
+		if (episodeName.equalsIgnoreCase(infoProgramTitle) && infoEpisodeDuration.equalsIgnoreCase(episodeDuration)) {
+			reports.log(LogStatus.PASS,
+					"Past Program Start playing successfully Expected Episode Name  - " + episodeName
+							+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - "
+							+ infoProgramTitle + " And Episode Duraion - " + infoEpisodeDuration);
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Past Program Start not playing successfully Expected Episode Name  - " + episodeName
+					+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - " + infoProgramTitle
+					+ " And Episode Duraion - " + infoEpisodeDuration);
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+
+	public void verifyBackToLiveOptionOnSameChannel() throws NumberFormatException, InterruptedException {
+		boolean backToLiveFound = false;
+		String cutvEnabledNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvEnabledNumber));
+		Thread.sleep(3000);
+		reports.log(LogStatus.PASS, "Go to TV - Guide");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		handlePopupIfExist();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		String liveEpisodeName = new EpgScreen(driver).focusElemntInEpg.getText();
+		String liveEpisodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Start Watching Video");
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try{
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		}
+		catch(NoSuchElementException ex){}
+		pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Click on Back To Live Option");
+		List<WebElement> actionItemList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		for (int i = 0; i < actionItemList.size(); i++) {
+			if(activeInfoMenuItem.getText().equalsIgnoreCase("terug naar Live")){
+				backToLiveFound = true;
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 2000);
+			}
+		}
+		if (backToLiveFound) {
+			reports.log(LogStatus.PASS, "Back To Live Option Found");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Back To Live Option is not present");
+		}
+	}
+
+	public void verifyActionItemList() throws NumberFormatException, InterruptedException {
+		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		Thread.sleep(3000);
+		reports.log(LogStatus.PASS,
+				"Verify Past Program Action List. Expected Output - kijken should be present in action item list");
+		navigateToPastReplaybleProgramFromTVGuide();
+		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (actionMenuList().contains("kijken")) {
+			reports.log(LogStatus.PASS, "Watch option getting displayed for past program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+			System.out.println("Program Started");
+			sendKeyMultipleTimes("ENTER", 1, 5000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			try{
+				if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+					sendKeyMultipleTimes("RIGHT", 1, 3000);
+					sendKeyMultipleTimes("ENTER", 1, 3000);
+				}
+			}
+			catch(NoSuchElementException ex){}
+			
+		} else {
+			FailTestCase("Watch Option should be displayed as part of action Item List");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		navigateToAlreadyStartedPastProgram(Integer.parseInt(cutvChannelNumber),episodeDuration);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		sendKeyMultipleTimes("ENTER", 1, 4000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+			reports.log(LogStatus.PASS, "Resume option getting displayed for past program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+			sendKeyMultipleTimes("ENTER", 1, 5000);
+		} else {
+			FailTestCase("Resume option should be displayed as part of action Item List");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		//sendKeyMultipleTimes(keyname, numberoftimes, delaybetweemKeys);
+		reports.log(LogStatus.PASS,
+				"Verify Action Items of Current Episode: Expected - herstarten should be displayed");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
+		handlePopupIfExist();
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		if (actionMenuList().contains("herstarten")) {
+			reports.log(LogStatus.PASS, "Restart option getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Restart option should be displayed in current program action list");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+		reports.log(LogStatus.PASS,
+				"Verify Action Item List for Future Episode. Expected Output - Neither Watch nor Restart option getting displayed");
+		sendKeyMultipleTimes("RIGHT", 3, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Future Program Details Screeen");
+		if (!(actionMenuList().contains("kijken") || actionMenuList().contains("herstarten"))) {
+			reports.log(LogStatus.PASS, "Neither Restart nor Watch option getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Restart or watch option should not be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 1000);
+		
+	}
+	private List<String> actionMenuList() {
+		List<String> actionMenuList = new ArrayList<String>();
+		for (WebElement we : actionItemList) {
+			actionMenuList.add(we.getText());
+		}
+		return actionMenuList;
+	}
+
+	public void navigateToAlreadyStartedPastProgram(int channelNumber,String episodeDuration) throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate to TV Guide");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
+		handlePopupIfExist();
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		handlePopupIfExist();
+		sendNumaricKeys(channelNumber);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		int noOfTry = 20;
+		while (noOfTry > 0) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			String focustText = new EpgScreen(driver).focusElemntInEpg.getText();
+			 String title = driver.findElement(By.xpath("//*[@id='title']")).getText();
+			if (new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(episodeDuration) && focustText.equalsIgnoreCase(title)) {
+				Thread.sleep(2000);
+				System.out.println(new EpgScreen(driver).focusElementProgramTime.getText()+"found");
+				reports.log(LogStatus.PASS, "Already Started Watch Program Found - " +title + "Expected Episode Duration -"+episodeDuration );
+				reports.attachScreenshot(captureCurrentScreenshot());
+				break;
+
+			}
+			noOfTry -= 1;
+			sendKeyMultipleTimes("LEFT", 1, 3000);
+		}
+	}
+
+	public void verifyStartOverWatchStartedProgram() throws NumberFormatException, InterruptedException {
+		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+		openLiveTV();
+		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+		Thread.sleep(4000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (new MiniEPGScreen(driver).notificationMsg.isDisplayed()) {
+				sendKeyMultipleTimes("ENTER", 1, 1000);
+				sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
+				Thread.sleep(3000);
+			}
+		} catch (NoSuchElementException e) {
+		}
+		navigateToPastReplaybleProgramFromTVGuide();
+		String episodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try{
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		}
+		catch(NoSuchElementException ex){}
+		navigateToAlreadyStartedPastProgram(Integer.parseInt(cutvChannelNumber),episodeDuration);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String episodeName = new EpgScreen(driver).focusElemntInEpg.getText();
+		System.out.println(episodeName);
+		sendKeyMultipleTimes("ENTER", 1,3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		Thread.sleep(3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try{
+		if (!driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+			FailTestCase("Resume option should be dispalyed for already watched past program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			sendKeyMultipleTimes("ENTER", 1, 3000);
+			Thread.sleep(3000);
+			pressPauseButtonAndValidation();
+			sendKeyMultipleTimes("ENTER", 1, 3000);
+			sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 3, 0);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			String infoProgramTitle = programDurationIn_Infobar.getText();
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 3, 0);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			String episode = programTitle.getText();
+			System.out.println(episodeName + " " + episode + "  " + infoProgramTitle +" " + episodeDuration);
+			if (episodeName.equalsIgnoreCase(episode) && infoProgramTitle.equalsIgnoreCase(episodeDuration)) {
+				reports.log(LogStatus.PASS, "Past Program Start playing successfully");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			} else {
+				FailTestCase("Past Program not playing successfully");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+		}
+		}
+		catch(NoSuchElementException ex){}
 	}
 
 }

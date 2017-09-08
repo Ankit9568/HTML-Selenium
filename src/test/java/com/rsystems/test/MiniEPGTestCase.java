@@ -166,6 +166,7 @@ public class MiniEPGTestCase extends TestInitization {
 
 		try {
 			if (miniEpg.onGoingRecordingIcon.isDisplayed()) {
+				
 				FailTestCase(
 						"Recording icon is already visible on webpage.Try to remove ongoing recording from channel");
 			}
@@ -195,6 +196,7 @@ public class MiniEPGTestCase extends TestInitization {
 
 		try {
 			if (miniEpg.onGoingRecordingIcon.isDisplayed()) {
+								
 				FailTestCase(
 						"Recording icon is already visible on webpage.Try to remove ongoing recording from channel");
 			}

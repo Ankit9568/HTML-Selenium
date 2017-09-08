@@ -17,7 +17,6 @@ import com.rsystems.pages.EpgScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
-import com.sun.jna.platform.win32.WinDef.INT_PTR;
 
 public class EPGTestCases extends TestInitization {
 
