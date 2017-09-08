@@ -1,5 +1,8 @@
 package com.rsystems.pages;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -309,5 +312,140 @@ public class RcArrowKeys extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		
+	}
+	public void verifyBackKey() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Go to Hub Screen By pressing Menu Key");
+		new Hub(driver).launchAndVerifyMenuScreen();
+		reports.log(LogStatus.PASS, "Go to Shop Screen");
+		sendKeySequence("DOWN,RIGHT,ENTER", 1000, "shop");
+		reports.log(LogStatus.PASS,"Press Back Key");
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Hub Screen getting displayed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Hub Screen not displayed");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString() , 1	, 1000);
+		reports.log(LogStatus.PASS, "Go to Hub Screen By pressing Menu Key");
+		new Hub(driver).launchAndVerifyMenuScreen();
+		reports.log(LogStatus.PASS, "Go to Shop Screen");
+		sendKeySequence("DOWN,RIGHT,ENTER", 1000, "shop");
+		reports.log(LogStatus.PASS,"Press TV_GUIDE Key");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		reports.log(LogStatus.PASS,"Press Back Key");
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Hub Screen getting displayed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Hub Screen not displayed");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString() , 1	, 1000);
+		reports.log(LogStatus.PASS ,"Go to EPG Screen");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		sendNumaricKeys(3);
+		Thread.sleep(3000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).programDetailsScreen, "Program Details Screen");
+		reports.log(LogStatus.PASS, "Press kijken to watch episode");
+		sendKeyMultipleTimes("ENTER", 1, 4000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		reports.log(LogStatus.PASS,"Press Back Key");
+		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Hub Screen getting displayed");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Hub Screen not displayed");
+		}
+	}
+	
+	public void verifyRecordButton() throws InterruptedException {
+		
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> we = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		boolean found = false;
+		for (int i =0 ;i<we.size();i++)
+		{
+			if(we.get(i).getText().contains("stoppen"))
+			{
+				sendKeyMultipleTimes("ENTER", 2, 1000);
+				new DTVChannelScreen(driver).openLiveTV();
+				found = true;
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 1000);
+			}
+		}
+		if(!found)
+		{
+			sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
+			new DTVChannelScreen(driver).openLiveTV();
+		}
+		reports.log(LogStatus.PASS, "Press Record Button");
+		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).programDetailsScreen, "Program Details Screen");
+		
+		if(driver.findElement(By.xpath("//div[@class='dtv-info-ratings']/img[@id='recording']")).getAttribute("src").contains("ico_Ongoing_recording.png")){
+			reports.log(LogStatus.PASS, "Press Record Button - Recording Started Successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Press Record Button - Recording not started");
+		}
+		reports.log(LogStatus.PASS, "Go to EPG Screen");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		reports.log(LogStatus.PASS, "Press Record Key");
+		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 2000);
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "Press Record Key -  Nothing happned. TV Guide");
+		
+		reports.log(LogStatus.PASS, "Navigate to Library Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Library Screen not getting displayed");
+		}
+		reports.log(LogStatus.PASS, "Press Record Key");
+		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Press Record Key - Nothing happened Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Library Screen not getting displayed");
+		}
 	}
 }

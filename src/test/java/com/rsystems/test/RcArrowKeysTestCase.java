@@ -64,5 +64,25 @@ public class RcArrowKeysTestCase extends TestInitization {
 		RcArrowKeys rc = new RcArrowKeys(driver);
 		rc.verifyRCArrowKeysOnDTV();
 	}
-	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * Test cases is used to validate Record Button
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_RCU_Record_Button() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRecordButton();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * Test cases is used to validate BACK Key
+	 */
+	@Test
+	public void tc_RCU_BackKey() throws InterruptedException
+	{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyBackKey();
+		
+	}
 }

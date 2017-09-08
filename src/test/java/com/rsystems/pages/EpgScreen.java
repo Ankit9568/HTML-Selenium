@@ -2094,5 +2094,79 @@ public class EpgScreen extends TestInitization {
 		}
 
 	}
+	public void verifyForwardBackWardKey() throws InterruptedException {
+		goToEpgChannelScreen(true);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 4000);
+		Thread.sleep(3000);
+		if (dayNavigator.getText().contains("morgen")) {
+			reports.log(LogStatus.PASS, "Press FW Key - Day Changes in the grid");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press FW Key - Day not changed");
+		}
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 2, 4000);
+		Thread.sleep(3000);
+		System.out.println(dayNavigator.getText());
+		if (dayNavigator.getText().contains("gisteren")) {
+			reports.log(LogStatus.PASS, "Press REW Key - Day Changes in the grid");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Press REW Key - Day not changed");
+		}
+	}
 
+	public void verifyProgramDescription() throws InterruptedException {
+		goToEpgChannelScreen(true);
+		sendNumaricKeys(1);
+		Thread.sleep(3000);
+		System.out.println(programSummary.getLocation().y);
+		System.out.println(focusElementProgramTime.getLocation().y);
+		if(programSummary.getLocation().y > focusElementProgramTime.getLocation().y ){
+			reports.log(LogStatus.PASS, "Program Summary is present below Program Duration");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Program Summary should display below Program Duration");
+		}
+		reports.log(LogStatus.PASS, "Navigate RIGHT - LEFT in EPG");
+		String prevProgramSummary = programSummary.getText();
+		String programDuration = focusElementProgramTime.getText();
+		int iterator = 20;
+		while(iterator!=0)
+		{
+			if(programDuration.equalsIgnoreCase(focusElementProgramTime.getText()))
+			{
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+			}
+			else
+			{
+				break;
+			}
+			iterator--;
+		}
+		System.out.println(prevProgramSummary+ "====== "+ programSummary.getText());
+		Thread.sleep(3000);
+		if(!prevProgramSummary.equalsIgnoreCase(programSummary.getText())){
+			reports.log(LogStatus.PASS, "Press Right Key - Program Summary Getting updated.");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}else
+		{
+			FailTestCase("Program Summary not getting updated");
+		}
+		String currentProgramSummary = programSummary.getText();
+		sendKeyMultipleTimes("LEFT", 1, 5000);
+		System.out.println(currentProgramSummary+ "====== "+ programSummary.getText());
+		if(!currentProgramSummary.equalsIgnoreCase(programSummary.getText())){
+			reports.log(LogStatus.PASS, "Press LEFT Key - Program Summary Getting updated");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}else
+		{
+			FailTestCase("Program Summary not getting updated");
+		}
+		
+	}
 }
+

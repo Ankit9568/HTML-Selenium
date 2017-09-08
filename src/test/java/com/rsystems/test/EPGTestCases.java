@@ -17,6 +17,7 @@ import com.rsystems.pages.EpgScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
+import com.sun.jna.platform.win32.WinDef.INT_PTR;
 
 public class EPGTestCases extends TestInitization {
 
@@ -1139,6 +1140,9 @@ public class EPGTestCases extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("ActivateInfoBanner", "RadioChannel", "name_nl")));
+		Thread.sleep(5000);
+
 		String currentPrgDesc = epgScreen.channelGenere.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -1283,11 +1287,11 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG023_EPG_Program_Duration() throws InterruptedException {
 
 		EpgScreen epgScreen = new EpgScreen(driver);
-		
+
 		reports.log(LogStatus.PASS, "Navigate to Tv guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 
 		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getY();
@@ -1391,4 +1395,23 @@ public class EPGTestCases extends TestInitization {
 		}
 	}
 
+	/**
+	 * @author Rahul.Dhoundiyal Test cases is used to validate Forward and
+	 *         Reverse Key
+	 */
+	@Test
+	public void tc_EPG018_EPG_Day_Forward_key_Reverse_key() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verifyForwardBackWardKey();
+	}
+
+	/**
+	 * @author Rahul.Dhoundiyal Test cases is used to validate Program
+	 *         Description updated or not
+	 */
+	@Test
+	public void tc_EPG024_EPG_Program_description() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verifyProgramDescription();
+	}
 }

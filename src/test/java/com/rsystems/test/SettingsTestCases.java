@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.rsystems.pages.SettingScreen;
 import com.rsystems.utils.TestInitization;
 
 public class SettingsTestCases extends TestInitization {
@@ -39,6 +40,18 @@ public class SettingsTestCases extends TestInitization {
 			}
 			
 	
+		
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * Test cases is used to verify two lines in Settings Screen
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_SF009_Settings() throws InterruptedException{
+		
+		SettingScreen settingScreen = new SettingScreen(driver);
+		settingScreen.verifyLinesInSettingScreen();
 		
 	}
 }
