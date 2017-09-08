@@ -1333,7 +1333,7 @@ public class EpgScreen extends TestInitization {
 	}
 
 	public void dayNavigatorCssValidation() throws InterruptedException {
-		String actualStartY = dayNavigator.getLocation().getY() + "";
+		String actualStartY = (dayNavigator.getLocation().getY() + dayNavigator.getSize().height) + "";
 		String actualEndX = (dayNavigator.getLocation().getX() + dayNavigator.getSize().width) + "";
 		String actualFontFamily = dayNavigator.getCssValue("font-family");
 		String fontSize = dayNavigator.getCssValue("font-size");
