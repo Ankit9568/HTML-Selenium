@@ -43,7 +43,7 @@ public class ObjectRepository {
 		public static final String cutvIcon = "//span[@class='channel-cutv']";
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[contains(@class,'programLogo')]/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
-		public static final String focusElementProgramTiminig = "//*[@id='channel-6']/section/div/div[2]/div[@class='prog-time']";
+		public static final String focusElementProgramTiminig = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[contains(@class,'prog-time')]";
 		//public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
 		public static final String focusElementCUTVIcon = "//*[@id='groupIcon']/img[@class='cutvicon']";
 		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div[@class='focusProgram']";
@@ -85,12 +85,12 @@ public class ObjectRepository {
 		public static final String timeLineGradient="currentTimeLine";
 		public static final String epgPoster="poster";
 		public static final String epgTitleHighlightedProgram="title";
-		public static final String remainingTime="//*[@id='channel-6']/section/div/div[2]/div[1]/span[@class='remaining-time']";
-		public static final String titleGroup="//*[@id='channel-6']/section/div/div[2]/div[@class='title-group']";
+		public static final String remainingTime="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]";
+		public static final String titleGroup="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']";
 		public static final String programSummary="//*[@id='description']/div";
 		public static final String groupIconImage="//*[@id='groupIcon']/img";
 		public static final String groupIcon="groupIcon";
-		public static final String barIcon="//*[@id='channel-6']/section/div/div[2]/div[1]/span[3]/b";
+		public static final String barIcon="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]/b";
 		public static final String lastIcon="//span[@id='groupIcon']/img[last()]";
 		public static final String focusedChannlDetails="//div[@class='channelsDetails']";
 		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";

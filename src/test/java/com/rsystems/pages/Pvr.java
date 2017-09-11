@@ -111,37 +111,41 @@ public class Pvr extends TestInitization {
 
 	public void PvrPlayBackMenu() throws InterruptedException {
 
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		dtvChannelScreen.openLiveTV();
-		handlePopupIfExist();
-		episodeDetails = new DTVChannelScreen(driver).startRecording(
-				Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+        DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+        dtvChannelScreen.openLiveTV();
+        handlePopupIfExist();
+        episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 
-		navigateToThePVRPlayback(episodeDetails);
-		handlePopupIfExist();
+        navigateToThePVRPlayback(episodeDetails);
+        handlePopupIfExist();
 
-		dtvChannelScreen.pressForwardButtonAndValidation();
+        dtvChannelScreen.pressForwardButtonAndValidation();
 
-		dtvChannelScreen.pressRewindButtonAndValidation();
+        dtvChannelScreen.pressRewindButtonAndValidation();
 
-		dtvChannelScreen.pressForwardButtonAndValidation();
+        dtvChannelScreen.pressForwardButtonAndValidation();
 
-		dtvChannelScreen.pressPlayButtonAndValidation();
+        dtvChannelScreen.pressPlayButtonAndValidation();
 
-		dtvChannelScreen.pressPauseButtonAndValidation();
+        dtvChannelScreen.pressPauseButtonAndValidation();
 
-		reports.log(LogStatus.PASS, "Stop the Video Playback");
-		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+        reports.log(LogStatus.PASS, "Stop the Video Playback");
+        sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().defaultContent();
+        String libraryScreenTitle=screenTitle.getText();
+        if(libraryScreenTitle.equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
+        {
+              reports.log(LogStatus.PASS, "Successfully reached to the library screen");
+              reports.attachScreenshot(captureCurrentScreenshot());
+              
+        }
+        else
+        {
+              FailTestCase("Libary screen has not been reached");
+        }
+        
 
-		reports.log(LogStatus.PASS, "Returning to the Hub Menu");
-
-		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
-		EpgScreen epgScreen = new EpgScreen(driver);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgScreen.displayChannelDescription, "Channel Description");
 	}
 
 	public void PvrRcTrickPlay() throws InterruptedException {
