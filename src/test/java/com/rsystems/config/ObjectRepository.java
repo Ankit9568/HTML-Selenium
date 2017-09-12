@@ -23,6 +23,11 @@ public class ObjectRepository {
 	public static final String[] Test2 = { "mijn bibliotheek", "televisie", "shop", "search_active_bold.png",
 			"setting_active_bold.png" };
 
+	public static class unAssignStbScreen {
+		
+		public  static final String languageHeading = "//span[@class='left-txt']";
+	}
+
 	public static class EpgSettingScreen {
 		public static final String epgType = "epgType";
 		public static final String epgBackground = "epgBackground";
@@ -44,58 +49,57 @@ public class ObjectRepository {
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[contains(@class,'programLogo')]/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
 		public static final String focusElementProgramTiminig = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[contains(@class,'prog-time')]";
-		//public static final String focusElementCUTVIcon = "//li[@class = 'program focusProgram']/div/p[2]/span/img[1]";
+		// public static final String focusElementCUTVIcon = "//li[@class =
+		// 'program focusProgram']/div/p[2]/span/img[1]";
 		public static final String focusElementCUTVIcon = "//*[@id='groupIcon']/img[@class='cutvicon']";
 		public static final String epgFocussedCell = "//li[@class='program focusProgram']/div[@class='focusProgram']";
 		public static final String epgNonFocussedCell = "//li[@class='program']/div";
 		public static final String focousElementChannelNumber = "//li[@id='colCh0']/span/span[1]";
 		public static final String actionList = "//div[@id='containerDiv']/div[contains(@class,'cItem')]";
 		public static final String herstarten = "//div[(text()='herstarten')]";
-		public static final String focusedProgramTvguide="//li[@class='program focusProgram']";
-		public static final String focusedCurrentLineTvguide="currentTimeLine";
-		public static final String actionMenuItems="cVodInfoMenu";
-		
-		public static final String timeInFocousCell  = "//li[@class = 'program focusProgram']/div/p[@class='programTiming ']";
+		public static final String focusedProgramTvguide = "//li[@class='program focusProgram']";
+		public static final String focusedCurrentLineTvguide = "currentTimeLine";
+		public static final String actionMenuItems = "cVodInfoMenu";
+
+		public static final String timeInFocousCell = "//li[@class = 'program focusProgram']/div/p[@class='programTiming ']";
 		public static final String summryInFocousCell = "//li[@class = 'program focusProgram']/div/div[@class='programDescription']/div[1]";
-		
+
 		public static final String iconElementListInFocousCell = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
 		public static final String focousElementCell = "//li[@class = 'program focusProgram']/div[2]";
-		public static final String dayNavigator  = "dayHeading";
-		
+		public static final String dayNavigator = "dayHeading";
+
 		public static final String channelGenere = "category-detail";
-		
+
 		public static final String channelLogo = "//li[@id='colCh0']/div[@class='ch_logo']";
 		public static final String cutvChannelIcon = "//li[@id='colCh0']/span/span[2]";
-		public static final String nonFocussedCell = "//li[@class='program']/div[1]";	
+		public static final String nonFocussedCell = "//li[@class='program']/div[1]";
 		public static final String focussedCell = "//li[@class='program focusProgram']";
 		public static final String ChannelCells = "programChannels";
-		
+
 		public static final String nonFocussedProgramTitle = "//li[@class='program']/div/p[contains(@class,'programTitle')]";
 		public static final String programTimingInProgramCell = "//li[@class = 'program']/div/p[contains(@class,'programTiming ')]";
-		
-		
-	
+
 		public static final String timeInNonFocousCell = "//li[@class = 'program']/div/p[contains(@class,'programTiming')]";
 		public static final String summryInNonFocousCell = "//li[@class = 'program']/div/div[@class='programDescription']/div[1]";
 		public static final String iconElementListInNonFocousCell = "//li[@class='program']/div/span[@class='epggroupicon']/img";
-	
+
 		public static final String largeRecordingIcon = "//*[@id='groupIcon']/img[@id='recording']";
 		public static final String smallRecordingIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img[@class='recording']";
-	
-		public static final String timeLineGradient="currentTimeLine";
-		public static final String epgPoster="poster";
-		public static final String epgTitleHighlightedProgram="title";
-		public static final String remainingTime="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]";
-		public static final String titleGroup="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']";
-		public static final String programSummary="//*[@id='description']/div";
-		public static final String groupIconImage="//*[@id='groupIcon']/img";
-		public static final String groupIcon="groupIcon";
-		public static final String barIcon="//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]/b";
-		public static final String lastIcon="//span[@id='groupIcon']/img[last()]";
-		public static final String focusedChannlDetails="//div[@class='channelsDetails']";
+
+		public static final String timeLineGradient = "currentTimeLine";
+		public static final String epgPoster = "poster";
+		public static final String epgTitleHighlightedProgram = "title";
+		public static final String remainingTime = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]";
+		public static final String titleGroup = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']";
+		public static final String programSummary = "//*[@id='description']/div";
+		public static final String groupIconImage = "//*[@id='groupIcon']/img";
+		public static final String groupIcon = "groupIcon";
+		public static final String barIcon = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]/b";
+		public static final String lastIcon = "//span[@id='groupIcon']/img[last()]";
+		public static final String focusedChannlDetails = "//div[@class='channelsDetails']";
 		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";
-		public static final String epgGroupIcon="//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
-	
+		public static final String epgGroupIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
+
 	}
 
 	public static class LibraryElements {
@@ -203,7 +207,7 @@ public class ObjectRepository {
 		public static final String search = "//section[@id='dMenuList']/ul/li[@id='menuItem_3']";
 		public static final String setting = "//section[@id='dMenuList']/ul/li[@id='menuItem_4']";
 		public static final String assetLineList = "//ul[@id='dMinimizedSlider']/li";
-		
+
 	}
 
 	public static class MiniEPGScreen {
@@ -266,7 +270,7 @@ public class ObjectRepository {
 		public static final String topMovieHeading = "flavour-title";
 		public static final String filmsCategoryPoster = "//ul[@id='focusedItemContainer']/li[2]/img";
 		public static final String leafPoster = "//*[@id='dItemImageHalf_00']";
-		public static final String continueWatchVideo="//*[@id='rightContainer']/div[@class='rentSuccess']/div";
+		public static final String continueWatchVideo = "//*[@id='rightContainer']/div[@class='rentSuccess']/div";
 	}
 
 	public static class HotKeys {

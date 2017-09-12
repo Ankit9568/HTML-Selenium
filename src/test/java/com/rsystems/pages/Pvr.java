@@ -37,75 +37,72 @@ public class Pvr extends TestInitization {
 
 	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException {
 
-		// Start a recording
 
-		RecordingScreen record = new RecordingScreen(driver);
-		String recordingType = "SINGLE";
+        RecordingScreen record = new RecordingScreen(driver);
+        String recordingType = "SINGLE";
 
-		reports.log(LogStatus.PASS, "Navigate to Library Screen");
-		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
-		driver.switchTo().defaultContent();
-		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
-		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
-				.equalsIgnoreCase("mijn bibliotheek")) {
-			reports.log(LogStatus.PASS, "Library Screen getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Library Screen not getting displayed");
-		}
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
-			reports.log(LogStatus.PASS, "Recording List getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Recording List not getting displayed");
-		}
+        reports.log(LogStatus.PASS, "Navigate to Library Screen");
+        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+        driver.switchTo().defaultContent();
+        System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
+        if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+                    .equalsIgnoreCase("mijn bibliotheek")) {
+              reports.log(LogStatus.PASS, "Library Screen getting displayed");
+              reports.attachScreenshot(captureCurrentScreenshot());
+        } else {
+              FailTestCase("Library Screen not getting displayed");
+        }
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        driver.switchTo().frame(getCurrentFrameIndex());
+        if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
+              reports.log(LogStatus.PASS, "Recording List getting displayed");
+              reports.attachScreenshot(captureCurrentScreenshot());
+        } else {
+              FailTestCase("Recording List not getting displayed");
+        }
 
-		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-		int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
-		for (int i = 0; i < recordingSize; i++) {
+        driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+        int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
+        for (int i = 0; i < recordingSize; i++) {
 
-			if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType))) {
-				if (record.focusRecordingElement
-						.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording))
-						.getText().equalsIgnoreCase(episodeDetails.channelNo)
-						&& record.focusRecordingElement
-								.findElement(By
-										.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording))
-								.getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
-						&& record.focusRecordingElement
-								.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0)
-								.getAttribute("src").contains("ico_Ongoing_recording.png")) {
-					break;
-				} else {
-					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
-				}
-			} else {
-				TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
-			}
-		}
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+              if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+              {
+                    if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+                && record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName))
+                    {
+                          break;
+                    } 
+                    else 
+                    {
+                          TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+                    }
+                } 
+              else 
+              {
+                    TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+              }
+        }
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        sendKeyMultipleTimes("ENTER", 1, 1000);
 
-		reports.log(LogStatus.PASS, "PVR Playback video is playing");
-		Thread.sleep(3000);
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 3000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr = currentImgSource.split("/");
-		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Playback Video is playing.Play button is now highlight on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
+        reports.log(LogStatus.PASS, "PVR Playback video is playing");
+        Thread.sleep(3000);
+        sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 3000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().frame(getCurrentFrameIndex());
+        String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
+        String[] currentImgToArr = currentImgSource.split("/");
+        String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+        if (imageName
+                    .equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
+              reports.log(LogStatus.PASS, "Playback Video is playing.Play button is now highlight on webpage");
+              reports.attachScreenshot(captureCurrentScreenshot());
+        }
 
-		else {
-			FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
-		}
+        else {
+              FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
+        }
 
 	}
 

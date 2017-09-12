@@ -500,9 +500,11 @@ public class DTVChannelTestCase extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
-		isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
-
-		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+		try {
+			isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+		} finally {
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+		}
 	}
 
 	@Test
@@ -578,8 +580,7 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
 		sendKeyMultipleTimes("ENTER", 1, 1000);
-		
-		
+
 		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"),
 				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
@@ -761,7 +762,7 @@ public class DTVChannelTestCase extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.hdd_Less_Timeshifting();
 	}
-	
+
 	@Test
 	public void tc_Single_Asset_Variant_Non_Grouped_Purchase() throws InterruptedException {
 
@@ -779,16 +780,28 @@ public class DTVChannelTestCase extends TestInitization {
 	}
 
 	/**
-	 * @author Pritam.Dutta
-	 * This test cases is used to 'Go to any possible menu while Time shifting.
+	 * @author Pritam.Dutta This test cases is used to 'Go to any possible menu
+	 *         while Time shifting.
 	 * 
 	 * @throws InterruptedException
 	 */
 	@Test
-	public void tc_Pause_LiveTV_PLTV_interworking_with_menu() throws InterruptedException
-	{
+	public void tc_Pause_LiveTV_PLTV_interworking_with_menu() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.Pause_LiveTV_PLTV_interworking_with_menu();
+
+	}
+
+	/**
+	 * @author Ankit.Agarwal1
+	 * @throws Exception 
+	 * 
+	 */
+
+	@Test
+	public void tc_CUSUB0205_basic_premium_switch() throws Exception {
 		
+		tc_CUSUB0201_basic();
+		tc_CUSUB0202_premium();
 	}
 }

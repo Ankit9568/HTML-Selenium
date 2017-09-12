@@ -13,7 +13,7 @@ import com.rsystems.utils.Unicode;
 
 public class HotKeysNavigation extends TestInitization {
 
-	 WebDriver driver;
+	WebDriver driver;
 
 	public HotKeysNavigation(WebDriver driver) {
 		this.driver = driver;
@@ -48,24 +48,29 @@ public class HotKeysNavigation extends TestInitization {
 		epg.goToEpgChannelScreen(true);
 	}
 
-	public boolean navigateToRadioScreen() throws InterruptedException {
+	public void navigateToRadioScreen() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Returning to the Hub Screen");
 		TestInitization.setApplicationHubPage(2);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to the Radio Screen");
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 2, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel Number"); 
+		int radioChannel = Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
+		if (radioChannel == Integer.parseInt(getExcelKeyValue("DTVChannel", "RadioChannel", "Values"))) {
+			reports.log(LogStatus.PASS, "Radio channel Number : " + radioChannel + " has been reached ");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Radio channel Number : " + radioChannel + " has not been reached");
+
+		}
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		isDisplayed(dtvChannelScreen.programTitle, "Program Title");
-		return true;
+
 	}
 
 }

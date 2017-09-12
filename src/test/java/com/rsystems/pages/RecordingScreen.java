@@ -837,8 +837,8 @@ public class RecordingScreen extends TestInitization{
 		while(!stopRecording){
 			
 			driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty());
-			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/ico_Future_recording.png']")).isEmpty())
+			System.out.println(focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/future_recording_icon_small.png']")).isEmpty());
+			if (focusProgram.findElements(By.cssSelector(".epggroupicon img[src='./resources/common/images/future_recording_icon_small.png']")).isEmpty())
 			{
 				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -903,7 +903,12 @@ public class RecordingScreen extends TestInitization{
 	boolean verifyRecording = false;
 	moveToOngoingandCompletedRecordingList();
 	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-	int recordingSize = 15;
+	int recordingSize = Integer.parseInt(totalRecordingID.getText());
+	wait.until(ExpectedConditions.visibilityOf(totalRecordingID));
+	if(recordingSize > 15)
+	{
+		recordingSize = 15;
+	}
 	for(int i = 0 ; i< recordingSize;i++)
 	{
 		
@@ -912,12 +917,13 @@ public class RecordingScreen extends TestInitization{
 			if (focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
 			&&
 			focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
-			&&
-			focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0).getAttribute("src").contains("ico_Ongoing_recording.png")
-					)
+			)
 			{
-				verifyRecording = true;
-				break;
+				if(!focusRecordingElement.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).isEmpty())
+				{
+					verifyRecording = true;
+					break;
+				}
 			}
 			else
 			{
@@ -1003,9 +1009,16 @@ public class RecordingScreen extends TestInitization{
 		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
 		TestInitization.sendKeyMultipleTimes("ENTER",1,3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
+		int recordingSize = 0;
+		wait.until(ExpectedConditions.visibilityOf(totalRecordingID));
 		String recordingBeforeDelete = totalRecordingID.getText();
 		System.out.println("Recording List Before Delete :" +recordingBeforeDelete);
-		for (int i = 0; i< 15;i++)
+		recordingSize =  Integer.parseInt(recordingBeforeDelete);
+		if(Integer.parseInt(recordingBeforeDelete)>15)
+		{
+			recordingSize = 15;
+		}
+		for (int i = 0; i<recordingSize;i++)
 		{	
 			if (focusRecordingElement.findElements(By.cssSelector(ObjectRepository.RecordingElements.ongoingRecordingIconElement)).size()>0){
 				if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE"))

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
@@ -31,8 +32,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.CommandInfo;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.internal.ApacheHttpClient;
+import org.openqa.selenium.remote.internal.HttpClientFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -454,22 +459,22 @@ public class TestInitization {
 		System.out.println("Trying to set home page ");
 
 		if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
-			
+
 			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 2000);
 			sendNumaricKeys(1);
 			Thread.sleep(3000);
-			handlePopupIfExist(); 
-			
+			handlePopupIfExist();
+
 			sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 			int retryForHubScreen = 5;
 			Actions action = new Actions(driver);
 
 			// Needs to switch home screen
 			System.out.println("Trying to switch to default content");
-			
+
 			driver.switchTo().defaultContent();
 			System.out.println("Default content switcg successfully.");
-			
+
 			while (((driver.findElements(By.xpath("//iframe[contains(@id,'ScreenHolder')]")).size()) > 1)
 					&& retryForHubScreen > 0) {
 				System.out.println("Trying to press page down");
@@ -590,7 +595,17 @@ public class TestInitization {
 				stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
 			}
 
-			driver = new RemoteWebDriver(new URL("http://" + stbIP + ":9517"), capability);
+			int connectionTimeout = 5000;
+			int socketTimeout = 15000;
+			
+			ApacheHttpClient.Factory clientFactory = new ApacheHttpClient.Factory(
+					new HttpClientFactory(connectionTimeout, socketTimeout));
+			HttpCommandExecutor executor = new HttpCommandExecutor(new HashMap<String, CommandInfo>(),
+					new URL("http://" + stbIP + ":9517"), clientFactory);
+			driver = new RemoteWebDriver(executor, capability);
+
+			// driver = new RemoteWebDriver(new URL("http://" + stbIP +
+			// ":9517"), capability);
 			// driver = new RemoteWebDriver(new
 			// URL("http://10.67.196.111:9517"), capability);
 			selectWindow("http");
@@ -606,7 +621,7 @@ public class TestInitization {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(30,  TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		driver.navigate().to(url);
 
 	}

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -437,10 +438,11 @@ public class DTVChannelScreen extends TestInitization {
 	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Open TV Guide");
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 3000);
 		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
+		System.out.println(driver.getPageSource());
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
@@ -882,10 +884,10 @@ public class DTVChannelScreen extends TestInitization {
 		}
 		Thread.sleep(2000);
 		pressPauseButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 6000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(programDetailsScreen));
 		isDisplayed(programDetailsScreen, "Program Details Screen");
 		List<String> menuItemList = new ArrayList<String>();
 		for (WebElement we : actionItemList) {
@@ -939,11 +941,11 @@ public class DTVChannelScreen extends TestInitization {
 		else {
 			FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
 		}
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 7000);
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String infoEpisodeDuration = programDurationIn_Infobar.getText();
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String infoProgramTitle = programTitle.getText();
 		if (episodeName.equalsIgnoreCase(infoProgramTitle) && infoEpisodeDuration.equalsIgnoreCase(episodeDuration)) {
@@ -991,9 +993,10 @@ public class DTVChannelScreen extends TestInitization {
 		} catch (NoSuchElementException ex) {
 		}
 		pressPauseButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
-		sendKeyMultipleTimes("ENTER", 1, 3000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 7000);
+		sendKeyMultipleTimes("ENTER", 1, 5000);
 		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(programDetailsScreen));
 		isDisplayed(programDetailsScreen, "Program Details Screen");
 		reports.log(LogStatus.PASS, "Click on Back To Live Option");
 		List<WebElement> actionItemList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
@@ -1043,7 +1046,7 @@ public class DTVChannelScreen extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		navigateToAlreadyStartedPastProgram(Integer.parseInt(cutvChannelNumber), episodeDuration);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 4000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(programDetailsScreen, "Program Details Screen");
 		sendKeyMultipleTimes("ENTER", 1, 4000);
@@ -1056,7 +1059,6 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("Resume option should be displayed as part of action Item List");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		// sendKeyMultipleTimes(keyname, numberoftimes, delaybetweemKeys);
 		reports.log(LogStatus.PASS,
 				"Verify Action Items of Current Episode: Expected - herstarten should be displayed");
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
