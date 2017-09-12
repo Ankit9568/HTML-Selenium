@@ -804,4 +804,12 @@ public class DTVChannelTestCase extends TestInitization {
 		tc_CUSUB0201_basic();
 		tc_CUSUB0202_premium();
 	}
+	
+	
+	@Test
+	public void tc_CUSUB0203_no_subscription(){
+		
+		
+		
+	}
 }
