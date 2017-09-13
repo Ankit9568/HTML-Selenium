@@ -9,8 +9,8 @@
 	<classes>
 		<class name="com.rsystems.test.EPGTestCases">
 			<methods>
-				<!-- <include name="tc_BCEPGHPG05_epg_setting_UI_NL" />
-				<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+				<include name="tc_EPG_Date_Time_Change" />
+				<!--  <include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
 				<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
 				<include name="tc_BCEPGHPG01_epg_cancel_setting" />
 				<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
@@ -41,17 +41,17 @@
 				<include name="tc_EPG_Day_Navigator_Details" />
 				<include name="tc_EPG_Program_description" />
 				<include name="tc_EPG_Mini_EPG" />
-				<include name="tc_EPG_Genre" /> -->
-				<include name="tc_EPG023_EPG_Program_Duration" />
+				<include name="tc_EPG_Genre" />
+				 <include name="tc_EPG023_EPG_Program_Duration" />
 				<include name="tc_EPG_Blacklist_Backprogram_faded" />
-				<include name="tc_EPG_Channel_Bar_Navigation" />
+				<include name="tc_EPG_Channel_Bar_Navigation" />-->
 			</methods>
 		</class>
 	</classes>
 </test>
 
 
-	<test name="Hub Test cases ">
+	<!-- <test name="Hub Test cases ">
 		<classes>
 			<class name="com.rsystems.test.HubTestCases">
 				<methods>
@@ -59,12 +59,12 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
-	<test name="DTV Test case ">
+	</test> -->
+	<!-- <test name="DTV Test case ">
 	<classes>
 		<class name="com.rsystems.test.DTVChannelTestCase">
 			<methods>
-			<include name="tc_Single_Asset_Variant_Non_Grouped_Purchase" />
+			<include name="tc_EPG_Date_Time_Change" /> -->
 			<!-- 	<include name="tc_BCDTVDT0105_DTVChannelInfobanner" />
 				<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" />
 				<include name="DTV_ChannelZapViaChannelNumberNotExisting" />
@@ -88,9 +88,9 @@
 				<include name="tc_Single_Asset_Variant_Group_Purchase" />
 				<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
 				<include name="tc_StoreEvolution_ChangeSortingOfCategory" /> -->
-			</methods>
+			<!-- </methods>
 		</class>
 	</classes>
-</test>
+</test> -->
 </suite>
 

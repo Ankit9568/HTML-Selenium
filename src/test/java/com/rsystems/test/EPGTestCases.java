@@ -2,6 +2,9 @@ package com.rsystems.test;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +21,8 @@ import com.rsystems.pages.EpgScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
+
+import cucumber.api.java.ca.Cal;
 
 public class EPGTestCases extends TestInitization {
 
@@ -1414,61 +1419,87 @@ public class EPGTestCases extends TestInitization {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyProgramDescription();
 	}
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used 1) Open EPG. 2) Verify the icons in the grid view
+	 *             Test cases is used 1) Open EPG. 2) Verify the icons in the
+	 *             grid view
 	 */
 	@Test
-	
-	public void tc_EPG_Grid_view_icons() throws InterruptedException{
+
+	public void tc_EPG_Grid_view_icons() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg_Grid_view_icons();
-		
+
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used 1. Select a future program and press OK. 2. Press"Record "
+	 *             Test cases is used 1. Select a future program and press OK.
+	 *             2. Press"Record "
 	 */
 	@Test
-	
-	public void tc_EPG016_EPG_Schedule_recording() throws InterruptedException{
+
+	public void tc_EPG016_EPG_Schedule_recording() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.epg_Schedule_recording();
-		
+
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used Step1-Ensure the EPG will scroll ahead seven days (Or as far ahead as data has been provided) using FFW key.
-	 * Step2-Ensure the EPG will scroll back two days (Or as far ahead as data has been provided) using REW key.
+	 *             Test cases is used Step1-Ensure the EPG will scroll ahead
+	 *             seven days (Or as far ahead as data has been provided) using
+	 *             FFW key. Step2-Ensure the EPG will scroll back two days (Or
+	 *             as far ahead as data has been provided) using REW key.
 	 */
 	@Test
-	
-	public void tc_392_EPG_Navigation_Till_Available_Days() throws InterruptedException{
+
+	public void tc_392_EPG_Navigation_Till_Available_Days() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.EPG_Navigation_Till_Available_Days();
-		
+
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used Check that time in EPG page, parameter page, info banner, menu page, is correct.
-	 * @throws ParseException 
+	 *             Test cases is used Check that time in EPG page, parameter
+	 *             page, info banner, menu page, is correct.
+	 * @throws ParseException
 	 */
 	@Test
-	
-	public void tc_356_TIME0202_UI() throws InterruptedException, ParseException{
+
+	public void tc_356_TIME0202_UI() throws InterruptedException, ParseException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.TIME0202_UI();
-		
+
 	}
+
+	@Test
+	public void tc_EPG_Date_Time_Change() throws InterruptedException {
+
+		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to EPG screen");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().defaultContent();
+		String currentTime = miniEPGScreen.headerTime.getText();
+
+		// Waiting for one minute
+		Thread.sleep(60000);
+
+		if (currentTime.contentEquals(miniEPGScreen.headerTime.getText())) {
+			FailTestCase("Time of EPG not Upgrading after one minute. Time before one minute : " + currentTime + ""
+					+ "Time after one minute " + miniEPGScreen.headerTime.getText());
+		} else {
+			reports.log(LogStatus.PASS, "Time has been updated . Time before one minute : " + currentTime + ""
+					+ "Time after one minute " + miniEPGScreen.headerTime.getText());
+		}
+	}
+
 }

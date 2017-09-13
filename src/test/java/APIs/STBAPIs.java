@@ -46,6 +46,7 @@ public class STBAPIs {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 		File file = new File(RequestResponseValidation.requestXml);
+		file.setWritable(true);
 		marshaller.marshal(newXml, file);
 		new RequestResponseValidation().postRequest();
 
@@ -79,7 +80,7 @@ public class STBAPIs {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 		File file = new File(RequestResponseValidation.requestXml);
-
+		file.setWritable(true);
 		marshaller.marshal(newXml, file);
 		new RequestResponseValidation().postRequest();
 	}
@@ -116,7 +117,8 @@ public class STBAPIs {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 		File file = new File(RequestResponseValidation.requestXml);
-
+		file.setWritable(true);
+		
 		marshaller.marshal(newXml, file);
 		new RequestResponseValidation().postRequest();
 
@@ -154,7 +156,7 @@ public class STBAPIs {
 				.createSubscriberAPI(subscriberAPIType);
 		// output pretty printed
 		File file = new File(RequestResponseValidation.requestXml);
-
+		file.setWritable(true);
 		marshaller.marshal(newXml, file);
 		new RequestResponseValidation().postRequest();
 	}

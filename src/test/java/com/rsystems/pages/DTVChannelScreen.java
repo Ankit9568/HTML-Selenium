@@ -316,7 +316,7 @@ public class DTVChannelScreen extends TestInitization {
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
 
-			FailTestCase("Unable to forward Live TV");
+			FailTestCase("Unable to forward");
 		}
 	}
 

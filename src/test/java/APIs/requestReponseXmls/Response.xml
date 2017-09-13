@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubscriberAPI>
 <version>4.2.0</version>
-<SubscriberPackageAssignResult>
+<SubscriberPackageUnassignResult>
 <result>
   <Code>0</Code>
   <Message>SUCCESS</Message>
-  <subscriber>1344908</subscriber>
+  <subscriber>1332105</subscriber>
 </result>
-</SubscriberPackageAssignResult>
+</SubscriberPackageUnassignResult>
 </SubscriberAPI>

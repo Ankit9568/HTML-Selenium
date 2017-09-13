@@ -2,10 +2,12 @@ package com.rsystems.test;
 
 import java.text.ParseException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.rsystems.config.ObjectRepository.ZapListPage;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.pages.RentMovie;
@@ -794,21 +796,98 @@ public class DTVChannelTestCase extends TestInitization {
 
 	/**
 	 * @author Ankit.Agarwal1
-	 * @throws Exception 
+	 * @throws Exception
 	 * 
 	 */
 
 	@Test
 	public void tc_CUSUB0205_basic_premium_switch() throws Exception {
-		
+
 		tc_CUSUB0201_basic();
 		tc_CUSUB0202_premium();
 	}
-	
-	
+
 	@Test
-	public void tc_CUSUB0203_no_subscription(){
+	public void tc_CUSUB0203_no_subscription() throws Exception {
+
+		STBAPIs stbApis = new STBAPIs();
+		try {
+
+			DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+			MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+			// Some time package not assign to STB so we first assign package
+			// and
+			// than unassigns according to the testing condition
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+			stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
+			stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+			dtvChannelScreen.openLiveTV();
+			dtvChannelScreen.tuneToChannel(Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel",
+					"CUTVEnabledChannelToPassForRecording_2", "Values")));
+			dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
+			driver.switchTo().frame(getCurrentFrameIndex());
+			isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			isNotDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+
+			sendKeyMultipleTimes("RIGHT", 1, 1000);
+			isNotDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
+			
+			sendKeyMultipleTimes("ENTER", 1, 4000);
+			driver.switchTo().defaultContent();
+			isDisplayed(driver.findElement(By.xpath(ZapListPage.screenTitle)), "televise screen");
+
+			
+			// Test case pending for Unimplemented Functionality
+		} finally {
+			// Assign package in case of any error
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		}
+	}
+
+	@Test
+	public void tc_CUUPS0801_upsell_page() throws Exception {
+
+		STBAPIs stbApis = new STBAPIs();
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+
+		// Some time package not assign to STB so we first assign package and
+		// than unassigns according to the testing condition
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
+		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
+
+		// Assign basic CUTV package
+		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+
+		dtvChannelScreen.openLiveTV();
+		dtvChannelScreen.tuneToChannel(Integer.parseInt(
+				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
+		dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
+
+		sendKeyMultipleTimes("ENTER", 2, 4000);
+		handlePopupIfExist();
+
+		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
 		
+		sendKeyMultipleTimes("ENTER", 1, 4000);
+		driver.switchTo().defaultContent();
+		isDisplayed(driver.findElement(By.xpath(ZapListPage.screenTitle)), "televise screen");
 		
 		
 	}

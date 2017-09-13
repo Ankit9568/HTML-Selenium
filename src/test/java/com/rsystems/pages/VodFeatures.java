@@ -177,24 +177,12 @@ public class VodFeatures extends TestInitization {
 		Thread.sleep(5000);
 		
 		driver.switchTo().frame(getCurrentFrameIndex());
-		String vodText=continueWatchVideo.getText();
-		System.out.println(vodText);
-		if(continueWatchVideo.isDisplayed())
-		{
-			reports.log(LogStatus.PASS, "Press Enter to continue watch video");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		    TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
+		wait.until(ExpectedConditions.visibilityOf(continueWatchVideo));
+		reports.log(LogStatus.PASS, "Press Enter to continue watch video");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
 		
-		}
-		else
-		{
-		 driver.switchTo().frame(getCurrentFrameIndex());
-		 wait.until(ExpectedConditions.visibilityOf(continueWatchVideo));
-		 reports.log(LogStatus.PASS, "Press Enter to continue watch video");
-		 reports.attachScreenshot(captureCurrentScreenshot());
-		 TestInitization.sendKeyMultipleTimes("ENTER", 1, 3000);
-		}
-
+		
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
 		dtvChannelScreen.pressRewindButtonAndValidation();
