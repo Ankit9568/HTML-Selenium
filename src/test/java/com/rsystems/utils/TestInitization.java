@@ -70,9 +70,9 @@ public class TestInitization {
 	public static String currentExecutionReportPath;
 	public static ArrayList<ReportsData> testResult = new ArrayList<ReportsData>();
 	public static Date executionStartTime = cald.getTime();
-	public static int STBRebootAfterTestCase = 20;
+	public static int STBRebootAfterTestCase = 30;
 	public static int executedMethodCount = 0;
-	
+
 	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
 			+ "config" + File.separator + "config.properties";
@@ -117,53 +117,10 @@ public class TestInitization {
 		log.info("Logger Info:: Inside Setup Method");
 
 		launchWebdriver();
-
-		System.out.println("Waiting for the page to load");
-		wait = new WebDriverWait(driver, 120L);
-
-		try {
-
-			wait.until(ExpectedConditions.presenceOfElementLocated(
-					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
-			System.out.println("Proximus Logo Loaded");
-
-			if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
-
-				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
-				System.out.println("Frame loaded");
-				Thread.sleep(2000);
-
-				if (driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText()
-						.equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl"))) {
-					System.out.println("HUB TV text returned is :: "
-							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
-					System.out.println("HUB is loaded with TV showcase focused");
-
-				} else {
-
-					System.out.println("HUB TV text returned is :: "
-							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
-					System.out.println("This is not equal to Televisie ");
-
-				}
-
-			} else {
-				System.out.println("STB is Unassigned");
-				// Thread.sleep(5000);
-				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder0"));
-				System.out.println("Frame loaded");
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("heading1")));
-				Thread.sleep(2000);
-			}
-		}
-
-		catch (Throwable t) {
-			t.printStackTrace();
-			System.out.println("HUB is not loaded with TV showcase focused " + t);
-
-		}
-
-		log.info("Logger Info:: Going out of Setup Method");
+		launchApplication();
+			
+		
+		
 
 	}
 
@@ -190,7 +147,7 @@ public class TestInitization {
 	}
 
 	@AfterMethod()
-	public void afterMethodCalled() throws InterruptedException {
+	public void afterMethodCalled() throws InterruptedException, IOException {
 
 		reports.log(LogStatus.PASS, "END Step : Leave the test case with focus on HUB Text Line");
 		try {
@@ -199,13 +156,28 @@ public class TestInitization {
 			e.printStackTrace();
 		}
 		reports.endTest();
-		executedMethodCount = executedMethodCount+1;
-		
-		if(executedMethodCount>STBRebootAfterTestCase){
-			
+		executedMethodCount = executedMethodCount + 1;
+
+		System.out.println(" Executed Method Count :: " + executedMethodCount + " STB Reboot Aftre Test case :: "
+				+ STBRebootAfterTestCase);
+		if (executedMethodCount > STBRebootAfterTestCase || executedMethodCount == STBRebootAfterTestCase) {
+
+			SSH_Connection sshConnection = new SSH_Connection();
+
+			String stbIP = null;
+			stbIP = System.getProperty("STBIP");
+			if (stbIP == null || stbIP.contentEquals("")) {
+				stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
+			}
+
+			sshConnection.rebootSTBAndSetup(stbIP, "root",
+					"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
+			Thread.sleep(5000);
+			launchWebdriver();
+			launchApplication();
+			executedMethodCount = 0;
 		}
-		
-		
+
 	}
 
 	@AfterSuite
@@ -604,17 +576,13 @@ public class TestInitization {
 
 			int connectionTimeout = 5000;
 			int socketTimeout = 15000;
-			
+
 			ApacheHttpClient.Factory clientFactory = new ApacheHttpClient.Factory(
 					new HttpClientFactory(connectionTimeout, socketTimeout));
 			HttpCommandExecutor executor = new HttpCommandExecutor(new HashMap<String, CommandInfo>(),
 					new URL("http://" + stbIP + ":9517"), clientFactory);
 			driver = new RemoteWebDriver(executor, capability);
 
-			// driver = new RemoteWebDriver(new URL("http://" + stbIP +
-			// ":9517"), capability);
-			// driver = new RemoteWebDriver(new
-			// URL("http://10.67.196.111:9517"), capability);
 			selectWindow("http");
 			// override URL in case of HTV
 			url = "http://hpg.nat.myrio.net/boot_webkit.html";
@@ -843,5 +811,63 @@ public class TestInitization {
 			}
 		} catch (NoSuchElementException e) {
 		}
+	}
+	
+	public static void main(String arr[]) throws InterruptedException{
+		SSH_Connection  sshConnection = new SSH_Connection();
+		sshConnection.rebootSTBAndSetup("10.67.181.116", "root",
+				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
+	}
+	
+	
+	private void launchApplication(){
+		
+		
+		System.out.println("Waiting for the page to load");
+		wait = new WebDriverWait(driver, 120L);
+
+		try {
+
+			wait.until(ExpectedConditions.presenceOfElementLocated(
+					By.xpath("//img[@src='resources/components/animation/images/logo.png']")));
+			System.out.println("Proximus Logo Loaded");
+
+			if (!(Boolean.valueOf(getUpdatedProptiesFile().getProperty("RunOnUnassignedSTB")))) {
+
+				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder1"));
+				System.out.println("Frame loaded");
+				Thread.sleep(2000);
+
+				if (driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText()
+						.equalsIgnoreCase(getExcelKeyValue("hub", "TV", "name_nl"))) {
+					System.out.println("HUB TV text returned is :: "
+							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+					System.out.println("HUB is loaded with TV showcase focused");
+
+				} else {
+
+					System.out.println("HUB TV text returned is :: "
+							+ driver.findElement(By.xpath(ObjectRepository.HubTVItem)).getText());
+					System.out.println("This is not equal to Televisie ");
+
+				}
+
+			} else {
+				System.out.println("STB is Unassigned");
+				// Thread.sleep(5000);
+				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ScreenHolder0"));
+				System.out.println("Frame loaded");
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("heading1")));
+				Thread.sleep(2000);
+			}
+		}
+
+		catch (Throwable t) {
+			t.printStackTrace();
+			System.out.println("HUB is not loaded with TV showcase focused " + t);
+
+		}
+
+		log.info("Logger Info:: Going out of Setup Method");
 	}
 }

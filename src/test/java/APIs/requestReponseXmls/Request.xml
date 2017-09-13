@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SubscriberAPI>
     <version>4.2.0</version>
-    <SubscriberSTBUnassign>
-        <subscriberDataAttributes>
-            <accountNumber>0811</accountNumber>
-        </subscriberDataAttributes>
-        <subscriberSTB>
-            <equipmentId>1849018</equipmentId>
-            <macAddress>2CABA452DED5</macAddress>
-            <serialNumber>254479723</serialNumber>
-        </subscriberSTB>
-    </SubscriberSTBUnassign>
+    <SubscriberPackageAssign>
+        <subscriberPackage>
+            <subscriberDataAttributes>
+                <accountNumber>0811</accountNumber>
+            </subscriberDataAttributes>
+            <packageData>
+                <packageId>5210</packageId>
+                <packageLocked>0</packageLocked>
+                <usoc>TVREPLAY</usoc>
+                <packageRateCode>PD</packageRateCode>
+                <subscriptionStartDate>25/07/2017</subscriptionStartDate>
+                <subscriptionEndDate>31/12/2020</subscriptionEndDate>
+            </packageData>
+        </subscriberPackage>
+    </SubscriberPackageAssign>
 </SubscriberAPI>

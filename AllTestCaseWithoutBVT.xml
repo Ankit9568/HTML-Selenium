@@ -205,14 +205,12 @@
 				<methods>
 
 					<include name="tc_Pause_LiveTV_PLTV_pause" />
-					<include name="tc_HDD_Less_Timeshifting" />
-
 					<include name="tc_Pause_LiveTV_PLTV_interworking_with_menu" />
 					<include name="TP003_TSTV_Trick_play_menufromFullScreen_TV" />
 					<include name="TP006_DTV_RC_Keys_during_Trickplay" />
 					<include name="TP005_DTV_Trick_playmenufromFullScreen_TV" />
 					<include name="TP004_TSTV_RC_Keys_during_Trickplay" />
-
+					<include name="tc_HDD_Less_Timeshifting" />
 				</methods>
 			</class>
 		</classes>
