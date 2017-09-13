@@ -116,6 +116,20 @@ public class TestInitization {
 		log = Logger.getLogger("ProximusHTMLLogger");
 		log.info("Logger Info:: Inside Setup Method");
 
+		
+		SSH_Connection sshConnection = new SSH_Connection();
+
+		String stbIP = null;
+		stbIP = System.getProperty("STBIP");
+		if (stbIP == null || stbIP.contentEquals("")) {
+			stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
+		}
+
+		sshConnection.rebootSTBAndSetup(stbIP, "root",
+				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
+		Thread.sleep(5000);
+		
+		
 		launchWebdriver();
 		launchApplication();
 			
