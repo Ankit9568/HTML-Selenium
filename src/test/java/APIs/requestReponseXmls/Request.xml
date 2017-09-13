@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><SubscriberAPI><version>4.2.0</version><SubscriberPackageUnassign><subscriberPackage><subscriberDataAttributes><accountNumber>091000125</accountNumber></subscriberDataAttributes><packageData><packageId>5211</packageId><packageLocked>0</packageLocked><usoc>TVREPLAYPL</usoc><packageRateCode>PD</packageRateCode><subscriptionStartDate>25/07/2017</subscriptionStartDate><subscriptionEndDate>31/12/2020</subscriptionEndDate></packageData></subscriberPackage></SubscriberPackageUnassign></SubscriberAPI>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SubscriberAPI>
+    <version>4.2.0</version>
+    <SubscriberSTBUnassign>
+        <subscriberDataAttributes>
+            <accountNumber>0811</accountNumber>
+        </subscriberDataAttributes>
+        <subscriberSTB>
+            <equipmentId>1849018</equipmentId>
+            <macAddress>2CABA452DED5</macAddress>
+            <serialNumber>254479723</serialNumber>
+        </subscriberSTB>
+    </SubscriberSTBUnassign>
+</SubscriberAPI>

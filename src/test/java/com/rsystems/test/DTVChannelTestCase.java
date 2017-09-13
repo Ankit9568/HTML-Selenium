@@ -5,6 +5,7 @@ import java.text.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
+import org.yaml.snakeyaml.representer.Represent;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository.ZapListPage;
@@ -477,7 +478,9 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
+		reports.log(LogStatus.PASS, "Assign only CUTV Basic package [70:TV-Replay] to Subscriber.");
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtvChannelScreen.openCutvEnableChannelFromTvGuide();
 
@@ -499,7 +502,9 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.pressPlayButtonAndValidation();
 		dtvChannelScreen.pressRewindButtonAndValidation();
 
+		reports.log(LogStatus.PASS, "Press forward button ");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
 		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
 		try {
@@ -523,8 +528,11 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
+		reports.log(LogStatus.PASS,
+				"Assign CUTV Basic and premium package [70:TV-Replay and 70:TV-Replay-Plus ]  to Subscriber.");
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
+		reports.attachScreenshot(captureCurrentScreenshot());
 
 		dtvChannelScreen.openLiveTV();
 		dtvChannelScreen.tuneToChannel(Integer.parseInt(
@@ -821,12 +829,14 @@ public class DTVChannelTestCase extends TestInitization {
 			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 			stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay-Plus"));
 
+			reports.log(LogStatus.PASS, "UnAssign All CUTV package from Subscribe [70:TV-Replay , 70:TV-Replay-Plus]");
 			stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay"));
 			stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
+			reports.attachScreenshot(captureCurrentScreenshot());
 
 			dtvChannelScreen.openLiveTV();
-			dtvChannelScreen.tuneToChannel(Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel",
-					"CUTVEnabledChannelToPassForRecording_2", "Values")));
+			dtvChannelScreen.tuneToChannel(
+					Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
 			dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 			driver.switchTo().frame(getCurrentFrameIndex());
 			isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
@@ -839,12 +849,11 @@ public class DTVChannelTestCase extends TestInitization {
 
 			sendKeyMultipleTimes("RIGHT", 1, 1000);
 			isNotDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
-			
+
 			sendKeyMultipleTimes("ENTER", 1, 4000);
 			driver.switchTo().defaultContent();
 			isDisplayed(driver.findElement(By.xpath(ZapListPage.screenTitle)), "televise screen");
 
-			
 			// Test case pending for Unimplemented Functionality
 		} finally {
 			// Assign package in case of any error
@@ -871,6 +880,7 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageUnAssign(new PackageInformation("70:TV-Replay-Plus"));
 
 		// Assign basic CUTV package
+		reports.log(LogStatus.PASS, "Assign only CUTV basic [70:TV-Replay] CUTV package to subsriber ");
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 
 		dtvChannelScreen.openLiveTV();
@@ -878,17 +888,20 @@ public class DTVChannelTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannelToPassForRecording_2", "Values")));
 		dtvChannelScreen.navigateToPastReplaybleProgramFromTVGuide();
 
-		sendKeyMultipleTimes("ENTER", 2, 4000);
+		sendKeyMultipleTimes("ENTER", 1, 4000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
 		handlePopupIfExist();
 
+		reports.log(LogStatus.PASS, "Press forward button");
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(miniEPGScreen.programDetailsScreen, "Upsell message ");
-		
+
 		sendKeyMultipleTimes("ENTER", 1, 4000);
 		driver.switchTo().defaultContent();
 		isDisplayed(driver.findElement(By.xpath(ZapListPage.screenTitle)), "televise screen");
-		
-		
+
 	}
 }

@@ -1499,6 +1499,7 @@ public class EPGTestCases extends TestInitization {
 		} else {
 			reports.log(LogStatus.PASS, "Time has been updated . Time before one minute : " + currentTime + ""
 					+ "Time after one minute " + miniEPGScreen.headerTime.getText());
+			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
 

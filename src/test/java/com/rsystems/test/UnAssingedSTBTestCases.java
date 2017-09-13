@@ -7,8 +7,10 @@ import java.util.Properties;
 
 import org.testng.annotations.Test;
 
+import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.UnAssignStb;
 import com.rsystems.utils.TestInitization;
+import com.sun.jna.platform.win32.WinNT.LOGICAL_PROCESSOR_RELATIONSHIP;
 
 import APIs.STBAPIs;
 
@@ -23,7 +25,7 @@ public class UnAssingedSTBTestCases extends TestInitization {
 	public void tc_BCCOMML0210_LANG007_Assignment() throws Exception {
 
 		STBAPIs stbApis = new STBAPIs();
-
+		reports.log(LogStatus.PASS, "Unassigned STB");
 		try {
 			stbApis.stbUnassign(TestInitization.getExcelKeyValue("AccountInformation", "LineNumber", "Value"),
 					TestInitization.getExcelKeyValue("AccountInformation", "EquipmentId", "Value"),
@@ -36,6 +38,7 @@ public class UnAssingedSTBTestCases extends TestInitization {
 				throw e;
 			}
 		}
+		reports.attachScreenshot(captureCurrentScreenshot());
 		Properties PR = getUpdatedProptiesFile();
 
 		PR.setProperty("RunOnUnassignedSTB", "TRUE");
@@ -47,9 +50,12 @@ public class UnAssingedSTBTestCases extends TestInitization {
 				(TestInitization.getExcelKeyValue("AccountInformation", "PinCode", "Value")));
 	}
 
+	@Test
 	public void STB_Registration_Auto_Config_screen_On_unassigning_STB() throws Exception {
 		STBAPIs stbApis = new STBAPIs();
 		UnAssignStb unAssignStb = new UnAssignStb(driver);
+		
+		reports.log(LogStatus.PASS, "Unassigned STB");
 		try {
 			stbApis.stbUnassign(TestInitization.getExcelKeyValue("AccountInformation", "LineNumber", "Value"),
 					TestInitization.getExcelKeyValue("AccountInformation", "EquipmentId", "Value"),
@@ -62,7 +68,9 @@ public class UnAssingedSTBTestCases extends TestInitization {
 				throw e;
 			}
 		}
-
+		reports.attachScreenshot(captureCurrentScreenshot());
+// waiting for 5 second for unassign STB
+		Thread.sleep(5000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(unAssignStb.languageHeading, "Language heading ");
 
@@ -71,7 +79,8 @@ public class UnAssingedSTBTestCases extends TestInitization {
 		PR.setProperty("RunOnUnassignedSTB", "TRUE");
 		PR.put("RunOnUnassignedSTB", "TRUE");
 		PR.store(new FileOutputStream(TestInitization.configFilePath), null);
-
+		
+		reports.log(LogStatus.PASS, "Trying to Assign STB.");
 		assignLanguageToStB(TestInitization.getExcelKeyValue("AccountInformation", "Language", "Value"),
 				(TestInitization.getExcelKeyValue("AccountInformation", "LineNumber", "Value")),
 				(TestInitization.getExcelKeyValue("AccountInformation", "PinCode", "Value")));
