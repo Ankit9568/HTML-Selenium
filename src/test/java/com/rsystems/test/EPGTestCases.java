@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -1503,4 +1504,15 @@ public class EPGTestCases extends TestInitization {
 		}
 	}
 
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test case is used to verify Current Time Line in EPG
+	 */
+	@Test
+	public void tc_EPG007_EPG_Current_Time_Line() throws InterruptedException{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verifyCurrentTimeLine();
+		
+	}
 }

@@ -85,4 +85,48 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rc.verifyBackKey();
 		
 	}
+	
+	// New Test cases
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * Test cases to verify CH+/CH- keys
+	 */
+	@Test
+	public void tc_RCU_CHPlus_CHMiunsKey()throws InterruptedException
+	{
+		
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCCHPlusChMinusKeysOnDTV();
+	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * Test cases is used to validate OnDemand Key
+	 * 
+	 */
+	@Test
+	public void tc_RCU_ON_Demand_NTE1_1() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUOnDemandKey();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validate PVR Key
+	 */
+	@Test
+	public void tc_RCU_PVR_NTE1_1() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUPVRKey();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to validate Radio Key
+	 */
+	@Test
+	public void tc_RCU_Radio_Hot_Key_NTE1_1() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCURadioKey();
+	}
 }
