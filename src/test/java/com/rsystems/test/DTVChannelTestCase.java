@@ -11,6 +11,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository.ZapListPage;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.MiniEPGScreen;
+import com.rsystems.pages.Pvr;
 import com.rsystems.pages.RentMovie;
 import com.rsystems.pages.VodFeatures;
 import com.rsystems.pages.ZapList;
@@ -437,32 +438,7 @@ public class DTVChannelTestCase extends TestInitization {
 		}
 	}
 
-	@Test
-	public void tc_BCVODVD0130_VOD_FOD() throws InterruptedException {
-
-		DTVChannelScreen dtvScreen = new DTVChannelScreen(driver);
-		RentMovie rentMovie = new RentMovie(driver);
-		dtvScreen.navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
-
-		driver.switchTo().frame(getCurrentFrameIndex());
-		try {
-			reports.log(LogStatus.FAIL, rentMovie.rentOption.getText() + "is visible on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} catch (NoSuchElementException e) {
-
-			reports.log(LogStatus.PASS, " Rent Option is not visible on webpage");
-			reports.attachScreenshot(captureCurrentScreenshot());
-
-		}
-
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		handlePopupIfExist();
-		dtvScreen.pressPauseButtonAndValidation();
-		// navigate to menu page
-		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
-	}
-
+	
 	@Test
 	public void tc_CUSUB0201_basic() throws Exception {
 
@@ -564,131 +540,10 @@ public class DTVChannelTestCase extends TestInitization {
 		stbApis.stbPackageAssign(new PackageInformation("70:TV-Replay"));
 	}
 
-	@Test
-	public void tc_Single_Asset_Variant_Group_Purchase() throws InterruptedException {
+	
 
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		VodFeatures vodFeatures = new VodFeatures(driver);
-		// Navigate the group item of VODs
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
 
-		// check and VOD in a single group
-		sendKeyMultipleTimes("ENTER", 1, 1000);
 
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-
-		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
-
-		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		// Navigate to move Category
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-
-		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "PinNumber"));
-		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
-
-		// highlight the VOD3
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-
-		// validate the PIN container is displayed
-		isDisplayed(vodFeatures.pinContainer, "Pin Container");
-		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		handlePopupIfExist();
-		dtvChannelScreen.pressForwardButtonAndValidation();
-
-	}
-
-	@Test
-	public void tc_Single_Asset_Variant_Group_Package_Lock_Unlock() throws Exception {
-
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		STBAPIs stbApis = new STBAPIs();
-
-		// Navigate the group item of VODs
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
-
-		// check and VOD in a single group
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-
-		stbApis.stbPackageUnAssign(new PackageInformation("Spiderman2"));
-
-		// waiting for 20 second for updation package
-		Thread.sleep(15000);
-		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 2, 1000);
-
-		// check and VOD in a single group
-		sendKeyMultipleTimes("ENTER", 2, 1000);
-		dtvChannelScreen.validateMovieNotExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-
-		stbApis.stbPackageAssign(new PackageInformation("Spiderman2"));
-		// waiting for 20 second for updation package
-		Thread.sleep(15000);
-		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 2, 1000);
-		// check and VOD in a single group
-		sendKeyMultipleTimes("ENTER", 2, 1000);
-
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
-
-	}
-
-	@Test
-	public void tc_StoreEvolution_ChangeSortingOfCategory() throws InterruptedException {
-
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		VodFeatures vodFeatures = new VodFeatures(driver);
-
-		// Navigate the group item of VODs
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD2", "GroupName"));
-
-		// back to parent category
-		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
-
-		if (vodFeatures.leftPannel.getAttribute("class").equalsIgnoreCase("cStoreLeftSection")) {
-			reports.log(LogStatus.PASS, "Sorting criteria found in left side on page");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Sorting criteria does not found in left side on page");
-		}
-		String popularMovieName = dtvChannelScreen.getMovieNameForSpecificCategory(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"));
-
-		dtvChannelScreen.changeSortingOptionAndValidation(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "SortingOptionName"),
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption1", "First Movie Order"));
-		dtvChannelScreen.changeSortingOptionAndValidation(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "SortingOptionName"),
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption2", "First Movie Order"));
-
-		dtvChannelScreen.changeSortingOptionAndValidation(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption3", "SortingOptionName"),
-				popularMovieName);
-
-		dtvChannelScreen.changeSortingOptionAndValidation(
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "SortingOptionName"),
-				TestInitization.getExcelKeyValue("MovieScreen", "SortingOption4", "First Movie Order"));
-
-	}
 
 	/**
 	 * This test cases is verify back to live option in past program
@@ -773,21 +628,7 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.hdd_Less_Timeshifting();
 	}
 
-	@Test
-	public void tc_Single_Asset_Variant_Non_Grouped_Purchase() throws InterruptedException {
 
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		VodFeatures vodFeatures = new VodFeatures(driver);
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-				TestInitization.getExcelKeyValue("RentMovie", "POD", "Category"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
-
-		vodFeatures.RentGrpMovie(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
-				TestInitization.getExcelKeyValue("RentMovie", "POD", "PinNumber"));
-
-		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
-
-	}
 
 	/**
 	 * @author Pritam.Dutta This test cases is used to 'Go to any possible menu
@@ -904,4 +745,37 @@ public class DTVChannelTestCase extends TestInitization {
 		isDisplayed(driver.findElement(By.xpath(ZapListPage.screenTitle)), "televise screen");
 
 	}
+	
+	@Test
+	public void TP003_TSTV_Trick_play_menufromFullScreen_TV()throws InterruptedException
+	{
+		Pvr p = new Pvr(driver);
+		p.TP003_TSTV_Trick_playmenufromFullscreen_TV();
+		
+	}
+	@Test
+	public void TP006_DTV_RC_Keys_during_Trickplay()throws InterruptedException
+	{
+		Pvr p = new Pvr(driver);
+		p.TP006_DTV_RC_Keys_Trickplay();
+		
+	}
+	
+	@Test
+	public void TP005_DTV_Trick_playmenufromFullScreen_TV()throws InterruptedException
+	{
+		Pvr p = new Pvr(driver);
+		p.TP005_DTV_Trick_playmenufromFullscreen_TV();
+		
+	}
+	
+	@Test
+	public void TP004_TSTV_RC_Keys_during_Trickplay()throws InterruptedException
+	{
+		Pvr p = new Pvr(driver);
+		p.TP004_TSTV_RC_Keys_during_Trickplay();
+		
+	}
+	
+	
 }

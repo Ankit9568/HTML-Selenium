@@ -70,7 +70,9 @@ public class TestInitization {
 	public static String currentExecutionReportPath;
 	public static ArrayList<ReportsData> testResult = new ArrayList<ReportsData>();
 	public static Date executionStartTime = cald.getTime();
-
+	public static int STBRebootAfterTestCase = 20;
+	public static int executedMethodCount = 0;
+	
 	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "test" + File.separator + "java" + File.separator + "com" + File.separator + "rsystems" + File.separator
 			+ "config" + File.separator + "config.properties";
@@ -196,9 +198,14 @@ public class TestInitization {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		reports.endTest();
-
+		executedMethodCount = executedMethodCount+1;
+		
+		if(executedMethodCount>STBRebootAfterTestCase){
+			
+		}
+		
+		
 	}
 
 	@AfterSuite

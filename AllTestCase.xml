@@ -88,14 +88,14 @@
 					<include name="tc_EPG020_EPG_NL_Language_Day" />
 					<include name="tc_EPG004_Focused_Program_Info_Details" />
 					<include name="tc_EPG024_EPG_Program_description" />
-                    <include name="tc_EPG018_EPG_Day_Forward_key_Reverse_key" />
-                    <include name="tc_EPG023_EPG_Program_Duration" />
-                    <include name="tc_EPG_Blacklist_Backprogram_faded" />
+					<include name="tc_EPG018_EPG_Day_Forward_key_Reverse_key" />
+					<include name="tc_EPG023_EPG_Program_Duration" />
+					<include name="tc_EPG_Blacklist_Backprogram_faded" />
 					<include name="tc_EPG_Channel_Bar_Navigation" />
-                    <include name="tc_EPG016_EPG_Schedule_recording" />
-                    <include name="tc_EPG_Grid_view_icons" />
-                    <include name="tc_392_EPG_Navigation_Till_Available_Days" />
-                    <include name="tc_356_TIME0202_UI" />
+					<include name="tc_EPG016_EPG_Schedule_recording" />
+					<include name="tc_EPG_Grid_view_icons" />
+					<include name="tc_392_EPG_Navigation_Till_Available_Days" />
+					<include name="tc_356_TIME0202_UI" />
 
 				</methods>
 			</class>
@@ -124,18 +124,18 @@
 
 	<!-- Divide Test case in two part -->
 
-	
-	<test name="Settings Test case ">
-            <classes>
-                  <class name="com.rsystems.test.SettingsTestCases">
-                        <methods>
-                              <include name="tc_SF009_Settings" />
-                        </methods>
-                  </class>
-            </classes>
-      </test>
 
-	
+	<test name="Settings Test case ">
+		<classes>
+			<class name="com.rsystems.test.SettingsTestCases">
+				<methods>
+					<include name="tc_SF009_Settings" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+
 	<test name="DTV Test case ">
 		<classes>
 			<class name="com.rsystems.test.DTVChannelTestCase">
@@ -150,7 +150,6 @@
 					<include name="pause_LiveTV_PLTV_BackToLive" />
 					<include name="pause_LiveTV_PLTV_cancelPopupMessage" />
 					<include name="Pause_LiveTV_trickplay" />
-					<include name="tc_BCVODVD0130_VOD_FOD" />
 
 					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
 					<include name="tc_CUBTL0602_back_to_live_other_channel" />
@@ -160,14 +159,17 @@
 					<include name="tc_CUSO0501_start_over_list_actions" />
 					<include name="tc_CUSUB0201_basic" />
 					<include name="tc_CUSUB0202_premium" />
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
-					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
-					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
-					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
-					<include name="tc_Pause_LiveTV_PLTV_pause" />
 
-					<include name="tc_Single_Asset_Variant_Non_Grouped_Purchase" />
-                    <include name="tc_Pause_LiveTV_PLTV_interworking_with_menu" />
+					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
+
+					<include name="tc_Pause_LiveTV_PLTV_pause" />
+					<include name="tc_HDD_Less_Timeshifting" />
+
+					<include name="tc_Pause_LiveTV_PLTV_interworking_with_menu" />
+					<include name="TP003_TSTV_Trick_play_menufromFullScreen_TV" />
+					<include name="TP006_DTV_RC_Keys_during_Trickplay" />
+					<include name="TP005_DTV_Trick_playmenufromFullScreen_TV" />
+					<include name="TP004_TSTV_RC_Keys_during_Trickplay" />
 
 				</methods>
 			</class>
@@ -206,7 +208,7 @@
 					<include name="tc_RCU_EPG_Navigation" />
 					<include name="tc_RCU_Arrow_Keys_on_DTV_fullscreen" />
 					<include name="tc_RCU_Record_Button" />
-                    <include name="tc_RCU_BackKey" />
+					<include name="tc_RCU_BackKey" />
 				</methods>
 			</class>
 		</classes>
@@ -237,6 +239,8 @@
 		<classes>
 			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
+					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
+					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
 					<include name="tc_StoreEvolutionPosternonleafCategory" />
 					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
 					<include name="tc_BCVODBG0312_VOD_Rent" />
@@ -244,9 +248,15 @@
 					<include name="tc_StoreEvolutionPosterleafCategory" />
 					<include name="tc_storeEvolutionDefaultposternonleafCategory" />
 					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
-					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
-					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+					<include name="TP009_VOD_TrickplaymenufromVODplayback" />
+					<include name="TP010_VODRCKeysduringTrickplay" />
+					<include name="tc_BCVODVD0130_VOD_FOD" />
+					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
+					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
 					<include name="tc_SF005_Store" />
+					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
+					<include name="tc_Single_Asset_Variant_Non_Grouped_Purchase" />
 				</methods>
 			</class>
 		</classes>
@@ -258,13 +268,6 @@
 				<methods>
 					<include name="TP007_PVRTrickplaymenufromPVR" />
 					<include name="TP008_PVRRCKeysduringTrickplay" />
-					<include name="TP009_VOD_TrickplaymenufromVODplayback" />
-					<include name="TP010_VODRCKeysduringTrickplay" />
-					<include name="TP003_TSTV_Trick_play_menufromFullScreen_TV" />
-					<include name="TP006_DTV_RC_Keys_during_Trickplay" />
-					<include name="TP005_DTV_Trick_playmenufromFullScreen_TV" />
-					<include name="TP004_TSTV_RC_Keys_during_Trickplay" />
-
 				</methods>
 			</class>
 		</classes>
@@ -357,19 +360,6 @@
 			</class>
 		</classes>
 	</test>
-
-	<test name="Time taking test cases">
-		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
-				<methods>
-					<!-- Live TV Test case -->
-					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
-					<include name="tc_HDD_Less_Timeshifting" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
 
 </suite>
 
