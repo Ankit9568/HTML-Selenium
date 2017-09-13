@@ -1232,4 +1232,228 @@ public class DTVChannelScreen extends TestInitization {
 			System.out.println(e);
 		}
 	}
+
+	public void TP001_CUTV_Trick_play_menu_from_Full_screenTV() throws InterruptedException {
+		Pvr pvr = new Pvr(driver);
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.log(LogStatus.PASS, "Programme is getting played");
+		clickToContinue();
+		reports.attachScreenshot(captureCurrentScreenshot());
+		handlePopupIfExist();
+		pressForwardButtonAndValidation();
+		pressRewindButtonAndValidation();
+		pressPauseButtonAndValidation();
+		pressPlayButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Live TV forwarded thorugh Trick Play Bar Icon");
+		sendKeyMultipleTimes("RIGHT", 2, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName = pvr.forward.getAttribute("class");
+		System.out.println("class name " + currentClassName);
+		if (currentClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Running streaming is forwarded");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to forward the running streaming");
+		}
+
+		reports.log(LogStatus.PASS, "Live TV is played thorugh Trick Play Bar Icon");
+		sendKeyMultipleTimes("LEFT", 2, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		String currentImgSource = pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		String currentClassNameForPlay = enablePausePlayButton.getAttribute("class");
+		System.out.println("class name " + currentClassNameForPlay);
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))
+				&& currentClassNameForPlay.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "play Successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Pause button is not highlight on webpage");
+
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Live TV is rewind thorugh Trick Play Bar Icon");
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassNameRewind = rewindBtn.getAttribute("class");
+		System.out.println("class name " + currentClassNameRewind);
+		if (currentClassNameRewind.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Running streaming is rewind");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to rewind the running streaming");
+		}
+
+	}
+
+	public void clickToContinue() throws InterruptedException {
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@id='containerDiv']"))));
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+	}
+
+	public void TP002_CUTV_RC_Keys_during_Trickplay() throws InterruptedException {
+		ActivateInfobanner activateInfobanner = new ActivateInfobanner(driver);
+		EpgScreen epgScreen = new EpgScreen(driver);
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressForwardButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Menu key though RC ");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		driver.switchTo().defaultContent();
+		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Menu Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Menu Screen not getting displayed");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressRewindButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Ondemand Hot key though RC");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (driver.findElement(By.xpath(ObjectRepository.StoreFilterLayer.shopScreen)).getText()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "OnDemandMenu", "name_nl"))) {
+
+			reports.log(LogStatus.PASS, "Ondemand Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("On demand Screen not getting displayed");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressForwardButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing PVR key through RC");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().defaultContent();
+		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Library Screen not getting displayed");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		System.out.println(presentTmeStartTime);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressRewindButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Back key through RC");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 1000);
+		String currentProgramTime = activateInfobanner.duration.getText();
+		System.out.println(currentProgramTime);
+		if (presentTmeStartTime.equalsIgnoreCase(currentProgramTime)) {
+			reports.log(LogStatus.PASS, "CUTV is not interrupted and Playing the same programme");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Current programme in CUTV has been interrupted");
+		}
+
+		pressPauseButtonAndValidation();
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Back key through RC");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (presentTmeStartTime.equalsIgnoreCase(currentProgramTime)) {
+			reports.log(LogStatus.PASS, "CUTV is not interrupted and Playing the same programme");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Current programme in CUTV has been interrupted");
+		}
+		pressPauseButtonAndValidation();
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing PVR key through RC");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().defaultContent();
+		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Library Screen not getting displayed");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		navigateToPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		clickToContinue();
+		handlePopupIfExist();
+		pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Pressing Ondemand Hot key though RC");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (driver.findElement(By.xpath(ObjectRepository.StoreFilterLayer.shopScreen)).getText()
+				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "OnDemandMenu", "name_nl"))) {
+
+			reports.log(LogStatus.PASS, "Ondemand Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("On demand Screen not getting displayed");
+		}
+
+	}
 }

@@ -280,4 +280,33 @@ public class VodFeaturesTestCase extends TestInitization {
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
 
 	}
+	
+
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException Test cases is used to '1.Go to shop
+        2.Select a program from the available category
+        3.Select 'Rent' from the Action Menu
+        4. Enter incorrect PIN
+	 */
+	@Test
+	public void tc_VOD_Rent_Enter_Invalid_PIN() throws InterruptedException {
+		VodFeatures vod = new VodFeatures(driver);
+		vod.VOD_Rent_Enter_Invalid_PIN(TestInitization.getExcelKeyValue("RentMovie", "POD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "WrongPinNumber"));
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException Test cases 'Watch a VOD and try to record it.
+	 */
+	@Test
+	public void tc_VOD_Record() throws InterruptedException {
+		VodFeatures vod = new VodFeatures(driver);
+		vod.VOD_Record();
+	}
+	
+	
 }

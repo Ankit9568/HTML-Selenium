@@ -778,4 +778,31 @@ public class DTVChannelTestCase extends TestInitization {
 	}
 	
 	
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to NTE STB is up and running.2. CUTV packages (Basic and Premium) is subscribed.3. User is watching a catchup program.
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_TP001_CUTV_Trick_play_menu_from_FullscreenTV() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.TP001_CUTV_Trick_play_menu_from_Full_screenTV();
+		
+	}
+	
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to NTE STB is up and running.2. CUTV packages (Basic and Premium) is subscribed.3. User is watching a catchup program.
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_TP002_CUTV_RC_Keys_during_Trickplay() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.TP002_CUTV_RC_Keys_during_Trickplay();
+		
+	}
+	
+	
 }

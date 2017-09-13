@@ -178,4 +178,18 @@ public class RecordingTestCase extends TestInitization {
 		recordingScreen.deleteAllRecordings();
 		recordingScreen.verifyAndPlanOverlappingRecordings(2);
 	}
+	
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used 'Start to watch a record. 
+	 * Stop the playout with any of the button that cause the playout to stop (STOP/Digital TV/PVR/ONDemand/TV Guide/&&&.)
+	 * Restart the playout of the record.
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_BCDTVCP1428_nPVR_Resume_Restart() throws InterruptedException
+	{
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.BCDTVCP1428_nPVR_Resume_Restart();
+	}
 }

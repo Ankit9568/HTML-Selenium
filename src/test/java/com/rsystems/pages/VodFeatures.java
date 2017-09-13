@@ -3,6 +3,7 @@ package com.rsystems.pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -98,6 +99,10 @@ public class VodFeatures extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.continueWatchVideo)
 	public WebElement continueWatchVideo;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.wrongPinEnterMessage)
+	public WebElement wrongPinEnterMessage;
+	
 	
 	public void naviagteToVideoOndemandScreen() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -539,4 +544,79 @@ public class VodFeatures extends TestInitization {
 		reports.log(LogStatus.PASS, "Verify Opacity of Two Lines getting displayed on Store Filter Screen");
 		libraryScreen.verifyOpactiyOfLines();
 	}
+	
+	public void VOD_Rent_Enter_Invalid_PIN(String parentCategry, String movieName, String WrongPinNumber) throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(parentCategry, movieName);
+
+		reports.log(LogStatus.PASS, "Navigate to PIN Screen");
+
+		TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(pinContainer, "Pin Container");
+		reports.log(LogStatus.PASS, "Enter Wrong number");
+		sendNumaricKeys(Integer.parseInt(WrongPinNumber));
+		reports.attachScreenshot(captureCurrentScreenshot());
+		Thread.sleep(2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String wrongPinMessage=wrongPinEnterMessage.getText();
+		System.out.println(wrongPinMessage);
+		if(wrongPinMessage.equalsIgnoreCase(getExcelKeyValue("ErrorMessages","WrongErrorMessage","Value")))
+		{
+			Thread.sleep(2000);
+			reports.log(LogStatus.PASS, "Wrong pin enter message is getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		else
+		{
+			FailTestCase("Wrong pin enter message is not getting displayed");
+		}
+	}
+	
+	public void VOD_Record() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		Pvr pvr = new Pvr(driver);
+
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+
+		reports.log(LogStatus.PASS, "Start VOD");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(lookOption.isDisplayed())
+		{
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		handlePopupIfExist();
+		}
+		else
+		{
+			driver.switchTo().frame(getCurrentFrameIndex());
+			wait.until(ExpectedConditions.visibilityOf(lookOption));
+			
+		}
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (pvr.playerBar.isDisplayed()) 
+			{
+				FailTestCase("Recording button is getting displayed");
+			}
+
+			else 
+			{
+				reports.log(LogStatus.PASS, "Nothing should happen in case of Recording Button");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+		} catch (NoSuchElementException e) {
+			reports.log(LogStatus.PASS, "Nothing should happen in case of Recording Button");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+	}
+	
 }
