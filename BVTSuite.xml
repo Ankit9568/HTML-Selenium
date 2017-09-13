@@ -17,6 +17,30 @@
 	<!-- </classes> -->
 	<!-- </test> -->
 
+<test name="VOD Test case">
+		<classes>
+			<class name="com.rsystems.test.VodFeaturesTestCase">
+				<methods>
+					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
+					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
+					<include name="tc_StoreEvolutionPosternonleafCategory" />
+					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
+					<include name="tc_BCVODBG0312_VOD_Rent" />
+					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
+					<include name="tc_StoreEvolutionPosterleafCategory" />
+					<include name="tc_storeEvolutionDefaultposternonleafCategory" />
+					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
+					<include name="TP009_VOD_TrickplaymenufromVODplayback" />
+					<include name="TP010_VODRCKeysduringTrickplay" />
+					<include name="tc_BCVODVD0130_VOD_FOD" />
+					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
+					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
 	<test name="Recording Test cases ">
 		<classes>
 			<class name="com.rsystems.test.RecordingTestCase">
@@ -107,29 +131,7 @@
 	</test>
 
 
-	<test name="VOD Test case">
-		<classes>
-			<class name="com.rsystems.test.VodFeaturesTestCase">
-				<methods>
-					<include name="tc_BCVODVD0118_naviagteToVODTrailer" />
-					<include name="tc_BCVODVD0101_navigateToOndemandScreenHotKey" />
-					<include name="tc_StoreEvolutionPosternonleafCategory" />
-					<include name="tc_StoreEvolutionDefaultPosterLeafCategory" />
-					<include name="tc_BCVODBG0312_VOD_Rent" />
-					<include name="tc_BCVODVD0131_VOD_Rent_Zero_Euro" />
-					<include name="tc_StoreEvolutionPosterleafCategory" />
-					<include name="tc_storeEvolutionDefaultposternonleafCategory" />
-					<include name="tc_BCVODVD0114_VOD_Current_Rentals" />
-					<include name="TP009_VOD_TrickplaymenufromVODplayback" />
-					<include name="TP010_VODRCKeysduringTrickplay" />
-					<include name="tc_BCVODVD0130_VOD_FOD" />
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
-					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
-					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+	
 
 	<test name="RcArrow Keys TestCase">
 		<classes>
