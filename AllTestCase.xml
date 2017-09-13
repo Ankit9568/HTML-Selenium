@@ -7,15 +7,16 @@
 
 	<!-- First Sprint(15_6_2017) Test case -->
 
-	<!-- <test name="UnAssingedSTBTestCases"> -->
-	<!-- <classes> -->
-	<!-- <class name="com.rsystems.test.UnAssingedSTBTestCases"> -->
-	<!-- <methods> -->
-	<!-- <include name="tc_BCCOMML0210_LANG007_Assignment" /> -->
-	<!-- </methods> -->
-	<!-- </class> -->
-	<!-- </classes> -->
-	<!-- </test> -->
+	<test name="UnAssingedSTBTestCases">
+		<classes>
+			<class name="com.rsystems.test.UnAssingedSTBTestCases">
+				<methods>
+					<include name="tc_BCCOMML0210_LANG007_Assignment" />
+					<include name="STB_Registration_Auto_Config_screen_On_unassigning_STB" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 
 	<test name="Recording Test cases ">
 		<classes>
@@ -31,6 +32,7 @@
 					<include name="tc_BCDTVCP1419_navigation_with_recordings" />
 					<include name="tc_BCDTVCP1451_Planned_nPVR_Delete" />
 					<include name="tc_BCDTVCP1430_nPVR_Planner_Navigation" />
+					<include name="tc_BCDTVCP1429_nPVR_Library_Navigation" />
 					<include name="tc_BCDTVCP1429_nPVR_Library_Navigation" />
 				</methods>
 			</class>
@@ -97,6 +99,8 @@
 					<include name="tc_392_EPG_Navigation_Till_Available_Days" />
 					<include name="tc_356_TIME0202_UI" />
 
+					<include name="tc_EPG007_EPG_Current_Time_Line" />
+					<include name="tc_EPG_Date_Time_Change" />
 				</methods>
 			</class>
 		</classes>
@@ -171,6 +175,12 @@
 					<include name="TP005_DTV_Trick_playmenufromFullScreen_TV" />
 					<include name="TP004_TSTV_RC_Keys_during_Trickplay" />
 
+					<include name="tc_CUSUB0205_basic_premium_switch" />
+					<include name="tc_CUSUB0203_no_subscription" />
+					<include name="tc_CUUPS0801_upsell_page" />
+					<include name="tc_TP001_CUTV_Trick_play_menu_from_FullscreenTV" />
+					<include name="tc_TP002_CUTV_RC_Keys_during_Trickplay" />
+
 				</methods>
 			</class>
 		</classes>
@@ -209,6 +219,11 @@
 					<include name="tc_RCU_Arrow_Keys_on_DTV_fullscreen" />
 					<include name="tc_RCU_Record_Button" />
 					<include name="tc_RCU_BackKey" />
+					<include name="tc_RCU_CHPlus_CHMiunsKey" />
+					<include name="tc_RCU_ON_Demand_NTE1_1" />
+					<include name="tc_RCU_PVR_NTE1_1" />
+					<include name="tc_RCU_Radio_Hot_Key_NTE1_1" />
+
 				</methods>
 			</class>
 		</classes>
@@ -257,6 +272,9 @@
 					<include name="tc_SF005_Store" />
 					<include name="tc_TP009_VOD_Trick_play_menu_from_VOD_playback" />
 					<include name="tc_Single_Asset_Variant_Non_Grouped_Purchase" />
+					<include name="tc_VOD_Rent_Enter_Invalid_PIN" />
+					<include name="tc_VOD_Record" />
+
 				</methods>
 			</class>
 		</classes>
