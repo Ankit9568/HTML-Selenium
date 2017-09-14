@@ -225,12 +225,16 @@ public class MiniEPGTestCase extends TestInitization {
 		TestInitization.sendKeySequence("UP", 2000, "zaplijst");
 		
 
-		reports.log(LogStatus.PASS, "Navigate the CUTV disabled channel");
+		reports.log(LogStatus.PASS, "Navigate the CUTV Enabled channel");
 		sendNumaricKeys(
 				Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
 		Thread.sleep(2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
+		dtvChannel.openLiveTV();
+		dtvChannel.tuneToChannel(Integer.parseInt(TestInitization.getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		
+		
 		reports.log(LogStatus.PASS, "Navigate the MiniEpg screen and validation");
 		TestInitization.sendKeySequence("LEFT", 2000, "televisie");
 		

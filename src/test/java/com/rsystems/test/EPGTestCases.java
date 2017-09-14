@@ -948,7 +948,7 @@ public class EPGTestCases extends TestInitization {
 		Boolean pauseBtnFound = false;
 		Boolean recordBtnFound = false;
 
-		reports.log(LogStatus.PASS, "Navigate the Live TV");
+		reports.log(LogStatus.PASS, "Navigate the TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		reports.log(LogStatus.PASS, "Select On goining program");
@@ -960,9 +960,9 @@ public class EPGTestCases extends TestInitization {
 			if (option.getText().contentEquals("pauzeren")) {
 				pauseBtnFound = true;
 				reports.log(LogStatus.PASS, "Pause button found");
-			} else if (option.getText().contentEquals("opnemen")) {
+			} else if (option.getText().contentEquals("opnemen") || option.getText().contentEquals("opname stoppen") ) {
 				recordBtnFound = true;
-				reports.log(LogStatus.PASS, "Record button found");
+				reports.log(LogStatus.PASS, "Record/RecrdingStop button found");
 			}
 
 			else if (option.getText().contentEquals("serie opnemen")) {
@@ -1143,12 +1143,13 @@ public class EPGTestCases extends TestInitization {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
+		
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("ActivateInfoBanner", "RadioChannel", "name_nl")));
 		Thread.sleep(5000);
-
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
 		String currentPrgDesc = epgScreen.channelGenere.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -1303,6 +1304,8 @@ public class EPGTestCases extends TestInitization {
 		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getY();
 		int startTimeDuration = epgScreen.focusElementProgramTime.getLocation().getY();
 		int startYProgramDesc = epgScreen.displayChannelDescription.getLocation().getY();
+		
+		System.out.println("page source " + driver.getPageSource());
 		String startProgramTime = epgScreen.displayChannelStartTime.getText();
 		if (startYProgramTitle < startTimeDuration && startTimeDuration < startYProgramDesc) {
 			reports.log(LogStatus.PASS, "Program duration is displayed between program title and program description ");
