@@ -42,7 +42,7 @@ public class ObjectRepository {
 		public static final String displayChannelTitle = "title";
 		public static final String displayChannelDescription = "vodText";
 		public static final String displayChannelprogressbar = "progress";
-		public static final String displayChannelStartTime = "startDate";
+		public static final String displayChannelStartTime = "prog-time";
 		public static final String displayChannelEndTime = "endDate";
 		public static final String displayChannelCallLetterIcon = "//li[@class='focusedChannel']/div[contains(@class,'ch_logo')]/span/img";
 		public static final String cutvIcon = "//span[@class='channel-cutv']";

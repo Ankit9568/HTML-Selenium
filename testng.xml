@@ -7,9 +7,9 @@
 
 	<test name="EPG Setting Test case ">
 		<classes>
-			<class name="com.rsystems.test.MiniEPGTestCase">
+			<class name="com.rsystems.test.EPGTestCases">
 				<methods>
-					<include name="tc_77679_MiniEPG_Left_side_tv_guideTile" />
+					<include name="tc_EPG023_EPG_Program_Duration" />
 					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> <include name="tc_BCEPGHPG02_epg_confirmation_setting" 
 						/> <include name="tc_BCEPGHPG01_epg_cancel_setting" /> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" 
 						/> <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> <include name="tc_BCEPGHPG09_epg_scenior_font_geel" 

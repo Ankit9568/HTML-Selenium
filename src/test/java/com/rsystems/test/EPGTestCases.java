@@ -1304,9 +1304,8 @@ public class EPGTestCases extends TestInitization {
 		int startYProgramTitle = epgScreen.displayChannelTitle.getLocation().getY();
 		int startTimeDuration = epgScreen.focusElementProgramTime.getLocation().getY();
 		int startYProgramDesc = epgScreen.displayChannelDescription.getLocation().getY();
-		
-		System.out.println("page source " + driver.getPageSource());
 		String startProgramTime = epgScreen.displayChannelStartTime.getText();
+		
 		if (startYProgramTitle < startTimeDuration && startTimeDuration < startYProgramDesc) {
 			reports.log(LogStatus.PASS, "Program duration is displayed between program title and program description ");
 			reports.attachScreenshot(captureCurrentScreenshot());
