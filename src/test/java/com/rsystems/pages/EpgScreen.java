@@ -1999,6 +1999,7 @@ public class EpgScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Navigate RIGHT - LEFT in EPG");
 		String prevProgramSummary = programSummary.getText();
 		String programDuration = focusElementProgramTime.getText();
+		String programTitle = driver.findElement(By.className("progName")).getText();
 		int iterator = 20;
 		while(iterator!=0)
 		{
@@ -2012,24 +2013,59 @@ public class EpgScreen extends TestInitization {
 			}
 			iterator--;
 		}
-		System.out.println(prevProgramSummary+ "====== "+ programSummary.getText());
+		String updatedProgramSummary = programSummary.getText();
+		System.out.println(prevProgramSummary+ "====== "+ updatedProgramSummary);
 		Thread.sleep(3000);
-		if(!prevProgramSummary.equalsIgnoreCase(programSummary.getText())){
-			reports.log(LogStatus.PASS, "Press Right Key - Program Summary Getting updated.");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}else
+		if(programTitle.equalsIgnoreCase(displayChannelTitle.getText()))
 		{
-			FailTestCase("Program Summary not getting updated");
+			if(updatedProgramSummary.equalsIgnoreCase(prevProgramSummary))
+			{
+				reports.log(LogStatus.PASS, "Press Right Key - Program Description updated according to Program");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Press Right Key - Program Description not updated according to Program");
+			}
 		}
+		else{
+			if(!updatedProgramSummary.equalsIgnoreCase(prevProgramSummary))
+			{
+				reports.log(LogStatus.PASS, "Press Right Key - Program Description updated according to Program");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Press Right Key - Program Description not updated according to Program");
+			}
+		}
+		
 		String currentProgramSummary = programSummary.getText();
 		sendKeyMultipleTimes("LEFT", 1, 5000);
-		System.out.println(currentProgramSummary+ "====== "+ programSummary.getText());
-		if(!currentProgramSummary.equalsIgnoreCase(programSummary.getText())){
-			reports.log(LogStatus.PASS, "Press LEFT Key - Program Summary Getting updated");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}else
+		updatedProgramSummary = programSummary.getText();
+		System.out.println(currentProgramSummary+ "====== "+ updatedProgramSummary);
+		if(programTitle.equalsIgnoreCase(displayChannelTitle.getText()))
 		{
-			FailTestCase("Program Summary not getting updated");
+			if(updatedProgramSummary.equalsIgnoreCase(currentProgramSummary))
+			{
+				reports.log(LogStatus.PASS, "Press LEFT Key - Program Description updated according to Program");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Press LEFT Key - Program Description not updated according to Program");
+			}
+		}
+		else{
+			if(!updatedProgramSummary.equalsIgnoreCase(currentProgramSummary))
+			{
+				reports.log(LogStatus.PASS, "Press LEFT  Key - Program Description updated according to Program");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+			else
+			{
+				FailTestCase("Press LEFT Key - Program Description not updated according to Program");
+			}
 		}
 
 	}

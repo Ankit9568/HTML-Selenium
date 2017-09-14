@@ -103,6 +103,8 @@ public class VodFeatures extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.Vod.wrongPinEnterMessage)
 	public WebElement wrongPinEnterMessage;
 	
+	@FindBy(how = How.ID, using = ObjectRepository.FilmsScreen.currentSelectedMovieName)
+	public WebElement currentSelectedMovieName;
 	
 	public void naviagteToVideoOndemandScreen() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -515,22 +517,29 @@ public class VodFeatures extends TestInitization {
 	
 	public void TP009_VOD_Trick_play_menufrom_VODplayback() throws InterruptedException
 	{
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+        DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+        dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+        TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+      TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+        sendKeyMultipleTimes("ENTER", 2, 1000);
+        dtvChannelScreen.pressForwardButtonAndValidation();
+        dtvChannelScreen.pressRewindButtonAndValidation();
+        dtvChannelScreen.pressPauseButtonAndValidation();
+        dtvChannelScreen.pressPlayButtonAndValidation();
+        sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
+        reports.log(LogStatus.PASS, "Should be on the Movie list screen");
+        driver.switchTo().frame(getCurrentFrameIndex());
+        isDisplayed(currentSelectedMovieName, "Currently played film");
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        driver.switchTo().frame(getCurrentFrameIndex());
+        isDisplayed(lookOption, "kijken");
+        reports.log(LogStatus.PASS, "Continue to watch video");
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        handlePopupIfExist();
+        dtvChannelScreen.pressPauseButtonAndValidation();
 
-		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
-		TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
-	    TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		dtvChannelScreen.pressForwardButtonAndValidation();
-		dtvChannelScreen.pressRewindButtonAndValidation();
-		dtvChannelScreen.pressPauseButtonAndValidation();
-		dtvChannelScreen.pressPlayButtonAndValidation();
-		dtvChannelScreen.pressStopButtonAndValidation();
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		dtvChannelScreen.pressPlayButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+
 
 	}
 	

@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +26,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
-
-import gherkin.lexer.Fa;
 
 public class MiniEPGScreen extends TestInitization {
 
@@ -1791,78 +1788,67 @@ public class MiniEPGScreen extends TestInitization {
 		String cutvChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		String miniEPGExpectedscreenTitle = getExcelKeyValue("screenTitles", "LiveTV", "name_nl");
 		dtvChannelScreen.openLiveTV();
-		sendNumaricKeys(1);
-		Thread.sleep(1000);
-		handlePopupIfExist();
 		sendNumaricKeys(Integer.parseInt(cutvChannelNumber));
 		Thread.sleep(3000);
 		handlePopupIfExist();
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (cutvIcon.getAttribute("src").contains("cutv-icon.png")) {
-			reports.log(LogStatus.PASS, "Tuned To CUTV Channel " + cutvChannelNumber);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not Tuned to CUTV Channel");
-		}
-		Thread.sleep(2000);
-		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		//Add code
-		driver.switchTo().frame(getCurrentFrameIndex());
-		try {
-			if (epgGuide.isDisplayed()) {
-				reports.log(LogStatus.PASS, "TV Guide Displayed");
-				reports.attachScreenshot(captureCurrentScreenshot());
-			} else {
-				FailTestCase("Tv Guide not displayed");
-			}
-		} catch (NoSuchElementException ex) {
-			FailTestCase("TV Guide not displayed");
-		}
-		/*driver.switchTo().defaultContent();
-		DateFormat sdf = new SimpleDateFormat("hh:mm");
-		System.out.println(Calendar.DATE);
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.HOUR, -32);
-		System.out.println("Before 32 hr: " + c.getTime());
-		String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
-		int month = c.get(Calendar.MONTH);
-		System.out.println(c.get(Calendar.DAY_OF_MONTH));
-		Date date1 = sdf.parse(c.getTime().toString().split(" ")[3]);
-		System.out.println(sdf.parse(c.getTime().toString().split(" ")[3]));
-		int noOfTry = 60;
-		boolean found = false;
-		while (noOfTry!=0) {
-			driver.switchTo().frame(getCurrentFrameIndex());
-			sendKeyMultipleTimes("LEFT", 1, 1000);
-			System.out.println(dayHeading.getText());
-			System.out.println(day);
-			if (dayHeading.getText().contains(day)) {
-				Date date2 = sdf.parse(new EpgScreen(driver).focusElementProgramTime.getText().split(">")[0].trim());
-				System.out.println(date2);
-				System.out.println(date1);
-				System.out.println(date2.before(date1));
-				if (date2.before(date1)) {
-					System.out.println("Found");
-					reports.log(LogStatus.PASS, "CUTV Program started 32 hrs ago found");
+		isDisplayed(epgGuide, "TV Guide");
+		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 3000);
+		int noOfTry = 30;
+		while (noOfTry > 0) {
+			try {
+				String focustText = new EpgScreen(driver).focusElemntInEpg.getText();
+				String title = driver.findElement(By.xpath("//*[@id='title']")).getText();
+				if (new DTVChannelScreen(driver).focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")
+						&& focustText.equalsIgnoreCase(title)) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past Replayble program found Started long back" + new EpgScreen(driver).focusElemntInEpg.getText());
 					reports.attachScreenshot(captureCurrentScreenshot());
-
-					sendKeyMultipleTimes("ENTER", 1, 1000);
-					reports.log(LogStatus.PASS, "Start playing CUTV playout of program started 32 hrs ago");
-					reports.attachScreenshot(captureCurrentScreenshot());
-					found = true;
 					break;
 				}
+			} catch (NoSuchElementException ex) {
+
 			}
-			noOfTry -=1;
+			noOfTry -= 1;
+			sendKeyMultipleTimes("RIGHT", 1, 1000);
+			reports.log(LogStatus.PASS, "Navigate to Replayble Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		if(!found)
-		{	
-			FailTestCase("No CUTV Program started 32hr ago found");
-		}*/
-		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 2, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(programDetailsScreen));
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		Thread.sleep(3000);
+		List<WebElement> menuList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		System.out.println(menuList.size());
+		for(int i =0 ;i<menuList.size();i++)
+		{
+			if(menuList.get(i).getText().equalsIgnoreCase("kijken"))
+			{
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 2000);
+			}
+		}
+		
+		Thread.sleep(5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		} catch (NoSuchElementException ex) {
+		}
 		Thread.sleep(2000);
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+		Thread.sleep(3000);
 		sendKeyMultipleTimes("LEFT", 1, 1000);
 		driver.switchTo().defaultContent();
 		wait.until(ExpectedConditions.visibilityOf(headerText));
@@ -1883,7 +1869,7 @@ public class MiniEPGScreen extends TestInitization {
 		reports.log(LogStatus.PASS, "Validate Left-far Tile is tv-gids");
 		validateFirstOrRightTile("LEFT", "tv-gids", 15);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		int noOfTry = 30;
+		noOfTry = 30;
 		boolean found = false;
 		while (noOfTry!=1) {
 			sendKeyMultipleTimes("RIGHT", 1, 1000);
@@ -1921,20 +1907,8 @@ public class MiniEPGScreen extends TestInitization {
 			FailTestCase( "Not navigated to Active Episode Tile");
 			
 		}
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
-		String[] currentImgToArr = currentImgSource.split("/");
-		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-		if (imageName
-				.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-			reports.log(LogStatus.PASS, "Full Screen Vidoe is playing");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Not navigated to Full Scren Video");
-		}
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 	}
 
 	public void verifyTitleOfMiniEPGScreen() throws InterruptedException {

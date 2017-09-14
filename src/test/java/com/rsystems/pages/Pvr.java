@@ -38,7 +38,8 @@ public class Pvr extends TestInitization {
 	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException {
 
 
-        RecordingScreen record = new RecordingScreen(driver);
+		RecordingScreen record = new RecordingScreen(driver);
+        DTVChannelScreen channelScreen = new DTVChannelScreen(driver);
         String recordingType = "SINGLE";
 
         reports.log(LogStatus.PASS, "Navigate to Library Screen");
@@ -74,35 +75,21 @@ public class Pvr extends TestInitization {
                     } 
                     else 
                     {
-                          TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+                          TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
                     }
                 } 
               else 
               {
-                    TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+                    TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
               }
         }
-        sendKeyMultipleTimes("ENTER", 1, 1000);
-        sendKeyMultipleTimes("ENTER", 1, 1000);
-        sendKeyMultipleTimes("ENTER", 1, 1000);
-
+        sendKeyMultipleTimes("ENTER", 3, 3000);
         reports.log(LogStatus.PASS, "PVR Playback video is playing");
         Thread.sleep(3000);
-        sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 3000);
-        reports.attachScreenshot(captureCurrentScreenshot());
-        driver.switchTo().frame(getCurrentFrameIndex());
-        String currentImgSource = new DTVChannelScreen(driver).pauseAndPlayImg.getAttribute("src");
-        String[] currentImgToArr = currentImgSource.split("/");
-        String imageName = currentImgToArr[(currentImgToArr.length) - 1];
-        if (imageName
-                    .equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PlayButtonImageName", "Values"))) {
-              reports.log(LogStatus.PASS, "Playback Video is playing.Play button is now highlight on webpage");
-              reports.attachScreenshot(captureCurrentScreenshot());
-        }
+        channelScreen.pressPauseButtonAndValidation();
+        Thread.sleep(8000);
+        sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
 
-        else {
-              FailTestCase("Play button is not highlight on webpage. Might be Video is not playing in this channel");
-        }
 
 	}
 

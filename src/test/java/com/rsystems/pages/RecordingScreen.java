@@ -1619,37 +1619,90 @@ public class RecordingScreen extends TestInitization {
 
 	public void BCDTVCP1428_nPVR_Resume_Restart() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		Pvr pvr = new Pvr(driver);
-		MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
-		dtvChannelScreen.openLiveTV();
-		handlePopupIfExist();
-		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(
-				Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
-		pvr.navigateToThePVRPlayback(episodeDetails);
-		handlePopupIfExist();
-		reports.log(LogStatus.PASS, "Stop Live TV by moving on Ondemand Screen");
-		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.xpath(ObjectRepository.StoreFilterLayer.shopScreen)).getText()
-				.equalsIgnoreCase(getExcelKeyValue("screenTitles", "OnDemandMenu", "name_nl"))) {
+        Pvr pvr = new Pvr(driver);
+        MiniEPGScreen miniEPGScreen = new MiniEPGScreen(driver);
+        dtvChannelScreen.openLiveTV();
+        handlePopupIfExist();
+        EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(
+                    Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+        pvr.navigateToThePVRPlayback(episodeDetails);
+        handlePopupIfExist();
+        reports.log(LogStatus.PASS, "Stop Live TV by moving on Ondemand Screen");
+        sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+        reports.attachScreenshot(captureCurrentScreenshot());
+        driver.switchTo().frame(getCurrentFrameIndex());
+        if (driver.findElement(By.xpath(ObjectRepository.StoreFilterLayer.shopScreen)).getText()
+                    .equalsIgnoreCase(getExcelKeyValue("screenTitles", "OnDemandMenu", "name_nl"))) {
 
-			reports.log(LogStatus.PASS, "Ondemand Screen getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("On demand Screen not getting displayed");
-		}
+              reports.log(LogStatus.PASS, "Ondemand Screen getting displayed");
+              reports.attachScreenshot(captureCurrentScreenshot());
+        } else {
+              FailTestCase("On demand Screen not getting displayed");
+        }
 
-		reports.log(LogStatus.PASS, "Navigating to library to Replay the same nPVR video");
-		pvr.navigateToThePVRPlayback(episodeDetails);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(miniEPGScreen.notificationMsg, "Notification message ");
+        reports.log(LogStatus.PASS, "Navigating to library to Replay the same nPVR video");
+        runPVRPlayback(episodeDetails);
+        driver.switchTo().frame(getCurrentFrameIndex());
+        isDisplayed(miniEPGScreen.notificationMsg, "Notification message ");
 
-		reports.log(LogStatus.PASS, "Restarting the video");
-		sendKeyMultipleTimes("RIGHT", 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
-	
-		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+        reports.log(LogStatus.PASS, "Restarting the video");
+        sendKeyMultipleTimes("RIGHT", 1, 1000);
+        sendKeyMultipleTimes("ENTER", 1, 1000);
+  
+        new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+
 	}
 
+	
+	public void runPVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException
+    {
+          RecordingScreen record = new RecordingScreen(driver);
+         String recordingType = "SINGLE";
+
+            reports.log(LogStatus.PASS, "Navigate to Library Screen");
+            sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+            driver.switchTo().defaultContent();
+            System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
+            if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+                        .equalsIgnoreCase("mijn bibliotheek")) {
+                  reports.log(LogStatus.PASS, "Library Screen getting displayed");
+                  reports.attachScreenshot(captureCurrentScreenshot());
+            } else {
+                  FailTestCase("Library Screen not getting displayed");
+            }
+            sendKeyMultipleTimes("ENTER", 1, 1000);
+            driver.switchTo().frame(getCurrentFrameIndex());
+            if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
+                  reports.log(LogStatus.PASS, "Recording List getting displayed");
+                  reports.attachScreenshot(captureCurrentScreenshot());
+            } else {
+                  FailTestCase("Recording List not getting displayed");
+            }
+
+            driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+            int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
+            for (int i = 0; i < recordingSize; i++) {
+
+                  if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+                  {
+                        if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+                    && record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName))
+                        {
+                              break;
+                        } 
+                        else 
+                        {
+                              TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+                        }
+                    } 
+                  else 
+                  {
+                        TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+                  }
+            }
+          sendKeyMultipleTimes("ENTER",2, 6000);
+    }
+    
+
+	
 }
