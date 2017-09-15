@@ -282,17 +282,17 @@ public class MiniEPGScreen extends TestInitization {
 			sendKeyMultipleTimes("RIGHT", 1, 500);
 			reports.attachScreenshot(captureCurrentScreenshot());
 			driver.switchTo().frame(getCurrentFrameIndex());
-			System.out.println(currentEpisode.findElement(By.tagName("h2")).getText());
-			if (currentEpisode.findElement(By.tagName("h2")).getText()
+			System.out.println(currentEpisode.findElement(By.className("title-animate")).getText());
+			if (currentEpisode.findElement(By.className("title-animate")).getText()
 					.equalsIgnoreCase(episodeName.get(channelKeyWithMinBuffer - 1))
 					&& currentEpisode.findElement(By.cssSelector(".media-content p")).getText()
 							.equalsIgnoreCase(episodeTiming.get(channelKeyWithMinBuffer - 1))) {
 				reports.log(LogStatus.PASS, "Expected Episode -" + episodeName.get(channelKeyWithMinBuffer - 1)
-						+ " Actual Episode :-" + currentEpisode.findElement(By.tagName("h2")).getText());
+						+ " Actual Episode :-" + currentEpisode.findElement(By.className("title-animate")).getText());
 				reports.attachScreenshot(captureCurrentScreenshot());
 			} else {
 				FailTestCase("Test Cases is failed Expected Episode -" + episodeName.get(channelKeyWithMinBuffer - 1)
-						+ " Actual Episode :-" + currentEpisode.findElement(By.tagName("h2")).getText()
+						+ " Actual Episode :-" + currentEpisode.findElement(By.className("title-animate")).getText()
 						+ " And Expected Episode Time Duration : " + episodeTiming.get(channelKeyWithMinBuffer - 1)
 						+ "Actual Episode Time Duration is "
 						+ currentEpisode.findElement(By.cssSelector(".media-content p")).getText());

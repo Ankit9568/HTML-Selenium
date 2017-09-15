@@ -210,7 +210,7 @@ public class RecordingScreen extends TestInitization {
 				reports.log(LogStatus.PASS, "SEND RIGHT KEY - Navigate to Next Episode");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				driver.switchTo().frame(getCurrentFrameIndex());
-				epgepisodeName = driver.findElement(By.className("current")).findElement(By.tagName("h2"))
+				epgepisodeName = driver.findElement(By.className("current")).findElement(By.className("title-animate"))
 						.getAttribute("innerText");
 				System.out.println(epgepisodeName);
 				// Enter to open Episode Info
