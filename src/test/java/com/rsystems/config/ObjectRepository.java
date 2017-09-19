@@ -286,7 +286,7 @@ public class ObjectRepository {
 		public static final String type = "leftLabel";
 		public static final String epgInfo = "epgType";
 		public static final String background = "epgBackground";
-		public static final String Id = "row_1";
+		
 		public static final String notificationMsg = "confimation-popup";
 		public static final String firstChannelNumberInEPG = "//*[@id='colCh0']/span/span";
 

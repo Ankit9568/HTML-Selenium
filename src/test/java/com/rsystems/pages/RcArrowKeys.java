@@ -31,8 +31,7 @@ public class RcArrowKeys extends TestInitization {
 	public WebElement epgInfo;
 	@FindBy(how = How.ID, using = ObjectRepository.RcArrowKey.background)
 	public WebElement background;
-	@FindBy(how = How.ID, using = ObjectRepository.RcArrowKey.Id)
-	public WebElement Id;
+	
 	@FindBy(how = How.ID, using = ObjectRepository.StoreFilterLayer.screenID)
 	public WebElement screenID;
 	@FindBy(how = How.XPATH, using = ObjectRepository.HubScreen.headerElement)
