@@ -29,7 +29,7 @@ public class SSH_Connection {
 			System.out.println(pingMachine());
 			if (pingMachine()) {
 				
-				String command1 = "cd /etc/params/webdriver_release_14Aug;killall QtTestBrowser;./run.sh";
+				String command1 = "cd /etc/params/webdriver_release_20Sep;killall QtTestBrowser;./run.sh";
 				startQTDriver(command1);
 				break;
 			} else {

@@ -73,4 +73,25 @@ public class HotKeysNavigation extends TestInitization {
 
 	}
 
+	
+	public int openRadioButtonAndValidate(int radioButtonPressCount) throws InterruptedException{
+		
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		reports.log(LogStatus.PASS, "Navigate to the Radio Screen");
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), radioButtonPressCount, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		int radioChannel = Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
+		if (radioChannel == Integer.parseInt(getExcelKeyValue("DTVChannel", "RadioChannel", "Values"))) {
+			reports.log(LogStatus.PASS, "Radio channel Number : " + radioChannel + " has been reached ");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Radio channel Number : " + radioChannel + " has not been reached");
+
+		}
+		
+		return radioChannel;
+	}
 }

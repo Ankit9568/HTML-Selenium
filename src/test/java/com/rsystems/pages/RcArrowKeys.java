@@ -9,9 +9,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.STVerticalAlignment;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
+import com.rsystems.pages.RecordingScreen.EpisodeInfo;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
 
@@ -31,7 +33,7 @@ public class RcArrowKeys extends TestInitization {
 	public WebElement epgInfo;
 	@FindBy(how = How.ID, using = ObjectRepository.RcArrowKey.background)
 	public WebElement background;
-	
+
 	@FindBy(how = How.ID, using = ObjectRepository.StoreFilterLayer.screenID)
 	public WebElement screenID;
 	@FindBy(how = How.XPATH, using = ObjectRepository.HubScreen.headerElement)
@@ -40,9 +42,10 @@ public class RcArrowKeys extends TestInitization {
 	public WebElement firstChannelNumberInEPG;
 	@FindBy(how = How.CLASS_NAME, using = "dayHeading")
 	public WebElement dayHeading;
-	
-	@FindBy(how = How.ID,using = ObjectRepository.RcArrowKey.notificationMsg)
+
+	@FindBy(how = How.ID, using = ObjectRepository.RcArrowKey.notificationMsg)
 	public WebElement notificationMsg;
+
 	public boolean verifyNavigationToEpgScreen() throws InterruptedException {
 
 		EpgScreen epg = new EpgScreen(driver);
@@ -102,13 +105,13 @@ public class RcArrowKeys extends TestInitization {
 
 		TestInitization.setApplicationHubPage(2);
 		reports.log(LogStatus.PASS, "Navigate to the VOD Screen");
-		
+
 		TestInitization.sendKeySequence("RIGHT,ENTER", 1000, "shop");
 		reports.attachScreenshot(captureCurrentScreenshot());
 
-				// Forward Navigation in the VOD screen
+		// Forward Navigation in the VOD screen
 		reports.log(LogStatus.PASS, "Press right key");
-		
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 
 		for (int iterator = 0; iterator < 2; iterator++) {
@@ -134,71 +137,63 @@ public class RcArrowKeys extends TestInitization {
 
 	}
 
-
 	public void verifyDTVHotKey() throws InterruptedException {
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 2000);
 		Thread.sleep(1000);
 		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 	}
+
 	public void verifyNumericKeys() throws InterruptedException {
 		verifyRCNumericKeyOnEPG();
 		verifyRCNumericKeyOnDTV();
 		verifyRCNumericKeyOnLibrary();
 		verifyRCNumericKeyOnShop();
-		
+
 	}
 
 	private void verifyRCNumericKeyOnShop() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Navigate to Shop Screen");
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Shop Screen not getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		reports.log(LogStatus.PASS, "Send Numeric Key");
 		sendNumaricKeys(5);
 		Thread.sleep(2000);
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Nothing happens. User is on Shop Screen");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Used tuned from Shop Screen");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		
+
 	}
 
 	private void verifyRCNumericKeyOnLibrary() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Navigate to Library Screen");
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Library Screen not getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		reports.log(LogStatus.PASS, "Send Numeric Key");
 		sendNumaricKeys(5);
 		Thread.sleep(2000);
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Nothing happens. User is on Library Screen");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Used tuned from Library Screen");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -216,18 +211,17 @@ public class RcArrowKeys extends TestInitization {
 		sendNumaricKeys(3);
 		Thread.sleep(2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if(firstChannelNumberInEPG.getAttribute("innerText").trim().equalsIgnoreCase("3")){
-			reports.log(LogStatus.PASS, "user moved to channel no "+firstChannelNumberInEPG.getAttribute("innerText").trim());
+		if (firstChannelNumberInEPG.getAttribute("innerText").trim().equalsIgnoreCase("3")) {
+			reports.log(LogStatus.PASS,
+					"user moved to channel no " + firstChannelNumberInEPG.getAttribute("innerText").trim());
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("User should be moved to Channel 3");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		
+
 	}
-	
+
 	public void verifyRCUEPGNavigation() throws InterruptedException {
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
 		reports.log(LogStatus.PASS, "Navigate to TV Guide");
@@ -236,13 +230,10 @@ public class RcArrowKeys extends TestInitization {
 		String dateOnEPG = dayHeading.getText();
 		reports.log(LogStatus.PASS, "Press Forward Key");
 		sendUnicodeMultipleTimes(Unicode.VK_FORWARD.toString(), 1, 1000);
-		if(!dayHeading.getText().equalsIgnoreCase(dateOnEPG))
-		{
+		if (!dayHeading.getText().equalsIgnoreCase(dateOnEPG)) {
 			reports.log(LogStatus.PASS, "User moved horizontally from one day to another");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Press Forward Key - Used not moved horizontally from one day to another");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -250,28 +241,25 @@ public class RcArrowKeys extends TestInitization {
 		String focusElement = new EpgScreen(driver).focusElemntInEpg.getText();
 		reports.log(LogStatus.PASS, "Press Ch- key");
 		sendUnicodeMultipleTimes(Unicode.VK_CHANNEL_MINUS.toString(), 1, 1000);
-		if(new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(focusElement)){
+		if (new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(focusElement)) {
 			reports.log(LogStatus.PASS, "Nothing happens. Focus is on current episode");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Press CH- Key : Focus changed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
+
 	public void verifyRCArrowKeysOnDTV() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
 		reports.log(LogStatus.PASS, "Press UP Arrow Key");
 		sendKeyMultipleTimes("UP", 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))) {
 			reports.log(LogStatus.PASS, "ZapList getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Zaplist should getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -279,12 +267,10 @@ public class RcArrowKeys extends TestInitization {
 		reports.log(LogStatus.PASS, "Press DOWN Arrow Key");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Zaplist", "name_nl"))) {
 			reports.log(LogStatus.PASS, "ZapList getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Zaplist should getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -292,12 +278,10 @@ public class RcArrowKeys extends TestInitization {
 		reports.log(LogStatus.PASS, "Press RIGHT Arrow Key");
 		sendKeyMultipleTimes("RIGHT", 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Mini EPG Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Mini EPG Screen  should getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -305,23 +289,22 @@ public class RcArrowKeys extends TestInitization {
 		reports.log(LogStatus.PASS, "Press LEFT Arrow Key");
 		sendKeyMultipleTimes("LEFT", 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))){
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Mini EPG Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Mini EPG Screen should getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		
+
 	}
+
 	public void verifyBackKey() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Go to Hub Screen By pressing Menu Key");
 		new Hub(driver).launchAndVerifyMenuScreen();
 		reports.log(LogStatus.PASS, "Go to Shop Screen");
 		sendKeySequence("DOWN,RIGHT,ENTER", 1000, "shop");
-		reports.log(LogStatus.PASS,"Press Back Key");
+		reports.log(LogStatus.PASS, "Press Back Key");
 		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 		driver.switchTo().defaultContent();
 		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
@@ -331,16 +314,16 @@ public class RcArrowKeys extends TestInitization {
 		} else {
 			FailTestCase("Hub Screen not displayed");
 		}
-		sendUnicodeMultipleTimes(Unicode.VK_TV.toString() , 1	, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
 		reports.log(LogStatus.PASS, "Go to Hub Screen By pressing Menu Key");
 		new Hub(driver).launchAndVerifyMenuScreen();
 		reports.log(LogStatus.PASS, "Go to Shop Screen");
 		sendKeySequence("DOWN,RIGHT,ENTER", 1000, "shop");
-		reports.log(LogStatus.PASS,"Press TV_GUIDE Key");
+		reports.log(LogStatus.PASS, "Press TV_GUIDE Key");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
-		reports.log(LogStatus.PASS,"Press Back Key");
+		reports.log(LogStatus.PASS, "Press Back Key");
 		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 		driver.switchTo().defaultContent();
 		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
@@ -350,8 +333,8 @@ public class RcArrowKeys extends TestInitization {
 		} else {
 			FailTestCase("Hub Screen not displayed");
 		}
-		sendUnicodeMultipleTimes(Unicode.VK_TV.toString() , 1	, 1000);
-		reports.log(LogStatus.PASS ,"Go to EPG Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Go to EPG Screen");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide");
@@ -365,7 +348,7 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
-		reports.log(LogStatus.PASS,"Press Back Key");
+		reports.log(LogStatus.PASS, "Press Back Key");
 		sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 		driver.switchTo().defaultContent();
 		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
@@ -376,30 +359,25 @@ public class RcArrowKeys extends TestInitization {
 			FailTestCase("Hub Screen not displayed");
 		}
 	}
-	
+
 	public void verifyRecordButton() throws InterruptedException {
-		
+
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		List<WebElement> we = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
 		boolean found = false;
-		for (int i =0 ;i<we.size();i++)
-		{
-			if(we.get(i).getText().contains("stoppen"))
-			{
+		for (int i = 0; i < we.size(); i++) {
+			if (we.get(i).getText().contains("stoppen")) {
 				sendKeyMultipleTimes("ENTER", 2, 1000);
 				new DTVChannelScreen(driver).openLiveTV();
 				found = true;
 				break;
-			}
-			else
-			{
+			} else {
 				sendKeyMultipleTimes("DOWN", 1, 1000);
 			}
 		}
-		if(!found)
-		{
+		if (!found) {
 			sendKeyMultipleTimes("PAGE_DOWN", 1, 2000);
 			new DTVChannelScreen(driver).openLiveTV();
 		}
@@ -408,13 +386,12 @@ public class RcArrowKeys extends TestInitization {
 		sendKeyMultipleTimes("ENTER", 1, 2000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).programDetailsScreen, "Program Details Screen");
-		
-		if(driver.findElement(By.xpath("//div[@class='dtv-info-ratings']/img[@id='recording']")).getAttribute("src").contains("ico_Ongoing_recording.png")){
+
+		if (driver.findElement(By.xpath("//div[@class='dtv-info-ratings']/img[@id='recording']")).getAttribute("src")
+				.contains("ico_Ongoing_recording.png")) {
 			reports.log(LogStatus.PASS, "Press Record Button - Recording Started Successfully");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Press Record Button - Recording not started");
 		}
 		reports.log(LogStatus.PASS, "Go to EPG Screen");
@@ -424,35 +401,29 @@ public class RcArrowKeys extends TestInitization {
 		reports.log(LogStatus.PASS, "Press Record Key");
 		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 2000);
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "Press Record Key -  Nothing happned. TV Guide");
-		
+
 		reports.log(LogStatus.PASS, "Navigate to Library Screen");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
-		{
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Library Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Press Record Key");
 		sendUnicodeMultipleTimes(Unicode.VK_ADD_RECORDING.toString(), 1, 2000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
-		{
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Press Record Key - Nothing happened Library Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Library Screen not getting displayed");
 		}
 	}
-	
-	//Rahul Methods
+
+	// Rahul Methods
 	public void verifyRCCHPlusChMinusKeysOnDTV() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
@@ -465,27 +436,25 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String currentChannelNo = dtvChannelScreen.chnlNoIn_Infobar.getText();
-		if(!currentChannelNo.equalsIgnoreCase(prevchannelNumber))
-		{
-			reports.log(LogStatus.PASS, "Press CH+ Key - Channel Zapped to "+ currentChannelNo + " from Channel Number - "+prevchannelNumber);
+		if (!currentChannelNo.equalsIgnoreCase(prevchannelNumber)) {
+			reports.log(LogStatus.PASS, "Press CH+ Key - Channel Zapped to " + currentChannelNo
+					+ " from Channel Number - " + prevchannelNumber);
 			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else{
+		} else {
 			FailTestCase("Press CH+ Key - Not Zapped to next channel");
 		}
-		reports.log(LogStatus.PASS,"Press CH- Key");
+		reports.log(LogStatus.PASS, "Press CH- Key");
 		sendUnicodeMultipleTimes(Unicode.VK_CHANNEL_MINUS.toString(), 1, 2000);
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		String newChannelNo = dtvChannelScreen.chnlNoIn_Infobar.getText();
-		if(!currentChannelNo.equalsIgnoreCase(newChannelNo))
-		{
-			reports.log(LogStatus.PASS, "Press CH- Key - Channel Zapped to "+ newChannelNo + " from Channel Number - "+currentChannelNo);
+		if (!currentChannelNo.equalsIgnoreCase(newChannelNo)) {
+			reports.log(LogStatus.PASS,
+					"Press CH- Key - Channel Zapped to " + newChannelNo + " from Channel Number - " + currentChannelNo);
 			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else{
+		} else {
 			FailTestCase("Press CH+ Key - Not Zapped to next channel");
 		}
 		verifyCHPluseMinusKeyOnHubScreen();
@@ -507,13 +476,10 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(new MiniEPGScreen(driver).epgGuide, "TV Guide is still");
-		if(new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(focusProgram))
-		{
+		if (new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(focusProgram)) {
 			reports.log(LogStatus.PASS, "Nothing happens. Used still on EPG Screen and focus is on current episode");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Used still on EPG Screen but focus changed from current episode");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -525,48 +491,42 @@ public class RcArrowKeys extends TestInitization {
 		isDisplayed(notificationMsg, "Warning Message");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 	}
-	
+
 	private void verifyCHPluseMinusKeyOnHubScreen() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Navigate to Hub Screen");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		driver.switchTo().defaultContent();
 		String prevScreenTitle = headerText.getText();
-		if(prevScreenTitle.equalsIgnoreCase("home"))
-		{
+		if (prevScreenTitle.equalsIgnoreCase("home")) {
 			reports.log(LogStatus.PASS, "Hub Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Hub Screen not getting displayed");
 		}
 		reports.log(LogStatus.PASS, "Press Ch+ Key on Hub Page");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(prevScreenTitle)){
+		if (headerText.getText().equalsIgnoreCase(prevScreenTitle)) {
 			reports.log(LogStatus.PASS, "Press CH+ Key - Nothing happens. User still on Hub Page");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("User not on Hub Page");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		reports.log(LogStatus.PASS, "Press Ch- Key on Hub Page");
 		sendUnicodeMultipleTimes(Unicode.VK_CHANNEL_MINUS.toString(), 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(prevScreenTitle)){
+		if (headerText.getText().equalsIgnoreCase(prevScreenTitle)) {
 			reports.log(LogStatus.PASS, "Press CH- Key - Nothing happens. User still on Hub Page");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("User not on Hub Page");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
-	private void playCUTVPlayBack() throws InterruptedException {
-		String cutvChannel =getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+
+	public void playCUTVPlayBack() throws InterruptedException {
+		String cutvChannel = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		dtvChannelScreen.openLiveTV();
 		handlePopupIfExist();
@@ -606,7 +566,7 @@ public class RcArrowKeys extends TestInitization {
 		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
 	}
-	
+
 	public void verifyRCUOnDemandKey() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Press On Demand Key");
 		verifyOnDemandKey();
@@ -620,23 +580,19 @@ public class RcArrowKeys extends TestInitization {
 		verifyOnDemandKey();
 	}
 
-	private void verifyOnDemandKey() throws InterruptedException
-	{
-		
+	private void verifyOnDemandKey() throws InterruptedException {
+
 		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl")))
-		{
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Shop screen should be displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 	}
-	
+
 	public void verifyRCUPVRKey() throws InterruptedException {
 		reports.log(LogStatus.PASS, "Press PVR Key from any screen");
 		verifyPVRKey();
@@ -648,18 +604,16 @@ public class RcArrowKeys extends TestInitization {
 		playCUTVPlayBack();
 		reports.log(LogStatus.PASS, "Press PVR Key while watching CUTV Playback");
 		verifyPVRKey();
-		
+
 	}
-	private void verifyPVRKey() throws InterruptedException{
+
+	private void verifyPVRKey() throws InterruptedException {
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
 		driver.switchTo().defaultContent();
-		if(headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
-		{
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
 			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Shop screen should be displayed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
@@ -688,7 +642,7 @@ public class RcArrowKeys extends TestInitization {
 		isDisplayed(notificationMsg, "Notification popup");
 		reports.log(LogStatus.PASS, "Click on Continue");
 		sendKeyMultipleTimes("ENTER", 1, 3000);
-		verifyRadioKey();	
+		verifyRadioKey();
 	}
 
 	private void verifyRadioKey() throws InterruptedException {
@@ -696,17 +650,72 @@ public class RcArrowKeys extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		String channelNumber = new DTVChannelScreen(driver).chnlNoIn_Infobar.getText();
-		if(channelNumber.equalsIgnoreCase(getExcelKeyValue("DTVChannel", "RadioChannel", "Values")))
-		{
-			reports.log(LogStatus.PASS, "Navigate to Radio Channel " +channelNumber );
+		if (channelNumber.equalsIgnoreCase(getExcelKeyValue("DTVChannel", "RadioChannel", "Values"))) {
+			reports.log(LogStatus.PASS, "Navigate to Radio Channel " + channelNumber);
 			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		else
-		{
+		} else {
 			FailTestCase("Not tuned to Radio Channel");
 		}
-		
+
+	}
+
+	public void verifyChannelNumber(String actualChannelNumber, String expectedChannelNumber)
+			throws InterruptedException {
+
+		if (actualChannelNumber.contentEquals(expectedChannelNumber)) {
+			reports.log(LogStatus.PASS, "Actual Channel number : " + actualChannelNumber + " Expected channel Number "
+					+ expectedChannelNumber);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Actual Channel number : " + actualChannelNumber + " Expected channel Number "
+					+ expectedChannelNumber);
+		}
+	}
+
+	public void validateNotificationMessages(String lastTunedTVChannelNumber, String functionalityName)
+			throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
+			playCUTVPlayBack();
+		} else if (functionalityName.toUpperCase().contentEquals("PVR")) {
+			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
+			handlePopupIfExist();
+			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
+					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+			handlePopupIfExist();
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
+			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
+			dtvChannelScreen.pressPauseButtonAndValidation();
+			Thread.sleep(5000);
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
+
+			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			sendKeyMultipleTimes("ENTER", 2, 1000);
+
+		}
+
+		reports.log(LogStatus.PASS, "Press Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Notification message is displayed");
+		handlePopupIfExist();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		String currentChannelNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
+		verifyChannelNumber(currentChannelNumber, lastTunedTVChannelNumber);
+
 	}
 
 }

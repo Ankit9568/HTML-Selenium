@@ -118,6 +118,20 @@ public class DTVChannelScreen extends TestInitization {
 		isDisplayed(dtvChannelScreen.programTitle, "Program Title");
 	}
 
+	public String openLiveTVAndValidate() throws InterruptedException {
+
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 0);
+		// Get the current TV Channel number
+		reports.log(LogStatus.PASS, "Navigate Live TV");
+		// Open info banner for screenshot
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(chnlNoIn_Infobar, "Channel Number");
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		return chnlNoIn_Infobar.getText();
+	}
 	public void openLiveTV() throws InterruptedException {
 
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 0);
