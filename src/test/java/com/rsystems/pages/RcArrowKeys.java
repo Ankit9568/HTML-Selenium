@@ -673,27 +673,49 @@ public class RcArrowKeys extends TestInitization {
 		}
 	}
 
+	public void playCUTVFromEPG() throws InterruptedException{
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		
+		dtvChannelScreen.tuneToCUTVAndPastReplaybleProgramFromTVGuide();
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		reports.log(LogStatus.PASS, "Start CUTV Playback - click on kijken");
+		reports.attachScreenshot(captureCurrentScreenshot());
+		sendKeyMultipleTimes("ENTER", 1, 4000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		} catch (NoSuchElementException ex) {
+		}
+		Thread.sleep(3000);
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+	}
 	public void validateNotificationMessages(String lastTunedTVChannelNumber, String functionalityName , Unicode unicode , String buttonName)
 			throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
 		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
-			playCUTVPlayBack();
+			playCUTVFromEPG();
+			lastTunedTVChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
+			
 		} else if (functionalityName.toUpperCase().contentEquals("PVR")) {
 			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
 			handlePopupIfExist();
 			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
 					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
-			handlePopupIfExist();
+			
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
 			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
 			dtvChannelScreen.pressPauseButtonAndValidation();
-			handlePopupIfExist();
-			Thread.sleep(5000);
+			
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
@@ -702,16 +724,14 @@ public class RcArrowKeys extends TestInitization {
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 			sendKeyMultipleTimes("ENTER", 2, 1000);
-			handlePopupIfExist();
+			
 
 		}
 
 		reports.log(LogStatus.PASS, "Press " + buttonName);
 		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(notificationMsg, "Notification message is displayed");
+		isDisplayed(notificationMsg, "Notification message ");
 		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);

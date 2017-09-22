@@ -452,6 +452,53 @@ public class DTVChannelScreen extends TestInitization {
 
 	}
 
+	public String tuneToCUTVAndPastReplaybleProgramFromTVGuide() throws InterruptedException {
+
+		reports.log(LogStatus.PASS, "Open TV Guide");
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 3000);
+		
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		Thread.sleep(5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(epgGuide, "TV Guide");
+		
+		reports.log(LogStatus.PASS, "Navigate to Past Program");
+		EpgScreen epgScreen = new EpgScreen(driver);
+		
+		
+		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
+		System.out.println("Current Program Duration " + presentTmeStartTime);
+		int noOfTry = 20;
+		while (noOfTry > 0) {
+			try {
+				driver.switchTo().frame(getCurrentFrameIndex());
+				System.out.println(
+						"Focussed Program Duration -" + new EpgScreen(driver).focusElementProgramTime.getText());
+				System.out.println(focusElementcutvIcon.getAttribute("src"));
+				String focustText = new EpgScreen(driver).focusElemntInEpg.getText();
+				String title = driver.findElement(By.xpath("//*[@id='title']")).getText();
+				if (!(new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(presentTmeStartTime))
+						&& focusElementcutvIcon.getAttribute("src").contains("cutv-icon.png")
+						&& focustText.equalsIgnoreCase(title)) {
+					System.out.println("Episode Found");
+					reports.log(LogStatus.PASS,
+							"Past Replayble program found " + new EpgScreen(driver).focusElemntInEpg.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+				}
+			} catch (NoSuchElementException ex) {
+
+			}
+			noOfTry -= 1;
+			sendKeyMultipleTimes("LEFT", 1, 1000);
+			reports.log(LogStatus.PASS, "Navigate to Past Program");
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+
+		return epgScreen.focusElemntInEpg.getText();
+	}
+
 	public String navigateToPastReplaybleProgramFromTVGuide() throws InterruptedException {
 
 		reports.log(LogStatus.PASS, "Open TV Guide");
@@ -462,7 +509,7 @@ public class DTVChannelScreen extends TestInitization {
 		
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
-		System.out.println("Page source " + driver.getPageSource());
+		
 		
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
 		System.out.println("Current Program Duration " + presentTmeStartTime);

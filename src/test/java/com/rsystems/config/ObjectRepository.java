@@ -99,6 +99,7 @@ public class ObjectRepository {
 		public static final String focusedChannlDetails = "//div[@class='channelsDetails']";
 		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";
 		public static final String epgGroupIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
+		public static final String channelsIcon="//li[@id='colCh0']/span/span[@class='channel-cutv']";
 
 	}
 
@@ -120,9 +121,9 @@ public class ObjectRepository {
 
 		public static final String InfoEpisodeNameXPath = "program-title";
 		public static final String ChannelNoClassName = "channel-no";
-		public static final String ChannelInfoImageXPath = "/html/body/div/div[2]/div[1]/div/div/div[1]/span/img";
-		public static final String EpisodeDurationXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[2]";
-		public static final String ProgramDefinitionXPath = "/html/body/div/div[2]/div[1]/div/div/div[3]/div[1]/img";
+		public static final String ChannelInfoImageXPath = "//div[@class='dtv-infoplayer-container']/span[@class='dtvinfo-poster']/img";
+		public static final String EpisodeDurationXPath = "//div[@class='program-info']/div[@class='duration']";
+		public static final String ProgramDefinitionXPath = "//div[@class='program-info']/div[@class='dtv-info-ratings']/img";
 		public static final String RecordingListCSSSelector = "#recordingContent div[id^='item']";
 		public static final String ChannelNoInPlannedRecording = "recordingNumber";
 		public static final String ChannelLogoInPlannedRecording = ".logo";
@@ -216,7 +217,8 @@ public class ObjectRepository {
 		public static final String activeZapBlockElement = "active";
 		public static final String currentChannelNumber = "//*[contains(@class,'active')]/div[1]/div[1]/span";
 		public static final String cuTVIcon = "programCUTV";
-		public static final String miniEPGCurrentChannelName = "//div[@class='focusBox']/ul/li[2]/div[3]/h2";
+		//public static final String miniEPGCurrentChannelName = "//div[@class='focusBox']/ul/li[2]/div[3]/h2";
+		public static final String miniEPGCurrentChannelName = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div[@class='title-animate']";
 		public static final String miniEPGCurrentEpisodeDuration = "//div[@class='focusBox']/ul/li[2]/div[3]/p";
 		public static final String miniEPGChannelNumber = "//div[@class='focusBox']/ul/li[2]/div[1]/div[1]/span";
 		public static final String progressBar = "//div[@class='focusBox']/ul/li[2]/div[2]";
@@ -232,12 +234,13 @@ public class ObjectRepository {
 		public static final String highlightVideoLeftTitle = "//li[@class='active']/span/../../li[1]/span";
 		public static final String highlightVideoRightTitle = "//li[@class='active']/span/../../li[3]/span";
 		public static final String activeTileProgramTime = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/p";
-		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
+		public static final String activeTileHeading = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div[@class='title-animate']";
+		public static final String lastTileInMiniEPG = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
 		public static final String onGoingRecordingIcon = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/div/span[@class='recording-icon ongoing']";
 		public static final String previousProgramTitle = "//*[@id='VH_0']/span";
 		public static final String centerTitle = "//*[@id='VH_1']/span";
 		public static final String nextProgramTitle = "//*[@id='VH_2']/span";
-		public static final String programDetailsScreen = "vodName";
+		public static final String programDetailsScreen = "dtvName";
 		public static final String actionItemList = "cItem";
 		public static final String recordingIconOnInfo = "programRecording";
 		public static final String programTitle = "//ul[@id='focusedItemContainer']/li[2]/div[@class='media-content']/h2";
