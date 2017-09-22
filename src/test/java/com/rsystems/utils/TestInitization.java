@@ -117,7 +117,7 @@ public class TestInitization {
 		log.info("Logger Info:: Inside Setup Method");
 
 		
-		/*SSH_Connection sshConnection = new SSH_Connection();
+		SSH_Connection sshConnection = new SSH_Connection();
 
 		String stbIP = null;
 		stbIP = System.getProperty("STBIP");
@@ -127,7 +127,7 @@ public class TestInitization {
 
 		sshConnection.rebootSTBAndSetup(stbIP, "root",
 				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
-	Thread.sleep(5000);*/
+	Thread.sleep(5000);
 		
 		
 		launchWebdriver();
