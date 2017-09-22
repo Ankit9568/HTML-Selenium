@@ -673,7 +673,7 @@ public class RcArrowKeys extends TestInitization {
 		}
 	}
 
-	public void validateNotificationMessages(String lastTunedTVChannelNumber, String functionalityName)
+	public void validateNotificationMessages(String lastTunedTVChannelNumber, String functionalityName , Unicode unicode , String buttonName)
 			throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
@@ -692,6 +692,7 @@ public class RcArrowKeys extends TestInitization {
 		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
 			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
 			dtvChannelScreen.pressPauseButtonAndValidation();
+			handlePopupIfExist();
 			Thread.sleep(5000);
 		}
 
@@ -701,16 +702,19 @@ public class RcArrowKeys extends TestInitization {
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 			sendKeyMultipleTimes("ENTER", 2, 1000);
+			handlePopupIfExist();
 
 		}
 
-		reports.log(LogStatus.PASS, "Press Live TV");
-		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Press " + buttonName);
+		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(notificationMsg, "Notification message is displayed");
 		handlePopupIfExist();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		String currentChannelNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();

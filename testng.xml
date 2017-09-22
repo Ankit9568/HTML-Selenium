@@ -7,9 +7,14 @@
 
 	<test name="EPG Setting Test case ">
 		<classes>
-			<class name="com.rsystems.test.EPGTestCases">
+			<class name="com.rsystems.test.RcArrowKeysTestCase">
 				<methods>
-					<include name="tc_EPG023_EPG_Program_Duration" />
+<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2" /> -->
+					<include name="tc_RCU_Digital_TV_NTE1_2_A" />
+<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2_B" /> -->
+<!-- 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" /> -->
+					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" />
+					
 					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> <include name="tc_BCEPGHPG02_epg_confirmation_setting" 
 						/> <include name="tc_BCEPGHPG01_epg_cancel_setting" /> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" 
 						/> <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> <include name="tc_BCEPGHPG09_epg_scenior_font_geel" 
@@ -63,15 +68,5 @@
 			</class>
 		</classes>
 	</test>
-	
-	<test name="UnAssingedSTBTestCases">
-	<classes>
-		<class name="com.rsystems.test.UnAssingedSTBTestCases">
-			<methods>
-				<include name="STB_Registration_Auto_Config_screen_On_unassigning_STB" />
-			</methods>
-		</class>
-	</classes>
-</test>
 </suite>
 

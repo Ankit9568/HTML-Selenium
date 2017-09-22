@@ -48,7 +48,7 @@ public class ObjectRepository {
 		public static final String cutvIcon = "//span[@class='channel-cutv']";
 		public static final String focousElementProrgamImg = "//li[@class='program focusProgram']/div/span[contains(@class,'programLogo')]/img";
 		public static final String diplayChannelDescImg = "//div[@class='poster']/img";
-		public static final String focusElementProgramTiminig = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[contains(@class,'prog-time')]";
+		public static final String focusElementProgramTiminig = "//span[@id='prog-time']";
 		// public static final String focusElementCUTVIcon = "//li[@class =
 		// 'program focusProgram']/div/p[2]/span/img[1]";
 		public static final String focusElementCUTVIcon = "//*[@id='groupIcon']/img[@class='cutvicon']";

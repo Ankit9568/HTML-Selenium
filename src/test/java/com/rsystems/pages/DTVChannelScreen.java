@@ -123,6 +123,9 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 0);
 		// Get the current TV Channel number
 		reports.log(LogStatus.PASS, "Navigate Live TV");
+		
+		sendNumaricKeys(1);
+		Thread.sleep(5000);
 		// Open info banner for screenshot
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -456,9 +459,11 @@ public class DTVChannelScreen extends TestInitization {
 		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
-		System.out.println(driver.getPageSource());
+		
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
+		System.out.println("Page source " + driver.getPageSource());
+		
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
 		System.out.println("Current Program Duration " + presentTmeStartTime);
 		int noOfTry = 20;

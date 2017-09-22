@@ -4,6 +4,7 @@ import static org.testng.Assert.expectThrows;
 import static org.testng.Assert.fail;
 
 import org.testng.annotations.Test;
+import org.yaml.snakeyaml.representer.Represent;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.DTVChannelScreen;
@@ -138,6 +139,7 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rc.verifyRCURadioKey();
 	}
 
+	@Test
 	public void tc_RCU_Digital_TV_NTE1_2() throws InterruptedException {
 
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
@@ -145,7 +147,7 @@ public class RcArrowKeysTestCase extends TestInitization {
 		// Step 1
 		dtvChannelScreen.openLiveTVAndValidate();
 		setApplicationHubPage(1);
-		sendKeySequence("RIGHT,ENTER", 1000, "home");
+		sendKeySequence("RIGHT,ENTER", 1000, "shop");
 		dtvChannelScreen.openLiveTVAndValidate();
 		hotKeysNavigation.navigateToRadioScreen();
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
@@ -189,9 +191,9 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rcArrowKeys.verifyChannelNumber(currentNumber, lastChannelNumber);
 
 		// Step 6
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "CUTV");
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PVR");
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PLTV");
+		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "CUTV", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PVR", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PLTV", Unicode.VK_TV, "Live TV");
 
 	}
 
@@ -220,51 +222,81 @@ public class RcArrowKeysTestCase extends TestInitization {
 		// Step 1
 		String tvChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
 		setApplicationHubPage(1);
-		sendKeySequence("RIGHT,ENTER", 1000, "home");
+		sendKeySequence("RIGHT,ENTER", 1000, "shop");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, tvChannelNumber, "Radio button ");
 
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		reports.attachScreenshot(captureCurrentScreenshot());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		driver.switchTo().frame(getCurrentFrameIndex());
-		if (tvChannelNumber.contentEquals(dtvChannelScreen.chnlNoIn_Infobar.getText())) {
-			reports.log(LogStatus.PASS, "Live TV is tuned Actual Channel Number "
-					+ dtvChannelScreen.chnlNoIn_Infobar.getText() + " Expected Channel Number " + tvChannelNumber);
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Live TV is not tuned Actual Channel Number " + dtvChannelScreen.chnlNoIn_Infobar.getText()
-					+ " Expected Channel Number " + tvChannelNumber);
-		}
-		
-		hotKeysNavigation.openRadioButtonAndValidate(2);
+		int radioChannelNumber = hotKeysNavigation.openRadioButtonAndValidate(2);
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
-		String channelNumber = hotKeysNavigation.openRadioButtonAndValidate(1) + "";
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, radioChannelNumber + "",
+				"Radio button ");
+
+		// Step 2
+		hotKeysNavigation.openRadioButtonAndValidate(1);
+		reports.log(LogStatus.PASS, "Navigate to another Radio channel");
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values")));
+
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		if (channelNumber.contentEquals(dtvChannelScreen.chnlNoIn_Infobar.getText())) {
-			reports.log(LogStatus.PASS, "Radio Channel is tuned Actual channel number "
-					+ dtvChannelScreen.chnlNoIn_Infobar.getText() + " Expected Channel Number " + channelNumber);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		if (getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values")
+				.contentEquals(dtvChannelScreen.chnlNoIn_Infobar.getText())) {
+			reports.log(LogStatus.PASS,
+					"Other Radio channel is tuned. Actual Channel number " + dtvChannelScreen.chnlNoIn_Infobar.getText()
+							+ "Expected Channel number " + getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"));
 			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Other Radio channel is not tuned. Actual Channel number "
+					+ dtvChannelScreen.chnlNoIn_Infobar.getText() + "Expected Channel number "
+					+ getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"));
 		}
 
-		else {
-			FailTestCase("Unable to Tuned Radio channel Actual channel number "
-					+ dtvChannelScreen.chnlNoIn_Infobar.getText() + " Expected Channel Number " + channelNumber);
-		}
-		
-		
-		// Step 2
-		
-		
-		
-		
+		reports.log(LogStatus.PASS, "Again Radio press nothing should happen");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
+				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
+
 		// Step3
-		hotKeysNavigation.openRadioButtonAndValidate();
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
+				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
+		
+		reports.log(LogStatus.PASS, "Press menu button");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
+				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
+		
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, tvChannelNumber+"",
+				"TV button ");
+	}
+
+	@Test
+	public void tc_RCU_Radio_Hot_Key_NTE1_2_A() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
+		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
+		// Step 4
+		String channelNumber = dtvChannelScreen.openLiveTVAndValidate();
+		reports.log(LogStatus.PASS, "Naviaget to HUB ");
 		setApplicationHubPage(1);
-		
-		
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, channelNumber, "Radio button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, channelNumber, "TV button");
+
+		// Step 5
+		int getLastTunedRadioChannelNumber = hotKeysNavigation.getLastTunedRadioChannelNum();
 		dtvChannelScreen.openLiveTVAndValidate();
-		hotKeysNavigation.navigateToRadioScreen();
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, getLastTunedRadioChannelNumber + "",
+				"Radio button");
+
+		// Step 6
+		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "CUTV", Unicode.VK_RADIO,
+				"Radio button");
+		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "PVR", Unicode.VK_RADIO,
+				"Radio button");
+		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "PLTV", Unicode.VK_RADIO,
+				"Radio button");
 
 	}
 }

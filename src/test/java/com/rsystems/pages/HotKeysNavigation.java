@@ -73,11 +73,14 @@ public class HotKeysNavigation extends TestInitization {
 
 	}
 
-	
-	public int openRadioButtonAndValidate(int radioButtonPressCount) throws InterruptedException{
-		
-		
+	public int openRadioButtonAndValidate(int radioButtonPressCount) throws InterruptedException {
+
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		
+		// first move to TV channel than radion screen
+		sendNumaricKeys(1);
+		Thread.sleep(5000);
+		
 		reports.log(LogStatus.PASS, "Navigate to the Radio Screen");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), radioButtonPressCount, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -91,7 +94,39 @@ public class HotKeysNavigation extends TestInitization {
 			FailTestCase("Radio channel Number : " + radioChannel + " has not been reached");
 
 		}
-		
+
 		return radioChannel;
+	}
+
+	public void pressUnicodeAndValidateChannelNumber(Unicode unicode, String ChannelNumberToBeValiadte,
+			String buttonName) throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		reports.log(LogStatus.PASS, "Press " + buttonName);
+		sendUnicodeMultipleTimes(unicode.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		int currentChannel = Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
+		if (currentChannel == Integer.parseInt(ChannelNumberToBeValiadte)) {
+			reports.log(LogStatus.PASS, "Channel is tuned to " + ChannelNumberToBeValiadte);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Unable to tuned expected channel number " + " Actual Channel number " + currentChannel
+					+ " Expected channel Number " + ChannelNumberToBeValiadte);
+
+		}
+
+	}
+
+	public int getLastTunedRadioChannelNum() throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 2, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		return Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
 	}
 }
