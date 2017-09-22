@@ -3,6 +3,7 @@ package com.rsystems.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jetty.util.thread.strategy.ProduceConsume;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -133,7 +134,7 @@ public class DTVChannelScreen extends TestInitization {
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(chnlNoIn_Infobar, "Channel Number");
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		return chnlNoIn_Infobar.getText();
+		return programDurationIn_Infobar.getText();
 	}
 	public void openLiveTV() throws InterruptedException {
 
@@ -301,21 +302,25 @@ public class DTVChannelScreen extends TestInitization {
 		}
 	}
 
-	public void tuneToChannel(int channelNumber) throws InterruptedException {
+	public String tuneToChannel(int channelNumber) throws InterruptedException {
 
 		sendNumaricKeys(channelNumber);
 		Thread.sleep(2000);
 		handlePopupIfExist();
+		String programDuration = null;
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		if (new DTVChannelScreen(driver).chnlNoIn_Infobar.getText().equalsIgnoreCase(String.valueOf(channelNumber))) {
 			reports.log(LogStatus.PASS, "Tuned to Channel " + channelNumber);
 			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			programDuration = programDurationIn_Infobar.getText();
+			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
 			FailTestCase("Not Tuned to Channel " + channelNumber);
 		}
+		return programDuration;
 	}
 
 	public void pressForwardButtonAndValidation() throws InterruptedException {

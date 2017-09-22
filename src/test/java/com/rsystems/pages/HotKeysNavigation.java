@@ -98,10 +98,10 @@ public class HotKeysNavigation extends TestInitization {
 		return radioChannel;
 	}
 
-	public void pressUnicodeAndValidateChannelNumber(Unicode unicode, String ChannelNumberToBeValiadte,
+	public void pressUnicodeAndValidateChannelNumber(Unicode unicode, String ChannelProgramDurationToBeValidate,
 			String buttonName) throws InterruptedException {
 
-		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		
 		reports.log(LogStatus.PASS, "Press " + buttonName);
 		sendUnicodeMultipleTimes(unicode.toString(), 1, 2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
@@ -109,24 +109,26 @@ public class HotKeysNavigation extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		int currentChannel = Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
-		if (currentChannel == Integer.parseInt(ChannelNumberToBeValiadte)) {
-			reports.log(LogStatus.PASS, "Channel is tuned to " + ChannelNumberToBeValiadte);
+		
+		String currentChannelProgramDuration = programDurationIn_Infobar.getText();
+		if (currentChannelProgramDuration.contentEquals(ChannelProgramDurationToBeValidate)) {
+			reports.log(LogStatus.PASS, "Actual proram Duration" + currentChannelProgramDuration + " Expected program duration " + ChannelProgramDurationToBeValidate);
+			TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
-			FailTestCase("Unable to tuned expected channel number " + " Actual Channel number " + currentChannel
-					+ " Expected channel Number " + ChannelNumberToBeValiadte);
+			FailTestCase("Unable to tuned expected channel number " + " Actual Channel program duration  " + currentChannelProgramDuration
+					+ " Expected channel program duration " + ChannelProgramDurationToBeValidate);
 
 		}
 
 	}
 
-	public int getLastTunedRadioChannelNum() throws InterruptedException {
+	public String getLastTunedRadioChannelNum() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 2, 0);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		return Integer.parseInt(dtvChannelScreen.chnlNoIn_Infobar.getText());
+		return dtvChannelScreen.programDurationIn_Infobar.getText();
 	}
 }

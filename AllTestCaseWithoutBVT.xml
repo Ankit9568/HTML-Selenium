@@ -89,6 +89,8 @@
 					<include name="tc_356_TIME0202_UI" />
 					<include name="tc_EPG007_EPG_Current_Time_Line" />
 					<include name="tc_EPG_Date_Time_Change" />
+					<include name="tc_EPG_Icons" />
+					<include name="tc_TIME0201_grid" />
 				</methods>
 			</class>
 		</classes>
@@ -124,6 +126,7 @@
 					<include name="tc_Single_Asset_Variant_Non_Grouped_Purchase" />
 					<include name="tc_VOD_Rent_Enter_Invalid_PIN" />
 					<include name="tc_VOD_Record" />
+					<include name="tc_VOD_Renting_within_the_Rental_Time" />
 
 				</methods>
 			</class>
@@ -223,7 +226,16 @@
 		<classes>
 			<class name="com.rsystems.test.DTVChannelTestCase">
 				<methods>
-
+					<include name="tc_SF021_FULL_SCREEN_PLAYBACK" />
+					<include
+						name="tc_DTVZAP009_Zapping_from_TSTV_full_screen_Show_info_on_zap_setting_YES" />
+					<include name="tc_DTVZAP003_ZappingfromEPG_Showinfoonzapsetting_YES" />
+					<include
+						name="tc_DTVZAP007_Zapping_from_HUB_Show_info_on_zap_setting_YES" />
+					<include
+						name="tc_DTV_Channel_Zap_Via_Zap_List_Show_info_on_zap_setting_YES" />
+					<include name="tc_BCDTVCP1427_PLTV_Lost_On_PVR_Playback" />
+					<include name="tc_BCDTVCP1439_Trickplay" />
 					<include name="tc_Pause_LiveTV_PLTV_pause" />
 					<include name="tc_Pause_LiveTV_PLTV_interworking_with_menu" />
 					<include name="TP003_TSTV_Trick_play_menufromFullScreen_TV" />
@@ -237,6 +249,7 @@
 					<include name="tc_TP002_CUTV_RC_Keys_during_Trickplay" />
 
 					<include name="tc_HDD_Less_Timeshifting" />
+					
 				</methods>
 			</class>
 		</classes>

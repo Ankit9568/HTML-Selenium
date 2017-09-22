@@ -660,6 +660,19 @@ public class RcArrowKeys extends TestInitization {
 
 	}
 
+	public void verifyProgramDetails(String actualProgramDetails, String expectedProgramDetails)
+			throws InterruptedException {
+
+		if (actualProgramDetails.contentEquals(expectedProgramDetails)) {
+			reports.log(LogStatus.PASS, "Actual Channel program Details  : " + actualProgramDetails
+					+ " Expected channel program Details  " + expectedProgramDetails);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Actual Channel program Details  : " + actualProgramDetails + " Expected channel Number "
+					+ expectedProgramDetails);
+		}
+	}
+
 	public void verifyChannelNumber(String actualChannelNumber, String expectedChannelNumber)
 			throws InterruptedException {
 
@@ -673,10 +686,10 @@ public class RcArrowKeys extends TestInitization {
 		}
 	}
 
-	public void playCUTVFromEPG() throws InterruptedException{
-		
+	public void playCUTVFromEPG() throws InterruptedException {
+
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		
+
 		dtvChannelScreen.tuneToCUTVAndPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		reports.log(LogStatus.PASS, "Start CUTV Playback - click on kijken");
@@ -694,37 +707,41 @@ public class RcArrowKeys extends TestInitization {
 		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 	}
-	public void validateNotificationMessages(String lastTunedTVChannelNumber, String functionalityName , Unicode unicode , String buttonName)
-			throws InterruptedException {
 
+	public void validateNotificationMessagesForLiveTV(String functionalityName, Unicode unicode, String buttonName)
+			throws InterruptedException {
+		String liveTvprogramDetails = null;
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
 		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
+			liveTvprogramDetails = getLiveProgramDetails(
+					getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values"));
 			playCUTVFromEPG();
-			lastTunedTVChannelNumber = getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values");
-			
 		} else if (functionalityName.toUpperCase().contentEquals("PVR")) {
-			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
-			handlePopupIfExist();
+			liveTvprogramDetails = getLiveProgramDetails(
+					TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl"));
 			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
 					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
-			
+
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
-			lastTunedTVChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
+			liveTvprogramDetails = getLiveProgramDetails(
+					TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl"));
 			dtvChannelScreen.pressPauseButtonAndValidation();
-			
+
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
+
+			liveTvprogramDetails = getLiveProgramDetails(
+					TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl"));
 
 			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
 			sendKeyMultipleTimes("ENTER", 2, 1000);
-			
 
 		}
 
@@ -737,8 +754,69 @@ public class RcArrowKeys extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
-		String currentChannelNumber = dtvChannelScreen.chnlNoIn_Infobar.getText();
-		verifyChannelNumber(currentChannelNumber, lastTunedTVChannelNumber);
+		String currentChannelNumber = dtvChannelScreen.programDurationIn_Infobar.getText();
+		verifyProgramDetails(currentChannelNumber, liveTvprogramDetails);
+
+	}
+
+	public void validateNotificationMessagesForRadio(String functionalityName, Unicode unicode, String buttonName)
+			throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		String liveTvprogramDetails = getLiveProgramDetails(
+				TestInitization.getExcelKeyValue("DTVChannel", "RadioChannel", "Values"));
+
+		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
+
+			playCUTVFromEPG();
+		} else if (functionalityName.toUpperCase().contentEquals("PVR")) {
+
+			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
+					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
+
+		// move to Another Live TV Channel
+			dtvChannelScreen.tuneToChannel(Integer
+					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+			
+			Thread.sleep(8000);
+			dtvChannelScreen.pressPauseButtonAndValidation();
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
+
+			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			sendKeyMultipleTimes("ENTER", 2, 1000);
+
+		}
+
+		reports.log(LogStatus.PASS, "Press " + buttonName);
+		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Notification message ");
+		handlePopupIfExist();
+		Thread.sleep(5000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		String currentChannelNumber = dtvChannelScreen.programDurationIn_Infobar.getText();
+		verifyProgramDetails(currentChannelNumber, liveTvprogramDetails);
+
+	}
+
+	private String getLiveProgramDetails(String channelNumber) throws NumberFormatException, InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
+		return dtvChannelScreen.tuneToChannel(Integer.parseInt(channelNumber));
 
 	}
 

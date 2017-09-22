@@ -1,10 +1,6 @@
 package com.rsystems.test;
 
-import static org.testng.Assert.expectThrows;
-import static org.testng.Assert.fail;
-
 import org.testng.annotations.Test;
-import org.yaml.snakeyaml.representer.Represent;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.pages.DTVChannelScreen;
@@ -191,9 +187,10 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rcArrowKeys.verifyChannelNumber(currentNumber, lastChannelNumber);
 
 		// Step 6
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "CUTV", Unicode.VK_TV, "Live TV");
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PVR", Unicode.VK_TV, "Live TV");
-		rcArrowKeys.validateNotificationMessages(lastChannelNumber, "PLTV", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessagesForLiveTV("CUTV", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessagesForLiveTV("PVR", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessagesForLiveTV("PLTV", Unicode.VK_TV, "Live TV");
+		rcArrowKeys.validateNotificationMessagesForLiveTV("VOD", Unicode.VK_TV, "Live TV");
 
 	}
 
@@ -220,10 +217,10 @@ public class RcArrowKeysTestCase extends TestInitization {
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		// Step 1
-		String tvChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
+		String tvChannelNumberProgramDuration = dtvChannelScreen.openLiveTVAndValidate();
 		setApplicationHubPage(1);
 		sendKeySequence("RIGHT,ENTER", 1000, "shop");
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, tvChannelNumber, "Radio button ");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, tvChannelNumberProgramDuration, "Radio button ");
 
 		int radioChannelNumber = hotKeysNavigation.openRadioButtonAndValidate(2);
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
@@ -267,7 +264,7 @@ public class RcArrowKeysTestCase extends TestInitization {
 		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
 				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
 		
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, tvChannelNumber+"",
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV,tvChannelNumberProgramDuration ,
 				"TV button ");
 	}
 
@@ -278,24 +275,26 @@ public class RcArrowKeysTestCase extends TestInitization {
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
 		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
 		// Step 4
-		String channelNumber = dtvChannelScreen.openLiveTVAndValidate();
+		String currentChannelProgramDuration = dtvChannelScreen.openLiveTVAndValidate();
 		reports.log(LogStatus.PASS, "Naviaget to HUB ");
 		setApplicationHubPage(1);
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, channelNumber, "Radio button");
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, channelNumber, "TV button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, currentChannelProgramDuration, "Radio button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, currentChannelProgramDuration, "TV button");
 
 		// Step 5
-		int getLastTunedRadioChannelNumber = hotKeysNavigation.getLastTunedRadioChannelNum();
+		String getLastTunedRadioChannelProgramDetails = hotKeysNavigation.getLastTunedRadioChannelNum();
 		dtvChannelScreen.openLiveTVAndValidate();
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, getLastTunedRadioChannelNumber + "",
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, getLastTunedRadioChannelProgramDetails + "",
 				"Radio button");
 
 		// Step 6
-		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "CUTV", Unicode.VK_RADIO,
+		rcArrowKeys.validateNotificationMessagesForRadio("CUTV", Unicode.VK_RADIO,
 				"Radio button");
-		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "PVR", Unicode.VK_RADIO,
+		rcArrowKeys.validateNotificationMessagesForRadio("PVR", Unicode.VK_RADIO,
 				"Radio button");
-		rcArrowKeys.validateNotificationMessages(getLastTunedRadioChannelNumber + "", "PLTV", Unicode.VK_RADIO,
+		rcArrowKeys.validateNotificationMessagesForRadio( "PLTV", Unicode.VK_RADIO,
+				"Radio button");
+		rcArrowKeys.validateNotificationMessagesForRadio( "VOD", Unicode.VK_RADIO,
 				"Radio button");
 
 	}
