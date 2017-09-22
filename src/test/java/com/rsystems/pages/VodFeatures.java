@@ -627,5 +627,35 @@ public class VodFeatures extends TestInitization {
 		}
 		
 	}
-	
+	public void VOD_Renting_within_the_Rental_Time() throws InterruptedException
+    {
+          DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+          Pvr pvr = new Pvr(driver);
+
+          dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+                      TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+                      TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+
+          reports.log(LogStatus.PASS, "Start VOD");
+          driver.switchTo().frame(getCurrentFrameIndex());
+          wait.until(ExpectedConditions.visibilityOf(lookOption));
+          sendKeyMultipleTimes("ENTER", 1, 1000);
+          try
+          {
+                driver.switchTo().frame(getCurrentFrameIndex());
+                if(new MiniEPGScreen(driver).notificationMsg.isDisplayed())
+                {
+                      reports.log(LogStatus.PASS, "Notification message is getting displayed.Restart the video");
+                      reports.attachScreenshot(captureCurrentScreenshot());
+                      sendKeyMultipleTimes("RIGHT", 1, 3000);
+                      sendKeyMultipleTimes("ENTER", 1, 3000);
+              }
+          }
+          catch(NoSuchElementException e)
+          {
+                System.out.println("NO notification");
+          }     
+          new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+          
+    }
 }

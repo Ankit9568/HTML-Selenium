@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -36,99 +37,99 @@ public class Pvr extends TestInitization {
 	public WebElement screenTitle;
 
 	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException {
-
-
 		RecordingScreen record = new RecordingScreen(driver);
-        DTVChannelScreen channelScreen = new DTVChannelScreen(driver);
-        String recordingType = "SINGLE";
+		DTVChannelScreen channelScreen = new DTVChannelScreen(driver);
+		String recordingType = "SINGLE";
 
-        reports.log(LogStatus.PASS, "Navigate to Library Screen");
-        sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
-        driver.switchTo().defaultContent();
-        System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
-        if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
-                    .equalsIgnoreCase("mijn bibliotheek")) {
-              reports.log(LogStatus.PASS, "Library Screen getting displayed");
-              reports.attachScreenshot(captureCurrentScreenshot());
-        } else {
-              FailTestCase("Library Screen not getting displayed");
-        }
-        sendKeyMultipleTimes("ENTER", 1, 1000);
-        driver.switchTo().frame(getCurrentFrameIndex());
-        if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
-              reports.log(LogStatus.PASS, "Recording List getting displayed");
-              reports.attachScreenshot(captureCurrentScreenshot());
-        } else {
-              FailTestCase("Recording List not getting displayed");
-        }
+		reports.log(LogStatus.PASS, "Navigate to Library Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		System.out.println(driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim());
+		if (driver.findElement(By.xpath(ObjectRepository.ZapListPage.screenTitle)).getText().trim()
+				.equalsIgnoreCase("mijn bibliotheek")) {
+			reports.log(LogStatus.PASS, "Library Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Library Screen not getting displayed");
+		}
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if (driver.findElement(By.id("titleHeading")).getText().equalsIgnoreCase("opnames")) {
+			reports.log(LogStatus.PASS, "Recording List getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Recording List not getting displayed");
+		}
 
-        driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
-        int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
-        for (int i = 0; i < recordingSize; i++) {
+		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+		int recordingSize = Integer.parseInt(record.totalRecordingID.getText());
+		for (int i = 0; i < recordingSize; i++) {
 
-              if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
-              {
-                    if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
-                && record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName))
-                    {
-                          break;
-                    } 
-                    else 
-                    {
-                          TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
-                    }
-                } 
-              else 
-              {
-                    TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
-              }
-        }
-        sendKeyMultipleTimes("ENTER", 3, 3000);
-        reports.log(LogStatus.PASS, "PVR Playback video is playing");
-        Thread.sleep(3000);
-        channelScreen.pressPauseButtonAndValidation();
-        Thread.sleep(8000);
-        sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
-
-
+			if ((record.focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase(recordingType)))
+			{
+				if (record.focusRecordingElement.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording)).getText().equalsIgnoreCase(episodeDetails.channelNo)
+						&& record.focusRecordingElement.findElement(By.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording)).getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName))
+				{
+					break;
+				} 
+				else 
+				{
+					TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
+				}
+			} 
+			else 
+			{
+				TestInitization.sendKeyMultipleTimes("DOWN", 1, 2000);
+			}
+		}
+		sendKeyMultipleTimes("ENTER",1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(new SettingScreen(driver).activeOption));
+		sendKeyMultipleTimes("ENTER",1, 1000);
+		reports.log(LogStatus.PASS, "PVR Playback video is playing");
+		Thread.sleep(3000);
+		handlePopupIfExist();
+		channelScreen.pressPauseButtonAndValidation();
+		Thread.sleep(8000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
 	}
 
 	public void PvrPlayBackMenu() throws InterruptedException {
 
-        DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-        dtvChannelScreen.openLiveTV();
-        handlePopupIfExist();
-        episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.openLiveTV();
+		handlePopupIfExist();
+		episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 
-        navigateToThePVRPlayback(episodeDetails);
-        handlePopupIfExist();
+		navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
 
-        dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressForwardButtonAndValidation();
 
-        dtvChannelScreen.pressRewindButtonAndValidation();
+		dtvChannelScreen.pressRewindButtonAndValidation();
 
-        dtvChannelScreen.pressForwardButtonAndValidation();
+		dtvChannelScreen.pressForwardButtonAndValidation();
 
-        dtvChannelScreen.pressPlayButtonAndValidation();
+		dtvChannelScreen.pressPlayButtonAndValidation();
 
-        dtvChannelScreen.pressPauseButtonAndValidation();
+		dtvChannelScreen.pressPauseButtonAndValidation();
 
-        reports.log(LogStatus.PASS, "Stop the Video Playback");
-        sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
-        reports.attachScreenshot(captureCurrentScreenshot());
-        driver.switchTo().defaultContent();
-        String libraryScreenTitle=screenTitle.getText();
-        if(libraryScreenTitle.equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
-        {
-              reports.log(LogStatus.PASS, "Successfully reached to the library screen");
-              reports.attachScreenshot(captureCurrentScreenshot());
-              
-        }
-        else
-        {
-              FailTestCase("Libary screen has not been reached");
-        }
-        
+		reports.log(LogStatus.PASS, "Stop the Video Playback");
+		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().defaultContent();
+		String libraryScreenTitle=screenTitle.getText();
+		if(libraryScreenTitle.equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Successfully reached to the library screen");
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}
+		else
+		{
+			FailTestCase("Libary screen has not been reached");
+		}
+
 
 	}
 
@@ -271,7 +272,7 @@ public class Pvr extends TestInitization {
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		handlePopupIfExist();
-		
+
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		dtvChannelScreen.pressPlayButtonAndValidation();
@@ -291,7 +292,7 @@ public class Pvr extends TestInitization {
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		handlePopupIfExist();
-		
+
 		dtvChannelScreen.pressPauseButtonAndValidation();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 		reports.log(LogStatus.PASS, "Press on the Menu key");
@@ -600,8 +601,8 @@ public class Pvr extends TestInitization {
 		}
 
 		Thread.sleep(8000);
-		
-		
+
+
 		// rewind & validate
 		dtv.pressRewindButtonAndValidation();
 

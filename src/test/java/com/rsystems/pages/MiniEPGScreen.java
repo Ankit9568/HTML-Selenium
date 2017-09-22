@@ -66,6 +66,9 @@ public class MiniEPGScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.activeTileHeading)
 	public WebElement activeTileHeading;
 
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.lastTileInMiniEPG)
+	public WebElement lastTileInMiniEPG;
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.onGoingRecordingIcon)
 	public WebElement onGoingRecordingIcon;
 
@@ -120,7 +123,7 @@ public class MiniEPGScreen extends TestInitization {
 	@FindAll({ @FindBy(className = ObjectRepository.MiniEPGScreen.actionItemList) })
 	public List<WebElement> actionItemList;
 
-	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.programTitle)
+	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.activeTileHeading)
 	public WebElement programTitle;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.MiniEPGScreen.centerTitle)
@@ -456,18 +459,25 @@ public class MiniEPGScreen extends TestInitization {
 		navigateToMiniEpgAndValidateObject(activeTileHeading, "Active tile title ");
 		int count = 0;
 		while (maxKeyPressCount > 0) {
-
-			if (activeTileHeading.getText().contentEquals(tilenameToValidate)) {
-				reports.log(LogStatus.PASS,
-						tilenameToValidate + " found after press " + count + " " + keyToPress + " Key");
-				return;
+			try{
+				if (activeTileHeading.getText().contentEquals(tilenameToValidate)) {
+					reports.log(LogStatus.PASS,
+							tilenameToValidate + " found after press " + count + " " + keyToPress + " Key");
+					return;
+				}
 			}
-			TestInitization.sendKeyMultipleTimes(keyToPress, 1, 1000);
-			driver.switchTo().frame(getCurrentFrameIndex());
-			maxKeyPressCount--;
-			count++;
+				catch(NoSuchElementException ex)
+				{
+					if (lastTileInMiniEPG.getText().contentEquals(tilenameToValidate)) {
+						reports.log(LogStatus.PASS,
+								tilenameToValidate + " found after press " + count + " " + keyToPress + " Key");
+						return;
+					}
+				}
+				TestInitization.sendKeyMultipleTimes(keyToPress, 1, 1000);
+				driver.switchTo().frame(getCurrentFrameIndex());
+				maxKeyPressCount--;
 		}
-
 		FailTestCase("Far-" + keyToPress + " tile " + tilenameToValidate + " is not found");
 	}
 
@@ -1487,16 +1497,28 @@ public class MiniEPGScreen extends TestInitization {
 		int noOfTry = 30;
 		boolean found = false;
 		while (noOfTry!=0) {
-			driver.switchTo().frame(getCurrentFrameIndex());
-			if (miniEPGChannelName.getText().equalsIgnoreCase("tv-gids")) {
-				reports.log(LogStatus.PASS, "Focus is on " + miniEPGChannelName.getText());
-				reports.attachScreenshot(captureCurrentScreenshot());
-				found = true;
-				break;
-			} else {
-				prevTileEpisodeDuration = miniEPGEpisodeDuration.getText();
-				prevTileTitle = miniEPGChannelName.getText();
-				sendKeyMultipleTimes("RIGHT", 1, 1000);
+			try{
+				driver.switchTo().frame(getCurrentFrameIndex());
+				if (miniEPGChannelName.getText().equalsIgnoreCase("tv-gids")) {
+					reports.log(LogStatus.PASS, "Focus is on " + miniEPGChannelName.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					found = true;
+					break;
+				} else {
+					prevTileEpisodeDuration = miniEPGEpisodeDuration.getText();
+					prevTileTitle = miniEPGChannelName.getText();
+					sendKeyMultipleTimes("RIGHT", 1, 1000);
+				}
+				
+			}
+			catch(NoSuchElementException ex)
+			{
+				if (lastTileInMiniEPG.getText().equalsIgnoreCase("tv-gids")){
+					reports.log(LogStatus.PASS, "Focus is on " + lastTileInMiniEPG.getText());
+					reports.attachScreenshot(captureCurrentScreenshot());
+					found = true;
+					break;
+				}
 			}
 			noOfTry -=1;
 		}
@@ -1511,12 +1533,12 @@ public class MiniEPGScreen extends TestInitization {
 
 		if (new EpgScreen(driver).focusElemntInEpg.getText().equalsIgnoreCase(prevTileTitle)
 				&& new EpgScreen(driver).focusElementProgramTime.getText().equalsIgnoreCase(prevTileEpisodeDuration)) {
-			reports.log(LogStatus.PASS, "Focus should on Latest Program Shouwn on Mini EPG- " + prevTileTitle
-					+ " Actual focus is on " + new EpgScreen(driver).focusElemntInEpg.getText());
+			reports.log(LogStatus.PASS, "Focus should on Program - " + prevTileEpisodeDuration
+					+ " Actual focus is on " + new EpgScreen(driver).focusElementProgramTime.getText());
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
-			FailTestCase("Focus should on Latest Program Shouwn on Mini EPG- " + prevTileTitle + " Actual focus is on "
-					+ new EpgScreen(driver).focusElemntInEpg.getText());
+			FailTestCase("Focus should on Program - " + prevTileEpisodeDuration
+					+ " Actual focus is on " + new EpgScreen(driver).focusElementProgramTime.getText());
 		}
 
 		sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -1704,7 +1726,8 @@ public class MiniEPGScreen extends TestInitization {
 			reports.log(LogStatus.PASS, "Mini EPG got dismissed");
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
-		Thread.sleep(1000);
+		Thread.sleep(2000);
+		handlePopupIfExist();
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 

@@ -123,7 +123,7 @@ public class DTVChannelScreen extends TestInitization {
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 0);
 		// Get the current TV Channel number
 		reports.log(LogStatus.PASS, "Navigate Live TV");
-		
+
 		sendNumaricKeys(1);
 		Thread.sleep(5000);
 		// Open info banner for screenshot
@@ -506,11 +506,9 @@ public class DTVChannelScreen extends TestInitization {
 		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
-		
+
 		reports.log(LogStatus.PASS, "Navigate to Past Program");
 		EpgScreen epgScreen = new EpgScreen(driver);
-		
-		
 		String presentTmeStartTime = epgScreen.focusElementProgramTime.getText();
 		System.out.println("Current Program Duration " + presentTmeStartTime);
 		int noOfTry = 20;
@@ -553,7 +551,7 @@ public class DTVChannelScreen extends TestInitization {
 		while (maxcount > 0) {
 			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())
 					|| vodFeatures.topMovieHeading.getAttribute("innerText").trim()
-							.equalsIgnoreCase(foundMovieName.trim())) {
+					.equalsIgnoreCase(foundMovieName.trim())) {
 				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				return;
@@ -567,7 +565,7 @@ public class DTVChannelScreen extends TestInitization {
 		while (maxcount > 0) {
 			if (vodFeatures.topMovieHeading.getText().trim().equalsIgnoreCase(foundMovieName.trim())
 					|| vodFeatures.topMovieHeading.getAttribute("innerText").trim()
-							.equalsIgnoreCase(foundMovieName.trim())) {
+					.equalsIgnoreCase(foundMovieName.trim())) {
 				reports.log(LogStatus.PASS, "VOD " + foundMovieName + " found ");
 				reports.attachScreenshot(captureCurrentScreenshot());
 				return;
@@ -847,12 +845,12 @@ public class DTVChannelScreen extends TestInitization {
 						.findElement(By.className(ObjectRepository.RecordingElements.ChannelNoInPlannedRecording))
 						.getText().equalsIgnoreCase(episodeDetails.channelNo)
 						&& record.focusRecordingElement
-								.findElement(By
-										.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording))
-								.getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
+						.findElement(By
+								.cssSelector(ObjectRepository.RecordingElements.ProgramNameInPlannedRecording))
+						.getAttribute("innerText").equalsIgnoreCase(episodeDetails.programName)
 						&& record.focusRecordingElement
-								.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0)
-								.getAttribute("src").contains("ico_Ongoing_recording.png")) {
+						.findElements(By.cssSelector(".videoQuality .ongoing_recording img")).get(0)
+						.getAttribute("src").contains("ico_Ongoing_recording.png")) {
 					break;
 				} else {
 					TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -1017,8 +1015,8 @@ public class DTVChannelScreen extends TestInitization {
 		if (episodeName.equalsIgnoreCase(infoProgramTitle) && infoEpisodeDuration.equalsIgnoreCase(episodeDuration)) {
 			reports.log(LogStatus.PASS,
 					"Past Program Start playing successfully Expected Episode Name  - " + episodeName
-							+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - "
-							+ infoProgramTitle + " And Episode Duraion - " + infoEpisodeDuration);
+					+ " And Episode Duraion - " + episodeDuration + " Actual Episode Name  - "
+					+ infoProgramTitle + " And Episode Duraion - " + infoEpisodeDuration);
 			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 			reports.attachScreenshot(captureCurrentScreenshot());
 		} else {
@@ -1041,8 +1039,8 @@ public class DTVChannelScreen extends TestInitization {
 		handlePopupIfExist();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(epgGuide, "TV Guide");
-		String liveEpisodeName = new EpgScreen(driver).focusElemntInEpg.getText();
-		String liveEpisodeDuration = new EpgScreen(driver).focusElementProgramTime.getText();
+		new EpgScreen(driver).focusElemntInEpg.getText();
+		new EpgScreen(driver).focusElementProgramTime.getText();
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		navigateToPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 1, 1000);
@@ -1521,5 +1519,348 @@ public class DTVChannelScreen extends TestInitization {
 			FailTestCase("On demand Screen not getting displayed");
 		}
 
+	}
+
+	//Rahul Methods
+	public void verifyZappingFromEPGScreen() throws InterruptedException {
+		List<WebElement> menuList;
+		EpgScreen epgScreen = new EpgScreen(driver);
+		openLiveTV();
+		epgScreen.goToEpgChannelScreen(true);
+		reports.log(LogStatus.PASS, "Navigate to any other channel's current program");
+		sendNumaricKeys(3);
+		Thread.sleep(3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		System.out.println(driver.getPageSource());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		menuList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		System.out.println(menuList.size());
+		int list = menuList.size();
+		for(int i = 0;i<list;i++)
+		{
+			if(menuList.get(i).getText().equalsIgnoreCase("kijken"))
+			{
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+				Thread.sleep(2000);
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 3000);
+			}
+		}
+		pressPauseButtonAndValidation();
+		sendKeyMultipleTimes("ENTER", 1, 5000);
+		// Validation channel info
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(channelLogo, "Channel logo");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(chnlNoIn_Infobar, "Channel Number");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(programTitle, "Program Title");
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		epgScreen.goToEpgChannelScreen(true);
+		reports.log(LogStatus.PASS, "Navigate to CUTV Program");
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+		Thread.sleep(3000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(programDetailsScreen, "Program Details Screen");
+		menuList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		System.out.println(menuList.size());
+		list = menuList.size();
+		for(int i = 0;i<list;i++)
+		{
+			if(menuList.get(i).getText().equalsIgnoreCase("kijken"))
+			{
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+				Thread.sleep(2000);
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 3000);
+			}
+		}
+		handlePopupIfExist();
+		Thread.sleep(2000);
+		pressPauseButtonAndValidation();
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		// Validation channel info
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(channelLogo, "Channel logo");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(chnlNoIn_Infobar, "Channel Number");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(programTitle, "Program Title");
+	}
+
+
+	public void verifyZappingFromHubScreen() throws InterruptedException {
+		openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if(new MiniEPGScreen(driver).headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))){
+			reports.log(LogStatus.PASS, "Hub Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Hub Screen not getting displayed");
+		}
+		sendKeyMultipleTimes("UP", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		if(new Hub(driver).focusHubElement.getText().equalsIgnoreCase("televisie")){
+			reports.log(LogStatus.PASS, "Focus on TV Showcases asset");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Focus is not on televisie");
+		}
+		reports.log(LogStatus.PASS, "Press Ok");
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		pressPauseButtonAndValidation();	
+	}
+
+	public void verifyTwoLinesOnFullScreenVideo() throws InterruptedException {
+		openLiveTV();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Up Line");
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Down Line");
+		reports.log(LogStatus.PASS,"Play PVR and verify two lines" );
+		openLiveTV();
+		handlePopupIfExist();
+		episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Up Line");
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Down Line");
+		reports.log(LogStatus.PASS,"Play CUTV program and verify two lines" );
+		new RcArrowKeys(driver).playCUTVPlayBack();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Up Line");
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Down Line");
+
+
+		reports.log(LogStatus.PASS, "Play a VOD Playback");
+		navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		handlePopupIfExist();
+		pressPauseButtonAndValidation();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Up Line");
+		elementNotDisplayed(new LibraryScreen(driver).downCanvasLine,"Down Line");
+	}
+
+	public void elementNotDisplayed(WebElement we, String webElementName) throws InterruptedException {
+
+		try
+		{
+			if (we.isDisplayed()){
+				FailTestCase(webElementName +" should not be displayed on Webpage");
+			}
+			else
+			{
+				reports.log(LogStatus.PASS , webElementName + " not getting displayed on full screen video");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			}
+		}
+		catch(NoSuchElementException ex)
+		{
+			reports.log(LogStatus.PASS , webElementName +" not getting displayed on full screen video");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+	}
+
+	public void verifyZappingFromTSTV() throws InterruptedException {
+		openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		String channelNumber = chnlNoIn_Infobar.getText();
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 10000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+		reports.log(LogStatus.PASS, "Press CH+ Key");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new RcArrowKeys(driver).notificationMsg, "TSTV lost Warning Messgae");
+		reports.log(LogStatus.PASS, "Click on Cancel Button");
+		sendKeyMultipleTimes("RIGHT", 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		String newchannelNumber = chnlNoIn_Infobar.getText();
+		if(newchannelNumber.equalsIgnoreCase(channelNumber))
+		{
+			reports.log(LogStatus.PASS, "Nothing happens. Channel not zapped");
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Channel Zapped to other channel");
+		}
+		reports.log(LogStatus.PASS, "Again Press CH+ Key");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_UP_OR_CHANNEL_PLUS.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new RcArrowKeys(driver).notificationMsg, "TSTV lost Warning Messgae");
+		reports.log(LogStatus.PASS, "Click on Continue Button");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		newchannelNumber = chnlNoIn_Infobar.getText();
+		if(!newchannelNumber.equalsIgnoreCase(channelNumber))
+		{
+			reports.log(LogStatus.PASS, "Channel Zapped to other channel");
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Channel not Zapped to other channel");
+		}
+	}
+
+	public void verifyZappingFromZapList() throws InterruptedException {
+		openLiveTV();
+		sendKeyMultipleTimes("UP", 1, 1000);
+		driver.switchTo().defaultContent();
+		if(new MiniEPGScreen(driver).headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "ZapList", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Press UP - Zaplist Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Zap List Screen not getting displayed");
+		}
+		reports.log(LogStatus.PASS, "Select Currently Tuned Channel.Focus moves back to Full Screen DTV");
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		pressPauseButtonAndValidation();
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		sendKeyMultipleTimes("UP", 1, 2000);
+		handlePopupIfExist();
+		driver.switchTo().defaultContent();
+		if(new MiniEPGScreen(driver).headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "ZapList", "name_nl")))
+		{
+			reports.log(LogStatus.PASS, "Press UP - Zaplist Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Zap List Screen not getting displayed");
+		}
+		reports.log(LogStatus.PASS, "Select any other Currently Tuned Channel.Focus moves back to Full Screen DTV");
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
+		pressPauseButtonAndValidation();
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		// Validation channel info
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(channelLogo, "Channel logo");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(chnlNoIn_Infobar, "Channel Number");
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		isDisplayed(programTitle, "Program Title");
+	}
+
+	//Pritam Methods
+
+	public void PlayRecordingUsing_Trickplay() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		Pvr pvr = new Pvr(driver);
+		dtvChannelScreen.openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		pvr.navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Live TV forwarded thorugh Trick Play Bar Icon");
+		sendKeyMultipleTimes("RIGHT", 2, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassName = pvr.forward.getAttribute("class");
+		System.out.println("class name " + currentClassName);
+		if (currentClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Running streaming is forwarded");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to forward the running streaming");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Live TV is rewind thorugh Trick Play Bar Icon");
+		sendKeyMultipleTimes("LEFT", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		String currentClassNameRewind = rewindBtn.getAttribute("class");
+		System.out.println("class name " + currentClassNameRewind);
+		if (currentClassNameRewind.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "Running streaming is rewind");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+
+			FailTestCase("Unable to rewind the running streaming");
+		}
+
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		reports.log(LogStatus.PASS, "Pressing Play button thorugh Trick Play bar");
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+
+		String currentImgSource = pauseAndPlayImg.getAttribute("src");
+		String[] currentImgToArr = currentImgSource.split("/");
+		String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+		String PlayClassName = enablePausePlayButton.getAttribute("class");
+		System.out.println("class name " + PlayClassName);
+		if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))&& PlayClassName.contentEquals("enable active")) {
+			reports.log(LogStatus.PASS, "play Successfully");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+
+		else {
+			FailTestCase("Pause button is not highlight on webpage");
+
+		}
+	}
+
+
+	public void PLTV_Lost_On_PVR_Playback() throws InterruptedException
+	{
+		Pvr pvr = new Pvr(driver);
+		openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		openLiveTV();
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+		Thread.sleep(120000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		pvr.navigateToThePVRPlayback(episodeDetails);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+		tuneToChannel(Integer.parseInt(getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		if(new MiniEPGScreen(driver).notificationMsg.isDisplayed())
+		{
+			FailTestCase("Notification message should not appear for PLTV interrupt");
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "Notification message does not appear for PLTV buffer interrupt");
+			reports.attachScreenshot(captureCurrentScreenshot());
+
+		}	
 	}
 }

@@ -309,4 +309,14 @@ public class VodFeaturesTestCase extends TestInitization {
 	}
 	
 	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException Test cases 1.Go to shop 2.Select a rented asset from the available category 3.Select 'Watch' option from the Action Menu 4.Select one among the options
+	 */
+	@Test
+	public void tc_VOD_Renting_within_the_Rental_Time() throws InterruptedException {
+		VodFeatures vod = new VodFeatures(driver);
+		vod.VOD_Renting_within_the_Rental_Time();
+	}
+	
 }

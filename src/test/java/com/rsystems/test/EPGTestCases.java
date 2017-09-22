@@ -2,14 +2,10 @@ package com.rsystems.test;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -22,8 +18,6 @@ import com.rsystems.pages.EpgScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.utils.TestInitization;
 import com.rsystems.utils.Unicode;
-
-import cucumber.api.java.ca.Cal;
 
 public class EPGTestCases extends TestInitization {
 
@@ -1515,6 +1509,34 @@ public class EPGTestCases extends TestInitization {
 	public void tc_EPG007_EPG_Current_Time_Line() throws InterruptedException{
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyCurrentTimeLine();
+		
+	}
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used Check that '1. Check the icons available on EPG programs cells (as applicable) 2. Check the icons available in Channel cells
+	 * @throws ParseException
+	 */
+	@Test
+	public void tc_EPG_Icons() throws InterruptedException, ParseException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.verify_EPG_Program_Channel_icons();
+
+	}
+	
+	/**
+	 * @author Pritam.Dutta
+	 * @throws InterruptedException
+	 * Test cases is used Check that 'Go to TV grid and stay on the page for a longer time.
+	 * @throws ParseException
+	 */
+	
+	@Test
+	public void tc_TIME0201_grid() throws InterruptedException, ParseException
+	{
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.timeAfterRefresh_grid();
 		
 	}
 }

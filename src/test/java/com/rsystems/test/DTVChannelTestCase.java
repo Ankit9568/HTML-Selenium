@@ -5,15 +5,11 @@ import java.text.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
-import org.yaml.snakeyaml.representer.Represent;
-
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository.ZapListPage;
 import com.rsystems.pages.DTVChannelScreen;
 import com.rsystems.pages.MiniEPGScreen;
 import com.rsystems.pages.Pvr;
-import com.rsystems.pages.RentMovie;
-import com.rsystems.pages.VodFeatures;
 import com.rsystems.pages.ZapList;
 import com.rsystems.utils.PackageInformation;
 import com.rsystems.utils.TestInitization;
@@ -804,5 +800,89 @@ public class DTVChannelTestCase extends TestInitization {
 		
 	}
 	
+	//Rahul Test Cases
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to zap from TSTV
+	 */
+	@Test
+	public void tc_DTVZAP009_Zapping_from_TSTV_full_screen_Show_info_on_zap_setting_YES() throws InterruptedException{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyZappingFromTSTV();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to zap from EPG
+	 */
+	@Test
+	public void tc_DTVZAP003_ZappingfromEPG_Showinfoonzapsetting_YES() throws InterruptedException{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyZappingFromEPGScreen();
+	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to zap from Hub
+	 */
+	@Test
+	public void tc_DTVZAP007_Zapping_from_HUB_Show_info_on_zap_setting_YES() throws InterruptedException{
+		
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyZappingFromHubScreen();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * 
+	 * Test cases is used to verify lines in full screen video
+	 */
+	@Test
+	public void tc_SF021_FULL_SCREEN_PLAYBACK() throws InterruptedException{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyTwoLinesOnFullScreenVideo();
+	}
+
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to zap via Zap List
+	 */
+	@Test
+	public void tc_DTV_Channel_Zap_Via_Zap_List_Show_info_on_zap_setting_YES() throws InterruptedException{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.verifyZappingFromZapList();
+	}
+
+	//Pritam Test Cases
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to 1. Watch a BC during x minutes in PLTV mode. 2. Start to watch a nPVR recording 3. Stop PVR playback and check the PLTV buffer.
+	 * @throws InterruptedException
+	 */
+	
+	@Test
+	public void tc_BCDTVCP1427_PLTV_Lost_On_PVR_Playback() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.PLTV_Lost_On_PVR_Playback();
+		
+	}
+
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to 1. Play any of the recordings and use the trickplay buttons to navigate in the records. 2. From trickplay mode, select to Play the recording in normal speed.
+	 * @throws InterruptedException
+	 */
+
+	@Test
+	public void tc_BCDTVCP1439_Trickplay() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.PlayRecordingUsing_Trickplay();
+		
+	}
 	
 }

@@ -215,6 +215,8 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.epgGroupIcon)
 	public WebElement epgGroupIcon;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.channelsIcon)
+	public WebElement channelsIcon;
 
 	public void goToEpgSettingScreen() throws InterruptedException {
 
@@ -2039,7 +2041,7 @@ public class EpgScreen extends TestInitization {
 				FailTestCase("Press Right Key - Program Description not updated according to Program");
 			}
 		}
-		
+
 		String currentProgramSummary = programSummary.getText();
 		sendKeyMultipleTimes("LEFT", 1, 5000);
 		updatedProgramSummary = programSummary.getText();
@@ -2403,5 +2405,41 @@ public class EpgScreen extends TestInitization {
 		}
 	}
 
+
+	public void verify_EPG_Program_Channel_icons() throws InterruptedException
+	{
+		startaRecording();
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> myElements = driver.findElements(By.xpath(ObjectRepository.EpgScreen.epgGroupIcon));
+		System.out.println(myElements.size());
+		for(WebElement e : myElements) 
+		{
+			System.out.println(e.getAttribute("src"));
+			if(e.getAttribute("src").contains("recording"))
+			{
+				isDisplayed(e, "Recording Icon under Program details");
+			}
+			if(e.getAttribute("src").contains("cutv"))
+			{
+				isDisplayed(e,"CUTV Icon under Program Details");
+			}
+		}
+
+		reports.log(LogStatus.PASS, "Under Channels cells Icons should be shown");
+		isDisplayed(channelsIcon, "Cutv Icon under Channel cells");
+
+	}
+
+
+
+
+
+	public void timeAfterRefresh_grid() throws InterruptedException, ParseException
+	{
+		reports.log(LogStatus.PASS, "Navigate to the EPG screen");
+		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		timeAfterRefrehed(null);
+	}
 }
 
