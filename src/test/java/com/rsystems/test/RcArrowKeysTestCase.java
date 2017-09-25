@@ -135,15 +135,25 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rc.verifyRCURadioKey();
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Digital_TV_NTE1_2() throws InterruptedException {
 
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		// making the testing condition
+		hotKeysNavigation.setRadioChannel();
 		// Step 1
+		reports.log(LogStatus.PASS, "Navigate to Shop screen.");
 		dtvChannelScreen.openLiveTVAndValidate();
 		setApplicationHubPage(1);
 		sendKeySequence("RIGHT,ENTER", 1000, "shop");
+
 		dtvChannelScreen.openLiveTVAndValidate();
 		hotKeysNavigation.navigateToRadioScreen();
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
@@ -167,24 +177,30 @@ public class RcArrowKeysTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Digital_TV_NTE1_2_A() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
-
+		hotKeysNavigation.setRadioChannel();
 		// Step 4
 		dtvChannelScreen.openLiveTVAndValidate();
 		reports.log(LogStatus.PASS, "Naviaget to HUB ");
 		setApplicationHubPage(1);
-		String lastChannelNumber = dtvChannelScreen.openLiveTVAndValidate();
+		String lastChannelNumberProgramDetails = dtvChannelScreen.openLiveTVAndValidate();
+
 		hotKeysNavigation.navigateToRadioScreen();
 
 		// step 5
 		hotKeysNavigation.navigateToRadioScreen();
-		String currentNumber = dtvChannelScreen.openLiveTVAndValidate();
-		rcArrowKeys.verifyChannelNumber(currentNumber, lastChannelNumber);
+		String currentChannelProramDetails = dtvChannelScreen.openLiveTVAndValidate();
+		rcArrowKeys.verifyChannelNumber(currentChannelProramDetails, lastChannelNumberProgramDetails);
 
 		// Step 6
 		rcArrowKeys.validateNotificationMessagesForLiveTV("CUTV", Unicode.VK_TV, "Live TV");
@@ -194,6 +210,11 @@ public class RcArrowKeysTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Digital_TV_NTE1_2_B() throws InterruptedException {
 
@@ -211,31 +232,41 @@ public class RcArrowKeysTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Radio_Hot_Key_NTE1_2() throws InterruptedException {
 
 		HotKeysNavigation hotKeysNavigation = new HotKeysNavigation(driver);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		hotKeysNavigation.setRadioChannel();
 		// Step 1
 		String tvChannelNumberProgramDuration = dtvChannelScreen.openLiveTVAndValidate();
+		reports.log(LogStatus.PASS, "Navigate to shop screen.");
 		setApplicationHubPage(1);
 		sendKeySequence("RIGHT,ENTER", 1000, "shop");
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, tvChannelNumberProgramDuration, "Radio button ");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, tvChannelNumberProgramDuration,
+				"Radio button ");
 
-		int radioChannelNumber = hotKeysNavigation.openRadioButtonAndValidate(2);
+		String radioChannelProgramDuration = hotKeysNavigation.openRadioButtonAndValidate(2);
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, radioChannelNumber + "",
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, radioChannelProgramDuration,
 				"Radio button ");
 
 		// Step 2
 		hotKeysNavigation.openRadioButtonAndValidate(1);
 		reports.log(LogStatus.PASS, "Navigate to another Radio channel");
 		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values")));
-
+		Thread.sleep(2000);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		String otherRadioChannelText = dtvChannelScreen.programDurationIn_Infobar.getText();
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		if (getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values")
 				.contentEquals(dtvChannelScreen.chnlNoIn_Infobar.getText())) {
@@ -250,24 +281,29 @@ public class RcArrowKeysTestCase extends TestInitization {
 		}
 
 		reports.log(LogStatus.PASS, "Again Radio press nothing should happen");
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
-				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, otherRadioChannelText,
+				"Radio button ");
 
 		// Step3
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
-				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
-		
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, otherRadioChannelText,
+				"Radio button ");
+
 		reports.log(LogStatus.PASS, "Press menu button");
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
-				getExcelKeyValue("DTVChannel", "RadioChannel_1", "Values"), "Radio button ");
-		
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV,tvChannelNumberProgramDuration ,
+
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, otherRadioChannelText,
+				"Radio button ");
+
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, tvChannelNumberProgramDuration,
 				"TV button ");
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Radio_Hot_Key_NTE1_2_A() throws InterruptedException {
 
@@ -278,24 +314,36 @@ public class RcArrowKeysTestCase extends TestInitization {
 		String currentChannelProgramDuration = dtvChannelScreen.openLiveTVAndValidate();
 		reports.log(LogStatus.PASS, "Naviaget to HUB ");
 		setApplicationHubPage(1);
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, currentChannelProgramDuration, "Radio button");
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, currentChannelProgramDuration, "TV button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, currentChannelProgramDuration,
+				"Radio button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_TV, currentChannelProgramDuration,
+				"TV button");
 
 		// Step 5
-		String getLastTunedRadioChannelProgramDetails = hotKeysNavigation.getLastTunedRadioChannelNum();
+		String getLastTunedRadioChannelProgramDetails = hotKeysNavigation.getLastTunedRadioChannelProgramDetails();
 		dtvChannelScreen.openLiveTVAndValidate();
-		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO, getLastTunedRadioChannelProgramDetails + "",
-				"Radio button");
+		hotKeysNavigation.pressUnicodeAndValidateChannelNumber(Unicode.VK_RADIO,
+				getLastTunedRadioChannelProgramDetails + "", "Radio button");
 
 		// Step 6
-		rcArrowKeys.validateNotificationMessagesForRadio("CUTV", Unicode.VK_RADIO,
-				"Radio button");
-		rcArrowKeys.validateNotificationMessagesForRadio("PVR", Unicode.VK_RADIO,
-				"Radio button");
-		rcArrowKeys.validateNotificationMessagesForRadio( "PLTV", Unicode.VK_RADIO,
-				"Radio button");
-		rcArrowKeys.validateNotificationMessagesForRadio( "VOD", Unicode.VK_RADIO,
-				"Radio button");
+		rcArrowKeys.validateNotificationMessagesForRadio("CUTV", Unicode.VK_RADIO, "Radio button");
+		rcArrowKeys.validateNotificationMessagesForRadio("PVR", Unicode.VK_RADIO, "Radio button");
+		rcArrowKeys.validateNotificationMessagesForRadio("PLTV", Unicode.VK_RADIO, "Radio button");
+		rcArrowKeys.validateNotificationMessagesForRadio("VOD", Unicode.VK_RADIO, "Radio button");
 
 	}
+
+	@Test
+	public void tc_RCU_Radio_Hot_Key_NTE1_2_B() throws InterruptedException {
+
+		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
+		rcArrowKeys.validateNotoificationMessage("CUTV", Unicode.VK_RADIO);
+		rcArrowKeys.validateNotoificationMessage("PVR", Unicode.VK_RADIO);
+		rcArrowKeys.validateNotoificationMessage("VOD", Unicode.VK_RADIO);
+		rcArrowKeys.validateNotoificationMessage("PLTV", Unicode.VK_RADIO);
+
+		// For Step 8 Functionality is not yet implemented
+
+	}
+
 }

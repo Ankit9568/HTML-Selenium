@@ -735,8 +735,7 @@ public class RcArrowKeys extends TestInitization {
 
 		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
 
-			liveTvprogramDetails = getLiveProgramDetails(
-					TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl"));
+			liveTvprogramDetails = getLiveProgramDetails(1 + "");
 
 			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
@@ -749,9 +748,13 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(notificationMsg, "Notification message ");
+		reports.log(LogStatus.PASS, "Accepting popup ");
 		handlePopupIfExist();
+		// wait for start LIve TV
+		Thread.sleep(8000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		String currentChannelNumber = dtvChannelScreen.programDurationIn_Infobar.getText();
@@ -780,20 +783,21 @@ public class RcArrowKeys extends TestInitization {
 
 		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
 
-		// move to Another Live TV Channel
+			// move to Another Live TV Channel
 			dtvChannelScreen.tuneToChannel(Integer
 					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
-			
+
 			Thread.sleep(8000);
 			dtvChannelScreen.pressPauseButtonAndValidation();
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
 
+			getLiveProgramDetails(1 + "");
 			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
-			sendKeyMultipleTimes("ENTER", 2, 1000);
+			sendKeyMultipleTimes("ENTER", 2, 2000);
 
 		}
 
@@ -801,10 +805,12 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(notificationMsg, "Notification message ");
+		reports.log(LogStatus.PASS, "Accepting pop up ");
 		handlePopupIfExist();
-		Thread.sleep(5000);
+
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		reports.attachScreenshot(captureCurrentScreenshot());
 		driver.switchTo().frame(getCurrentFrameIndex());
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
 		String currentChannelNumber = dtvChannelScreen.programDurationIn_Infobar.getText();
@@ -818,6 +824,39 @@ public class RcArrowKeys extends TestInitization {
 		sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 3000);
 		return dtvChannelScreen.tuneToChannel(Integer.parseInt(channelNumber));
 
+	}
+
+	public void validateNotoificationMessage(String functionalityName, Unicode unicode) throws InterruptedException {
+
+		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+
+		if (functionalityName.contentEquals("CUTV")) {
+			rcArrowKeys.playCUTVPlayBack();
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("PVR")) {
+			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
+					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("PLTV")) {
+			dtvChannelScreen.pressPauseButtonAndValidation();
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
+			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			sendKeyMultipleTimes("ENTER", 2, 1000);
+		}
+
+		sendUnicodeMultipleTimes(unicode.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(rcArrowKeys.notificationMsg, " Notification Popup");
+		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
+		isNotDisplayed(rcArrowKeys.notificationMsg, " Notification Popup");
 	}
 
 }

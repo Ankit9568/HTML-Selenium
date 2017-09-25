@@ -39,7 +39,11 @@
 					<include name="tc_RCU_ON_Demand_NTE1_1" />
 					<include name="tc_RCU_PVR_NTE1_1" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_1" />
-
+					<include name="tc_RCU_Digital_TV_NTE1_2" />
+					<include name="tc_RCU_Digital_TV_NTE1_2_A" />
+					<include name="tc_RCU_Digital_TV_NTE1_2_B" />
+					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
+					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" />
 				</methods>
 			</class>
 		</classes>

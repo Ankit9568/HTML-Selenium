@@ -116,7 +116,6 @@ public class TestInitization {
 		log = Logger.getLogger("ProximusHTMLLogger");
 		log.info("Logger Info:: Inside Setup Method");
 
-		
 		SSH_Connection sshConnection = new SSH_Connection();
 
 		String stbIP = null;
@@ -127,14 +126,10 @@ public class TestInitization {
 
 		sshConnection.rebootSTBAndSetup(stbIP, "root",
 				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
-	Thread.sleep(5000);
-		
-		
+		Thread.sleep(5000);
+
 		launchWebdriver();
 		launchApplication();
-			
-		
-		
 
 	}
 
@@ -826,17 +821,15 @@ public class TestInitization {
 		} catch (NoSuchElementException e) {
 		}
 	}
-	
-	public static void main(String arr[]) throws InterruptedException{
-		SSH_Connection  sshConnection = new SSH_Connection();
+
+	public static void main(String arr[]) throws InterruptedException {
+		SSH_Connection sshConnection = new SSH_Connection();
 		sshConnection.rebootSTBAndSetup("10.67.181.116", "root",
 				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
 	}
-	
-	
-	private void launchApplication(){
-		
-		
+
+	private void launchApplication() {
+
 		System.out.println("Waiting for the page to load");
 		wait = new WebDriverWait(driver, 120L);
 

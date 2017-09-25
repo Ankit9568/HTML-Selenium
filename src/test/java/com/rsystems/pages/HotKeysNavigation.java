@@ -73,7 +73,7 @@ public class HotKeysNavigation extends TestInitization {
 
 	}
 
-	public int openRadioButtonAndValidate(int radioButtonPressCount) throws InterruptedException {
+	public String openRadioButtonAndValidate(int radioButtonPressCount) throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		
@@ -94,8 +94,8 @@ public class HotKeysNavigation extends TestInitization {
 			FailTestCase("Radio channel Number : " + radioChannel + " has not been reached");
 
 		}
-
-		return radioChannel;
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		return dtvChannelScreen.programDurationIn_Infobar.getText();
 	}
 
 	public void pressUnicodeAndValidateChannelNumber(Unicode unicode, String ChannelProgramDurationToBeValidate,
@@ -108,7 +108,7 @@ public class HotKeysNavigation extends TestInitization {
 
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		
 		String currentChannelProgramDuration = programDurationIn_Infobar.getText();
 		if (currentChannelProgramDuration.contentEquals(ChannelProgramDurationToBeValidate)) {
@@ -123,10 +123,15 @@ public class HotKeysNavigation extends TestInitization {
 
 	}
 
-	public String getLastTunedRadioChannelNum() throws InterruptedException {
+	public void setRadioChannel() throws InterruptedException{
+		// set radio channel to 800 because radio channel is not set on 800 than conflict the testing condtion 
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 2000);
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("DTVChannel", "RadioChannel", "Values")));	
+	}
+	public String getLastTunedRadioChannelProgramDetails() throws InterruptedException {
 
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 2, 0);
+		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_RADIO.toString(), 1, 0);
 		TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		return dtvChannelScreen.programDurationIn_Infobar.getText();
