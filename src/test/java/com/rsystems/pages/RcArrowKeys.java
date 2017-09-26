@@ -2,6 +2,7 @@ package com.rsystems.pages;
 
 import java.util.List;
 
+import org.apache.regexp.recompile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -857,6 +858,63 @@ public class RcArrowKeys extends TestInitization {
 		isDisplayed(rcArrowKeys.notificationMsg, " Notification Popup");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
 		isNotDisplayed(rcArrowKeys.notificationMsg, " Notification Popup");
+	}
+
+	public void validateStopKey(String functionalityName) throws InterruptedException {
+
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		RentMovie rentMovie = new RentMovie(driver);
+		
+		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
+			dtvChannelScreen.back_to_live_stop();
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("LIVETV")) {
+			dtvChannelScreen.pressStopButtonAndValidation();
+		}
+		
+		else if(functionalityName.toUpperCase().contentEquals("TIMESHIFT")){	
+			dtvChannelScreen.pressPauseButtonAndValidation();
+			//wait for 5 second for making buffer
+			Thread.sleep(5000);
+			reports.log(LogStatus.PASS, "Press Stop button");
+			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			isDisplayed(dtvChannelScreen.toastMessage, "Back to live ");
+		}
+		
+		else if (functionalityName.toUpperCase().
+				contentEquals("PVR")) {
+			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
+					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+			reports.log(LogStatus.PASS, "Press Stop button");
+			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			driver.switchTo().frame(getCurrentFrameIndex());
+			isDisplayed(recordingScreen.totalRecordingID, "Recording Count ");
+		}
+
+		else if (functionalityName.toUpperCase().contentEquals("VOD")) {
+			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			sendKeyMultipleTimes("ENTER", 2, 1000);
+			reports.log(LogStatus.PASS, "Press Stop button");
+			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			driver.switchTo().frame(getCurrentFrameIndex());
+			if (rentMovie.currentSelectedMovieName.getText()
+					.contentEquals(TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName").trim())) {
+				reports.log(LogStatus.PASS, "VOD Asset screen is shown.");
+				reports.attachScreenshot(captureCurrentScreenshot());
+			} else {
+				FailTestCase("VOD asset screen is not launched");
+			}
+
+		}
+
 	}
 
 }

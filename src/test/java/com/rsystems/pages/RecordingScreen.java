@@ -74,6 +74,8 @@ public class RecordingScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.HubScreen.headerElement)
 	public WebElement headerElement;
 
+	@FindBy(how = How.ID,using=ObjectRepository.EpgScreen.epgTitleHighlightedProgram)
+	public WebElement epgHiglightTitle;
 	/**
 	 * This function is used to get Episode Name. Created By Rahul Dhoundiyal
 	 */
@@ -302,7 +304,7 @@ public class RecordingScreen extends TestInitization {
 					.findElements(By.cssSelector(
 							".epggroupicon img[src='./resources/common/images/ico_Ongoing_recording.png']"))
 					.isEmpty()) {
-				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
+				epgEpisodeName = epgHiglightTitle.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
 				reports.log(LogStatus.PASS, "Info Screen of ongoing program getting displayed");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -744,7 +746,6 @@ public class RecordingScreen extends TestInitization {
 	 * Created By Rahul Dhoundiyal
 	 */
 	public void deleteAllRecordings() throws InterruptedException {
-		// moveToPlannedRecordings();
 		driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
 		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
 		sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -758,10 +759,6 @@ public class RecordingScreen extends TestInitization {
 		Integer totalRecordings = 0;
 		recordingContentElementList = driver
 				.findElements(By.cssSelector(ObjectRepository.RecordingElements.RecordingListCSSSelector));
-		/*
-		 * If there is no recordings under Scheduled Recording then first start
-		 * recording for multiple episode and try again to deleteAll
-		 */
 		if (recordingContentElementList.size() == 0) {
 			return;
 		} else {
@@ -837,7 +834,7 @@ public class RecordingScreen extends TestInitization {
 					.findElements(By.cssSelector(
 							".epggroupicon img[src='./resources/common/images/future_recording_icon_small.png']"))
 					.isEmpty()) {
-				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
+				epgEpisodeName = epgHiglightTitle.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 				reports.log(LogStatus.PASS, "Open Info Screen of Future program");
 				reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
@@ -1396,17 +1393,13 @@ public class RecordingScreen extends TestInitization {
 		sendKeyMultipleTimes("ENTER", 1, 1000);
 		reports.log(LogStatus.PASS, "Info Box getting displayed with Episode Info - Click on opname stoppen");
 		sendKeyMultipleTimes("DOWN", 1, 1000);
-		/*
-		 * driver.switchTo().frame(getCurrentFrameIndex());
-		 * if(activeInfoMenuItem.getText().equalsIgnoreCase("herstarten")) {
-		 * sendKeyMultipleTimes("DOWN", 1, 1000); }
-		 */
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("vodText")).getText().contains("stopzetten?")) {
+		System.out.println(driver.getPageSource());
+		if (driver.findElement(By.className("dtvText")).getText().contains("stopzetten?")) {
 			reports.log(LogStatus.PASS, "Message getting displayed to stop recording "
-					+ driver.findElement(By.className("vodText")).getText());
+					+ driver.findElement(By.className("dtvText")).getText());
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		reports.log(LogStatus.PASS, "Click on Cancel");
@@ -1414,7 +1407,7 @@ public class RecordingScreen extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (!driver.findElement(By.className("vodText")).getText().contains("stopzetten?")) {
+		if (!driver.findElement(By.className("dtvText")).getText().contains("stopzetten?")) {
 			isDisplayed(driver.findElement(By.xpath(ObjectRepository.RecordingElements.recordingIconElement)),
 					"Recording Icon");
 			reports.log(LogStatus.PASS, "Stop recording Message not getting displayed");
@@ -1425,15 +1418,15 @@ public class RecordingScreen extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (driver.findElement(By.className("vodText")).getText().contains("stopzetten?")) {
+		if (driver.findElement(By.className("dtvText")).getText().contains("stopzetten?")) {
 			reports.log(LogStatus.PASS, "Message getting displayed to stop recording "
-					+ driver.findElement(By.className("vodText")).getText());
+					+ driver.findElement(By.className("dtvText")).getText());
 			reports.attachScreenshot(captureCurrentScreenshot());
 		}
 		reports.log(LogStatus.PASS, "Click on Confirm to stop recording");
 		sendKeyMultipleTimes("ENTER", 1, 3000);
 		driver.switchTo().frame(getCurrentFrameIndex());
-		if (!driver.findElement(By.className("vodText")).getText().contains("stopzetten?")) {
+		if (!driver.findElement(By.className("dtvText")).getText().contains("stopzetten?")) {
 			try {
 				if (recordingIconElement.isDisplayed()) {
 					FailTestCase("Recording Icon should not be displayed");
@@ -1530,7 +1523,7 @@ public class RecordingScreen extends TestInitization {
 				}
 				prevStartTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim());
 				prevEndTime = sdf.parse(epgScreen.focusElementProgramTime.getText().split(" ")[0].trim());
-				epgEpisodeName = epgScreen.focusElemntInEpg.getText();
+				epgEpisodeName = epgHiglightTitle.getText();
 				TestInitization.sendKeyMultipleTimes("ENTER", 1, 1000);
 
 				reports.log(LogStatus.PASS, "Open Info Screen of Future program");
@@ -1702,7 +1695,87 @@ public class RecordingScreen extends TestInitization {
             }
           sendKeyMultipleTimes("ENTER",2, 6000);
     }
-    
 
-	
+	public void deleteAllPlannedRecordings() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Navigate To PVR Screen");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerElement.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("Shop screen should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS, "Navigate To Planned Recordings");
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> activeElement = driver.findElements(By.xpath("//div[@class='focusBox']/div/ul/li[@class='active']"));
+		int listSize = activeElement.size();
+		System.out.println(listSize);
+		for(int i=0;i<listSize;i++)
+		{
+			System.out.println(activeElement.get(i).getText());
+			if(activeElement.get(i).getText().equalsIgnoreCase("geplande opnames")){
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+				break;
+			}
+			else
+			{
+				sendKeyMultipleTimes("DOWN", 1, 2000);
+			}
+		}
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(totalRecordingID));
+		sendKeyMultipleTimes("UP", 1, 2000);
+		int totalRecordings = Integer.parseInt(totalRecordingID.getText());
+		if(activeInfoMenuItem.getText().equalsIgnoreCase("geplande opnames"))
+		{
+			reports.log(LogStatus.PASS, "Planned Recording List getting displayed.Total Recordings present - "+totalRecordings);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Planned Recording List not getting displayed");
+		}
+		if(totalRecordings>0)
+		{
+			for (int i = 0; i <totalRecordings; i++) {
+				driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+				if (focusRecordingElement.getAttribute("assetvolume").equalsIgnoreCase("SINGLE")) {
+					sendKeyMultipleTimes("ENTER", 1, 2000);
+					driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+					TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
+					TestInitization.sendKeyMultipleTimes("ENTER", 1, 2000);
+				}
+				else
+				{
+					sendKeyMultipleTimes("ENTER", 1, 2000);
+					sendKeyMultipleTimes("ENTER", 1, 2000);
+					sendKeyMultipleTimes("DOWN", 1, 2000);
+					sendKeyMultipleTimes("ENTER", 1, 2000);
+					sendKeyMultipleTimes("ENTER", 1, 2000);
+				}
+			}
+		}
+		else
+		{
+			reports.log(LogStatus.PASS, "Schedule Some recordings to test this scenario.");
+			scheduleRecordingForFutureChannel("SINGLE", 3);
+			deleteAllPlannedRecordings();
+			return;
+		}
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(totalRecordingID));
+		sendKeyMultipleTimes("DOWN", 1, 2000);
+		int totalRecordingsAfterDelete = Integer.parseInt(totalRecordingID.getText());
+		if(totalRecordingsAfterDelete == 0)
+		{
+			reports.log(LogStatus.PASS, "All Planned Recorings deleted.Recording Before Delete : "+totalRecordings+". After Delete - "+totalRecordingsAfterDelete);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("All planned recordings noit getting deleted");
+		}
+	}
 }

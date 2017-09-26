@@ -280,14 +280,13 @@ public class VodFeaturesTestCase extends TestInitization {
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
 
 	}
-	
 
 	/**
 	 * @author Pritam.Dutta
-	 * @throws InterruptedException Test cases is used to '1.Go to shop
-        2.Select a program from the available category
-        3.Select 'Rent' from the Action Menu
-        4. Enter incorrect PIN
+	 * @throws InterruptedException
+	 *             Test cases is used to '1.Go to shop 2.Select a program from
+	 *             the available category 3.Select 'Rent' from the Action Menu
+	 *             4. Enter incorrect PIN
 	 */
 	@Test
 	public void tc_VOD_Rent_Enter_Invalid_PIN() throws InterruptedException {
@@ -296,27 +295,51 @@ public class VodFeaturesTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"),
 				TestInitization.getExcelKeyValue("RentMovie", "POD", "WrongPinNumber"));
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
-	 * @throws InterruptedException Test cases 'Watch a VOD and try to record it.
+	 * @throws InterruptedException
+	 *             Test cases 'Watch a VOD and try to record it.
 	 */
 	@Test
 	public void tc_VOD_Record() throws InterruptedException {
 		VodFeatures vod = new VodFeatures(driver);
 		vod.VOD_Record();
 	}
-	
-	
+
 	/**
 	 * @author Pritam.Dutta
-	 * @throws InterruptedException Test cases 1.Go to shop 2.Select a rented asset from the available category 3.Select 'Watch' option from the Action Menu 4.Select one among the options
+	 * @throws InterruptedException
+	 *             Test cases 1.Go to shop 2.Select a rented asset from the
+	 *             available category 3.Select 'Watch' option from the Action
+	 *             Menu 4.Select one among the options
 	 */
 	@Test
 	public void tc_VOD_Renting_within_the_Rental_Time() throws InterruptedException {
 		VodFeatures vod = new VodFeatures(driver);
 		vod.VOD_Renting_within_the_Rental_Time();
 	}
-	
+
+	@Test
+	public void tc_Action_VOD() throws InterruptedException {
+
+		RentMovie rentMovie = new RentMovie(driver);
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
+			
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(rentMovie.trailer, "Movie Trailer ");
+		isDisplayed(rentMovie.rentOption, "Rent Option");
+		isDisplayed(rentMovie.addToFaviorite, "Add to Faviorite ");
+		isDisplayed(rentMovie.itemScore, "rate ");
+		isDisplayed(rentMovie.audioLanguage, "Audio ");
+		isDisplayed(rentMovie.currentSelectedMovieName, "Movie Title ");
+		isDisplayed(rentMovie.director, "Movie director ");
+		isDisplayed(rentMovie.vodDescription, "Movie description ");
+		isDisplayed(rentMovie.breadcompSrc, "breadcrump ");
+		isDisplayed(rentMovie.dateTime, "date time ");
+		
+	}
 }

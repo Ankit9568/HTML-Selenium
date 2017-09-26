@@ -954,7 +954,7 @@ public class EPGTestCases extends TestInitization {
 			if (option.getText().contentEquals("pauzeren")) {
 				pauseBtnFound = true;
 				reports.log(LogStatus.PASS, "Pause button found");
-			} else if (option.getText().contentEquals("opnemen") || option.getText().contentEquals("opname stoppen") ) {
+			} else if (option.getText().contentEquals("opnemen") || option.getText().contentEquals("opname stoppen")) {
 				recordBtnFound = true;
 				reports.log(LogStatus.PASS, "Record/RecrdingStop button found");
 			}
@@ -1137,13 +1137,12 @@ public class EPGTestCases extends TestInitization {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to TV guide");
 		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 1000);
-		
 
 		driver.switchTo().frame(getCurrentFrameIndex());
 		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("ActivateInfoBanner", "RadioChannel", "name_nl")));
 		Thread.sleep(5000);
 		reports.attachScreenshot(captureCurrentScreenshot());
-		
+
 		String currentPrgDesc = epgScreen.channelGenere.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -1299,7 +1298,7 @@ public class EPGTestCases extends TestInitization {
 		int startTimeDuration = epgScreen.focusElementProgramTime.getLocation().getY();
 		int startYProgramDesc = epgScreen.displayChannelDescription.getLocation().getY();
 		String startProgramTime = epgScreen.displayChannelStartTime.getText();
-		
+
 		if (startYProgramTitle < startTimeDuration && startTimeDuration < startYProgramDesc) {
 			reports.log(LogStatus.PASS, "Program duration is displayed between program title and program description ");
 			reports.attachScreenshot(captureCurrentScreenshot());
@@ -1503,19 +1502,21 @@ public class EPGTestCases extends TestInitization {
 	/**
 	 * @author Rahul.Dhoundiyal
 	 * @throws InterruptedException
-	 * Test case is used to verify Current Time Line in EPG
+	 *             Test case is used to verify Current Time Line in EPG
 	 */
 	@Test
-	public void tc_EPG007_EPG_Current_Time_Line() throws InterruptedException{
+	public void tc_EPG007_EPG_Current_Time_Line() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.verifyCurrentTimeLine();
-		
+
 	}
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used Check that '1. Check the icons available on EPG programs cells (as applicable) 2. Check the icons available in Channel cells
+	 *             Test cases is used Check that '1. Check the icons available
+	 *             on EPG programs cells (as applicable) 2. Check the icons
+	 *             available in Channel cells
 	 * @throws ParseException
 	 */
 	@Test
@@ -1524,24 +1525,55 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.verify_EPG_Program_Channel_icons();
 
 	}
-	
+
 	/**
 	 * @author Pritam.Dutta
 	 * @throws InterruptedException
-	 * Test cases is used Check that 'Go to TV grid and stay on the page for a longer time.
+	 *             Test cases is used Check that 'Go to TV grid and stay on the
+	 *             page for a longer time.
 	 * @throws ParseException
 	 */
-	
+
 	@Test
-	public void tc_TIME0201_grid() throws InterruptedException, ParseException
-	{
+	public void tc_TIME0201_grid() throws InterruptedException, ParseException {
 		EpgScreen epgScreen = new EpgScreen(driver);
 		epgScreen.timeAfterRefresh_grid();
-		
+
 	}
 
-	public void tc_EPG_Future_Program_Options(){
-		
-		
+	@Test
+	public void tc_EPG_Future_Program_Options() throws InterruptedException {
+		EpgScreen epgScreen = new EpgScreen(driver);
+		epgScreen.goToEpgChannelScreen(true);
+		epgScreen.navigateToFutureProgram();
+		reports.log(LogStatus.PASS, "Navigate to action list");
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		reports.attachScreenshot(captureCurrentScreenshot());
+		boolean reminderBtn = false;
+		boolean recordBtn = false;
+		driver.switchTo().frame(getCurrentFrameIndex());
+		List<WebElement> actionList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+		reports.log(LogStatus.PASS, "Validation the action list");
+		for (WebElement option : actionList) {
+			if (option.getText().contentEquals("herinnering")) {
+				reminderBtn = true;
+				reports.log(LogStatus.PASS, "Reminder button found");
+			} else if (option.getText().contentEquals("opnemen")) {
+				recordBtn = true;
+				reports.log(LogStatus.PASS, "Record button found");
+			}
+			else if (option.getText().contentEquals("serie opnemen")) {
+				reports.log(LogStatus.PASS, "Record Series found");
+			}
+
+			else if (option.getText().contentEquals("zendercatalogus")) {
+				reports.log(LogStatus.PASS, "Channel Catalog found");
+			}
+		}
+
+		if (!(reminderBtn && recordBtn)) {
+			FailTestCase("Reminder or Record button is not found");
+		}
+
 	}
 }

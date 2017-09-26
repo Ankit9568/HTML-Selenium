@@ -155,7 +155,19 @@ public class ObjectRepository {
 		public static final String highlighedMovieCategory = "//li[@class='focusedItem current']/span";
 		public static final String currentSelectedMovieName = "selectedVodTitle";
 		public static final String rentOption = "item_rent";
-
+		public static final String trailer = "item_trailer";
+		public static final String huren = "item_rent";
+		public static final String addToFaviorite = "item_bookmarks";
+		public static final String itemScore = "item_score";
+		public static final String similar = "item_comparable";
+		public static final String director = "//div[@id='actor-director']/p";
+		public static final String actor = "//div[@id='actor-director']/p[2]";
+		public static final String priceText = "price-text";
+		public static final String audioLanguage = "language";
+		public static final String breadcompSrc = "//article[@class='logo']/img[@src='resources/components/animation/images/logo.png']";
+		public static final String dateTime = "headerDateTime";
+		public static final String vodDescription = "//div[@class='vodText']/p";
+		
 	}
 
 	public static class LanguageChange {
@@ -183,6 +195,7 @@ public class ObjectRepository {
 		public static final String enablePausePlayButton = "play_pause";
 		public static final String stopBtn = "stop";
 		public static final String playerBar = "//div[@id='player_controls']";
+		public static final String toastMessage="//div[@class='NotAvailble']/currently";
 	}
 
 	public static class ZapListPage {

@@ -345,5 +345,16 @@ public class RcArrowKeysTestCase extends TestInitization {
 		// For Step 8 Functionality is not yet implemented
 
 	}
+	
+	@Test
+	public void tc_RCU_Stop_key() throws InterruptedException{
+		
+		RcArrowKeys rcArrowKeys = new RcArrowKeys(driver);
+		rcArrowKeys.validateStopKey("LIVETV");
+		rcArrowKeys.validateStopKey("PVR");
+		rcArrowKeys.validateStopKey("VOD");
+		rcArrowKeys.validateStopKey("TIMESHIFT");
+		rcArrowKeys.validateStopKey("CUTV");
+	}
 
 }

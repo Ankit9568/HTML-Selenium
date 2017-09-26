@@ -106,6 +106,9 @@ public class VodFeatures extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.FilmsScreen.currentSelectedMovieName)
 	public WebElement currentSelectedMovieName;
 	
+	
+	
+	
 	public void naviagteToVideoOndemandScreen() throws InterruptedException {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 
