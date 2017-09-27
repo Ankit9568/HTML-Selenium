@@ -70,7 +70,7 @@ public class TestInitization {
 	public static String currentExecutionReportPath;
 	public static ArrayList<ReportsData> testResult = new ArrayList<ReportsData>();
 	public static Date executionStartTime = cald.getTime();
-	public static int STBRebootAfterTestCase = 300;
+	public static int STBRebootAfterTestCase = 30;
 	public static int executedMethodCount = 0;
 
 	protected static String configFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator

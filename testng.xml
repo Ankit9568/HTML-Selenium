@@ -9,11 +9,11 @@
 		<classes>
 			<class name="com.rsystems.test.RcArrowKeysTestCase">
 				<methods>
-					<include name="tc_RCU_Digital_TV_NTE1_2" />
+<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2" /> -->
 					<include name="tc_RCU_Digital_TV_NTE1_2_A" />
-					<include name="tc_RCU_Digital_TV_NTE1_2_B" />
+<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2_B" /> -->
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
-					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" />
+<!-- 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" /> -->
 
 					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> <include name="tc_BCEPGHPG02_epg_confirmation_setting" 
 						/> <include name="tc_BCEPGHPG01_epg_cancel_setting" /> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" 
