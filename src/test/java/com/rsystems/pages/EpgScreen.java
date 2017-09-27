@@ -65,7 +65,7 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.displayChannelTitle)
 	public WebElement displayChannelTitle;
 
-	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.displayChannelDescription)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.displayChannelDescription)
 	public WebElement displayChannelDescription;
 
 	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.displayChannelprogressbar)
@@ -191,7 +191,7 @@ public class EpgScreen extends TestInitization {
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.titleGroup)
 	public WebElement titleGroup;
 
-	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.programSummary)
+	@FindBy(how = How.ID, using = ObjectRepository.EpgScreen.programSummary)
 	public WebElement programSummary;
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.groupIconImage)

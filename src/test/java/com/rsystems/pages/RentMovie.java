@@ -61,4 +61,7 @@ public class RentMovie {
 	@FindBy(how = How.XPATH, using = ObjectRepository.FilmsScreen.vodDescription)
 	public WebElement vodDescription;
 
+	@FindBy(how = How.XPATH, using = ObjectRepository.FilmsScreen.vodHeading)
+	public WebElement vodHeading;
+	
 }

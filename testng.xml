@@ -7,81 +7,103 @@
 
 	<test name="EPG Setting Test case ">
 		<classes>
-			<class name="com.rsystems.test.RcArrowKeysTestCase">
+			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
-<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2" /> -->
-					<include name="tc_RCU_Digital_TV_NTE1_2_A" />
-<!-- 					<include name="tc_RCU_Digital_TV_NTE1_2_B" /> -->
+					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+<!-- 					<include name="tc_EPG023_EPG_Program_Duration" /> -->
+					<!-- <include name="tc_RCU_Digital_TV_NTE1_2_B" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
-<!-- 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" /> -->
+					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" />
 
-					<!-- <include name="tc_BCEPGHPG04_epg_setting_UI_FR" /> <include name="tc_BCEPGHPG02_epg_confirmation_setting" 
-						/> <include name="tc_BCEPGHPG01_epg_cancel_setting" /> <include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" 
-						/> <include name="tc_BCEPGHPG010_epg_scenior_font_grijs" /> <include name="tc_BCEPGHPG09_epg_scenior_font_geel" 
-						/> <include name="tc_BCEPGHPG013_epg_scenior_groen_standard" /> <include 
-						name="tc_BCEPGHPG012_epg_scenior_groen_grijs" /> <include name="tc_BCEPGHPG011_epg_scenior_groen_geel" 
-						/> <include name="tc_BCEPGHPG016_epg_strak_font_grijs" /> <include name="tc_BCEPGHPG015_epg_strak_font_geel" 
-						/> <include name="tc_BCEPGHPG019_epg_strak_groen_standard" /> <include name="tc_BCEPGHPG018_epg_strak_groen_grijs" 
-						/> <include name="tc_BCEPGHPG017_epg_strak_groen_geel" /> <include name="tc_BCEPGHPG07_epg_customize_color_patterns" 
-						/> <include name="tc_BCDTVHP0801_epg_hot_key" /> <include name="tc_EPG_Past_Program_Options" 
-						/> <include name="tc_EPG_Up_Down_Navigation" /> <include name="tc_EPG_Gradient_of_Focused_Cell" 
-						/> <include name="tc_SF008_EPG" /> <include name="tc_EPG_Rounded_Corner_on_Focus_Cell" 
-						/> <include name="tc_EPG_Jump_By_Day_Using_FF_REW_Keys" /> <include name="tc_EPG_Focus_On_Current_Program" 
-						/> <include name="tc_EPG_via_Hotkey" /> <include name="tc_EPG_Focus_On_Current_Time" 
-						/> <include name="tc_EPG_Numeric_Navigation" /> <include name="tc_EPG_Ongoing_Program_Options" 
-						/> <include name="tc_EPG_Blacklist_Backprogram_faded" /> <include name="tc_EPG_Day_Navigator_Details" 
-						/> <include name="tc_EPG_Program_description" /> <include name="tc_EPG_Mini_EPG" 
-						/> <include name="tc_EPG_Genre" /> <include name="tc_EPG023_EPG_Program_Duration" 
-						/> <include name="tc_EPG_Blacklist_Backprogram_faded" /> <include name="tc_EPG_Channel_Bar_Navigation" 
-						/> -->
+					<include name="tc_BCEPGHPG04_epg_setting_UI_FR" />
+					<include name="tc_BCEPGHPG02_epg_confirmation_setting" />
+					<include name="tc_BCEPGHPG01_epg_cancel_setting" />
+					<include name="tc_BCEPGHPG03_epg_setting_UI_Default_options" />
+					<include name="tc_BCEPGHPG010_epg_scenior_font_grijs" />
+					<include name="tc_BCEPGHPG09_epg_scenior_font_geel" />
+					<include name="tc_BCEPGHPG013_epg_scenior_groen_standard" />
+					<include name="tc_BCEPGHPG012_epg_scenior_groen_grijs" />
+					<include name="tc_BCEPGHPG011_epg_scenior_groen_geel" />
+					<include name="tc_BCEPGHPG016_epg_strak_font_grijs" />
+					<include name="tc_BCEPGHPG015_epg_strak_font_geel" />
+					<include name="tc_BCEPGHPG019_epg_strak_groen_standard" />
+					<include name="tc_BCEPGHPG018_epg_strak_groen_grijs" />
+					<include name="tc_BCEPGHPG017_epg_strak_groen_geel" />
+					<include name="tc_BCEPGHPG07_epg_customize_color_patterns" />
+					<include name="tc_BCDTVHP0801_epg_hot_key" />
+					<include name="tc_EPG_Past_Program_Options" />
+					<include name="tc_EPG_Up_Down_Navigation" />
+					<include name="tc_EPG_Gradient_of_Focused_Cell" />
+					<include name="tc_SF008_EPG" />
+					<include name="tc_EPG_Rounded_Corner_on_Focus_Cell" />
+					<include name="tc_EPG_Jump_By_Day_Using_FF_REW_Keys" />
+					<include name="tc_EPG_Focus_On_Current_Program" />
+					<include name="tc_EPG_via_Hotkey" />
+					<include name="tc_EPG_Focus_On_Current_Time" />
+					<include name="tc_EPG_Numeric_Navigation" />
+					<include name="tc_EPG_Ongoing_Program_Options" />
+					<include name="tc_EPG_Blacklist_Backprogram_faded" />
+					<include name="tc_EPG_Day_Navigator_Details" />
+					<include name="tc_EPG_Program_description" />
+					<include name="tc_EPG_Mini_EPG" />
+					<include name="tc_EPG_Genre" />
+					<include name="tc_EPG023_EPG_Program_Duration" />
+					<include name="tc_EPG_Blacklist_Backprogram_faded" />
+					<include name="tc_EPG_Channel_Bar_Navigation" /> -->
 				</methods>
 			</class>
 		</classes>
 	</test>
 
 
-<!-- 	<test name="Hub Test cases ">
+<!-- 	<test name="EPG Setting Test case1 "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.RcArrowKeysTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_B" /> -->
+<!-- 					<include name="tc_RCU_Stop_key" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+
+<!-- 	<test name="Hub Test cases "> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.rsystems.test.VodFeaturesTestCase"> -->
+<!-- 				<methods> -->
+<!-- 					<include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
+<!-- 				</methods> -->
+<!-- 			</class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+<test name="Hub Test cases ">
 		<classes>
 			<class name="com.rsystems.test.HubTestCases">
 				<methods>
-					<include name="tc_SF022_ACTION_MENU" />
+					<include name="tc_Hub_Selecting_elements_in_text_line" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-	<test name="DTV Test case ">
-		<classes>
-			<class name="com.rsystems.test.DTVChannelTestCase">
-				<methods>
-					<include name="tc_CUSUB0205_basic_premium_switch" />
-					<include name="tc_CUSUB0203_no_subscription" />
-					<include name="tc_CUUPS0801_upsell_page" />
-					<include name="tc_BCDTVDT0105_DTVChannelInfobanner" />
-					<include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" />
-					<include name="DTV_ChannelZapViaChannelNumberNotExisting" />
-					<include name="DTV_Channel_Zap_Via_Up_Down" />
-					<include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" />
-					<include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" />
-					<include name="pause_LiveTV_play" />
-					<include name="pause_LiveTV_PLTV_BackToLive" />
-					<include name="pause_LiveTV_PLTV_cancelPopupMessage" />
-					<include name="Pause_LiveTV_trickplay" />
-					<include name="tc_BCVODVD0130_VOD_FOD" />
-					<include name="pause_LiveTV_PLTV_ExceedingBuffer" />
-					<include name="tc_Pause_LiveTV_PLTV_package_not_assigned" />
-					<include name="tc_CUBTL0602_back_to_live_other_channel" />
-					<include name="tc_CUSO0504_start_over_watch_past_program" />
-					<include name="tc_CUBTL0601_back_to_live_same_channel" />
-					<include name="tc_CUSO0505_start_over_watch_started_program" />
-					<include name="tc_CUSO0501_start_over_list_actions" />
-					<include name="tc_CUSUB0201_basic" />
-					<include name="tc_CUSUB0202_premium" />
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
-					<include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" />
-					<include name="tc_StoreEvolution_ChangeSortingOfCategory" />
-				</methods>
-			</class>
-		</classes>
-	</test> -->
+	<!-- <test name="DTV Test case "> <classes> <class name="com.rsystems.test.DTVChannelTestCase"> 
+		<methods> <include name="tc_CUSUB0205_basic_premium_switch" /> <include name="tc_CUSUB0203_no_subscription" 
+		/> <include name="tc_CUUPS0801_upsell_page" /> <include name="tc_BCDTVDT0105_DTVChannelInfobanner" 
+		/> <include name="tc_BCDTVDT0106_DTV_ChannelZapViaChannelNumberExisting" 
+		/> <include name="DTV_ChannelZapViaChannelNumberNotExisting" /> <include 
+		name="DTV_Channel_Zap_Via_Up_Down" /> <include name="tc_BCDTVDT0110_DTV_HD_SD_Zap" 
+		/> <include name="DTVZAP002ZappinginFullscreenDTVShowinfoonzapsettingYES" 
+		/> <include name="pause_LiveTV_play" /> <include name="pause_LiveTV_PLTV_BackToLive" 
+		/> <include name="pause_LiveTV_PLTV_cancelPopupMessage" /> <include name="Pause_LiveTV_trickplay" 
+		/> <include name="tc_BCVODVD0130_VOD_FOD" /> <include name="pause_LiveTV_PLTV_ExceedingBuffer" 
+		/> <include name="tc_Pause_LiveTV_PLTV_package_not_assigned" /> <include 
+		name="tc_CUBTL0602_back_to_live_other_channel" /> <include name="tc_CUSO0504_start_over_watch_past_program" 
+		/> <include name="tc_CUBTL0601_back_to_live_same_channel" /> <include name="tc_CUSO0505_start_over_watch_started_program" 
+		/> <include name="tc_CUSO0501_start_over_list_actions" /> <include name="tc_CUSUB0201_basic" 
+		/> <include name="tc_CUSUB0202_premium" /> <include name="tc_Single_Asset_Variant_Group_Purchase" 
+		/> <include name="tc_Single_Asset_Variant_Group_Package_Lock_Unlock" /> <include 
+		name="tc_StoreEvolution_ChangeSortingOfCategory" /> </methods> </class> </classes> 
+		</test> -->
 </suite>
 

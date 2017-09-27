@@ -23,10 +23,7 @@ public class HubTestCases extends TestInitization {
 
 	/**
 	 * This test case is used to verify Menu Screen is launching or not using
-	 * hot key Created by Rahul Dhoundiyal
-	 * Reviewed
-	 * Reviewed 2
-	 * Reviewed Finally
+	 * hot key Created by Rahul Dhoundiyal Reviewed Reviewed 2 Reviewed Finally
 	 */
 	@Test
 	public void tc_Hub_Menu_Button() throws InterruptedException {
@@ -158,6 +155,7 @@ public class HubTestCases extends TestInitization {
 		Hub hub = new Hub(driver);
 		LibraryScreen libraryScreen = new LibraryScreen(driver);
 		StoreFilterLayer storeFilterLayer = new StoreFilterLayer(driver);
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		reports.log(LogStatus.PASS, "Navigate to library screen");
 		sendKeySequence("LEFT,UP,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Library", "name_nl"));
 		libraryScreen.libraryElementActionListDisplayed();
@@ -169,15 +167,47 @@ public class HubTestCases extends TestInitization {
 		sendKeySequence("DOWN,RIGHT,RIGHT,UP,ENTER", 1000,
 				TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 		storeFilterLayer.actionItemValidation();
+
+		// Search button functionality not implemented
+		/*
+		 * reports.log(LogStatus.PASS, "Navigate to hub screen");
+		 * sendKeySequence("PAGE_DOWN", 1000,
+		 * TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		 * hub.verifyFocousElementText(TestInitization.getExcelKeyValue(
+		 * "screenTitles", "Shop", "name_nl"));
+		 * 
+		 * reports.log(LogStatus.PASS, "Navigate to search screen");
+		 * sendKeySequence("DOWN,RIGHT,UP,ENTER", 1000,
+		 * TestInitization.getExcelKeyValue("screenTitles", "Search",
+		 * "name_nl"));
+		 */
+
 		reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 
 		reports.log(LogStatus.PASS, "Navigate to search screen");
-		sendKeySequence("DOWN,RIGHT,UP,ENTER", 1000,
-				TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
+		sendKeySequence("DOWN,RIGHT,RIGHT,UP,ENTER", 1000,
+				TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
 
-		// Search button functionality not implemented
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+
+		reports.log(LogStatus.PASS, "Navigate to television screen");
+		sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendKeyMultipleTimes("LEFT", 3, 1000);
+		sendKeyMultipleTimes("UP", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 1000);
+		
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 1000);
+		isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel Number in info banner ");
+		
+		
+		
+		
+		
 	}
 
 	@Test
@@ -208,15 +238,25 @@ public class HubTestCases extends TestInitization {
 		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(vodFeatures.shopScreen, "highlight tile title");
-		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		
+		// Search button functionality not implemented
+		/*reports.log(LogStatus.PASS, "Navigate to hub screen");
 		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
 		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
 
 		reports.log(LogStatus.PASS, "Navigate to search screen");
-		sendKeySequence("RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));
-		// Search button functionality not implemented
+		sendKeySequence("RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Search", "name_nl"));*/
+	
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		hub.verifyFocousElementText(TestInitization.getExcelKeyValue("screenTitles", "Shop", "name_nl"));
+		reports.log(LogStatus.PASS, "Navigate to Setting screen");
+		sendKeySequence("RIGHT,RIGHT,ENTER", 1000, TestInitization.getExcelKeyValue("screenTitles", "Setting", "name_nl"));
+		
+		reports.log(LogStatus.PASS, "Navigate to hub screen");
+		sendKeySequence("PAGE_DOWN", 1000, TestInitization.getExcelKeyValue("screenTitles", "home", "name_nl"));
+		
 	}
-
 
 	public void tc_Hub_No_stack_animation_for_Asset_line() throws InterruptedException {
 
@@ -265,8 +305,5 @@ public class HubTestCases extends TestInitization {
 		libraryScreen.verifyTwoLinesInWithoutOpacityValidation("Level3");
 
 	}
-	
-	
-	
-	
+
 }

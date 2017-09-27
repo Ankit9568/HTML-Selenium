@@ -1084,6 +1084,7 @@ public class EPGTestCases extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
+		System.out.println("Page source " + driver.getPageSource());
 		String currentPrgDesc = epgScreen.displayChannelDescription.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
@@ -1145,7 +1146,8 @@ public class EPGTestCases extends TestInitization {
 
 		String currentPrgDesc = epgScreen.channelGenere.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
-		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
+		sendNumaricKeys(Integer.parseInt(getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		Thread.sleep(2000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		if (epgScreen.channelGenere.getText().contentEquals(currentPrgDesc)) {

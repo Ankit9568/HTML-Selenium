@@ -122,7 +122,7 @@ public class VodFeatures extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		reports.log(LogStatus.PASS, "Press stop button from RC");
-		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 3000);
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
@@ -327,6 +327,7 @@ public class VodFeatures extends TestInitization {
 				//isDisplayed(dtvChannelScreen.infoBanner, "Info banner ");
 
 				sendKeyMultipleTimes("ENTER", 1, 6000);
+				handlePopupIfExist();
 				Thread.sleep(4000);
 				new DTVChannelScreen(driver).pressPauseButtonAndValidation();
 				reports.log(LogStatus.PASS, "Movie " + movieTitle + " found in Renterd Folder and play sucessfully");

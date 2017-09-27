@@ -40,7 +40,7 @@ public class ObjectRepository {
 	public static class EpgScreen {
 		public static final String focousElement = "//li[@class = 'program focusProgram']/div/p[contains(@class,'programTitle')]";
 		public static final String displayChannelTitle = "title";
-		public static final String displayChannelDescription = "vodText";
+		public static final String displayChannelDescription = "description";
 		public static final String displayChannelprogressbar = "progress";
 		public static final String displayChannelStartTime = "prog-time";
 		public static final String displayChannelEndTime = "endDate";
@@ -91,7 +91,7 @@ public class ObjectRepository {
 		public static final String epgTitleHighlightedProgram = "title";
 		public static final String remainingTime = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]";
 		public static final String titleGroup = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']";
-		public static final String programSummary = "//*[@id='description']/div";
+		public static final String programSummary = "description";
 		public static final String groupIconImage = "//*[@id='groupIcon']/img";
 		public static final String groupIcon = "groupIcon";
 		public static final String barIcon = "//div[@class='channelsDetails']/div[contains(@class,'descriptions')]/div[@class='title-group']/span[contains(@class,'remaining-time')]/b";
@@ -167,7 +167,7 @@ public class ObjectRepository {
 		public static final String breadcompSrc = "//article[@class='logo']/img[@src='resources/components/animation/images/logo.png']";
 		public static final String dateTime = "headerDateTime";
 		public static final String vodDescription = "//div[@class='vodText']/p";
-		
+		public static final String vodHeading = "//div[@id='vodDetail']/div/div[@class='vod-heading-main']";
 	}
 
 	public static class LanguageChange {

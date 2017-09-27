@@ -865,27 +865,37 @@ public class RcArrowKeys extends TestInitization {
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
 		RentMovie rentMovie = new RentMovie(driver);
-		
+
 		if (functionalityName.toUpperCase().contentEquals("CUTV")) {
 			dtvChannelScreen.back_to_live_stop();
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("LIVETV")) {
-			dtvChannelScreen.pressStopButtonAndValidation();
+			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+			dtvChannelScreen
+					.tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+			reports.log(LogStatus.PASS, "Press Stop button");
+			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+			isDisplayed(dtvChannelScreen.chnlNoIn_Infobar, "Channel number ");
+			
 		}
-		
-		else if(functionalityName.toUpperCase().contentEquals("TIMESHIFT")){	
+
+		else if (functionalityName.toUpperCase().contentEquals("TIMESHIFT")) {
 			dtvChannelScreen.pressPauseButtonAndValidation();
-			//wait for 5 second for making buffer
+			// wait for 5 second for making buffer
 			Thread.sleep(5000);
 			reports.log(LogStatus.PASS, "Press Stop button");
 			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
 			reports.attachScreenshot(captureCurrentScreenshot());
 			isDisplayed(dtvChannelScreen.toastMessage, "Back to live ");
 		}
-		
-		else if (functionalityName.toUpperCase().
-				contentEquals("PVR")) {
+
+		else if (functionalityName.toUpperCase().contentEquals("PVR")) {
 			EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer
 					.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
 			new Pvr(driver).navigateToThePVRPlayback(episodeDetails);

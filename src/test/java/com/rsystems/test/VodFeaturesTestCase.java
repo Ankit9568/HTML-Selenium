@@ -171,14 +171,21 @@ public class VodFeaturesTestCase extends TestInitization {
 		vodFeatures.validateMovieRentedAndPlay(TestInitization.getExcelKeyValue("RentMovie", "POD3", "MovieName"));
 
 		// highlight the VOD3
-		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+		
+		dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+				TestInitization.getExcelKeyValue("RentMovie", "POD4", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "POD4", "GroupName"));
+		// check and VOD in a single group
 		sendKeyMultipleTimes("ENTER", 1, 1000);
+
+		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD4", "MovieName"));
+		sendKeyMultipleTimes("ENTER", 1, 2000);
 
 		// validate the PIN container is displayed
 		isDisplayed(vodFeatures.pinContainer, "Pin Container");
 		sendUnicodeMultipleTimes(Unicode.VK_PAGE_DOWN_OR_BACK.toString(), 1, 1000);
 		dtvChannelScreen.validateMovieExistInGrp(TestInitization.getExcelKeyValue("RentMovie", "POD2", "MovieName"));
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 2000);
 		handlePopupIfExist();
 		dtvChannelScreen.pressForwardButtonAndValidation();
 
@@ -330,14 +337,18 @@ public class VodFeaturesTestCase extends TestInitization {
 				TestInitization.getExcelKeyValue("RentMovie", "POD", "MovieName"));
 			
 		driver.switchTo().frame(getCurrentFrameIndex());
+		
+		System.out.println("page source " + driver.getPageSource());
+		
 		isDisplayed(rentMovie.trailer, "Movie Trailer ");
 		isDisplayed(rentMovie.rentOption, "Rent Option");
 		isDisplayed(rentMovie.addToFaviorite, "Add to Faviorite ");
 		isDisplayed(rentMovie.itemScore, "rate ");
 		isDisplayed(rentMovie.audioLanguage, "Audio ");
-		isDisplayed(rentMovie.currentSelectedMovieName, "Movie Title ");
+		isDisplayed(rentMovie.vodHeading, "Movie Title ");
 		isDisplayed(rentMovie.director, "Movie director ");
 		isDisplayed(rentMovie.vodDescription, "Movie description ");
+		driver.switchTo().defaultContent();
 		isDisplayed(rentMovie.breadcompSrc, "breadcrump ");
 		isDisplayed(rentMovie.dateTime, "date time ");
 		
