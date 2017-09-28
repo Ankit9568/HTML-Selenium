@@ -196,13 +196,15 @@ public class LibraryScreen extends TestInitization {
 	public String fetchTwoLinesLevel() {
 		String level = null;
 		driver.switchTo().defaultContent();
+		System.out.println(upCanvasLine.getAttribute("style"));
+		System.out.println(downCanvasLine.getAttribute("style"));
 		if (upCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, -60px, 0px)")
 				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 70px, 0px)")) {
 			level = "Level2";
 		} else if (upCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, -70px, 0px)")
 				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 70px, 0px)")) {
 			level = "Level1";
-		} else if (upCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, -120px, 0px)")
+		} else if (upCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, -130px, 0px)")
 				&& downCanvasLine.getAttribute("style").split(";")[1].trim().contains("translate3d(0px, 305px, 0px)")) {
 			level = "Level3";
 		}
