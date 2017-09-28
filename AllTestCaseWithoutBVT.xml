@@ -44,6 +44,11 @@
 					<include name="tc_RCU_Digital_TV_NTE1_2_B" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2_A" />
+					<include name="tc_RCU_Menu_key_NTE1_2" />
+					<include name="tc_RCU_TV_GUIDE_NTE1_2" />
+					<include name="tc_RCU_PVR_NTE1_2" />
+					<include name="tc_RCU_ON_Demand_NTE1_2" />
+					<include name="tc_RCU_Stop_key" />
 				</methods>
 			</class>
 		</classes>
@@ -95,6 +100,7 @@
 					<include name="tc_EPG_Date_Time_Change" />
 					<include name="tc_EPG_Icons" />
 					<include name="tc_TIME0201_grid" />
+					<include name="tc_EPG_Future_Program_Options" />
 				</methods>
 			</class>
 		</classes>
@@ -131,6 +137,7 @@
 					<include name="tc_VOD_Rent_Enter_Invalid_PIN" />
 					<include name="tc_VOD_Record" />
 					<include name="tc_VOD_Renting_within_the_Rental_Time" />
+					<include name="tc_Action_VOD" />
 
 				</methods>
 			</class>
@@ -142,6 +149,18 @@
 			<class name="com.rsystems.test.RecordingTestCase">
 				<methods>
 					<include name="tc_BCDTVCP1428_nPVR_Resume_Restart" />
+					<include name="tc_Record_option_in_Action_Menu" />
+					<include name="tc_BCDTVCP1452_All_Planned_nPVR_Delete" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Pvr Test Case">
+		<classes>
+			<class name="com.rsystems.test.PvrTestCase">
+				<methods>
+					<include name="tc_BCDTVCP1440_Playback_Till_End" />
 				</methods>
 			</class>
 		</classes>
@@ -251,9 +270,10 @@
 					<include name="tc_CUUPS0801_upsell_page" />
 					<include name="tc_TP001_CUTV_Trick_play_menu_from_FullscreenTV" />
 					<include name="tc_TP002_CUTV_RC_Keys_during_Trickplay" />
-
+					<include name="tc_RCU_Trick_play_keys" />
+					<include name="tc_CUBTL0604_back_to_live_stop" />
 					<include name="tc_HDD_Less_Timeshifting" />
-					
+
 				</methods>
 			</class>
 		</classes>

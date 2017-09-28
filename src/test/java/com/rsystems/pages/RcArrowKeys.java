@@ -886,6 +886,11 @@ public class RcArrowKeys extends TestInitization {
 		}
 
 		else if (functionalityName.toUpperCase().contentEquals("TIMESHIFT")) {
+			
+			sendUnicodeMultipleTimes(Unicode.VK_TV.toString(), 1, 1000);
+			dtvChannelScreen
+					.tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
+			
 			dtvChannelScreen.pressPauseButtonAndValidation();
 			// wait for 5 second for making buffer
 			Thread.sleep(5000);
@@ -910,7 +915,10 @@ public class RcArrowKeys extends TestInitization {
 			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
 					TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			reports.log(LogStatus.PASS, "Playing an movie");
 			sendKeyMultipleTimes("ENTER", 2, 1000);
+			reports.attachScreenshot(captureCurrentScreenshot());
+			
 			reports.log(LogStatus.PASS, "Press Stop button");
 			sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 2000);
 			reports.attachScreenshot(captureCurrentScreenshot());

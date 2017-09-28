@@ -9,7 +9,7 @@
 		<classes>
 			<class name="com.rsystems.test.RcArrowKeysTestCase">
 				<methods>
-					<include name="tc_RCU_Digital_TV_NTE1_2" />
+					<include name="tc_RCU_Stop_key" />
 <!-- 					<include name="tc_EPG023_EPG_Program_Duration" /> -->
 					<!-- <include name="tc_RCU_Digital_TV_NTE1_2_B" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
@@ -68,21 +68,21 @@
 <!-- 	</test> -->
 
 
-<!-- 	<test name="Hub Test cases "> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.rsystems.test.VodFeaturesTestCase"> -->
-<!-- 				<methods> -->
-<!-- 					<include name="tc_Single_Asset_Variant_Group_Purchase" /> -->
-<!-- 				</methods> -->
-<!-- 			</class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
-
-<test name="Hub Test cases ">
+	<test name="Hub Test cases ">
 		<classes>
-			<class name="com.rsystems.test.HubTestCases">
+			<class name="com.rsystems.test.VodFeaturesTestCase">
 				<methods>
-					<include name="tc_Hub_Selecting_elements_in_text_line" />
+					<include name="tc_Action_VOD" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+<test name="Hub Test cases1 ">
+		<classes>
+			<class name="com.rsystems.test.EPGTestCases">
+				<methods>
+					<include name="tc_EPG_Future_Program_Options" />
 				</methods>
 			</class>
 		</classes>
