@@ -33,7 +33,7 @@
 					<include name="tc_BCDTVCP1451_Planned_nPVR_Delete" />
 					<include name="tc_BCDTVCP1430_nPVR_Planner_Navigation" />
 					<include name="tc_BCDTVCP1429_nPVR_Library_Navigation" />
-					<include name="tc_BCDTVCP1429_nPVR_Library_Navigation" />
+					<include name="tc_BCDTVCP1428_nPVR_Resume_Restart" />
 				</methods>
 			</class>
 		</classes>

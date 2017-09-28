@@ -7,9 +7,9 @@
 
 	<test name="EPG Setting Test case ">
 		<classes>
-			<class name="com.rsystems.test.VodFeaturesTestCase">
+			<class name="com.rsystems.test.RcArrowKeysTestCase">
 				<methods>
-					<include name="tc_Single_Asset_Variant_Group_Purchase" />
+					<include name="tc_RCU_Digital_TV_NTE1_2" />
 <!-- 					<include name="tc_EPG023_EPG_Program_Duration" /> -->
 					<!-- <include name="tc_RCU_Digital_TV_NTE1_2_B" />
 					<include name="tc_RCU_Radio_Hot_Key_NTE1_2" />
