@@ -496,9 +496,10 @@ public class MiniEPGScreen extends TestInitization {
 
 	public void stopLiveTVRecording() throws InterruptedException {
 
+		
 		EpgScreen epgScreen = new EpgScreen(driver);
 		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
-
+		dtvChannelScreen.openLiveTV();
 		reports.log(LogStatus.PASS, "Press Enter on live Tile");
 		TestInitization.sendKeySequence("ENTER", 1000, "televisie");
 
@@ -507,7 +508,7 @@ public class MiniEPGScreen extends TestInitization {
 
 		reports.log(LogStatus.PASS, "Validation of stop recording screen");
 		driver.switchTo().frame(getCurrentFrameIndex());
-		isDisplayed(epgScreen.displayChannelDescription, "Display channel description");
+		isDisplayed(epgScreen.stopRecordigMsgTitle, "Display channel description");
 
 		TestInitization.sendKeySequence("ENTER", 1000, "televisie");
 		reports.log(LogStatus.PASS, "Validation of stop recording has been successfully");
@@ -1573,6 +1574,7 @@ public class MiniEPGScreen extends TestInitization {
 		while (noOfTry != 0) {
 			sendKeyMultipleTimes("DOWN", 1, 1000);
 			driver.switchTo().frame(getCurrentFrameIndex());
+			System.out.println(driver.getPageSource());
 			System.out.println(driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size());
 			if (driver.findElements(By.xpath(ObjectRepository.MiniEPGScreen.cutvIconOnZapTile)).size() > 0) {
 				reports.log(LogStatus.PASS, "CUTV Enabled Channel Found");

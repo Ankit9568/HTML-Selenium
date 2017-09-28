@@ -166,9 +166,9 @@ public class MiniEPGTestCase extends TestInitization {
 
 		try {
 			if (miniEpg.onGoingRecordingIcon.isDisplayed()) {
-				
-				FailTestCase(
-						"Recording icon is already visible on webpage.Try to remove ongoing recording from channel");
+				miniEpg.stopLiveTVRecording();
+				/*FailTestCase(
+						"Recording icon is already visible on webpage.Try to remove ongoing recording from channel");*/
 			}
 		} catch (NoSuchElementException e) {
 			reports.log(LogStatus.PASS, "Recoding icon is not found on webpage");

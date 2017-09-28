@@ -217,6 +217,9 @@ public class EpgScreen extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.EpgScreen.channelsIcon)
 	public WebElement channelsIcon;
+	
+	@FindBy(how = How.CLASS_NAME, using = ObjectRepository.EpgScreen.stopRecordigMsgTitle)
+	public WebElement stopRecordigMsgTitle;
 
 	public void goToEpgSettingScreen() throws InterruptedException {
 
@@ -1216,8 +1219,8 @@ public class EpgScreen extends TestInitization {
 		verifyNavigationinEPG();
 
 		// Choose Program
-		sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
-		sendKeyMultipleTimes("ENTER", 1, 1000);
+		//sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+		sendKeyMultipleTimes("ENTER", 1, 3000);
 		// Action menu should be shown
 		driver.switchTo().frame(getCurrentFrameIndex());
 		if (actionMenuItems.isDisplayed()) {

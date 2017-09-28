@@ -100,7 +100,8 @@ public class ObjectRepository {
 		public static final String channelBar = "//section[@class='channels_container channels_container_box_shadow']";
 		public static final String epgGroupIcon = "//li[@class = 'program focusProgram']/div/span[@class='epggroupicon']/img";
 		public static final String channelsIcon="//li[@id='colCh0']/span/span[@class='channel-cutv']";
-
+		public static final String stopRecordigMsgTitle = "dtvText";
+		
 	}
 
 	public static class LibraryElements {

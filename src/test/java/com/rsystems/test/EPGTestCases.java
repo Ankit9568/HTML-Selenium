@@ -1084,7 +1084,7 @@ public class EPGTestCases extends TestInitization {
 		reports.attachScreenshot(captureCurrentScreenshot());
 
 		driver.switchTo().frame(getCurrentFrameIndex());
-		System.out.println("Page source " + driver.getPageSource());
+		
 		String currentPrgDesc = epgScreen.displayChannelDescription.getText();
 		reports.log(LogStatus.PASS, "Navigate to another channel");
 		TestInitization.sendKeyMultipleTimes("DOWN", 1, 1000);
