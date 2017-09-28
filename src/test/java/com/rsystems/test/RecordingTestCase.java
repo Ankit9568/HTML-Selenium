@@ -192,4 +192,28 @@ public class RecordingTestCase extends TestInitization {
 		RecordingScreen recordingScreen = new RecordingScreen(driver);
 		recordingScreen.BCDTVCP1428_nPVR_Resume_Restart();
 	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to delete all the planned recordings
+	 */
+	@Test
+	public void tc_BCDTVCP1452_All_Planned_nPVR_Delete() throws InterruptedException{
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.deleteAllPlannedRecordings();
+	}
+
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is usedGo to EPG, select any current or future episode of nPVR  only channel. 
+	 * @throws InterruptedException
+	 */
+	
+	@Test
+	public void tc_Record_option_in_Action_Menu() throws InterruptedException
+	{
+		RecordingScreen recordingScreen = new RecordingScreen(driver);
+		recordingScreen.Record_option_in_Action_Menu();
+	}
 }

@@ -1848,10 +1848,147 @@ public class DTVChannelScreen extends TestInitization {
 		tuneToChannel(Integer.parseInt(getExcelKeyValue("DTVChannel", "CUTVEnabledChannel", "Values")));
 		navigateToPastReplaybleProgramFromTVGuide();
 		sendKeyMultipleTimes("ENTER", 2, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		try {
+			if (driver.findElement(By.id("negative")).getText().contains("verder kijken")) {
+				sendKeyMultipleTimes("RIGHT", 1, 3000);
+				sendKeyMultipleTimes("ENTER", 1, 3000);
+			}
+		} catch (NoSuchElementException ex) {
+		}
 		pressPauseButtonAndValidation();
 		sendUnicodeMultipleTimes(Unicode.VK_STOP_RECORDING.toString(), 1, 1000);
 		driver.switchTo().frame(getCurrentFrameIndex());
 		isDisplayed(toastMessage, "Back to live ");
 	}
 
+	public void trick_play_keys() throws InterruptedException
+	 {
+		    DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		    Pvr pvr = new Pvr(driver);
+			dtvChannelScreen.navigateToFilmScreenAndRentMovie(
+			TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+			TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+			reports.log(LogStatus.PASS, "Start VOD");
+			driver.switchTo().frame(getCurrentFrameIndex());
+			wait.until(ExpectedConditions.visibilityOf(new VodFeatures(driver).lookOption));
+			sendKeyMultipleTimes("ENTER", 1, 1000);
+			handlePopupIfExist();
+		    pressForwardKeyViaTrickPlay();
+		    pressRewindKeyViaTrickPlay();
+		    pressPlayButtonViaTrickPlay();
+			openLiveTV();
+		    handlePopupIfExist();
+		    EpisodeInfo episodeDetails = startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber","name_nl")));
+		    pvr.navigateToThePVRPlayback(episodeDetails);
+		    pressForwardKeyViaTrickPlay();
+		    pressRewindKeyViaTrickPlay();
+		    pressPlayButtonViaTrickPlay();
+		    openLiveTV();
+		    tuneToChannel(Integer.parseInt(getExcelKeyValue("Recording","RecordingChannelNumber","name_nl")));
+		    handlePopupIfExist();
+		    pressPlayButtonAndValidation();
+		    Thread.sleep(60000);
+		    pressPlayButtonViaTrickPlay();
+		    pressForwardKeyViaTrickPlay();
+		    pressRewindKeyViaTrickPlay();
+		    sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 1000);
+	}
+	
+public void pressRewindKeyViaTrickPlay() throws InterruptedException
+{
+	sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+	reports.log(LogStatus.PASS, "Live TV is rewind thorugh Trick Play Bar Icon");
+	sendKeyMultipleTimes("LEFT", 1, 1000);
+	sendKeyMultipleTimes("ENTER", 1, 1000);
+	driver.switchTo().frame(getCurrentFrameIndex());
+	String currentClassNameRewind = rewindBtn.getAttribute("class");
+	System.out.println("class name " + currentClassNameRewind);
+	if (currentClassNameRewind.contentEquals("enable active")) {
+		reports.log(LogStatus.PASS, "Running streaming is rewind");
+		reports.attachScreenshot(captureCurrentScreenshot());
+	} else {
+
+		FailTestCase("Unable to rewind the running streaming");
+	}
+	
+}
+
+
+public void pressForwardKeyViaTrickPlay() throws InterruptedException
+{
+	Pvr pvr = new Pvr(driver);
+	sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+	reports.log(LogStatus.PASS, "Live TV forwarded thorugh Trick Play Bar Icon");
+	sendKeyMultipleTimes("RIGHT", 2, 1000);
+	sendKeyMultipleTimes("ENTER", 1, 1000);
+	reports.attachScreenshot(captureCurrentScreenshot());
+	driver.switchTo().frame(getCurrentFrameIndex());
+	String currentClassName = pvr.forward.getAttribute("class");
+	System.out.println("class name " + currentClassName);
+	if (currentClassName.contentEquals("enable active")) {
+		reports.log(LogStatus.PASS, "Running streaming is forwarded");
+		reports.attachScreenshot(captureCurrentScreenshot());
+	} else {
+
+		FailTestCase("Unable to forward the running streaming");
+	}
+	
+}
+	
+
+public void pressPlayButtonViaTrickPlay() throws InterruptedException
+{
+	sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 1000);
+	reports.log(LogStatus.PASS, "Live TV is played thorugh Trick Play Bar Icon");
+	sendKeyMultipleTimes("ENTER", 1, 1000);
+	String currentImgSource = pauseAndPlayImg.getAttribute("src");
+	String[] currentImgToArr = currentImgSource.split("/");
+	String imageName = currentImgToArr[(currentImgToArr.length) - 1];
+	String currentClassNameForPlay = enablePausePlayButton.getAttribute("class");
+	System.out.println("class name " + currentClassNameForPlay);
+	if (imageName.equalsIgnoreCase(TestInitization.getExcelKeyValue("DTVChannel", "PauseButtonImageName", "Values"))
+			&& currentClassNameForPlay.contentEquals("enable active")) {
+		reports.log(LogStatus.PASS, "play Successfully");
+		reports.attachScreenshot(captureCurrentScreenshot());
+	}
+
+	else {
+		FailTestCase("Pause button is not highlight on webpage");
+
+	}
+}
+public EpisodeInfo stopRecording(int channelNumber) throws InterruptedException
+{
+	sendNumaricKeys(channelNumber);
+	TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+	driver.switchTo().frame(getCurrentFrameIndex());
+	TestInitization.sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+	Thread.sleep(3000);
+	EpisodeInfo episodeDetails = null;
+	reports.log(LogStatus.PASS, "Navigate to program information screen");
+	sendKeyMultipleTimes("ENTER", 1, 1000);
+	reports.attachScreenshot(captureCurrentScreenshot());
+	sendKeyMultipleTimes("DOWN", 1, 1000);
+	driver.switchTo().frame(TestInitization.getCurrentFrameIndex());
+	List<WebElement> menuList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+	int length = menuList.size();
+	System.out.println(length);
+	for (int i =0 ;i<length ; i++)
+	{
+		
+		System.out.println(activeInfoMenuItem.getText());
+		if(activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen"))
+		{
+			sendKeyMultipleTimes("ENTER", 2, 3000);
+			Thread.sleep(2000);
+			break;
+		}
+		else
+		{
+			sendKeyMultipleTimes("DOWN", 1, 2000);
+		}
+	}
+    return episodeDetails;
+}
 }

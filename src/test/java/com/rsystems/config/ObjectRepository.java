@@ -108,6 +108,7 @@ public class ObjectRepository {
 		public static final String libraryMenuItemsXPath = "//li[contains(@class,'enable')]";
 		public static final String libraryCanvas = "//*[@id='dCanvasUpLine']";
 		public static final String libraryElementRowContainer = "rowContainer";
+		public static final String titleHeadingOfScreen = "titleHeading";
 	}
 
 	public static class PIPElements {
@@ -196,6 +197,8 @@ public class ObjectRepository {
 		public static final String enablePausePlayButton = "play_pause";
 		public static final String stopBtn = "stop";
 		public static final String playerBar = "//div[@id='player_controls']";
+		//New Element
+		public static final String programEndTime="//div[@id='programProgressBar']/span[@class='program-time end-time']";
 		public static final String toastMessage="//div[@class='NotAvailble']/currently";
 	}
 

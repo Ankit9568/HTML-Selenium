@@ -856,7 +856,7 @@ public class DTVChannelTestCase extends TestInitization {
 		dtvChannelScreen.verifyZappingFromZapList();
 	}
 
-	//Pritam Test Cases
+
 	/**
 	 * @author Pritam.Dutta
 	 * This test cases is used to 1. Watch a BC during x minutes in PLTV mode. 2. Start to watch a nPVR recording 3. Stop PVR playback and check the PLTV buffer.
@@ -885,4 +885,41 @@ public class DTVChannelTestCase extends TestInitization {
 		
 	}
 	
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to Recording on CU enabled channel Steps: 1. Press trick play keys while watching VOD/recording/TSTV: 
+	 * a. Forward key (Single press >>/Multiple press>>
+	 * b. backward key (Single press<</Multiple press<<)
+	 * c. Stop key
+	 * d. Pause key
+	 * e. Play key
+	 * 2. Press FF/REW/Stop/Pause/Play when user is in HUB.
+	 * 3. Press FF/REW/Stop/Pause/Play when user is on TV guide screen.
+  
+	 * @throws InterruptedException
+	 */
+	
+	@Test
+	public void tc_RCU_Trick_play_keys() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.trick_play_keys();
+		
+	}
+	
+	
+	/**
+	 * @author Pritam.Dutta
+	 * This test cases is used to 'Back to live by pressing STOP Steps: 1. start over a past program on channel 1 2. press STOP
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_CUBTL0604_back_to_live_stop() throws InterruptedException
+	{
+		DTVChannelScreen dtvChannelScreen = new DTVChannelScreen(driver);
+		dtvChannelScreen.back_to_live_stop();
+		
+	}
 }

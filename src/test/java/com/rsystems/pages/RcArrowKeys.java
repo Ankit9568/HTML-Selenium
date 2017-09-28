@@ -2,7 +2,6 @@ package com.rsystems.pages;
 
 import java.util.List;
 
-import org.apache.regexp.recompile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.STVerticalAlignment;
 
 import com.relevantcodes.extentreports.LogStatus;
 import com.rsystems.config.ObjectRepository;
@@ -563,9 +561,9 @@ public class RcArrowKeys extends TestInitization {
 		Thread.sleep(60000);
 		sendUnicodeMultipleTimes(Unicode.VK_BACKWARD.toString(), 1, 1000);
 		Thread.sleep(20000);
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
-		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 1000);
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 2000);
 	}
 
 	public void verifyRCUOnDemandKey() throws InterruptedException {
@@ -934,5 +932,257 @@ public class RcArrowKeys extends TestInitization {
 		}
 
 	}
+	public void verifyRCUPVRKEYOnVODOrPVR() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Play a VOD Playback");
+		new DTVChannelScreen(driver).navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		handlePopupIfExist();
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Press PVR Key while watching VOD Playback");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).notificationMsg, "Confirmation Message Popup On VOD Playback");
+		reports.log(LogStatus.PASS, "Click On Continue- PVR Screen should be displayed");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
+			reports.log(LogStatus.PASS, "PVR Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("PVR screen should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS,"Play PVR Playback" );
+		new DTVChannelScreen(driver).openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+		reports.log(LogStatus.PASS, "Press PVR Key while watching PVR Playback");
+		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).notificationMsg, "Confirmation Message Popup on PVR Playback");
+		reports.log(LogStatus.PASS, "Click On Continue- PVR Screen should be displayed");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
+			reports.log(LogStatus.PASS, "PVR Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("PVR screen should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+		
+		
+	}
 
+	public void verifyRCUOnDemandKeyOnVODOrPVR() throws InterruptedException {
+		reports.log(LogStatus.PASS, "Play a VOD Playback");
+		new DTVChannelScreen(driver).navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		handlePopupIfExist();
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		reports.log(LogStatus.PASS, "Press On Demand while watching VOD Playback");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).notificationMsg, "Confirmation Message Popup on VOD Playback");
+		reports.log(LogStatus.PASS, "Click On Continue- Shop Screen should be displayed");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("PVR screen should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		reports.log(LogStatus.PASS,"Play PVR and verify two lines" );
+		new DTVChannelScreen(driver).openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+		reports.log(LogStatus.PASS, "Press On Demand Key while watching VOD Playback");
+		sendUnicodeMultipleTimes(Unicode.VK_ONDEMAND.toString(), 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).notificationMsg, "Confirmation Message Popup on PVR Playback");
+		reports.log(LogStatus.PASS, "Click On Continue- Shop Screen should be displayed");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Shop", "name_nl"))) {
+			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		} else {
+			FailTestCase("PVR screen should be displayed");
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		
+	}
+
+	public void verifyMENUKey() throws InterruptedException {
+		new DTVChannelScreen(driver).openLiveTV();
+		reports.log(LogStatus.PASS, "Press MENU Key while on Live TV");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Menu is open successfully");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Menu not opened successfully");
+		}
+		reports.log(LogStatus.PASS,"Play PVR and verify two lines" );
+		new DTVChannelScreen(driver).openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+		reports.log(LogStatus.PASS, "Press MENU Key while watching PVR Palyback");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Confirmation Pop up message on PVR Playback");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Menu is open successfully");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Menu not opened successfully");
+		}
+		reports.log(LogStatus.PASS, "Play a VOD Playback");
+		new DTVChannelScreen(driver).navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		handlePopupIfExist();
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+		reports.log(LogStatus.PASS, "Press MENU Key while watching VOD Palyback");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Confirmation Pop up message.");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Click on Continue - Menu is open successfully");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Menu not opened successfully");
+		}
+	}
+
+	public void verifyRCYHokKeysOnPVRPlayBack() throws InterruptedException {
+		playPVRPlayBack();
+		reports.log(LogStatus.PASS, "Press MENU Key while watching PVR Palyback");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Confirmation Pop up message");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "home", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Menu is open successfully");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("Menu not opened successfully");
+		}
+		
+		
+	}
+	
+	public void playPVRPlayBack() throws InterruptedException{
+		reports.log(LogStatus.PASS,"Play PVR and verify two lines" );
+		new DTVChannelScreen(driver).openLiveTV();
+		handlePopupIfExist();
+		EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+		new Pvr(driver).navigateToThePVRPlayback(episodeDetails);
+		handlePopupIfExist();
+	}
+
+	public void verifyRCUTVGuideKey() throws InterruptedException {
+		new DTVChannelScreen(driver).openLiveTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		String programTime = new DTVChannelScreen(driver).programDurationIn_Infobar.getText();
+		reports.log(LogStatus.PASS, "Press TV Guide Key - While watching Live TV");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "EPG Guide");
+		String focusProgramTime = new EpgScreen(driver).focusElementProgramTime.getText();
+		if(focusProgramTime.equalsIgnoreCase(programTime)){
+			reports.log(LogStatus.PASS, "Focus is on Current Live Channel.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Focus is not on Current Live Channel.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+		}
+		playTSTV();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		programTime = new DTVChannelScreen(driver).programDurationIn_Infobar.getText();
+		reports.log(LogStatus.PASS, "Press TV Guide Key - While watching TSTV");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "EPG Guide");
+		focusProgramTime = new EpgScreen(driver).focusElementProgramTime.getText();
+		if(focusProgramTime.equalsIgnoreCase(programTime)){
+			reports.log(LogStatus.PASS, "Focus is on TSTV Channel.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Focus is not on TSTV Channel.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+		}
+		reports.log(LogStatus.PASS, "Play CUTV Playback");
+		playCUTVPlayBack();
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 1, 0);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendUnicodeMultipleTimes(Unicode.VK_INFO.toString(), 2, 0);
+		programTime = new DTVChannelScreen(driver).programDurationIn_Infobar.getText();
+		reports.log(LogStatus.PASS, "Press TV Guide Key - While watching CUTV PlayBack");
+		sendUnicodeMultipleTimes(Unicode.TV_GUIDE.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(new MiniEPGScreen(driver).epgGuide, "EPG Guide");
+		focusProgramTime = new EpgScreen(driver).focusElementProgramTime.getText();
+		if(focusProgramTime.equalsIgnoreCase(programTime)){
+			reports.log(LogStatus.PASS, "Focus is on CUTV Playback.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+			reports.attachScreenshot(captureCurrentScreenshot());
+		}
+		else
+		{
+			FailTestCase("Focus is not on CUTV Playback.Expected Program Time - "+programTime+". Actual Program Time - "+focusProgramTime);
+		}
+		reports.log(LogStatus.PASS, "Play a VOD Playback");
+		new DTVChannelScreen(driver).navigateToFilmScreenAndRentMovie(TestInitization.getExcelKeyValue("RentMovie", "FOD", "Category"),
+				TestInitization.getExcelKeyValue("RentMovie", "FOD", "MovieName"));
+		driver.switchTo().frame(getCurrentFrameIndex());
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		handlePopupIfExist();
+		new DTVChannelScreen(driver).pressPauseButtonAndValidation();
+		sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString(), 1, 3000);
+		reports.log(LogStatus.PASS, "Press TV guide Key while watching VOD Palyback");
+		sendUnicodeMultipleTimes(Unicode.VK_MENU.toString(), 1, 2000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		isDisplayed(notificationMsg, "Confirmation Pop up message.");
+		sendKeyMultipleTimes("ENTER", 1, 3000);
+		driver.switchTo().defaultContent();
+		if (headerText.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "LiveTV", "name_nl"))) {
+			driver.switchTo().frame(getCurrentFrameIndex());
+			reports.log(LogStatus.PASS, "Click on Continue - TV Guide is open successfully");
+			reports.attachScreenshot(TestInitization.captureCurrentScreenshot());
+		} else {
+			FailTestCase("TV Guide not opened successfully");
+		}
+		
+	}
 }

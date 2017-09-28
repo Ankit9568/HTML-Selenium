@@ -356,5 +356,49 @@ public class RcArrowKeysTestCase extends TestInitization {
 		rcArrowKeys.validateStopKey("TIMESHIFT");
 		rcArrowKeys.validateStopKey("CUTV");
 	}
+	
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test case use to verify PVR Key on DTV,CUTV,PVRorVOD
+	 */
+	@Test
+	public void tc_RCU_PVR_NTE1_2() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUPVRKey();
+		rc.verifyRCUPVRKEYOnVODOrPVR();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test case use to verify ON Demand Key on DTV,CUTV,PVRorVOD
+	 */
+	@Test
+	public void tc_RCU_ON_Demand_NTE1_2() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUOnDemandKey();
+		rc.verifyRCUOnDemandKeyOnVODOrPVR();
+	}
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test case use to verify MENU Key on DTV,CUTV,PVRorVOD
+	 */
+	@Test
+	public void tc_RCU_Menu_key_NTE1_2() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyMENUKey();
+	}
 
+	/**
+	 * @author Rahul.Dhoundiyal
+	 * @throws InterruptedException
+	 * Test cases is used to verify TV Guide Key on DTV,TSTV,CUTV
+	 */
+	@Test
+	public void tc_RCU_TV_GUIDE_NTE1_2() throws InterruptedException{
+		RcArrowKeys rc = new RcArrowKeys(driver);
+		rc.verifyRCUTVGuideKey();
+	}
+	
 }

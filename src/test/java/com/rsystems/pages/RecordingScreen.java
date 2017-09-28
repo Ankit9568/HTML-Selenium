@@ -1697,33 +1697,7 @@ public class RecordingScreen extends TestInitization {
     }
 
 	public void deleteAllPlannedRecordings() throws InterruptedException {
-		reports.log(LogStatus.PASS, "Navigate To PVR Screen");
-		sendUnicodeMultipleTimes(Unicode.VK_PVR.toString(), 1, 3000);
-		driver.switchTo().defaultContent();
-		if (headerElement.getText().equalsIgnoreCase(getExcelKeyValue("screenTitles", "Library", "name_nl"))) {
-			reports.log(LogStatus.PASS, "Shop Screen getting displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		} else {
-			FailTestCase("Shop screen should be displayed");
-			reports.attachScreenshot(captureCurrentScreenshot());
-		}
-		reports.log(LogStatus.PASS, "Navigate To Planned Recordings");
-		driver.switchTo().frame(getCurrentFrameIndex());
-		List<WebElement> activeElement = driver.findElements(By.xpath("//div[@class='focusBox']/div/ul/li[@class='active']"));
-		int listSize = activeElement.size();
-		System.out.println(listSize);
-		for(int i=0;i<listSize;i++)
-		{
-			System.out.println(activeElement.get(i).getText());
-			if(activeElement.get(i).getText().equalsIgnoreCase("geplande opnames")){
-				sendKeyMultipleTimes("ENTER", 1, 3000);
-				break;
-			}
-			else
-			{
-				sendKeyMultipleTimes("DOWN", 1, 2000);
-			}
-		}
+		moveToPlannedRecordings();
 		driver.switchTo().frame(getCurrentFrameIndex());
 		wait.until(ExpectedConditions.visibilityOf(totalRecordingID));
 		sendKeyMultipleTimes("UP", 1, 2000);
@@ -1778,4 +1752,36 @@ public class RecordingScreen extends TestInitization {
 			FailTestCase("All planned recordings noit getting deleted");
 		}
 	}
+	
+	//Pritam New
+	
+		public void Record_option_in_Action_Menu() throws InterruptedException
+		{
+			
+			DTVChannelScreen channelScreen = new DTVChannelScreen(driver);
+			channelScreen.openLiveTV();
+			channelScreen.tuneToChannel(Integer.parseInt(getExcelKeyValue("Recording","RecordingChannelNumber","name_nl")));
+			sendUnicodeMultipleTimes(Unicode.VK_TVGUIDE.toString(), 1, 1000);
+			sendKeyMultipleTimes("ENTER",1,1000);
+			driver.switchTo().frame(getCurrentFrameIndex());
+			List<WebElement> menuList = driver.findElements(By.xpath(ObjectRepository.EpgScreen.actionList));
+			int length = menuList.size();
+			System.out.println(length);
+			for (int i =0 ;i<length ; i++)
+			{
+				System.out.println(activeInfoMenuItem.getText());
+				if(activeInfoMenuItem.getText().equalsIgnoreCase("opnemen")||activeInfoMenuItem.getText().equalsIgnoreCase("opname stoppen"))
+				{
+					reports.log(LogStatus.PASS, "Recording button is shown in the current nPVR enabled channel");
+					reports.attachScreenshot(captureCurrentScreenshot());
+					break;
+				}
+				else
+				{  
+					sendKeyMultipleTimes("DOWN", 1, 1000);
+				}
+			
+			
+			}
+		}
 }

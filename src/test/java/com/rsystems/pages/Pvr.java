@@ -1,5 +1,7 @@
 package com.rsystems.pages;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +37,12 @@ public class Pvr extends TestInitization {
 
 	@FindBy(how = How.XPATH, using = ObjectRepository.ZapListPage.screenTitle)
 	public WebElement screenTitle;
+	
+	@FindBy(how = How.ID, using = ObjectRepository.LibraryElements.titleHeadingOfScreen)
+	public WebElement titleHeadingOfScreen;
+	
+	@FindBy(how = How.XPATH, using = ObjectRepository.DtvChannel.programEndTime)
+	public WebElement programEndTime;
 
 	public void navigateToThePVRPlayback(EpisodeInfo episodeDetails) throws InterruptedException {
 		RecordingScreen record = new RecordingScreen(driver);
@@ -741,4 +749,35 @@ public class Pvr extends TestInitization {
 
 	}
 
+	public void playback_Till_End() throws InterruptedException
+	{
+	        Pvr pvr = new Pvr(driver);
+	        DTVChannelScreen channelScreen = new DTVChannelScreen(driver);
+	        channelScreen.openLiveTV();
+	        handlePopupIfExist();
+	        EpisodeInfo episodeDetails = new DTVChannelScreen(driver).startRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+	        Thread.sleep(120000);
+	        channelScreen.stopRecording(Integer.parseInt(TestInitization.getExcelKeyValue("Recording", "RecordingChannelNumber", "name_nl")));
+	        pvr.navigateToThePVRPlayback(episodeDetails);
+	        handlePopupIfExist();
+	        sendUnicodeMultipleTimes(Unicode.VK_PAUSE.toString(), 1, 3000);
+	        driver.switchTo().frame(getCurrentFrameIndex());
+	        String programEndTimeOfVideo=programEndTime.getText().split(":")[1].trim();
+	        sendUnicodeMultipleTimes(Unicode.VK_PLAY.toString().toString(), 1, 3000);
+	        System.out.println(programEndTimeOfVideo); 
+	        int currentTime=Integer.parseInt(programEndTimeOfVideo);
+	        long TimeinSec = TimeUnit.MINUTES.toMillis(currentTime+1);
+	        System.out.println(TimeinSec);
+	        Thread.sleep(TimeinSec);
+	        driver.switchTo().frame(getCurrentFrameIndex());
+	        if(titleHeadingOfScreen.getText().equalsIgnoreCase("opnames"))
+	        {
+	        	reports.log(LogStatus.PASS, "Reached to the recording list screen");
+	        	reports.attachScreenshot(captureCurrentScreenshot());
+	        }
+	        else
+	        {
+	        	FailTestCase("Not reached to the recording list screen");
+	        }
+	}
 }

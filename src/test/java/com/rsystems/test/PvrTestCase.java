@@ -23,7 +23,19 @@ public class PvrTestCase extends TestInitization
 		
 	}
 	
-	
+
+    /**
+	 * @author Pritam.Dutta
+	 * This test cases is used to Play any of the recordings up to the end, with and without using trickplay. the recording in normal speed.
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void tc_BCDTVCP1440_Playback_Till_End() throws InterruptedException
+	{
+		Pvr p = new Pvr(driver);
+		p.playback_Till_End();
+		
+	}
 	
 	
 	
