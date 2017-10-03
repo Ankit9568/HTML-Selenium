@@ -333,6 +333,11 @@ public class RcArrowKeysTestCase extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Radio_Hot_Key_NTE1_2_B() throws InterruptedException {
 
@@ -346,6 +351,11 @@ public class RcArrowKeysTestCase extends TestInitization {
 
 	}
 	
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_RCU_Stop_key() throws InterruptedException{
 		

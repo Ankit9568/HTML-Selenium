@@ -210,6 +210,11 @@ public class HubTestCases extends TestInitization {
 		
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void tc_Hub_Selecting_elements_in_text_line() throws InterruptedException {
 
@@ -278,6 +283,12 @@ public class HubTestCases extends TestInitization {
 		}
 
 	}
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 */
+	
 
 	@Test
 	public void tc_SF022_ACTION_MENU() throws InterruptedException {

@@ -1477,6 +1477,12 @@ public class EPGTestCases extends TestInitization {
 
 	}
 
+	/**
+	 * 
+	 * @author Ankit.Agarwal1
+	 * @throws InterruptedException
+	 * Validate the EPG date time changed 
+	 */
 	@Test
 	public void tc_EPG_Date_Time_Change() throws InterruptedException {
 
@@ -1542,7 +1548,12 @@ public class EPGTestCases extends TestInitization {
 		epgScreen.timeAfterRefresh_grid();
 
 	}
-
+/**
+ * 
+ * @author Ankit.Agarwal1
+ * @throws InterruptedException
+ * Test case verify the EPG future program option
+ */
 	@Test
 	public void tc_EPG_Future_Program_Options() throws InterruptedException {
 		EpgScreen epgScreen = new EpgScreen(driver);
