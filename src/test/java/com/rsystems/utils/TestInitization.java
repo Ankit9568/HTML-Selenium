@@ -23,6 +23,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -38,6 +39,7 @@ import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.internal.ApacheHttpClient;
 import org.openqa.selenium.remote.internal.HttpClientFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -118,17 +120,17 @@ public class TestInitization {
 		log = Logger.getLogger("ProximusHTMLLogger");
 		log.info("Logger Info:: Inside Setup Method");
 
-		SSH_Connection sshConnection = new SSH_Connection();
-
-		String stbIP = null;
-		stbIP = System.getProperty("STBIP");
-		if (stbIP == null || stbIP.contentEquals("")) {
-			stbIP = TestInitization.getUpdatedProptiesFile().getProperty("STBIP");
-		}
-
-		sshConnection.rebootSTBAndSetup(stbIP, "root",
-				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
-		Thread.sleep(5000);
+		/*
+		 * SSH_Connection sshConnection = new SSH_Connection();
+		 * 
+		 * String stbIP = null; stbIP = System.getProperty("STBIP"); if (stbIP
+		 * == null || stbIP.contentEquals("")) { stbIP =
+		 * TestInitization.getUpdatedProptiesFile().getProperty("STBIP"); }
+		 * 
+		 * sshConnection.rebootSTBAndSetup(stbIP, "root",
+		 * "yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
+		 * Thread.sleep(5000);
+		 */
 
 		launchWebdriver();
 		launchApplication();
@@ -359,26 +361,25 @@ public class TestInitization {
 		}
 
 	}
-	
-	public static void sendUnicodeAndValidateObject(String keyName, By expectedObjectAfterKeyPress , String elementName)
-			throws InterruptedException {
-		
-		sendUnicodeMultipleTimes(keyName, 1, 100);
-		wait.until(ExpectedConditions.presenceOfElementLocated(expectedObjectAfterKeyPress));
-		reports.log(LogStatus.PASS, elementName +" is found on webpage");
-		
-		
+
+	public static void sendUnicodeAndValidateObject(String keyName, WebElement expectedObjectAfterKeyPress,
+			String elementName) throws InterruptedException {
+
+		sendUnicodeMultipleTimes(keyName, 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(expectedObjectAfterKeyPress));
+		reports.log(LogStatus.PASS, elementName + " is found on webpage");
+
 	}
 
-	
-	public static void sendKeyAndValidateObject(String keyName, By expectedObjectAfterKeyPress , String elementName)
-			throws InterruptedException {
-		
-		sendKeyMultipleTimes(keyName, 1, 100);
-		wait.until(ExpectedConditions.presenceOfElementLocated(expectedObjectAfterKeyPress));
-		reports.log(LogStatus.PASS, elementName +" is found on webpage");
-		
-		
+	public static void sendKeyAndValidateObject(String keyName, WebElement expectedObjectAfterKeyPress,
+			String elementName) throws InterruptedException {
+
+		sendKeyMultipleTimes(keyName, 1, 1000);
+		driver.switchTo().frame(getCurrentFrameIndex());
+		wait.until(ExpectedConditions.visibilityOf(expectedObjectAfterKeyPress));
+		reports.log(LogStatus.PASS, elementName + " is found on webpage");
+
 	}
 
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
