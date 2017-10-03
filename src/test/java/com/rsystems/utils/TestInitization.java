@@ -55,6 +55,8 @@ import com.rsystems.config.ObjectRepository;
 import com.rsystems.pages.Hub;
 import com.rsystems.pages.MiniEPGScreen;
 
+import gherkin.lexer.El;
+
 public class TestInitization {
 
 	public static WebDriver driver;
@@ -347,8 +349,6 @@ public class TestInitization {
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
 
-		Thread.sleep(1000);
-
 		Actions action = new Actions(driver);
 
 		for (int noOfTimes = 0; noOfTimes < numberoftimes; noOfTimes++) {
@@ -359,14 +359,33 @@ public class TestInitization {
 		}
 
 	}
+	
+	public static void sendUnicodeAndValidateObject(String keyName, By expectedObjectAfterKeyPress , String elementName)
+			throws InterruptedException {
+		
+		sendUnicodeMultipleTimes(keyName, 1, 100);
+		wait.until(ExpectedConditions.presenceOfElementLocated(expectedObjectAfterKeyPress));
+		reports.log(LogStatus.PASS, elementName +" is found on webpage");
+		
+		
+	}
+
+	
+	public static void sendKeyAndValidateObject(String keyName, By expectedObjectAfterKeyPress , String elementName)
+			throws InterruptedException {
+		
+		sendKeyMultipleTimes(keyName, 1, 100);
+		wait.until(ExpectedConditions.presenceOfElementLocated(expectedObjectAfterKeyPress));
+		reports.log(LogStatus.PASS, elementName +" is found on webpage");
+		
+		
+	}
 
 	public static void sendKeyMultipleTimes(String keyname, int numberoftimes, long delaybetweemKeys)
 			throws InterruptedException {
 
 		System.out.println("Sending : " + keyname + " numberoftimes : " + numberoftimes
 				+ "  with delay in each key as : " + delaybetweemKeys);
-
-		Thread.sleep(1000);
 
 		Actions action = new Actions(driver);
 
@@ -820,12 +839,6 @@ public class TestInitization {
 			}
 		} catch (NoSuchElementException e) {
 		}
-	}
-
-	public static void main(String arr[]) throws InterruptedException {
-		SSH_Connection sshConnection = new SSH_Connection();
-		sshConnection.rebootSTBAndSetup("10.67.181.116", "root",
-				"yanjebipBoathHairgonpexUkkuarcIgjafbijKodgiNuflathsyepNujAvTetef");
 	}
 
 	private void launchApplication() {
