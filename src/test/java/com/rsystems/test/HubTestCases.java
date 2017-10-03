@@ -23,7 +23,7 @@ public class HubTestCases extends TestInitization {
 
 	/**
 	 * This test case is used to verify Menu Screen is launching or not using
-	 * hot key Created by Rahul Dhoundiyal Reviewed Reviewed 2 Reviewed Finally
+	 * hot key Created by Rahul Dhoundiyal 
 	 */
 	@Test
 	public void tc_Hub_Menu_Button() throws InterruptedException {
