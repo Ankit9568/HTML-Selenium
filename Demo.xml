@@ -1,0 +1,32 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Rsystems HTML Testing">
+
+	<listeners>
+		<listener class-name="com.rsystems.utils.TestListenerAdapter"></listener>
+	</listeners>
+
+
+	<test name="Hub Test cases ">
+		<classes>
+			<class name="com.rsystems.test.HubTestCases">
+				<methods>
+					<include name="tc_Hub_Menu_Button" />
+					<include name="tc_HUB_Navigation_Text_Line" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+
+	<test name="Tv Filter Layer TestCase">
+		<classes>
+			<class name="com.rsystems.test.TvFilterLayerTestCase">
+				<methods>
+					<include name="verifyTvFilterLayerScreen" />
+					<include name="tc_SF003_TV" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+</suite>
