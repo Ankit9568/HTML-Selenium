@@ -22,7 +22,7 @@
 		<classes>
 			<class name="com.rsystems.test.TvFilterLayerTestCase">
 				<methods>
-					<include name="verifyTvFilterLayerScreen" />
+<!-- 					<include name="verifyTvFilterLayerScreen" /> -->
 					<include name="tc_SF003_TV" />
 				</methods>
 			</class>
