@@ -11,7 +11,7 @@
 			<class name="com.rsystems.test.HubTestCases">
 				<methods>
 					<include name="tc_Hub_Menu_Button" />
-<!-- 					<include name="tc_Hub_Up_Down_navigation_in_HUB" /> -->
+					<include name="tc_Hub_Up_Down_navigation_in_HUB" />
 				</methods>
 			</class>
 		</classes>
